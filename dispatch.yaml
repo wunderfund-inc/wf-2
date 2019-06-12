@@ -1,6 +1,0 @@
-dispatch:
-- url: "wunderfund-test.appspot.com/*"
-  service: default
-
-- url: "staging.wunderfund-test.appspot.com/*"
-  service: staging
