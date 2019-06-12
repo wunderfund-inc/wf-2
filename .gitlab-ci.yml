@@ -7,9 +7,9 @@ deploy_production:
   only:
   - master
   script:
-  - echo $GCP_SERVICE_ACCOUNT_KEY
-  - gcloud auth activate-service-account  --key-file $GCP_SERVICE_ACCOUNT_KEY
-  - gcloud --quiet --project $GCLOUD_PROJECT_ID app deploy app.yaml
+  - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+  - gcloud --quiet --project $PROJECT_ID app deploy app.yaml
 
 deploy_staging:
   stage: deploy
@@ -18,5 +18,9 @@ deploy_staging:
   only:
   - staging
   script:
-  - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
-  - gcloud --quiet --project $GCLOUD_PROJECT_ID app deploy staging-app.yaml
+  - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+  - gcloud --quiet --project $PROJECT_ID app deploy staging-app.yaml
+
+after_script:
+  - rm /tmp/$CI_PIPELINE_ID.json
