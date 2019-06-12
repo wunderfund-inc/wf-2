@@ -9,7 +9,7 @@ deploy_production:
   script:
   - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
   - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-  - gcloud --quiet --project $PROJECT_ID app deploy app.yaml dispatch.yaml
+  - gcloud --quiet --project $PROJECT_ID app deploy production.yaml dispatch.yaml
 
 deploy_staging:
   stage: deploy
@@ -20,7 +20,7 @@ deploy_staging:
   script:
   - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
   - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-  - gcloud --quiet --project $PROJECT_ID app deploy staging-app.yaml
+  - gcloud --quiet --project $PROJECT_ID app deploy staging.yaml
 
 after_script:
 - rm /tmp/$CI_PIPELINE_ID.json
