@@ -2,6 +2,11 @@ runtime: nodejs10
 
 instance_class: F2
 
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
 handlers:
   - url: /_nuxt
     static_dir: .nuxt/dist/client
@@ -18,4 +23,4 @@ handlers:
 
 env_variables:
   HOST: '0.0.0.0'
-  NODE_ENV: 'production'
+  NODE_ENV: 'staging'
