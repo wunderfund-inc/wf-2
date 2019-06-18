@@ -1,64 +1,49 @@
+image: google/cloud-sdk:alpine
+
 cache:
   paths:
     - node_modules/
 
 stages:
-  # - build
-  # - test
-  # - staging
+  - build
+  - test
+  - staging
   - production
 
-# build:
-#   image: node:10.16
-#   stage: build
-#   environment:
-#     name: build
-#   before_script:
-#     - npm install
-#   script:
-#     - npm run build
+build:
+  stage: build
+  environment:
+    name: build
+  before_script:
+    - apk update
+    - apk add nodejs npm
+    - npm i
+  script:
+    - npm run build
 
-# test:
-#   image: node:10.16
-#   stage: test
-#   environment:
-#     name: test
-#   script:
-#     - npm run test
+test:
+  stage: test
+  environment:
+    name: test
+  script:
+    - npm run test
 
-# deploy to staging:
-#   image: google/cloud-sdk:alpine
-#   stage: staging
-#   environment:
-#     name: staging
-#   only:
-#     - staging
-#   script:
-#     - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
-#     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-#     - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.staging.yaml
-#   after_script:
-#     - rm /tmp/$CI_PIPELINE_ID.json
+deploy to staging:
+  stage: staging
+  environment:
+    name: staging
+  only:
+    - staging
+  script:
+    - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
+    - gcloud app deploy app.staging.yaml --quiet --project $GCP_PROJECT_ID
 
 deploy to production:
-  image: google/cloud-sdk:alpine
   stage: production
   environment:
     name: production
   only:
     - master
-  before_script:
-    # - curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
-    - apk update
-    - apk add nodejs npm
-    - npm i
-    - npm run build
-  # script:
-  #   - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
-  #   - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-  #   - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.production.yaml
-  # after_script:
-  #   - rm /tmp/$CI_PIPELINE_ID.json
   script:
     - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
     - gcloud app deploy app.production.yaml --quiet --project $GCP_PROJECT_ID
