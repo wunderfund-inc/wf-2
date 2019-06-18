@@ -48,10 +48,8 @@ deploy to production:
   only:
     - master
   before_script:
-    - apt update
-    - apt install nodejs
-    - apt install npm
-    - npm install
+    - sudo apt-get update && sudo apt-get install nodejs npm
+    - npm i
     - npm run build
   # script:
   #   - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
