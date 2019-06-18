@@ -48,7 +48,9 @@ deploy to production:
   only:
     - master
   before_script:
-    - sudo apt-get update && sudo apt-get install nodejs npm
+    # - curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+    - apk update
+    - apk add nodejs npm
     - npm i
     - npm run build
   # script:
