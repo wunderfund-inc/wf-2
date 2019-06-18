@@ -3,20 +3,9 @@ cache:
     - node_modules/
 
 stages:
-  - build
   - test
   - staging
   - production
-
-build:
-  image: node:10.16
-  stage: build
-  environment:
-    name: build
-  before_script:
-    - npm install
-  script:
-    - npm run build
 
 test:
   image: node:10.16
@@ -33,7 +22,10 @@ deploy to staging:
     name: staging
   only:
   - staging
+  before_script:
+  - npm install
   script:
+  - npm run build
   - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
   - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
   - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.staging.yaml
@@ -47,7 +39,10 @@ deploy to production:
     name: production
   only:
   - master
+  before_script:
+  - npm install
   script:
+  - npm run build
   - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
   - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
   - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.production.yaml
