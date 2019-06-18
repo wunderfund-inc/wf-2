@@ -4,6 +4,11 @@ cache:
   paths:
     - node_modules/
 
+before_script:
+  - apk update
+  - apk add nodejs npm
+  - npm i
+
 stages:
   - build
   - test
@@ -14,10 +19,6 @@ build:
   stage: build
   environment:
     name: build
-  before_script:
-    - apk update
-    - apk add nodejs npm
-    - npm i
   script:
     - npm run build
 
@@ -35,6 +36,7 @@ deploy to staging:
   only:
     - staging
   script:
+    - npm run build
     - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
     - gcloud app deploy app.staging.yaml --quiet --project $GCP_PROJECT_ID
 
@@ -45,5 +47,6 @@ deploy to production:
   only:
     - master
   script:
+    - npm run build
     - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
     - gcloud app deploy app.production.yaml --quiet --project $GCP_PROJECT_ID
