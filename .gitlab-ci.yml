@@ -8,37 +8,37 @@ stages:
   # - staging
   - production
 
-build:
-  image: node:10.16
-  stage: build
-  environment:
-    name: build
-  before_script:
-    - npm install
-  script:
-    - npm run build
+# build:
+#   image: node:10.16
+#   stage: build
+#   environment:
+#     name: build
+#   before_script:
+#     - npm install
+#   script:
+#     - npm run build
 
-test:
-  image: node:10.16
-  stage: test
-  environment:
-    name: test
-  script:
-    - npm run test
+# test:
+#   image: node:10.16
+#   stage: test
+#   environment:
+#     name: test
+#   script:
+#     - npm run test
 
-deploy to staging:
-  image: google/cloud-sdk:alpine
-  stage: staging
-  environment:
-    name: staging
-  only:
-    - staging
-  script:
-    - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
-    - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-    - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.staging.yaml
-  after_script:
-    - rm /tmp/$CI_PIPELINE_ID.json
+# deploy to staging:
+#   image: google/cloud-sdk:alpine
+#   stage: staging
+#   environment:
+#     name: staging
+#   only:
+#     - staging
+#   script:
+#     - echo $GCP_SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+#     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+#     - gcloud --quiet --project $GCP_PROJECT_ID app deploy app.staging.yaml
+#   after_script:
+#     - rm /tmp/$CI_PIPELINE_ID.json
 
 deploy to production:
   image: google/cloud-sdk:alpine
