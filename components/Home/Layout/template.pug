@@ -1,0 +1,13 @@
+section.container
+  div
+    logo
+    h1.title Wunderfund 2.0
+    h2.subtitle The next iteration of Wunderfund
+    .links
+      button-link(
+        v-for="(link, index) in links"
+        :key="index"
+        :link-classes="link.linkClass"
+        :url="link.url"
+        :title="link.title"
+      )
