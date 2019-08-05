@@ -1,13 +1,13 @@
 <template lang="pug">
-  home-layout
+  hero-section
 </template>
 
 <script>
-import HomeLayout from '@/components/Home/Layout'
+import HeroSection from '@/components/Home/HeroSection'
 
 export default {
   components: {
-    HomeLayout
+    HeroSection
   }
 }
 </script>

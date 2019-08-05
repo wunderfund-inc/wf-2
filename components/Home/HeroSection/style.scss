@@ -1,0 +1,49 @@
+$primary: #0091ea;
+$primaryNavy: #003554;
+.img--bg {
+  height: 80vh;
+  background-image: url('../../../assets/bg/hero.svg');
+  background-position: right;
+  background-repeat: no-repeat;
+  margin: 40px;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
+  .hero {
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: left;
+    width: 100%;
+    vertical-align: middle;
+    padding: 15px;
+    .title {
+      font-family: 'Montserrat', sans-serif;
+      width: 50%;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      font-family: 'Montserrat', sans-serif;
+      padding-bottom: 15px;
+      width: 40%;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      line-height: 1.5em;
+    }
+  }
+}
+@media only screen and (max-width: 991px) {
+  .img-bg {
+    margin: 15px;
+    height: 50vh;
+    background-position: right bottom;
+    margin-bottom: 0px;
+    -webkit-box-reflect: transparent;
+    .hero {
+      height: 50vh;
+      .title {
+        width: 100%;
+      }
+    }
+  }
+}
