@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Component from './index'
+import ButtonLink from './index'
 
 let wrapper
 
@@ -8,7 +8,7 @@ const url = 'https://github.com/nuxt/nuxt.js'
 const title = 'Github'
 
 beforeEach(() => {
-  wrapper = shallowMount(Component, {
+  wrapper = shallowMount(ButtonLink, {
     propsData: {
       linkClasses: linkClass,
       url,
@@ -19,7 +19,7 @@ beforeEach(() => {
 
 afterEach(() => wrapper.destroy())
 
-describe('ButtonLink Component', () => {
+describe('Button Link Component', () => {
   test('is a Vue instance', () => {
     expect(wrapper.isVueInstance()).toBeTruthy()
   })

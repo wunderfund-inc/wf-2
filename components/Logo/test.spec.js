@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
-import Component from './index'
+import Logo from './index'
 
 let wrapper
 
-beforeEach(() => (wrapper = shallowMount(Component)))
+beforeEach(() => (wrapper = shallowMount(Logo)))
 
 afterEach(() => wrapper.destroy())
 
