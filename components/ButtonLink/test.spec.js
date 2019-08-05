@@ -11,8 +11,8 @@ beforeEach(() => {
   wrapper = shallowMount(Component, {
     propsData: {
       linkClasses: linkClass,
-      url: url,
-      title: title
+      url,
+      title
     }
   })
 })
