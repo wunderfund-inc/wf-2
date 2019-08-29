@@ -5,14 +5,13 @@ $primaryNavy: #003554;
   background-image: url('../../../assets/bg/hero.svg');
   background-position: right;
   background-repeat: no-repeat;
-  margin: 0 40px;
+  // margin: -36px 0 0 0;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
   .hero {
     height: 75vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: left;
     text-align: left;
     width: 100%;
     vertical-align: middle;
