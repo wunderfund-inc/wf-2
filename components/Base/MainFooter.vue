@@ -9,15 +9,19 @@
                 src="../../assets/logo/logo.png"
                 width="200"
               )
-          b-row.pb-4
+          b-row
+            b-col
+              p.text-light Giving everyone access to early-stage startup investing.
+          b-row.py-4
             b-col
               b-link.px-2.text-light(href="https://www.facebook.com/thewunderfund")
                 facebook-icon(size="2x")
               b-link.px-2.text-light(href="https://www.linkedin.com/company/wunderfund")
                 linkedin-icon(size="2x")
-          b-row
-            b-col
-              p.text-light Giving everyone access to early-stage startup investing.
+              b-link.px-2.text-light(href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ")
+                youtube-icon(size="2x")
+              b-link.px-2.text-light(href="https://twitter.com/thewunderfund")
+                twitter-icon(size="2x")
         b-col(sm="6")
           address
             h4.d-none.d-sm-block.text-light About Us
@@ -33,14 +37,24 @@
         b-col
           b-row.pt-4
             b-col
-              p.text-light Thrivera Venture Fund I LLC runs Wunderfund.co. By using Wunderfund.co, you accept our Terms of Use and Privacy Policy. By choosing to invest using Wunderfund.co, you accept our Investor Agreement. By choosing to campaign using Wunderfund.co, you accept our Startup Agreement. Wunderfund.co is registered with the SEC and is a member of FINRA. We partner with North Capital Private Securities and Transfer Online, who are also registered with the SEC and members of FINRA.
+              p.text-light Thrivera Venture Fund I LLC runs Wunderfund.co. By using Wunderfund.co, you accept our Terms of Use and Privacy Policy. By choosing to invest using Wunderfund.co, you accept our Investor Agreement. By choosing to campaign using Wunderfund.co's technologies, you accept our Startup Agreement. Wunderfund.co is registered with the SEC and is a member of FINRA. We partner with North Capital Private Securities and Transfer Online, who are also registered with the SEC and members of FINRA.
 </template>
 
 <script>
-import { LinkedinIcon, FacebookIcon } from "vue-feather-icons";
+import {
+  LinkedinIcon,
+  FacebookIcon,
+  YoutubeIcon,
+  TwitterIcon
+} from "vue-feather-icons";
 
 export default {
-  components: { LinkedinIcon, FacebookIcon }
+  components: {
+    LinkedinIcon,
+    FacebookIcon,
+    YoutubeIcon,
+    TwitterIcon
+  }
 };
 </script>
 
