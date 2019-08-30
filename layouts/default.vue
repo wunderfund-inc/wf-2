@@ -1,7 +1,9 @@
 <template lang="pug">
-  main
-    main-navigation
-    nuxt
+  div
+    header
+      main-navigation
+    main
+      nuxt
     main-footer
 </template>
 

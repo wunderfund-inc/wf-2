@@ -1,6 +1,5 @@
 <template lang="pug">
-  section
-    hero-section
+  hero-section
 </template>
 
 <script>
