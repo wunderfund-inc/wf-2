@@ -1,13 +1,13 @@
 b-navbar.pt-3(toggleable="md" type="light" variant="transparent")
   b-container
-    b-navbar-brand(href="#")
+    b-navbar-brand(href="/")
       img.d-inline-block.align-middle(src="../../../assets/logo/logo.png" width="200")
     b-navbar-toggle(target="collapse")
     b-collapse#collapse(is-nav)
       b-navbar-nav
-        b-nav-item Learn
-        b-nav-item Browse
-        b-nav-item Raise Capital
+        b-nav-item(to="/learn") Learn
+        b-nav-item(to="/browse") Browse
+        b-nav-item(to="/raise-capital") Raise Capital
         b-nav-item.d-block.d-md-none My Investments
         b-nav-item.d-block.d-md-none My Account
         b-nav-item.d-block.d-md-none Logout
@@ -23,7 +23,7 @@ b-navbar.pt-3(toggleable="md" type="light" variant="transparent")
               width="50px"
               height="50px"
             )
-          b-dropdown-item My Investments
-          b-dropdown-item My Account
+          b-dropdown-item(to="/u/investments") My Investments
+          b-dropdown-item(to="/u/account") My Account
           b-dropdown-divider
           b-dropdown-item Logout
