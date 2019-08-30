@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import MainNavigation from "@/components/Base/MainNavigation";
-import MainFooter from "@/components/Base/MainFooter";
+import MainNavigation from "@/components/Base/MainNavigation/index";
+import MainFooter from "@/components/Base/MainFooter/index";
 
 export default {
   components: {
