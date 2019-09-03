@@ -1,7 +1,8 @@
 <template lang="pug">
   div#campaign
     section#hero
-    progress-section
+      hero-summary
+      progress-section
     section#content
       b-container.py-4
         b-row
@@ -13,10 +14,12 @@
 </template>
 
 <script>
+import HeroSummary from "@/components/Campaign/HeroSummary";
 import ProgressSection from "@/components/Campaign/ProgressSection";
 
 export default {
   components: {
+    HeroSummary,
     ProgressSection
   }
 };
