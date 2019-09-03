@@ -1,10 +1,10 @@
 <template lang="pug">
-  div#campaign
+  #campaign
     section#hero
       hero-summary
       progress-section
     section#content
-      b-container.py-4
+      b-container.py-5
         b-row
           b-col(md="3")
             campaign-sidebar
