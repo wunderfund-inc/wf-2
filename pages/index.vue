@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  main
     hero-section
     email-capture
 </template>

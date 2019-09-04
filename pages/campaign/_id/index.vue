@@ -1,5 +1,5 @@
 <template lang="pug">
-  #campaign
+  main#campaign
     #campaign-summary
       hero-summary
       progress-section
