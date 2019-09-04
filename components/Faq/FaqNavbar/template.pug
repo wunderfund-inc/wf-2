@@ -1,0 +1,6 @@
+b-navbar.py-3(type="light")
+  b-navbar-nav
+    b-nav-item.px-3(
+      v-for="(link, index) in faqMenu"
+      :key="index"
+      :to="`/faq/${link}`") {{ link | capitalize }}
