@@ -2,11 +2,11 @@
   main
     b-container
       section#faq-nav
-        b-row
-          b-col
-          b-col
+        b-row.justify-content-md-center
+          b-col(lg="3")
+          b-col(cols="12" md="auto")
             faq-navbar
-          b-col
+          b-col(lg="3")
 </template>
 
 <script>
