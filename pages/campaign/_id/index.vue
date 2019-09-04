@@ -1,9 +1,9 @@
 <template lang="pug">
   #campaign
-    section#hero
+    #campaign-summary
       hero-summary
       progress-section
-    section#content
+    #campaign-content
       b-container.py-5
         b-row
           b-col(md="3")
