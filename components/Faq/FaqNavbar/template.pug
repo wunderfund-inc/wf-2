@@ -1,8 +1,8 @@
-b-navbar.py-3(type="light")
+b-navbar.py-5(type="light")
   b-navbar-nav
     b-row
       b-col(
         v-for="(link, index) in faqMenu"
         :key="index"
       )
-        b-nav-item(:to="`/faq/${link}`") {{ link | capitalize }}
+        b-nav-item(:to="`/faq/${link}`") {{ link | propercase }}
