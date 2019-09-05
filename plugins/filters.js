@@ -19,3 +19,8 @@ Vue.filter("asCurrency", val => {
     currency: "USD"
   }).format(val);
 });
+
+/**
+ * Add percentage to raw number
+ */
+Vue.filter("asPercentage", val => `${val}%`);
