@@ -1,11 +1,3 @@
-<template lang="pug">
-  details.pb-3
-    summary {{ question }}
-    br
-    p {{ answer }}
-</template>
-
-<script>
 export default {
   props: {
     question: {
@@ -18,4 +10,3 @@ export default {
     }
   }
 };
-</script>

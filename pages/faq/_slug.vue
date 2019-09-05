@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import FaqNavbar from "@/components/Faq/FaqNavbar/index";
+import FaqNavbar from "@/components/Faq/FaqNavbar";
 import FaqLeftCol from "@/components/Faq/_Slug/FaqLeftCol";
 import FaqRightCol from "@/components/Faq/_Slug/FaqRightCol";
 
