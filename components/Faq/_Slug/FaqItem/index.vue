@@ -1,2 +1,2 @@
-<template src="./template.pug" />
+<template src="./template.pug" functional />
 <script src="./script.js" />
