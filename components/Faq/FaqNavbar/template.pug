@@ -5,4 +5,7 @@ b-navbar.py-5(type="light")
         v-for="(link, index) in faqMenu"
         :key="index"
       )
-        b-nav-item(:to="`/faq/${link}`") {{ link | propercase }}
+        b-nav-item(
+          active-class="font-weight-bolder"
+          :to="`/faq/${link}`"
+        ) {{ link | propercase }}
