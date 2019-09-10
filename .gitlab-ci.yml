@@ -1,52 +1,46 @@
-image: google/cloud-sdk:alpine
+image: node:10.16.3
 
 cache:
+  untracked: true
   paths:
     - node_modules/
 
-before_script:
-  - apk update
-  - apk add nodejs npm
-  - npm i
-
 stages:
-  - build
+  - setup
   - test
-  - staging
-  - production
+  - build
+  - deploy
 
-build:
-  stage: build
-  environment:
-    name: build
+setup:
+  stage: setup
   script:
-    - npm run build
+    - npm ci
+  only:
+    - master
 
 test:
   stage: test
-  environment:
-    name: test
   script:
     - npm run test
-
-deploy to staging:
-  stage: staging
-  environment:
-    name: staging
-  only:
-    - staging
-  script:
-    - npm run build
-    - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
-    - gcloud app deploy app.staging.yaml --quiet --project $GCP_PROJECT_ID
-
-deploy to production:
-  stage: production
-  environment:
-    name: production
   only:
     - master
+
+build:
+  stage: build
   script:
     - npm run build
-    - gcloud auth activate-service-account --key-file $GCP_SERVICE_ACCOUNT_KEY
-    - gcloud app deploy app.production.yaml --quiet --project $GCP_PROJECT_ID
+  artifacts:
+    paths:
+      - dist
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+  dependencies:
+    - build
+  only:
+    - master
