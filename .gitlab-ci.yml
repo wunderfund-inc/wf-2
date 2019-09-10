@@ -25,7 +25,7 @@ test:
   only:
     - master
 
-build-platform:
+build site:
   stage: build
   script:
     - npm run generate
@@ -35,7 +35,17 @@ build-platform:
   only:
     - master
 
-build-storybook:
+deploy site:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
+    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir dist --prod
+  dependencies:
+    - build-platform
+  only:
+    - master
+
+build storybook:
   stage: build
   script:
     - npm run build-storybook
@@ -45,21 +55,11 @@ build-storybook:
   only:
     - master
 
-deploy platform:
-  stage: deploy
-  script:
-    - npm i -g netlify-cli
-    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
-  dependencies:
-    - build-platform
-  only:
-    - master
-
 deploy storybook:
   stage: deploy
   script:
     - npm i -g netlify-cli
-    - netlify deploy --site $NETLIFY_STORYBOOK_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+    - netlify deploy --site $NETLIFY_STORYBOOK_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir storybook-static --prod
   dependencies:
     - build-storybook
   only:
