@@ -32,7 +32,6 @@ build-platform:
   artifacts:
     paths:
       - dist
-      - storybook-static
   only:
     - master
 
