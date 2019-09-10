@@ -25,11 +25,10 @@ test:
   only:
     - master
 
-build:
+build-platform:
   stage: build
   script:
     - npm run generate
-    - npm run storybook-build
   artifacts:
     paths:
       - dist
@@ -37,13 +36,32 @@ build:
   only:
     - master
 
-deploy:
+build-storybook:
+  stage: build
+  script:
+    - npm run build-storybook
+  artifacts:
+    paths:
+      - storybook-static
+  only:
+    - master
+
+deploy platform:
   stage: deploy
   script:
     - npm i -g netlify-cli
     - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+  dependencies:
+    - build-platform
+  only:
+    - master
+
+deploy storybook:
+  stage: deploy
+  script:
+    - npm i -g netlify-cli
     - netlify deploy --site $NETLIFY_STORYBOOK_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
   dependencies:
-    - build
+    - build-storybook
   only:
     - master
