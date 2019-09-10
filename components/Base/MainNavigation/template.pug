@@ -1,0 +1,30 @@
+header
+  b-navbar.pt-2(toggleable="md" type="light" variant="transparent")
+    b-container
+      b-navbar-brand(href="/")
+        img.d-inline-block.align-middle(src="../../../assets/logo/logo.png" width="200")
+      b-navbar-toggle(target="collapse")
+      b-collapse#collapse(is-nav)
+        b-navbar-nav
+          b-nav-item(to="/faq") FAQ
+          b-nav-item(to="/browse") Browse
+          b-nav-item(to="/raise-capital") Raise Capital
+          b-nav-item.d-block.d-md-none My Investments
+          b-nav-item.d-block.d-md-none My Account
+          b-nav-item.d-block.d-md-none Logout
+        b-navbar-nav.ml-auto.d-none.d-md-block
+          //- b-nav-item Login
+          //- b-nav-item Sign Up
+          b-nav-item-dropdown(right no-caret)
+            template(slot="button-content")
+              b-img(
+                thumbnail
+                src="https://avatars0.githubusercontent.com/u/4671881?s=460&v=4"
+                rounded="circle"
+                width="50px"
+                height="50px"
+              )
+            b-dropdown-item(to="/u/investments") My Investments
+            b-dropdown-item(to="/u/account") My Account
+            b-dropdown-divider
+            b-dropdown-item Logout
