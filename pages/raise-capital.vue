@@ -2,44 +2,7 @@
   <div>
     <section-jumbotron />
     <section-unique />
-    <div class="howItWorks">
-      <h2 class="howItWorksHeader">
-        How does it work?
-      </h2>
-      <img class="line" src="../assets/raise-capital/line.png" />
-      <b-row>
-        <b-col>
-          <h4 class="steps">
-            1. Apply
-          </h4>
-          <p class="stepDesc">
-            Provide us information about your company along with any documents
-            to convince investors
-          </p>
-        </b-col>
-        <b-col>
-          <h4 class="steps">
-            2. Due Dilligence
-          </h4>
-          <p class="stepDesc">
-            Customize your company profile and complete any other due diligence
-            needed.
-          </p>
-        </b-col>
-        <b-col>
-          <h4 class="steps">
-            3. Launch
-          </h4>
-          <p class="stepDesc">
-            Get your company launched. Let us streamline the investment and
-            closing process.
-          </p>
-        </b-col>
-      </b-row>
-      <nuxt-link to="/auth">
-        <main-button txt="Start your raise" />
-      </nuxt-link>
-    </div>
+    <section-ops />
     <div class="eligibility">
       <h3 class="eligibilityHeader">
         Not sure if crowdfunding is for you?
@@ -120,28 +83,6 @@
 </template>
 
 <style lang="scss" scoped>
-.howItWorks {
-  padding-top: 90px;
-  padding-bottom: 90px;
-  text-align: center;
-  img.line {
-    width: 73%;
-    margin-bottom: 30px;
-  }
-  h2.howItWorksHeader {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-  .steps {
-    text-align: center;
-  }
-  .stepDesc {
-    text-align: center;
-    padding-top: 10px;
-    padding-bottom: 20px;
-  }
-}
 .FAQSection {
   padding-top: 60px;
   padding-bottom: 60px;
@@ -198,6 +139,7 @@
 // import { fas } from "@fortawesome/free-solid-svg-icons"
 import SectionJumbotron from "@/components/RaiseCapital/SectionJumbotron";
 import SectionUnique from "@/components/RaiseCapital/SectionUnique";
+import SectionOps from "@/components/RaiseCapital/SectionOps";
 import MainButton from "@/components/Common/MainButton";
 
 export default {
@@ -205,6 +147,7 @@ export default {
   components: {
     SectionJumbotron,
     SectionUnique,
+    SectionOps,
     MainButton
   },
   data() {
