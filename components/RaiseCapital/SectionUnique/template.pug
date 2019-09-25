@@ -1,13 +1,14 @@
-b-container
-  h2.text-center.pb-5 What Makes Wunderfund Different?
-  b-row
-    b-col.pb-5(cols="6" v-for="(item, index) in items" :key="index")
-      b-row
-        b-col.d-none.d-sm-block(sm="3" lg="2")
-          img.aside(src="~assets/raise-capital/branding.png")
-        b-col(sm="9" lg="10")
-          h5.d-none.d-sm-block
-            strong {{ item.title }}
-          h5.d-block.d-sm-none.text-center
-            strong {{ item.title }}
-          p {{ item.description }}
+section
+  b-container
+    h2.text-center.pb-5 What Makes Wunderfund Different?
+    b-row
+      b-col.pb-5(cols="6" v-for="(item, index) in items" :key="index")
+        b-row
+          b-col.d-none.d-sm-block(sm="3" lg="2")
+            img.aside(src="~assets/raise-capital/branding.png")
+          b-col(sm="9" lg="10")
+            h5.d-none.d-sm-block
+              strong {{ item.title }}
+            h5.d-block.d-sm-none.text-center
+              strong {{ item.title }}
+            p {{ item.description }}
