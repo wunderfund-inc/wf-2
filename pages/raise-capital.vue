@@ -1,24 +1,6 @@
 <template>
   <div>
-    <div class="headDiv">
-      <b-row>
-        <b-col md="6" sm="12">
-          <h2>Startups need capital.<br />We've made it easy.</h2>
-          <p class="fact">
-            Fact: Women &amp; minorities make up less than 2% of venture-backed
-            capital. Crowdfunding is here to change that
-          </p>
-          <nuxt-link to="/auth">
-            <main-button txt="Start your raise" />
-          </nuxt-link>
-        </b-col>
-        <b-col md="6" sm="8">
-          <div class="bgImg">
-            <img src="../assets/bg/rc.png" class="bgImg" />
-          </div>
-        </b-col>
-      </b-row>
-    </div>
+    <section-jumbotron />
     <b-container>
       <div class="difference">
         <h2 class="differenceHeader">
@@ -251,22 +233,6 @@
 </template>
 
 <style lang="scss" scoped>
-.headDiv {
-  padding-top: 11%;
-  height: 80vh;
-  padding-left: 10%;
-  padding-right: 5%;
-  p.fact {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-}
-.bgImg {
-  background-position: right;
-  background-repeat: no-repeat;
-  background-size: contain;
-  width: inherit;
-}
 .difference {
   height: auto;
   .diffCol {
@@ -328,7 +294,7 @@
 .eligibility {
   height: 400px;
   background-color: #fafbfc;
-  background-image: url("https://www.albawaba.com/sites/default/files/imagecache/article_headline_node_big//sites/default/files/im/pr_new/shutterstock_735900559_startup.jpg");
+  background-image: url("https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
   background-repeat: no-repeat;
   background-size: cover;
   margin: 0 auto;
@@ -371,11 +337,13 @@
 
 <script>
 // import { fas } from "@fortawesome/free-solid-svg-icons"
+import SectionJumbotron from "@/components/RaiseCapital/SectionJumbotron";
 import MainButton from "@/components/Common/MainButton";
 
 export default {
   auth: false,
   components: {
+    SectionJumbotron,
     MainButton
   },
   data() {
