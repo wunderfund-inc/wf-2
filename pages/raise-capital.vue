@@ -1,158 +1,45 @@
 <template>
   <div>
     <section-jumbotron />
-    <b-container>
-      <div class="difference">
-        <h2 class="differenceHeader">
-          What makes Wunderfund different?
-        </h2>
-        <b-row>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/branding.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>We are branders</strong></h5>
-                <p class="fact">
-                  We are expert branders who can help you tell an amazing story.
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/lawyer.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>No lawyers required</strong></h5>
-                <p class="fact">
-                  You read that right. We take care of Form C and any due
-                  diligence.
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/accountant.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>No accountants required</strong></h5>
-                <p class="fact">
-                  You read that right. We take care of Form C and any due
-                  dilligence.
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/diligence.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>We cover the due-dilligence</strong></h5>
-                <p class="fact">
-                  It’s all automated but if you need business help, we have the
-                  experience.
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/vet.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>We vet the deals</strong></h5>
-                <p class="fact">
-                  We walk through your financials and pitch deck to match what
-                  we know investors will back.
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-          <b-col class="diffCol">
-            <b-row>
-              <b-col sm="3" lg="2">
-                <img
-                  class="differenceImg"
-                  src="../assets/raise-capital/help.png"
-                />
-              </b-col>
-              <b-col sm="9" lg="10">
-                <h5><strong>We’re here to help</strong></h5>
-                <p class="fact">
-                  We’re available 24/7 to answer questions. Just hit that chat
-                  box in the right corner
-                </p>
-              </b-col>
-            </b-row>
-          </b-col>
-        </b-row>
-      </div>
-      <div class="howItWorks">
-        <h2 class="howItWorksHeader">
-          How does it work?
-        </h2>
-        <img class="line" src="../assets/raise-capital/line.png" />
-        <b-row>
-          <b-col>
-            <h4 class="steps">
-              1. Apply
-            </h4>
-            <p class="stepDesc">
-              Provide us information about your company along with any documents
-              to convince investors
-            </p>
-          </b-col>
-          <b-col>
-            <h4 class="steps">
-              2. Due Dilligence
-            </h4>
-            <p class="stepDesc">
-              Customize your company profile and complete any other due
-              dilligence needed.
-            </p>
-          </b-col>
-          <b-col>
-            <h4 class="steps">
-              3. Launch
-            </h4>
-            <p class="stepDesc">
-              Get your company launched. Let us streamline the investment and
-              closing process.
-            </p>
-          </b-col>
-        </b-row>
-        <nuxt-link to="/auth">
-          <main-button txt="Start your raise" />
-        </nuxt-link>
-      </div>
-    </b-container>
+    <section-unique />
+    <div class="howItWorks">
+      <h2 class="howItWorksHeader">
+        How does it work?
+      </h2>
+      <img class="line" src="../assets/raise-capital/line.png" />
+      <b-row>
+        <b-col>
+          <h4 class="steps">
+            1. Apply
+          </h4>
+          <p class="stepDesc">
+            Provide us information about your company along with any documents
+            to convince investors
+          </p>
+        </b-col>
+        <b-col>
+          <h4 class="steps">
+            2. Due Dilligence
+          </h4>
+          <p class="stepDesc">
+            Customize your company profile and complete any other due diligence
+            needed.
+          </p>
+        </b-col>
+        <b-col>
+          <h4 class="steps">
+            3. Launch
+          </h4>
+          <p class="stepDesc">
+            Get your company launched. Let us streamline the investment and
+            closing process.
+          </p>
+        </b-col>
+      </b-row>
+      <nuxt-link to="/auth">
+        <main-button txt="Start your raise" />
+      </nuxt-link>
+    </div>
     <div class="eligibility">
       <h3 class="eligibilityHeader">
         Not sure if crowdfunding is for you?
@@ -233,24 +120,6 @@
 </template>
 
 <style lang="scss" scoped>
-.difference {
-  height: auto;
-  .diffCol {
-    margin-top: 25px;
-  }
-  h2.differenceHeader {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-  }
-  .differenceImg {
-    width: 100%;
-    display: inline-block;
-  }
-  .fact {
-    display: inline;
-  }
-}
 .howItWorks {
   padding-top: 90px;
   padding-bottom: 90px;
@@ -323,27 +192,19 @@
     }
   }
 }
-
-@media only screen and (max-width: 476px) {
-  .difference {
-    .differenceImg {
-      width: 50%;
-      margin: 0 auto;
-      text-align: center;
-    }
-  }
-}
 </style>
 
 <script>
 // import { fas } from "@fortawesome/free-solid-svg-icons"
 import SectionJumbotron from "@/components/RaiseCapital/SectionJumbotron";
+import SectionUnique from "@/components/RaiseCapital/SectionUnique";
 import MainButton from "@/components/Common/MainButton";
 
 export default {
   auth: false,
   components: {
     SectionJumbotron,
+    SectionUnique,
     MainButton
   },
   data() {
