@@ -3,14 +3,7 @@
     <section-jumbotron />
     <section-unique />
     <section-ops />
-    <div class="eligibility">
-      <h3 class="eligibilityHeader">
-        Not sure if crowdfunding is for you?
-      </h3>
-      <nuxt-link to="/faq">
-        <main-button txt="Check Requirements" class="EligbilityBtn" />
-      </nuxt-link>
-    </div>
+    <section-eligibility />
     <b-container>
       <div class="FAQSection">
         <h2 class="FAQHeader">
@@ -101,36 +94,10 @@
     text-decoration: none;
   }
 }
-.eligibility {
-  height: 400px;
-  background-color: #fafbfc;
-  background-image: url("https://images.unsplash.com/photo-1556740714-a8395b3bf30f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin: 0 auto;
-  .eligibilityHeader {
-    text-align: center;
-    padding-top: 10%;
-    padding-bottom: 10px;
-    color: white;
-  }
-  .EligbilityBtn {
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 15px;
-  }
-}
 
 @media only screen and (max-width: 769px) {
   .headDiv {
     height: 80vh;
-  }
-  .eligibility {
-    height: auto;
-    padding: 7%;
-    .eligibilityHeader {
-      padding-top: 0;
-    }
   }
 }
 </style>
@@ -140,7 +107,7 @@
 import SectionJumbotron from "@/components/RaiseCapital/SectionJumbotron";
 import SectionUnique from "@/components/RaiseCapital/SectionUnique";
 import SectionOps from "@/components/RaiseCapital/SectionOps";
-import MainButton from "@/components/Common/MainButton";
+import SectionEligibility from "@/components/RaiseCapital/SectionEligibility";
 
 export default {
   auth: false,
@@ -148,7 +115,7 @@ export default {
     SectionJumbotron,
     SectionUnique,
     SectionOps,
-    MainButton
+    SectionEligibility
   },
   data() {
     return {
