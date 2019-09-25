@@ -1,91 +1,403 @@
-<template lang="pug">
-  main
-    b-container
-      section
-        b-row.py-5
-          b-col(md="6" sm="12")
-            h2 Startups need capital.
-            h2 We've made it easy.
-            p
-              b Fact:
-              |
-              |
-              | Women &amp; Minorities make up less than 2% of venture-backed capital. Crowdfunding is here to change that.
-            nuxt-link(to="/auth")
-              main-button(txt="Start Your Raise")
-          b-col(md="6" sm="8")
-            b-img.img--bg(src="../assets/bg/rc.png")
-      section
-        h2.text-center.pb-5 What Makes Wunderfund Different?
-        b-row.pb-5(v-for="(item, index) in items" :key="index")
-          b-col(sm="3" lg="6")
-            b-img(:src="`/${item.icon}.png`")
-          b-col(sm="9" lg="6")
-            h5
-              strong {{ item.title }}
-            p {{ item.description }}
-      section
-        h2 How does it work?
-        b-img(src="/icons/line.png")
+<template>
+  <div>
+    <div class="headDiv">
+      <b-row>
+        <b-col md="6" sm="12">
+          <h2>Startups need capital.<br />We've made it easy.</h2>
+          <p class="fact">
+            Fact: Women &amp; minorities make up less than 2% of venture-backed
+            capital. Crowdfunding is here to change that
+          </p>
+          <nuxt-link to="/auth">
+            <main-button txt="Start your raise" />
+          </nuxt-link>
+        </b-col>
+        <b-col md="6" sm="8">
+          <div class="bgImg">
+            <img src="../assets/bg/rc.png" class="bgImg" />
+          </div>
+        </b-col>
+      </b-row>
+    </div>
+    <b-container>
+      <div class="difference">
+        <h2 class="differenceHeader">
+          What makes Wunderfund different?
+        </h2>
+        <b-row>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/branding.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>We are branders</strong></h5>
+                <p class="fact">
+                  We are expert branders who can help you tell an amazing story.
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/lawyer.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>No lawyers required</strong></h5>
+                <p class="fact">
+                  You read that right. We take care of Form C and any due
+                  diligence.
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/accountant.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>No accountants required</strong></h5>
+                <p class="fact">
+                  You read that right. We take care of Form C and any due
+                  dilligence.
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/diligence.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>We cover the due-dilligence</strong></h5>
+                <p class="fact">
+                  It’s all automated but if you need business help, we have the
+                  experience.
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/vet.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>We vet the deals</strong></h5>
+                <p class="fact">
+                  We walk through your financials and pitch deck to match what
+                  we know investors will back.
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+          <b-col class="diffCol">
+            <b-row>
+              <b-col sm="3" lg="2">
+                <img
+                  class="differenceImg"
+                  src="../assets/raise-capital/help.png"
+                />
+              </b-col>
+              <b-col sm="9" lg="10">
+                <h5><strong>We’re here to help</strong></h5>
+                <p class="fact">
+                  We’re available 24/7 to answer questions. Just hit that chat
+                  box in the right corner
+                </p>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+      </div>
+      <div class="howItWorks">
+        <h2 class="howItWorksHeader">
+          How does it work?
+        </h2>
+        <img class="line" src="../assets/raise-capital/line.png" />
+        <b-row>
+          <b-col>
+            <h4 class="steps">
+              1. Apply
+            </h4>
+            <p class="stepDesc">
+              Provide us information about your company along with any documents
+              to convince investors
+            </p>
+          </b-col>
+          <b-col>
+            <h4 class="steps">
+              2. Due Dilligence
+            </h4>
+            <p class="stepDesc">
+              Customize your company profile and complete any other due
+              dilligence needed.
+            </p>
+          </b-col>
+          <b-col>
+            <h4 class="steps">
+              3. Launch
+            </h4>
+            <p class="stepDesc">
+              Get your company launched. Let us streamline the investment and
+              closing process.
+            </p>
+          </b-col>
+        </b-row>
+        <nuxt-link to="/auth">
+          <main-button txt="Start your raise" />
+        </nuxt-link>
+      </div>
+    </b-container>
+    <div class="eligibility">
+      <h3 class="eligibilityHeader">
+        Not sure if crowdfunding is for you?
+      </h3>
+      <nuxt-link to="/faq">
+        <main-button txt="Check Requirements" class="EligbilityBtn" />
+      </nuxt-link>
+    </div>
+    <b-container>
+      <div class="FAQSection">
+        <h2 class="FAQHeader">
+          Frequently Asked Questions
+        </h2>
+        <div class="question">
+          <h4>
+            How do I get started?
+          </h4>
+          <p style="margin-top:10px;">
+            Hit that button in the upper right corner and Sign Up to become
+            involved in the community. Once you start to build out your profile,
+            we make it easy for you to fill out the campaign application form
+            allowing you to get your campaign off the ground.
+          </p>
+        </div>
+        <div class="question">
+          <h4>
+            Are there legal issues I need to be aware of when making a profile?
+          </h4>
+          <p style="margin-top:10px;">
+            When you build a crowdfunding campaign, the biggest thing to watch
+            out for is making any false promises. As a new company, you can't
+            predict the future, so promising explicit revenue targets and
+            specific growth numbers can be misleading. You are liable for every
+            statement that is not true. Since you're dealing with investors now,
+            you also cannot withhold relevant information that could affect
+            their decision to invest (e.g. a pending lawsuit). For more
+            information on the Crowdfunding Rules for Issuers, please visit THIS
+            SITE.
+          </p>
+        </div>
+        <div class="question">
+          <h4>
+            Are there eligibility requirements for my company to create a
+            campaign?
+          </h4>
+          <p style="margin-top:10px;">
+            Before you can issue an offering on Wunderfund.co, you have to apply
+            and tell us about your team and your company. All Issuers must also
+            meet the minimum requirements set forth by the rules of Regulation
+            Crowdfunding. If you have questions about your eligibility based on
+            these rules, then please contact Wunderfund and we will let you
+            know. Passing this process is not meant to be construed as
+            investment advice or endorsement by Wunderfund.co.
+          </p>
+        </div>
+        <div class="question">
+          <h4>
+            How much fundraising can be raised for each campaign?
+          </h4>
+          <p style="margin-top:10px;">
+            The range at which any company can raise on our website is anywhere
+            from $25,000 to $1.07 million.
+          </p>
+        </div>
+        <br />
+        <h5 style="margin-top:10px;">
+          Still have questions?
+          <nuxt-link to="/faq" class="faqLink">
+            <strong>
+              Go To FAQ
+              <!-- <fa :icon="fas.faLongArrowAltRight"/> -->
+            </strong>
+          </nuxt-link>
+        </h5>
+      </div>
+    </b-container>
+  </div>
 </template>
 
-<script>
-import MainButton from "@/components/Common/MainButton";
-
-export default {
-  components: {
-    MainButton
-  },
-  data() {
-    return {
-      items: [
-        {
-          icon: "branding",
-          title: "We Are Branders",
-          description:
-            "We are expert branders who can help you tell an amazing story."
-        },
-        {
-          icon: "lawyer",
-          title: "No Lawyers Required",
-          description:
-            "You read that right. We take care of Form C and any due dilligence."
-        },
-        {
-          icon: "accountant",
-          title: "No Accountants Required",
-          description:
-            "You read that right. We take care of Form C and any due dilligence."
-        },
-        {
-          icon: "diligence",
-          title: "We Cover Due Diligence",
-          description:
-            "It’s all automated but if you need business help, we have the experience."
-        },
-        {
-          icon: "vet",
-          title: "We Vet the Deals",
-          description:
-            "We walk through your financials and pitch deck to match what we know investors will back."
-        },
-        {
-          icon: "help",
-          title: "We're Here to Help!",
-          description:
-            "We’re available 24/7 to answer questions. Just hit that chat box in the right corner"
-        }
-      ]
-    };
-  }
-};
-</script>
-
 <style lang="scss" scoped>
-.img--bg {
+.headDiv {
+  padding-top: 11%;
+  height: 80vh;
+  padding-left: 10%;
+  padding-right: 5%;
+  p.fact {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+}
+.bgImg {
   background-position: right;
   background-repeat: no-repeat;
   background-size: contain;
   width: inherit;
 }
+.difference {
+  height: auto;
+  .diffCol {
+    margin-top: 25px;
+  }
+  h2.differenceHeader {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .differenceImg {
+    width: 100%;
+    display: inline-block;
+  }
+  .fact {
+    display: inline;
+  }
+}
+.howItWorks {
+  padding-top: 90px;
+  padding-bottom: 90px;
+  text-align: center;
+  img.line {
+    width: 73%;
+    margin-bottom: 30px;
+  }
+  h2.howItWorksHeader {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  .steps {
+    text-align: center;
+  }
+  .stepDesc {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+}
+.FAQSection {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  .FAQHeader {
+    text-align: center;
+  }
+  .question {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  a.faqLink {
+    color: #11628c;
+  }
+  a.faqLink:hover {
+    opacity: 0.7;
+    text-decoration: none;
+  }
+}
+.eligibility {
+  height: 400px;
+  background-color: #fafbfc;
+  background-image: url("https://www.albawaba.com/sites/default/files/imagecache/article_headline_node_big//sites/default/files/im/pr_new/shutterstock_735900559_startup.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+  .eligibilityHeader {
+    text-align: center;
+    padding-top: 10%;
+    padding-bottom: 10px;
+    color: white;
+  }
+  .EligbilityBtn {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .headDiv {
+    height: 80vh;
+  }
+  .eligibility {
+    height: auto;
+    padding: 7%;
+    .eligibilityHeader {
+      padding-top: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 476px) {
+  .difference {
+    .differenceImg {
+      width: 50%;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+}
 </style>
+
+<script>
+// import { fas } from "@fortawesome/free-solid-svg-icons"
+import MainButton from "@/components/Common/MainButton";
+
+export default {
+  auth: false,
+  components: {
+    MainButton
+  },
+  data() {
+    return {
+      categories: [
+        "Alcohol",
+        "Transportation",
+        "Tech",
+        "Retail",
+        "Food",
+        "Gaming",
+        "IoT"
+      ]
+    };
+  },
+  computed: {
+    // fas() {
+    //   return fas
+    // },
+    loggedIn() {
+      return this.$store.getters.currentUser;
+    }
+  }
+};
+</script>
