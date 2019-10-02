@@ -4,18 +4,18 @@ $font: 'Montserrat', sans-serif;
 .gold {
   border: 1px solid $primary;
   cursor: pointer;
-  color: white;
+  color: $primary;
   font-size: 14px;
   text-decoration: none;
   -webkit-transition: 0.3s all ease;
   transition: 0.3s ease all;
   text-transform: uppercase;
-  background-color: $primary;
+  background-color: transparent;
   font-family: $font;
   padding: 12px;
   &:hover {
     border: 1px solid $primary;
-    color: $primary;
-    background-color: transparent;
+    color: white;
+    background-color: $primary;
   }
 }
