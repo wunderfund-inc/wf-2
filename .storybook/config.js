@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-vue/dist/bootstrap-vue.min.css";
 
 Vue.use(BootstrapVue);
+
 Vue.component("nuxt-link", {
   props: ["to"],
   methods: {
@@ -14,7 +15,8 @@ Vue.component("nuxt-link", {
     },
   },
   template: `<a href="#" @click.prevent="log()"><slot>NuxtLink</slot></a>`,
-})
+});
+
 const req = require.context("../components", true, /stories.js$/);
 function loadStories() {
   req.keys().forEach(filename => req(filename));
