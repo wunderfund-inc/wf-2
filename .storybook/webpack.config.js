@@ -11,7 +11,7 @@ module.exports = async ({ config }) => {
     test: /\.pug$/,
     use: ["pug-plain-loader"],
     include: path.resolve(__dirname, "../")
-  })
+  });
 
   return config;
 };
