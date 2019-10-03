@@ -2,9 +2,11 @@ import { storiesOf } from "@storybook/vue";
 
 import MainButton from "./index.vue";
 
-storiesOf("Common Components", module).add("Main Button", () => ({
+storiesOf("Main Button", module).add("Normal text", () => ({
   components: { MainButton },
   template: `
-    <main-button txt="Story Time!" />
+    <b-container class="py-5">
+      <main-button txt="Story Time!" />
+    </b-container>
   `
 }));
