@@ -8,7 +8,13 @@ Vue.filter("capitalize", val => val.toUpperCase());
 /**
  * Proper case a string (capitalize the first letter only)
  */
-Vue.filter("propercase", val => val.charAt(0).toUpperCase() + val.substr(1));
+Vue.filter("propercase", val => {
+  if (val === "iot") {
+    return "IoT";
+  } else {
+    return val.charAt(0).toUpperCase() + val.substr(1);
+  }
+});
 
 /**
  * Return a string, displayed in USD currency, from a raw number
