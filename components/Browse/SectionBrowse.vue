@@ -1,20 +1,18 @@
-<template>
-  <b-container class="section">
-    <slot />
-    <b-row>
-      <b-col v-for="(campaign, index) in campaigns" :key="index" md="4">
-        <browse-card
-          :id="campaign.id"
-          :card-img="campaign.cardImg"
-          :company-name="campaign.companyName"
-          :company-motto="campaign.companyMotto"
-          :company-city="campaign.companyCity"
-          :company-state="campaign.companyState"
-          :offering-type="campaign.offeringType"
-        />
-      </b-col>
-    </b-row>
-  </b-container>
+<template lang="pug">
+  section
+    b-container.py-5
+      slot
+      b-row
+        b-col(v-for="(campaign, index) in campaigns" :key="index" md="4")
+          browse-card(
+            :id="campaign.id"
+            :card-img="campaign.cardImg"
+            :company-name="campaign.companyName"
+            :company-motto="campaign.companyMotto"
+            :company-city="campaign.companyCity"
+            :company-state="campaign.companyState"
+            :offering-type="campaign.offeringType"
+          )
 </template>
 
 <script>
@@ -41,9 +39,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.section {
-  padding: 40px 0 40px 0;
-}
-</style>
