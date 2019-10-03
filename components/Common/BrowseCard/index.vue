@@ -1,48 +1,52 @@
 <template lang="pug">
-  nuxt-link(:to="`/campaign/${id}`")
+  nuxt-link(:to="`/campaign/${campaign.id}`")
     b-card(
-      :img-src="cardImg"
+      :img-src="campaign.cardImg"
       img-top
     )
-      b-card-title {{ companyName }}
-      b-card-text {{ companyMotto }}
+      b-card-title {{ campaign.companyName }}
+      b-card-text {{ campaign.companyMotto }}
       b-row(justify-content-end)
         b-col
-          small.text-muted {{ companyCity }}, {{ companyState }}
+          small.text-muted {{ campaign.companyCity }}, {{ campaign.companyState }}
         b-col
-          b-badge.card-badge(size="sm") {{ offeringType | reg_format }}
+          b-badge.card-badge(size="sm") {{ campaign.offeringType | reg_format }}
 </template>
 
 <script>
 export default {
   props: {
-    cardImg: {
-      type: String,
-      required: true
-    },
-    companyName: {
-      type: String,
-      required: true
-    },
-    companyMotto: {
-      type: String,
-      required: true
-    },
-    companyCity: {
-      type: String,
-      required: true
-    },
-    companyState: {
-      type: String,
-      required: true
-    },
-    id: {
-      type: String,
-      required: true
-    },
-    offeringType: {
-      type: String,
-      default: "CF"
+    campaign: {
+      type: Object,
+      default() {},
+      cardImg: {
+        type: String,
+        required: true
+      },
+      companyName: {
+        type: String,
+        required: true
+      },
+      companyMotto: {
+        type: String,
+        required: true
+      },
+      companyCity: {
+        type: String,
+        required: true
+      },
+      companyState: {
+        type: String,
+        required: true
+      },
+      id: {
+        type: String,
+        required: true
+      },
+      offeringType: {
+        type: String,
+        default: "CF"
+      }
     }
   }
 };
