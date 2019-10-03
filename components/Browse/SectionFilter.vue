@@ -1,8 +1,8 @@
 <template lang="pug">
   section
     b-container.py-5
-      h2.title.text-center
-      b-row
+      h2.title.text-center Invest in companies you care about
+      b-row.pt-5
         b-card-group(deck)
           b-card.border-0(
             v-for="(category, index) in categories"
