@@ -1,6 +1,9 @@
 <template lang="pug">
   nuxt-link(:to="`/campaign/${id}`")
-    b-card(:img-src="cardImg" img-top)
+    b-card(
+      :img-src="cardImg"
+      img-top
+    )
       b-card-title {{ companyName }}
       b-card-text {{ companyMotto }}
       b-row(justify-content-end)
@@ -52,9 +55,8 @@ $font: "Montserrat", sans-serif;
 a {
   text-decoration: none;
   .card {
-    margin: 20px;
     img {
-      height: 200px;
+      height: 250px;
     }
     .card-badge {
       background-color: rgba(236, 195, 11, 0.5);
@@ -73,15 +75,6 @@ a {
     -webkit-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
     -moz-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
     box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
-  }
-}
-
-@media only screen and (max-width: 991px) {
-  .container {
-    max-width: 85%;
-    img {
-      display: none;
-    }
   }
 }
 </style>
