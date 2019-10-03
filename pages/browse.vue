@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import SectionFilter from "@/components/Browse/SectionFilter.vue";
-import SectionBrowse from "@/components/Browse/SectionBrowse.vue";
+import SectionFilter from "@/components/Browse/SectionFilter";
+import SectionBrowse from "@/components/Browse/SectionBrowse";
 
 export default {
   components: {
