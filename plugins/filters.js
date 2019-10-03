@@ -30,3 +30,11 @@ Vue.filter("asCurrency", val => {
  * Add percentage to raw number
  */
 Vue.filter("asPercentage", val => `${val}%`);
+
+Vue.filter("reg_format", val => {
+  if (val === "A") {
+    return "Reg A+";
+  } else {
+    return `Reg ${val}`;
+  }
+});
