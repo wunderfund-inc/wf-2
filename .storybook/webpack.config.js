@@ -1,4 +1,5 @@
 const path = require("path");
+const rootPath = path.resolve(__dirname, '../');
 
 module.exports = async ({ config }) => {
   config.module.rules.push({
@@ -12,6 +13,8 @@ module.exports = async ({ config }) => {
     use: ["pug-plain-loader"],
     include: path.resolve(__dirname, "../")
   });
+
+  config.resolve.alias["@"] = rootPath;
 
   return config;
 };
