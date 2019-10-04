@@ -2,11 +2,11 @@
   main
     section-filter
     section-browse
-      h5.title.text-left Companies now Fundraising:
-      p.subtitle.text-left We diligently
+      h5.title.text-center Companies Currently Fundraising:
+      p.subtitle.text-center (We diligently
         |
         |
-        nuxt-link(to="/faq/company") screen all startups.
+        nuxt-link(to="/faq/company") screen all startups)
 </template>
 
 <script>

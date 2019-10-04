@@ -3,7 +3,7 @@
     hero-section
     email-capture
     section-browse
-      h5.text-center.pb-4 Companies Currently Fundraising:
+      h5.text-center.pb-4 Live Campaigns:
 </template>
 
 <script>
