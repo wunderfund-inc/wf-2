@@ -9,7 +9,7 @@
             img-top
             no-body
           )
-            template(slot="footer") {{ link | propercase }}
+            template(slot="footer") {{ link | properCase }}
 </template>
 
 <script>

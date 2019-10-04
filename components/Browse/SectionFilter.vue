@@ -14,7 +14,7 @@
             b-card-footer.border-top-0.text-center(
               footer-bg-variant="transparent"
               footer-border-variant="transparent"
-            ) {{ category | propercase }}
+            ) {{ category | properCase }}
 </template>
 
 <script>

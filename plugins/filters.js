@@ -3,38 +3,46 @@ import Vue from "vue";
 /**
  * Capitalize all letters of a string
  */
-Vue.filter("capitalize", val => val.toUpperCase());
+const capitalize = val => val.toUpperCase();
+Vue.filter("capitalize", capitalize);
 
 /**
  * Proper case a string (capitalize the first letter only)
  */
-Vue.filter("propercase", val => {
+const properCase = val => {
   if (val === "iot") {
     return "IoT";
   } else {
     return val.charAt(0).toUpperCase() + val.substr(1);
   }
-});
+};
+Vue.filter("properCase", properCase);
 
 /**
  * Return a string, displayed in USD currency, from a raw number
  */
-Vue.filter("asCurrency", val => {
+const asCurrency = val => {
   return Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
   }).format(val);
-});
+};
+Vue.filter("asCurrency", asCurrency);
 
 /**
  * Add percentage to raw number
  */
-Vue.filter("asPercentage", val => `${val}%`);
+const asPercentage = val => `${val}%`;
+Vue.filter("asPercentage", asPercentage);
 
-Vue.filter("reg_format", val => {
+/**
+ * Add "Reg" to regulation type - if it's A, it's actually "A+"
+ */
+const regulationFormat = val => {
   if (val === "A") {
     return "Reg A+";
   } else {
     return `Reg ${val}`;
   }
-});
+};
+Vue.filter("regulationFormat", regulationFormat);
