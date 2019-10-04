@@ -13,7 +13,7 @@ export const properCase = val => {
   if (val === "iot") {
     return "IoT";
   } else {
-    return val.charAt(0).toUpperCase() + val.substr(1);
+    return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
   }
 };
 Vue.filter("properCase", properCase);
