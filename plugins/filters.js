@@ -3,13 +3,13 @@ import Vue from "vue";
 /**
  * Capitalize all letters of a string
  */
-const capitalize = val => val.toUpperCase();
+export const capitalize = val => val.toUpperCase();
 Vue.filter("capitalize", capitalize);
 
 /**
  * Proper case a string (capitalize the first letter only)
  */
-const properCase = val => {
+export const properCase = val => {
   if (val === "iot") {
     return "IoT";
   } else {
@@ -21,7 +21,7 @@ Vue.filter("properCase", properCase);
 /**
  * Return a string, displayed in USD currency, from a raw number
  */
-const asCurrency = val => {
+export const asCurrency = val => {
   return Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD"
@@ -32,13 +32,13 @@ Vue.filter("asCurrency", asCurrency);
 /**
  * Add percentage to raw number
  */
-const asPercentage = val => `${val}%`;
+export const asPercentage = val => `${val}%`;
 Vue.filter("asPercentage", asPercentage);
 
 /**
  * Add "Reg" to regulation type - if it's A, it's actually "A+"
  */
-const regulationFormat = val => {
+export const regulationFormat = val => {
   if (val === "A") {
     return "Reg A+";
   } else {
