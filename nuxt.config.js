@@ -51,10 +51,14 @@ export default {
           {
             set: "@fortawesome/free-brands-svg-icons",
             icons: [
+              "faFacebook",
+              "faFacebookF",
               "faFacebookSquare",
               "faLinkedin",
+              "faTwitter",
               "faTwitterSquare",
-              "faYoutubeSquare"
+              "faYoutubeSquare",
+              "faGoogle"
             ]
           }
         ]

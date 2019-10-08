@@ -4,13 +4,22 @@
     size="lg"
     :style="`background-color: ${color}; border: 1px solid ${color}`"
   )
-    brand-icon(:i="")
-    span.d-inline.d-md-none {{ name }}
+    brand-icon(:i="name")
+    span.d-inline.d-md-none {{ name | properCase }}
 </template>
 
 <script>
+import BrandIcon from "@/components/Common/BrandIcon";
+
 export default {
+  components: {
+    BrandIcon
+  },
   props: {
+    name: {
+      type: String,
+      required: true
+    },
     color: {
       type: String,
       required: true
