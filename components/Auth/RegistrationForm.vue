@@ -26,7 +26,20 @@
         :state="state"
         trim
       )
-    button.btn.btn-lg.btn-primary.btn-block Sign in
+    b-form-group.text-left(
+      label="Confirm Password"
+      label-for="input-password"
+      :invalid-feedback="invalidFeedback"
+      :valid-feedback="validFeedback"
+      :state="state"
+    )
+      b-form-input#input-password(
+        type="password"
+        v-model="confirm_password"
+        :state="state"
+        trim
+      )
+    button.btn.btn-lg.btn-primary.btn-block Register
 </template>
 
 <script>
@@ -37,6 +50,7 @@ export default {
       password: null,
       invalidFeedback: null,
       validFeedback: null,
+      confirm_password: null,
       state: null
     };
   }
