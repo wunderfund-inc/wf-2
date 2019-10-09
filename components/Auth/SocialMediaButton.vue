@@ -4,7 +4,7 @@
     size="lg"
     :style="`background-color: ${color}; border: 1px solid ${color}`"
   )
-    brand-icon(:i="name")
+    brand-icon(:i="name === 'facebook' ? 'facebook-f' : name")
     span.d-inline.d-md-none {{ name | properCase }}
 </template>
 
