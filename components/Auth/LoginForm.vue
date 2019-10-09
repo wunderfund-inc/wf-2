@@ -26,7 +26,7 @@
         :state="state"
         trim
       )
-    button.btn.btn-lg.btn-primary.btn-block Sign in
+    button.mb-3.btn.btn-lg.btn-primary.btn-block Sign in
 </template>
 
 <script>

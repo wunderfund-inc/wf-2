@@ -4,10 +4,14 @@
       b-row
         b-col.d-none.d-md-block
         b-col
-          h1.pb-4 Log In
+          h1.pb-4 Register
           section-social-media-login
           hr.py-3
           registration-form
+          small.text-muted Already registered?
+            |
+            |
+            nuxt-link(to="/auth/login") Log In
         b-col.d-none.d-md-block
 </template>
 

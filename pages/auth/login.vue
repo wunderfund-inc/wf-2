@@ -8,6 +8,10 @@
           section-social-media-login
           hr.py-3
           login-form
+          small.text-muted Don't have an account?
+            |
+            |
+            nuxt-link(to="/auth/register") Register
         b-col.d-none.d-md-block
 </template>
 
