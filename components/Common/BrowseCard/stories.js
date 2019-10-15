@@ -1,4 +1,5 @@
 import { storiesOf } from "@storybook/vue";
+import { withKnobs, text } from "@storybook/addon-knobs";
 
 import BrowseCard from "./index.vue";
 
@@ -12,20 +13,30 @@ export const campaign = {
   offeringType: "A"
 };
 
-storiesOf("Common Components", module).add("Browse Card", () => ({
-  components: { BrowseCard },
-  data() {
-    return {
-      campaign
-    };
-  },
-  template: `
-    <b-container class="py-5">
-      <b-row>
-        <b-col cols="5">
-          <browse-card :campaign="campaign" />
-        </b-col>
-      </b-row>
-    </b-container>
-  `
-}));
+storiesOf("Common Components", module)
+  .addDecorator(withKnobs)
+  .add("Browse Card", () => ({
+    components: { BrowseCard },
+    props: {
+      campaignData: {
+        default: {
+          id: text("Campaign ID", campaign.id),
+          cardImg: text("Card Image", campaign.cardImg),
+          companyName: text("Name of the Company", campaign.companyName),
+          companyMotto: text("Company Motto", campaign.companyMotto),
+          companyCity: text("Location (City)", campaign.companyCity),
+          companyState: text("Location (State)", campaign.companyState),
+          offeringType: text("Offering Type", campaign.offeringType)
+        }
+      }
+    },
+    template: `
+      <b-container class="py-5">
+        <b-row>
+          <b-col cols="5">
+            <browse-card :campaign="campaignData" />
+          </b-col>
+        </b-row>
+      </b-container>
+    `
+  }));
