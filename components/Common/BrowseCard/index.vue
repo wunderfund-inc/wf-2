@@ -1,5 +1,5 @@
 <template lang="pug">
-  nuxt-link(:to="`/campaign/${campaign.id}`")
+  nuxt-link(:to="`/c/${campaign.id}`")
     b-card(
       :img-src="campaign.cardImg"
       img-top
