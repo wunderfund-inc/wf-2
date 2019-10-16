@@ -2,10 +2,10 @@ section.py-5.cta__section
   b-container
     b-row.pb-3
       b-col
-        h6.text-center Be the first to hear about investment opportunities
+        h6.text-center Be the first to hear about investment opportunities!
     b-row
       b-col.d-none.d-md-block
-      b-col
+      b-col(cols="12" md="5")
         transition(name="fade" mode="out-in")
           b-form(v-if="show")
             b-input-group
@@ -18,5 +18,5 @@ section.py-5.cta__section
               b-input-group-append
                 b-button.color__gold(size="sm" @click="subscribeUser") Sign Up
           div(v-else)
-            p You have subscribed to our newsletter. Thanks!
+            p.text-center You have subscribed to our newsletter. Thanks!
       b-col.d-none.d-md-block
