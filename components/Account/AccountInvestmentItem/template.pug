@@ -1,0 +1,42 @@
+aside
+  hr
+  b-media.my-auto(vertical-align="center")
+    template(#aside)
+      b-img(thumbnail src="https://media.licdn.com/dms/image/C4E0BAQE_Y0Pw7tfPAQ/company-logo_200_200/0?e=2159024400&v=beta&t=dev5L16IwZq60yKbp-ZQcmhK1M5SMCRwzheM7mbHaK0" width="80")
+    b-row.form-inline
+      b-col
+        h2.mb-0.py-4.align-middle Esoteric Brewing Company
+      b-col(cols="3").text-right
+        b-button(variant="outline-secondary" v-b-toggle="'investment-1'" size="sm")
+          span.when-opened Collapse
+          span.when-closed Expand
+  b-collapse#investment-1
+    b-row
+      b-col
+        h4.mb-0.py-4 The Offering
+    b-row
+      b-col
+        h5 Raised:
+        h6 $9,650.00
+      b-col
+        h5 Goal:
+        h6 $10,000.00
+      b-col
+        h5 Status:
+        h6 8 days left!
+    b-row
+      b-col
+        h4.mb-0.py-4 Your Investment
+    b-row
+      b-col
+        h5 Amount Invested:
+        h6 $100.01
+      b-col
+        h5 Ownership (units):
+        h6 {{ 100.01 / 50 }}
+      b-col
+        h5 Ownership (%):
+        h6 {{ (100.01 / 1070).toFixed(4) }}
+    b-row.py-4
+      b-col
+        b-button(size="lg") View Agreement
