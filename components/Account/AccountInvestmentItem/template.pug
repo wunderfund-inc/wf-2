@@ -8,12 +8,12 @@ aside
       b-col(cols="3").text-right
         b-button(
           variant="outline-secondary"
-          v-b-toggle="`investment-${companyId}`"
+          v-b-toggle="'investment-' + investment.companyId"
           size="sm"
         )
           span.when-opened Collapse
           span.when-closed Expand
-  b-collapse(:id="`investment-${companyId}`")
+  b-collapse(:id="`investment-${investment.companyId}`")
     b-row
       b-col
         h4.mb-0.py-4 The Offering
