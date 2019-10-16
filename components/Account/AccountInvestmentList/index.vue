@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import d from "./data.json";
+import d from "../AccountInvestmentItem/data.json";
 import AccountInvestmentItem from "@/components/Account/AccountInvestmentItem";
 
 export default {
