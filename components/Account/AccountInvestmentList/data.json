@@ -1,0 +1,13 @@
+{
+  "investments": [
+    {
+      "companyId": "1",
+      "companyLogo": "https://media.licdn.com/dms/image/C4E0BAQE_Y0Pw7tfPAQ/company-logo_200_200/0?e=2159024400&v=beta&t=dev5L16IwZq60yKbp-ZQcmhK1M5SMCRwzheM7mbHaK0",
+      "companyNickname": "Esgro",
+      "companyPricePerShare": 1070,
+      "companyUnitPrice": 50,
+      "amount": 100,
+      "agreementUrl": ""
+    }
+  ]
+}
