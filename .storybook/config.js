@@ -1,5 +1,6 @@
 import { configure } from "@storybook/vue";
 import "./plugins/bootstrap-vue";
+import "./plugins/filters";
 import "./plugins/font-awesome";
 import "./plugins/nuxt-link";
 
