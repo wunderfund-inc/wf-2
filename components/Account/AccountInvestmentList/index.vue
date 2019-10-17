@@ -19,7 +19,7 @@ export default {
   },
   props: {
     investments: {
-      type: Object,
+      type: Array,
       default() {},
       required: true
     }
