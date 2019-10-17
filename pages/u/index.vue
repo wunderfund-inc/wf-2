@@ -5,7 +5,7 @@
         b-col(sm="3" align-self="start")
           account-sidebar
         b-col(sm="9" align-self="end")
-          account-spend-limit-card(:spend-pool="2200")
+          account-spend-limit-card(:spend-pool="2200" :spend-max="2200")
           account-investment-list(:investments="investments")
 </template>
 

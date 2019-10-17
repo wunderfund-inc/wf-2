@@ -11,6 +11,10 @@ storiesOf("Account Page Components", module)
       spendPool: {
         type: Number,
         default: () => number("Spend Pool", 2200)
+      },
+      spendMax: {
+        type: Number,
+        default: () => number("Max Spend", 2200)
       }
     },
     template: `
