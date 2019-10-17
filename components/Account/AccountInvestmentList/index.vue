@@ -11,17 +11,18 @@
 </template>
 
 <script>
-import d from "../AccountInvestmentItem/data.json";
 import AccountInvestmentItem from "@/components/Account/AccountInvestmentItem";
 
 export default {
   components: {
     AccountInvestmentItem
   },
-  data() {
-    return {
-      investments: d.investments
-    };
+  props: {
+    investments: {
+      type: Object,
+      default() {},
+      required: true
+    }
   }
 };
 </script>

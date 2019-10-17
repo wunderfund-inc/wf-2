@@ -1,8 +1,9 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number } from "@storybook/addon-knobs";
 
+import d from "../data.json";
 import AccountInvestmentItem from "./index.vue";
-import d from "./data.json";
+
 const investment = d.investments[0];
 
 storiesOf("Account Page Components", module)
