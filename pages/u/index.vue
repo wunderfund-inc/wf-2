@@ -2,9 +2,9 @@
   main
     b-container.py-5
       b-row
-        b-col.d-none.d-md-block(md="3" align-self="start")
+        b-col.d-none.d-md-block(md="3")
           account-sidebar
-        b-col(md="9" align-self="end")
+        b-col(md="9")
           account-spend-limit-card(:spend-pool="2200" :spend-max="2200")
           account-investment-list(:investments="investments")
 </template>
