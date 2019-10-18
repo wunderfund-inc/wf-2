@@ -5,15 +5,17 @@
         b-col.d-none.d-md-block(md="3")
           account-sidebar
         b-col(md="9")
-          h1 Insert form for accreditation
+          section-accreditation
 </template>
 
 <script>
 import AccountSidebar from "@/components/Account/AccountSidebar";
+import SectionAccreditation from "@/components/Account/SectionAccreditation";
 
 export default {
   components: {
-    AccountSidebar
+    AccountSidebar,
+    SectionAccreditation
   }
 };
 </script>
