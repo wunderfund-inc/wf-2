@@ -46,3 +46,13 @@ export const regulationFormat = val => {
   }
 };
 Vue.filter("regulationFormat", regulationFormat);
+
+/**
+ * Pluralize words on the FAQ menus, depending on the word
+ */
+export const pluralFaq = val => {
+  if (val === "investor") return `${val}s`;
+  if (val === "company") return "companies";
+  return val;
+};
+Vue.filter("pluralFaq", pluralFaq);
