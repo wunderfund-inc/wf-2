@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import { withKnobs, number } from "@storybook/addon-knobs";
+import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
 import AccountProfile from "./index.vue";
 
@@ -15,11 +15,19 @@ storiesOf("Account Page Components", module)
       spendMax: {
         type: Number,
         default: () => number("Max Spend", 2200)
+      },
+      isAccredited: {
+        type: Boolean,
+        default: () => boolean("Already Accredited?", false)
       }
     },
     template: `
       <b-container class="py-5">
-        <account-profile :spend-pool="spendPool" :spend-max="spendMax" />
+        <account-profile
+          :spend-pool="spendPool"
+          :spend-max="spendMax"
+          :is-accredited="isAccredited"
+        />
       </b-container>
     `
   }));

@@ -14,11 +14,7 @@ storiesOf("Account Page Components", module).add(
     },
     template: `
       <b-container class="py-5">
-        <b-row>
-          <b-col cols="9">
-            <account-investment-list :investments="investments" />
-          </b-col>
-        </b-row>
+        <account-investment-list :investments="investments" />
       </b-container>
     `
   })
