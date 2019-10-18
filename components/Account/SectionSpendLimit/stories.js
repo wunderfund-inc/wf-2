@@ -1,12 +1,12 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, number } from "@storybook/addon-knobs";
 
-import AccountSpendLimitCard from "./index.vue";
+import SectionSpendLimit from "./index.vue";
 
 storiesOf("Account Page Components", module)
   .addDecorator(withKnobs)
-  .add("Spend Limit Card", () => ({
-    components: { AccountSpendLimitCard },
+  .add("Section - Spend Limit Display", () => ({
+    components: { SectionSpendLimit },
     props: {
       spendPool: {
         type: Number,
@@ -19,11 +19,7 @@ storiesOf("Account Page Components", module)
     },
     template: `
       <b-container class="py-5">
-        <b-row>
-          <b-col cols="9">
-            <account-spend-limit-card :spend-pool="spendPool" />
-          </b-col>
-        </b-row>
+        <section-spend-limit :spend-pool="spendPool" :spend-max="spendMax" />
       </b-container>
     `
   }));
