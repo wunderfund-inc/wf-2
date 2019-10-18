@@ -6,7 +6,7 @@
           b-row.justify-content-md-center
             b-col(lg="3")
             b-col(cols="12" md="auto")
-              faq-navbar
+              faq-navbar(:menu="links")
             b-col(lg="3")
     section
       b-container
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import d from "./data.json";
+
 import FaqNavbar from "@/components/Faq/_Slug/FaqNavbar";
 import FaqLeftCol from "@/components/Faq/_Slug/FaqLeftCol";
 import FaqRightCol from "@/components/Faq/_Slug/FaqRightCol";
@@ -30,6 +32,11 @@ export default {
     FaqNavbar,
     FaqLeftCol,
     FaqRightCol
+  },
+  data() {
+    return {
+      links: d.faqLinks
+    };
   }
 };
 </script>

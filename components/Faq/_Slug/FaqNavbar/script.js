@@ -1,7 +1,8 @@
 export default {
-  data() {
-    return {
-      faqMenu: ["general", "investors", "issuers", "legal"]
-    };
+  props: {
+    menu: {
+      type: Array,
+      required: true
+    }
   }
 };
