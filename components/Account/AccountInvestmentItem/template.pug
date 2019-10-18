@@ -33,7 +33,7 @@ aside
     b-row
       b-col
         h5 Amount Invested:
-        h6 {{ investment.amount }}
+        h6 {{ investment.amount | asCurrency }}
       b-col
         h5 Ownership (units):
         h6 {{ investment.amount / investment.companyUnitPrice }}
