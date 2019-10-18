@@ -16,6 +16,10 @@ export default {
     spendMax: {
       type: Number,
       required: true
+    },
+    isAccredited: {
+      type: Boolean,
+      required: true
     }
   }
 };
