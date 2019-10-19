@@ -3,9 +3,9 @@ import { withKnobs, radios } from "@storybook/addon-knobs";
 
 import BrandIcon from "./index.vue";
 
-storiesOf("Components/Social Media Icons", module)
+storiesOf("Common Components", module)
   .addDecorator(withKnobs)
-  .add("Single icons", () => ({
+  .add("Social Media Icons", () => ({
     components: { BrandIcon },
     props: {
       icons: {

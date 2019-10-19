@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/vue";
 
 import SectionPasswordReset from "./index.vue";
 
-storiesOf("Account Page Components", module).add(
+storiesOf("Page - User Account", module).add(
   "Section - Password Reset",
   () => ({
     components: { SectionPasswordReset },

@@ -6,7 +6,7 @@ import AccountInvestmentItem from "./index.vue";
 
 const investment = d.investments[0];
 
-storiesOf("Account Page Components", module)
+storiesOf("Page - User Account", module)
   .addDecorator(withKnobs)
   .add("Investment Item", () => ({
     components: { AccountInvestmentItem },

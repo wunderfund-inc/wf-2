@@ -5,8 +5,8 @@ import AccountInvestmentList from "./index.vue";
 
 export const investments = d.investments;
 
-storiesOf("Account Page Components", module).add(
-  "Card - List of Investments",
+storiesOf("Page - User Account", module).add(
+  "Section - List of Investments",
   () => ({
     components: { AccountInvestmentList },
     data() {

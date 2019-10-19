@@ -3,9 +3,9 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 
 import MainButton from "./index.vue";
 
-storiesOf("Main Button", module)
+storiesOf("Common Components", module)
   .addDecorator(withKnobs)
-  .add("Variable text input", () => ({
+  .add("Main Button", () => ({
     components: { MainButton },
     props: {
       text: {

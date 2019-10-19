@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/vue";
 
 import SectionAccreditation from "./index.vue";
 
-storiesOf("Account Page Components", module).add(
+storiesOf("Page - User Account", module).add(
   "Section - Accreditation Info",
   () => ({
     components: { SectionAccreditation },

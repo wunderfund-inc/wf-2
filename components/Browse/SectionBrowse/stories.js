@@ -5,7 +5,7 @@ import ListOfCampaigns from "./index.vue";
 
 export const campaigns = d.campaigns;
 
-storiesOf("Browse Page Components", module).add("List of Campaigns", () => ({
+storiesOf("Page - Browse", module).add("Section - Campaign Cards", () => ({
   components: { ListOfCampaigns },
   data() {
     return { campaigns };

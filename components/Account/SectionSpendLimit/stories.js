@@ -3,7 +3,7 @@ import { withKnobs, number } from "@storybook/addon-knobs";
 
 import SectionSpendLimit from "./index.vue";
 
-storiesOf("Account Page Components", module)
+storiesOf("Page - User Account", module)
   .addDecorator(withKnobs)
   .add("Section - Spend Limit Display", () => ({
     components: { SectionSpendLimit },

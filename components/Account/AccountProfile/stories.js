@@ -3,9 +3,9 @@ import { withKnobs, number, boolean } from "@storybook/addon-knobs";
 
 import AccountProfile from "./index.vue";
 
-storiesOf("Account Page Components", module)
+storiesOf("Page - User Account", module)
   .addDecorator(withKnobs)
-  .add("Card - Profile", () => ({
+  .add("Section - Profile", () => ({
     components: { AccountProfile },
     props: {
       spendPool: {
