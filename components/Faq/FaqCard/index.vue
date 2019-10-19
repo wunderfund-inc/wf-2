@@ -7,7 +7,7 @@
       border-variant="transparent"
       bg-variant="transparent"
     )
-      b-card-footer(
+      b-card-footer.text-center(
         footer-bg-variant="transparent"
         footer-border-variant="transparent"
       ) {{ faqLink | pluralFaq | properCase }}
