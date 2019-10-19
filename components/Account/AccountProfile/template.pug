@@ -8,13 +8,6 @@ b-card.mb-3(no-body)
           span.when-opened Collapse
           span.when-closed Expand
     b-collapse#profile.pt-4
-      section-spend-limit(
-        :spend-pool="spendPool"
-        :spend-max="spendMax"
-      )
-        span(v-if="isAccredited") Need to change your Annual Income or Net Worth so you can invest more annually?
-          |
-          |
-          b-link(href="https://www.google.com") Re-verify!
+      section-spend-limit(:spend-pool="spendPool" :spend-max="spendMax")
       section-accreditation(:is-accredited="isAccredited")
       section-password-reset
