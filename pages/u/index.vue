@@ -4,7 +4,7 @@
       account-profile(
         :spend-pool="2000"
         :spend-max="2200"
-        :is-accredited="true"
+        :is-accredited="false"
       )
       account-investment-list(:investments="investments")
 </template>
