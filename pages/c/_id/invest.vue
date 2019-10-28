@@ -1,0 +1,21 @@
+<template lang="pug">
+  main
+    b-container.py-5
+      b-row
+        b-col(md="8")
+          invest-form
+        b-col(md="4")
+          invest-summary
+</template>
+
+<script>
+import InvestForm from "@/components/Checkout/InvestForm";
+import InvestSummary from "@/components/Checkout/InvestSummary";
+
+export default {
+  components: {
+    InvestForm,
+    InvestSummary
+  }
+};
+</script>
