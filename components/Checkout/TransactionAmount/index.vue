@@ -15,14 +15,13 @@
       span(
         :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
       ) Your commitment to invest needs to be at least {{ minInvestmentAmount | asCurrency }}
-
 </template>
 
 <script>
 export default {
   computed: {
     minInvestmentAmount() {
-      return 20;
+      return this.$store.getters["offering/minimumInvestmentAmount"];
     },
     validAmount() {
       if (this.transactionAmount === null) return null;
@@ -36,6 +35,9 @@ export default {
         this.$store.commit("checkout/SET_TRANSACTION_AMOUNT", val);
       }
     }
+  },
+  async created() {
+    await this.$store.dispatch("offering/SET_OFFERING_DATA");
   }
 };
 </script>
