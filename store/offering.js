@@ -24,6 +24,6 @@ export const actions = {
   async SET_OFFERING_DATA({ commit }) {
     await commit("SET_SECURITY_TYPE", "CF");
     await commit("SET_MINIMUM_INVESTMENT", 20);
-    await commit("SET_PAYMENT_METHODS", ["ach", "check", "wire"]);
+    await commit("SET_PAYMENT_METHODS", ["ACH", "CHECK", "WIRE"]);
   }
 };

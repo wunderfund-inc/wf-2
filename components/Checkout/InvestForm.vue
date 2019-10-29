@@ -3,17 +3,21 @@
     h3 Invest in Esoteric Brewing Company
     b-form
       offering-list(:offerings="offerings")
-      transaction-amount(v-if="selectedOffering")
+      div(v-if="selectedOffering")
+        transaction-amount
+        transaction-method
 </template>
 
 <script>
 import OfferingList from "@/components/Checkout/OfferingList";
 import TransactionAmount from "@/components/Checkout/TransactionAmount";
+import TransactionMethod from "@/components/Checkout/TransactionMethod";
 
 export default {
   components: {
     OfferingList,
-    TransactionAmount
+    TransactionAmount,
+    TransactionMethod
   },
   computed: {
     offerings() {

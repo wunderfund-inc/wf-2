@@ -1,8 +1,28 @@
 <template lang="pug">
-  b-form-group(label="How do you want to invest?")
-    b-form-radio(value="ach") ACH
-    b-form-radio(value="check") via a Check
-    b-form-radio(value="wire") via Wire Transfer
-    b-form-radio(value="cc") via Credit Card
-    b-form-radio(value="crypto") via Cryptocurrency
+  b-form-group(label="I would like to invest via:")
+    b-form-radio(
+      v-for="(method, index) in availablePaymentMethods"
+      :key="index"
+      :value="method"
+      v-model="selectedMethod"
+      name="selected-method"
+    ) {{ method | properCase }}
 </template>
+
+<script>
+export default {
+  computed: {
+    selectedMethod: {
+      get() {
+        return this.$store.getters["checkout/selectedPaymentMethod"];
+      },
+      set(val) {
+        this.$store.commit("checkout/SET_PAYMENT_METHOD", val);
+      }
+    },
+    availablePaymentMethods() {
+      return this.$store.getters["offering/availablePaymentMethods"];
+    }
+  }
+};
+</script>
