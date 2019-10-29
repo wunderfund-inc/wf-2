@@ -1,8 +1,9 @@
 <template lang="pug">
-  label.card.py-2(:class="cardBorder(offering)")
+  label.card.py-2.pl-1(:class="cardBorder(offering)")
     .container
       .form-row.form-check-inline
         b-form-radio.form-check-input(
+          :disabled="notQualified"
           :value="offering"
           size="lg"
           v-model="selectedOffering"
@@ -32,12 +33,16 @@ export default {
       set(val) {
         this.$store.commit("checkout/SET_OFFERING", val);
       }
+    },
+    notQualified() {
+      if (this.offering === "CF") return false;
+      return this.$store.getters["checkout/notQualified"];
     }
   },
   methods: {
     cardBorder(val) {
       const whichCard = this.selectedOffering === val;
-      return whichCard ? "border-success" : "border-transparent";
+      return whichCard ? "border-primary" : "border-transparent";
     }
   }
 };

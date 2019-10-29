@@ -5,6 +5,7 @@ export const state = () => ({
 });
 
 export const getters = {
+  notQualified: () => true,
   selectedOffering: state => state.selectedOffering,
   transactionAmount: state => state.transactionAmount,
   selectedPaytmentMethod: state => state.selectedPaymentMethod

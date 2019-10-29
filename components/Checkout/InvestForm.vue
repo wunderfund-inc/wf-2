@@ -1,6 +1,6 @@
 <template lang="pug">
   section
-    h3.pb-3 Invest in Esoteric Brewing Company
+    h3 Invest in Esoteric Brewing Company
     b-form
       offering-list(:offerings="offerings")
 </template>
@@ -14,7 +14,7 @@ export default {
   },
   computed: {
     offerings() {
-      return ["CF", "D", "A"];
+      return this.$store.getters["company/offerings"];
     }
   }
 };

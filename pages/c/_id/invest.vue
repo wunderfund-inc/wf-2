@@ -16,6 +16,9 @@ export default {
   components: {
     InvestForm,
     InvestSummary
+  },
+  async fetch({ store }) {
+    await store.dispatch("company/GET_OFFERINGS");
   }
 };
 </script>
