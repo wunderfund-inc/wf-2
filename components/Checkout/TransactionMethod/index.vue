@@ -6,7 +6,7 @@
       :value="method"
       v-model="selectedMethod"
       name="selected-method"
-    ) {{ method | properCase }}
+    ) {{ method | paymentMethodFormat }}
 </template>
 
 <script>

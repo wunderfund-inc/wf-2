@@ -56,3 +56,20 @@ export const pluralFaq = val => {
   return val;
 };
 Vue.filter("pluralFaq", pluralFaq);
+
+/**
+ * Payment method string formatting
+ */
+export const paymentMethodFormat = val => {
+  switch (val) {
+    case "ACH":
+      return "Bank Account (ACH)";
+    case "CC":
+      return "Credit Card";
+    case "CRYPTO":
+      return "Cryptocurrency (Ethereum)";
+    default:
+      return properCase(val);
+  }
+};
+Vue.filter("paymentMethodFormat", paymentMethodFormat);

@@ -4,7 +4,8 @@ import {
   asCurrency,
   asPercentage,
   regulationFormat,
-  pluralFaq
+  pluralFaq,
+  paymentMethodFormat
 } from "./filters";
 
 describe("testing filter functions", () => {
@@ -52,6 +53,16 @@ describe("testing filter functions", () => {
       expect(pluralFaq("investor")).toBe("investors");
       expect(pluralFaq("company")).toBe("companies");
       expect(pluralFaq("legal")).toBe("legal");
+    });
+  });
+
+  describe("format payment methods based on value", () => {
+    it("adds context to ACH and Cryptocurrency transfers", () => {
+      expect(paymentMethodFormat("ACH")).toBe("Bank Account (ACH)");
+      expect(paymentMethodFormat("CHECK")).toBe("Check");
+      expect(paymentMethodFormat("WIRE")).toBe("Wire");
+      expect(paymentMethodFormat("CC")).toBe("Credit Card");
+      expect(paymentMethodFormat("CRYPTO")).toBe("Cryptocurrency (Ethereum)");
     });
   });
 });
