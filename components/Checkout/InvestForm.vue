@@ -8,6 +8,7 @@
         entity-list
         transaction-amount
         transaction-method
+        method-layout
 </template>
 
 <script>
@@ -16,6 +17,7 @@ import TransactionType from "@/components/Checkout/TransactionType";
 import EntityList from "@/components/Checkout/EntityList";
 import TransactionAmount from "@/components/Checkout/TransactionAmount";
 import TransactionMethod from "@/components/Checkout/TransactionMethod";
+import MethodLayout from "@/components/Checkout/Methods/MethodLayout";
 
 export default {
   components: {
@@ -23,7 +25,8 @@ export default {
     TransactionType,
     EntityList,
     TransactionAmount,
-    TransactionMethod
+    TransactionMethod,
+    MethodLayout
   },
   computed: {
     offerings() {
