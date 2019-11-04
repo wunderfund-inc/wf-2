@@ -1,14 +1,16 @@
 export const state = () => ({
   selectedOffering: null,
   transactionAmount: null,
-  selectedPaymentMethod: null
+  selectedMethod: null,
+  selectedType: null
 });
 
 export const getters = {
   notQualified: () => true,
   selectedOffering: state => state.selectedOffering,
   transactionAmount: state => state.transactionAmount,
-  selectedPaytmentMethod: state => state.selectedPaymentMethod
+  selectedMethod: state => state.selectedMethod,
+  selectedtType: state => state.selectedType
 };
 
 export const mutations = {
@@ -19,6 +21,9 @@ export const mutations = {
     state.transactionAmount = payload;
   },
   SET_PAYMENT_METHOD(state, payload) {
-    state.selectedPaymentMethod = payload;
+    state.selectedMethod = payload;
+  },
+  SET_TRANSACTION_TYPE(state, payload) {
+    state.selectedType = payload;
   }
 };
