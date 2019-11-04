@@ -14,7 +14,7 @@ export default {
   computed: {
     selectedMethod: {
       get() {
-        return this.$store.getters["checkout/selectedPaymentMethod"];
+        return this.$store.getters["checkout/selectedMethod"];
       },
       set(val) {
         this.$store.commit("checkout/SET_PAYMENT_METHOD", val);
