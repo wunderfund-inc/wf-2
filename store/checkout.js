@@ -2,7 +2,8 @@ export const state = () => ({
   selectedOffering: null,
   transactionAmount: null,
   selectedMethod: null,
-  selectedType: null
+  selectedType: null,
+  selectedEntity: null
 });
 
 export const getters = {
@@ -10,7 +11,8 @@ export const getters = {
   selectedOffering: state => state.selectedOffering,
   transactionAmount: state => state.transactionAmount,
   selectedMethod: state => state.selectedMethod,
-  selectedtType: state => state.selectedType
+  selectedType: state => state.selectedType,
+  selectedEntity: state => state.selectedEntity
 };
 
 export const mutations = {
@@ -25,5 +27,8 @@ export const mutations = {
   },
   SET_TRANSACTION_TYPE(state, payload) {
     state.selectedType = payload;
+  },
+  SET_ENTITY(state, payload) {
+    state.selectedEntity = payload;
   }
 };

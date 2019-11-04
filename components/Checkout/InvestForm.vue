@@ -5,6 +5,7 @@
       offering-list(:offerings="offerings")
       div(v-if="selectedOffering")
         transaction-type
+        entity-list
         transaction-amount
         transaction-method
 </template>
@@ -12,6 +13,7 @@
 <script>
 import OfferingList from "@/components/Checkout/OfferingList";
 import TransactionType from "@/components/Checkout/TransactionType";
+import EntityList from "@/components/Checkout/EntityList";
 import TransactionAmount from "@/components/Checkout/TransactionAmount";
 import TransactionMethod from "@/components/Checkout/TransactionMethod";
 
@@ -19,6 +21,7 @@ export default {
   components: {
     OfferingList,
     TransactionType,
+    EntityList,
     TransactionAmount,
     TransactionMethod
   },
