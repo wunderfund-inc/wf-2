@@ -1,17 +1,21 @@
 <template lang="pug">
-  b-card(bg-variant="light" v-if="extraInfoNeeded")
+  b-card(bg-variant="light" v-if="selectedMethod")
     b-form-group(
-      label="Extra Information Needed!"
+      label="Extra Information"
       label-size="lg"
       label-class="font-weight-bold pt-0 mb-4"
     )
-      section(v-if="needsAchInfo")
+      section(v-if="selectedMethod === 'ACH'")
         b-row
           b-col
             ach-account-number
           b-col
             ach-routing-number
-      section(v-if="needsCCInfo")
+      section(v-if="selectedMethod === 'CHECK'")
+        p We will email you the details for sending the check.
+      seciton(v-if="selectedMethod === 'WIRE'")
+        p We will email you details for the wire transfer.
+      section(v-if="selectedMethod === 'CC'")
         b-row
           b-col
             cc-cardholder-name
@@ -28,7 +32,7 @@
             cc-cvv
           b-col
           b-col
-      section(v-if="needsCryptoInfo")
+      section(v-if="selectedMethod === 'CRYPTO'")
         b-row
           b-col
             crypto-address
@@ -58,18 +62,6 @@ export default {
   computed: {
     selectedMethod() {
       return this.$store.getters["checkout/selectedMethod"];
-    },
-    extraInfoNeeded() {
-      return ["ACH", "CC", "CRYPTO"].includes(this.selectedMethod);
-    },
-    needsAchInfo() {
-      return this.selectedMethod === "ACH";
-    },
-    needsCCInfo() {
-      return this.selectedMethod === "CC";
-    },
-    needsCryptoInfo() {
-      return this.selectedMethod === "CRYPTO";
     }
   }
 };
