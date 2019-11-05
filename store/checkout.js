@@ -12,7 +12,8 @@ export const state = () => ({
     name: null,
     number: null,
     cvv: null,
-    expiry: null
+    expiryMonth: null,
+    expiryYear: null
   }
 });
 
@@ -28,7 +29,9 @@ export const getters = {
   ccCardholderName: state => state.cc.name,
   ccCardNumber: state => state.cc.number,
   ccCVV: state => state.cc.cvv,
-  ccExpiration: state => state.cc.expiry
+  ccExpiryMonth: state => state.cc.expiryMonth,
+  ccExpiryYear: state => state.cc.expiryYear,
+  ccExpiry: state => state.cc.expiryMonth + "/" + state.cc.expiryYear
 };
 
 export const mutations = {
@@ -45,5 +48,6 @@ export const mutations = {
   SET_CC_CARDHOLDER_NAME: (state, payload) => (state.cc.name = payload),
   SET_CC_CARD_NUMBER: (state, payload) => (state.cc.number = payload),
   SET_CC_CVV: (state, payload) => (state.cc.cvv = payload),
-  SET_CC_EXPIRATION: (state, payload) => (state.cc.expiry = payload)
+  SET_CC_EXPIRY_MONTH: (state, payload) => (state.cc.expiryMonth = payload),
+  SET_CC_EXPIRY_YEAR: (state, payload) => (state.cc.expiryYear = payload)
 };
