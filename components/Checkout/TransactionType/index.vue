@@ -1,19 +1,18 @@
 <template lang="pug">
   b-form-group(label="Which type of investment is this?")
-    b-form-radio-group
-      b-form-radio(
-        value="PERSONAL" 
-        v-model="selectedType" 
-        name="selected-type"
-      ) A Personal investment.
-      b-form-radio(
-        value="ENTITY" 
-        v-model="selectedType" 
-        name="selected-type"
-        :disabled="!hasEntities"
-      ) An investment on behalf an Entity.
-        br(v-if="!hasEntities")
-        small.text-muted(v-if="!hasEntities") You don't have any entities filed. Apply Here!
+    b-form-radio(
+      value="PERSONAL" 
+      v-model="selectedType" 
+      name="selected-type"
+    ) A Personal investment.
+    b-form-radio(
+      value="ENTITY" 
+      v-model="selectedType" 
+      name="selected-type"
+      :disabled="!hasEntities"
+    ) An investment on behalf an Entity.
+      br(v-if="!hasEntities")
+      small.text-muted(v-if="!hasEntities") You don't have any entities filed. Apply Here!
 </template>
 
 <script>
