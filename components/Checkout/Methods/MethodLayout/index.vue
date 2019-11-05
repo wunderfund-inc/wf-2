@@ -1,45 +1,37 @@
 <template lang="pug">
   b-card(bg-variant="light" v-if="extraInfoNeeded")
     b-form-group(
-      v-if="needsAchInfo"
       label="Extra Information Needed!"
       label-size="lg"
       label-class="font-weight-bold pt-0 mb-4"
     )
-      b-row
-        b-col
-          ach-account-number
-        b-col
-          ach-routing-number
-    b-form-group(
-      v-if="needsCCInfo"
-      label="Extra Information Needed!"
-      label-size="lg"
-      label-class="font-weight-bold pt-0 mb-4"
-    )
-      b-row
-        b-col
-          cc-cardholder-name
-      b-row
-        b-col
-          cc-card-number
-      b-row
-        b-col
-          cc-expiry-month
-        b-col
-          cc-expiry-year
-      b-row
-        b-col
-          cc-cvv
-        b-col
-        b-col
-    b-form-group(
-      v-if="needsCryptoInfo"
-      label="Extra Information Needed!"
-      label-size="lg"
-      label-class="font-weight-bold pt-0 mb-4"
-    )
-      b-form-input(placeholder="ethereum address")
+      section(v-if="needsAchInfo")
+        b-row
+          b-col
+            ach-account-number
+          b-col
+            ach-routing-number
+      section(v-if="needsCCInfo")
+        b-row
+          b-col
+            cc-cardholder-name
+        b-row
+          b-col
+            cc-card-number
+        b-row
+          b-col
+            cc-expiry-month
+          b-col
+            cc-expiry-year
+        b-row
+          b-col
+            cc-cvv
+          b-col
+          b-col
+      section(v-if="needsCryptoInfo")
+        b-row
+          b-col
+            crypto-address
 </template>
 
 <script>
@@ -50,6 +42,7 @@ import CcCardNumber from "@/components/Checkout/Methods/CcCardNumber";
 import CcExpiryMonth from "@/components/Checkout/Methods/CcExpiryMonth";
 import CcExpiryYear from "@/components/Checkout/Methods/CcExpiryYear";
 import CcCvv from "@/components/Checkout/Methods/CcCvv";
+import CryptoAddress from "@/components/Checkout/Methods/CryptoAddress";
 
 export default {
   components: {
@@ -59,7 +52,8 @@ export default {
     CcCardNumber,
     CcExpiryMonth,
     CcExpiryYear,
-    CcCvv
+    CcCvv,
+    CryptoAddress
   },
   computed: {
     selectedMethod() {

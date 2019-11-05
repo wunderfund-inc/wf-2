@@ -14,6 +14,9 @@ export const state = () => ({
     cvv: null,
     expiryMonth: null,
     expiryYear: null
+  },
+  crypto: {
+    address: null
   }
 });
 
@@ -31,7 +34,8 @@ export const getters = {
   ccCVV: state => state.cc.cvv,
   ccExpiryMonth: state => state.cc.expiryMonth,
   ccExpiryYear: state => state.cc.expiryYear,
-  ccExpiry: state => state.cc.expiryMonth + "/" + state.cc.expiryYear
+  ccExpiry: state => state.cc.expiryMonth + "/" + state.cc.expiryYear,
+  cryptoAddress: state => state.crypto.address
 };
 
 export const mutations = {
@@ -49,5 +53,6 @@ export const mutations = {
   SET_CC_CARD_NUMBER: (state, payload) => (state.cc.number = payload),
   SET_CC_CVV: (state, payload) => (state.cc.cvv = payload),
   SET_CC_EXPIRY_MONTH: (state, payload) => (state.cc.expiryMonth = payload),
-  SET_CC_EXPIRY_YEAR: (state, payload) => (state.cc.expiryYear = payload)
+  SET_CC_EXPIRY_YEAR: (state, payload) => (state.cc.expiryYear = payload),
+  SET_CRYPTO_ADDRESS: (state, payload) => (state.crypto.address = payload)
 };
