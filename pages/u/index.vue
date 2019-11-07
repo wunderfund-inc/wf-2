@@ -17,6 +17,7 @@ import AccountInvestmentList from "@/components/Account/AccountInvestmentList";
 import d from "@/components/Account/data.json";
 
 export default {
+  middleware: "authenticated",
   components: {
     AccountProfile,
     AccountInvestmentList
