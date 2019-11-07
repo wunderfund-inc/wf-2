@@ -29,11 +29,12 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ["~/assets/main.css"],
   /*
    ** Plugins to load before mounting the App
    */
   plugins: ["~plugins/filters"],
+  pageTransition: "page",
   /*
    ** Nuxt.js modules
    */
