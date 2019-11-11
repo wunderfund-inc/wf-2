@@ -3,9 +3,9 @@
     section#faq-nav
       b-container
         .py-2
-          b-row.justify-content-md-center
+          b-row
             b-col(lg="3")
-            b-col(cols="12" md="auto")
+            b-col(cols="12")
               faq-navbar(:menu="links")
             b-col(lg="3")
     section
