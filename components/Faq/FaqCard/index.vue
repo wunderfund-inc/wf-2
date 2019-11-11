@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-link.text-decoration-none(:to="`/faq/${faqlink}`")
+  b-link.text-decoration-none(:to="`/faq/${faqLink}`")
     b-card(
       :img-src="imgSrc"
       img-top

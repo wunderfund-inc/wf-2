@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import d from "./data.json";
-
 import FaqNavbar from "@/components/Faq/_Slug/FaqNavbar";
 import FaqLeftCol from "@/components/Faq/_Slug/FaqLeftCol";
 import FaqRightCol from "@/components/Faq/_Slug/FaqRightCol";
@@ -35,7 +33,7 @@ export default {
   },
   data() {
     return {
-      links: d.faqLinks
+      links: ["general", "investor", "company", "legal"]
     };
   }
 };

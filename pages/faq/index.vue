@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import d from "./data.json";
 import FaqCard from "@/components/Faq/FaqCard";
 
 export default {
@@ -16,7 +15,7 @@ export default {
   },
   data() {
     return {
-      links: d.faqLinks
+      links: ["general", "investor", "company", "legal"]
     };
   }
 };
