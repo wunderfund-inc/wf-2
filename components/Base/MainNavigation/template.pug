@@ -27,10 +27,8 @@ header
               width="45"
               height="45"
             )
-          b-dropdown-item
-            b-nav-item(to="/u") Dashboard
-          b-dropdown-item
-            b-nav-item(@click="logout") Logout
+          b-nav-item.pl-4(to="/u") Dashboard
+          b-nav-item.pl-4(@click="logout") Logout
       b-navbar-nav.ml-auto.d-none.d-md-flex(v-else)
         //- TODO: add back in once Store Action is made.
         //- b-nav-item(to="/auth/login") Login
