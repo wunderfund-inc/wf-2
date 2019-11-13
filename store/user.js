@@ -11,7 +11,9 @@ export const state = () => ({
 export const getters = {
   passwordOld: state => state.passwordOld,
   passwordNew: state => state.passwordNew,
-  passwordsMatch: state => state.passwordOld !== state.passwordNew,
+  passwordsMatch: state => {
+    return state.passwordOld === state.passwordNew;
+  },
   entities: state => state.entities,
   hasEntities: state => state.entities.length > 0
 };
@@ -24,6 +26,6 @@ export const mutations = {
     state.passwordOld = payload;
   },
   SET_NEW_PASSWORD(state, payload) {
-    state.passwordOld = payload;
+    state.passwordNew = payload;
   }
 };
