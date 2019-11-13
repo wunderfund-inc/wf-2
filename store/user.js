@@ -2,10 +2,11 @@ export const state = () => ({
   passwordOld: null,
   passwordNew: null,
   entities: [
-    "Lion Share Holdings, LLC.",
-    "Thrivera Venture I, LLC.",
-    "Wunderfund, Inc."
-  ]
+    // "Lion Share Holdings, LLC.",
+    // "Thrivera Venture I, LLC.",
+    // "Wunderfund, Inc."
+  ],
+  userData: null
 });
 
 export const getters = {
@@ -15,7 +16,8 @@ export const getters = {
     return state.passwordOld === state.passwordNew;
   },
   entities: state => state.entities,
-  hasEntities: state => state.entities.length > 0
+  hasEntities: state => state.entities.length > 0,
+  userData: state => state.userData
 };
 
 export const mutations = {
@@ -27,5 +29,14 @@ export const mutations = {
   },
   SET_NEW_PASSWORD(state, payload) {
     state.passwordNew = payload;
+  },
+  SET_USER_DATA(state, payload) {
+    state.userData = payload;
+  }
+};
+
+export const actions = {
+  async LOGOUT_USER({ commit }) {
+    await commit("SET_USER_DATA", null);
   }
 };

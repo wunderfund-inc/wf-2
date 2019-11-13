@@ -1,20 +1,12 @@
 export default {
-  data() {
-    return {
-      loggedIn: true
-    };
-  },
   computed: {
     signedIn() {
-      return this.loggedIn;
+      return this.$store.getters["user/userData"];
     }
   },
   methods: {
-    login() {
-      this.loggedIn = true;
-    },
-    logout() {
-      this.loggedIn = false;
+    async logout() {
+      await this.$store.dispatch("user/LOGOUT_USER");
     }
   }
 };

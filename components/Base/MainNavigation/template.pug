@@ -11,11 +11,9 @@ header
           b-nav-item(to="/faq") FAQ
           div(v-if="signedIn")
             b-nav-item.d-block.d-md-none(to="/u") Dashboard
-            b-nav-item.d-block.d-md-none(@click="logout") Logout
+            b-nav-item.d-block.d-md-none(to="/" @click="logout") Logout
           div(v-else)
-            //- TODO: add back in once Store Action is made.
-            //- b-nav-item.d-block.d-md-none(to="/auth/login") Login
-            b-nav-item.d-block.d-md-none(@click="login") Login
+            b-nav-item.d-block.d-md-none(to="/auth/login") Login
             b-nav-item.d-block.d-md-none(to="/auth/register") Sign Up
       b-navbar-nav.ml-auto.d-none.d-md-flex(v-if="signedIn")
         b-nav-item-dropdown(right no-caret)
@@ -28,9 +26,7 @@ header
               height="45"
             )
           b-nav-item.pl-4(to="/u") Dashboard
-          b-nav-item.pl-4(@click="logout") Logout
+          b-nav-item.pl-4(to="/" @click="logout") Logout
       b-navbar-nav.ml-auto.d-none.d-md-flex(v-else)
-        //- TODO: add back in once Store Action is made.
-        //- b-nav-item(to="/auth/login") Login
-        b-nav-item(@click="login") Login
+        b-nav-item(to="/auth/login") Login
         b-nav-item(to="/auth/register") Sign Up
