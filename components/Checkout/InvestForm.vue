@@ -1,6 +1,6 @@
 <template lang="pug">
   section
-    h3 Invest in Esoteric Brewing Company
+    h3 Invest in Esoteric Brewing
     b-form
       offering-list(:offerings="offerings")
       div(v-if="selectedOffering")
