@@ -1,6 +1,6 @@
 <template lang="pug">
   b-form-group(
-    label="Name (as appears on your card)"
+    label="Name (as it appears on your card)"
     label-for="cc-name"
   )
     b-form-input#cc-name(v-model="ccName")
