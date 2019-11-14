@@ -41,9 +41,9 @@ describe("testing filter functions", () => {
 
   describe("add some string flavor to Regulation Types", () => {
     it("returns additional string messaging", () => {
-      expect(regulationFormat("CF")).toBe("Reg CF");
-      expect(regulationFormat("D")).toBe("Reg D");
-      expect(regulationFormat("A")).toBe("Reg A+");
+      expect(regulationFormat("CF")).toBe("CF");
+      expect(regulationFormat("D")).toBe("D");
+      expect(regulationFormat("A")).toBe("A+");
     });
   });
 

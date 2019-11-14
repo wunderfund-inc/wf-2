@@ -38,13 +38,7 @@ Vue.filter("asPercentage", asPercentage);
 /**
  * Add "Reg" to regulation type - if it's A, it's actually "A+"
  */
-export const regulationFormat = val => {
-  if (val === "A") {
-    return "Reg A+";
-  } else {
-    return `Reg ${val}`;
-  }
-};
+export const regulationFormat = val => (val === "A" ? "A+" : val);
 Vue.filter("regulationFormat", regulationFormat);
 
 /**
