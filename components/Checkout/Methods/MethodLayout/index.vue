@@ -11,8 +11,11 @@
             ach-account-number
           b-col
             ach-routing-number
+        b-row
+          b-col
+            b-img(src="~assets/logo/tapi_secure.png")
       section(v-if="selectedMethod === 'CHECK'")
-        p We will email you the details for sending the check.
+        p We will email you details for sending the check.
       seciton(v-if="selectedMethod === 'WIRE'")
         p We will email you details for the wire transfer.
       section(v-if="selectedMethod === 'CC'")
@@ -27,15 +30,18 @@
             cc-expiry-month
           b-col
             cc-expiry-year
-        b-row
           b-col
             cc-cvv
+        b-row
           b-col
-          b-col
+            b-img(src="~assets/logo/tapi_secure.png")
       section(v-if="selectedMethod === 'CRYPTO'")
         b-row
           b-col
             crypto-address
+        b-row
+          b-col
+            b-img(src="~assets/logo/tapi_secure.png")
 </template>
 
 <script>
