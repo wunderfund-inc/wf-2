@@ -9,6 +9,7 @@
         transaction-amount
         transaction-method
         method-layout
+        transaction-agreements
 </template>
 
 <script>
@@ -18,6 +19,7 @@ import EntityList from "@/components/Checkout/EntityList";
 import TransactionAmount from "@/components/Checkout/TransactionAmount";
 import TransactionMethod from "@/components/Checkout/TransactionMethod";
 import MethodLayout from "@/components/Checkout/Methods/MethodLayout";
+import TransactionAgreements from "@/components/Checkout/TransactionAgreements";
 
 export default {
   components: {
@@ -26,7 +28,8 @@ export default {
     EntityList,
     TransactionAmount,
     TransactionMethod,
-    MethodLayout
+    MethodLayout,
+    TransactionAgreements
   },
   computed: {
     offerings() {
