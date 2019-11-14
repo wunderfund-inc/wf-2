@@ -8,7 +8,7 @@
           size="lg"
           v-model="selectedOffering"
         )
-        span.form-check-label {{ offering | regulationFormat }}
+        span.form-check-label Regulation {{ offering | regulationFormat }}
       .form-row
         slot
           span

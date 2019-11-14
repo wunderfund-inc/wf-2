@@ -10,7 +10,7 @@
         b-col
           small.text-muted {{ campaign.companyCity }}, {{ campaign.companyState }}
         b-col
-          b-badge.card-badge(size="sm") {{ campaign.offeringType | regulationFormat }}
+          b-badge.card-badge(size="sm") Reg {{ campaign.offeringType | regulationFormat }}
 </template>
 
 <script>
