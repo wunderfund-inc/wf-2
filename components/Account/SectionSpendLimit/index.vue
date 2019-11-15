@@ -1,7 +1,8 @@
 <template lang="pug">
   section
-    h2 Current Invest Limit: {{ spendPool | asCurrency }}
-    h6.text-muted.mb-0 Annual Maximum Invest Limit: {{ spendMax | asCurrency }}
+    b-container
+      h2 Current Invest Limit: {{ spendPool | asCurrency }}
+      h6.text-muted.mb-0 Annual Maximum Invest Limit: {{ spendMax | asCurrency }}
 </template>
 
 <script>

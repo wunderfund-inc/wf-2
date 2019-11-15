@@ -6,7 +6,7 @@ export const state = () => ({
     // "Thrivera Venture I, LLC.",
     // "Wunderfund, Inc."
   ],
-  userData: null
+  userData: {}
 });
 
 export const getters = {
