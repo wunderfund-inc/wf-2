@@ -24,6 +24,7 @@ export const state = () => ({
 
 export const getters = {
   address: state => state.address,
+  personal: state => state.personal,
   passwordOld: state => state.passwordOld,
   passwordNew: state => state.passwordNew,
   passwordsMatch: state => {

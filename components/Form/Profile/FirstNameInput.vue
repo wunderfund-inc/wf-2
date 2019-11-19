@@ -14,7 +14,7 @@ export default {
         return this.$store.getters["user/personal"].firstName;
       },
       set(val) {
-        this.$store.commit("user/SET_USER_ATTRIBUTE", { firstName: val });
+        this.$store.commit("user/SET_PERSONAL_ATTRIBUTE", { firstName: val });
       }
     }
   }
