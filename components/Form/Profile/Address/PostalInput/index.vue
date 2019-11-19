@@ -7,15 +7,20 @@
 </template>
 
 <script>
+import { validPostal } from "@/plugins/validators";
+
 export default {
   computed: {
     postal: {
       get() {
-        return null;
+        return this.$store.getters["user/address"].postal;
       },
       set(val) {
-        return val;
+        this.$store.commit("user/SET_ADDRESS_ATTRIBUTE", { postal: val });
       }
+    },
+    isValid() {
+      return validPostal(this.postal);
     }
   }
 };

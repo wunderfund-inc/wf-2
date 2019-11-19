@@ -11,10 +11,10 @@ export default {
   computed: {
     state: {
       get() {
-        return null;
+        return this.$store.getters["user/address"].state;
       },
       set(val) {
-        return val;
+        this.$store.commit("user/SET_ADDRESS_ATTRIBUTE", { state: val });
       }
     }
   }

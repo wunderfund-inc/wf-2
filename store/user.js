@@ -1,3 +1,5 @@
+const cloneDeep = require("lodash.clonedeep");
+
 export const state = () => ({
   passwordOld: null,
   passwordNew: null,
@@ -6,10 +8,18 @@ export const state = () => ({
     // "Thrivera Venture I, LLC.",
     // "Wunderfund, Inc."
   ],
-  userData: {}
+  userData: {},
+  address: {
+    street1: null,
+    street2: null,
+    city: null,
+    state: null,
+    postal: null
+  }
 });
 
 export const getters = {
+  address: state => state.address,
   passwordOld: state => state.passwordOld,
   passwordNew: state => state.passwordNew,
   passwordsMatch: state => {
@@ -21,6 +31,9 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_ADDRESS_ATTRIBUTE(state, payload) {
+    state.address = Object.assign(cloneDeep(state.address), payload);
+  },
   SET_ENTITY_LIST(state, payload) {
     state.entities = payload;
   },
