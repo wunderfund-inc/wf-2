@@ -9,6 +9,10 @@ export const state = () => ({
     // "Wunderfund, Inc."
   ],
   userData: {},
+  personal: {
+    firstName: null,
+    lastName: null
+  },
   address: {
     street1: null,
     street2: null,
@@ -31,6 +35,9 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_PERSONAL_ATTRIBUTE(state, payload) {
+    state.personal = Object.assign(cloneDeep(state.personal), payload);
+  },
   SET_ADDRESS_ATTRIBUTE(state, payload) {
     state.address = Object.assign(cloneDeep(state.address), payload);
   },

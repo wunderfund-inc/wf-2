@@ -11,10 +11,10 @@ export default {
   computed: {
     lastName: {
       get() {
-        return null;
+        return this.$store.getters["user/personal"].lastName;
       },
       set(val) {
-        return val;
+        this.$store.commit("user/SET_USER_ATTRIBUTE", { lastName: val });
       }
     }
   }
