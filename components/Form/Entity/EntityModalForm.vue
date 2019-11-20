@@ -9,8 +9,7 @@
           entity-type
       b-row
         b-col
-          entity-name
-          //- entity-ein
+          entity-ein
       b-row
         b-col
           entity-name
@@ -38,11 +37,13 @@
 <script>
 import EntityName from "@/components/Form/Entity/EntityName";
 import EntityType from "@/components/Form/Entity/EntityType";
+import EntityEin from "@/components/Form/Entity/EntityEin";
 
 export default {
   components: {
     EntityName,
-    EntityType
+    EntityType,
+    EntityEin
   }
 };
 </script>
