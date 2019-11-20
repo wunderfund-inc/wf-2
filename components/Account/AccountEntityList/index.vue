@@ -13,7 +13,7 @@
               size="sm"
             ) Create
       b-card-text.mt-3.mb-0.px-3(v-if="entities.length === 0") It doesn't look like you any entities on file with us.
-    b-list-group(flush)
+    //- b-list-group(flush)
       b-list-group-item(
         v-for="(entity, index) in entities"
         :key="index"
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import AccountEntityItem from "@/components/Account/AccountEntityItem";
+// import AccountEntityItem from "@/components/Account/AccountEntityItem";
 import EntityModalForm from "@/components/Form/Entity/EntityModalForm";
 
 export default {
   components: {
-    AccountEntityItem,
+    // AccountEntityItem,
     EntityModalForm
   },
   props: {
