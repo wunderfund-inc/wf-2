@@ -14,6 +14,7 @@ export const state = () => ({
       name: null,
       type: null,
       ein: null,
+      differentEmail: false,
       email: null,
       address: {
         street1: null,

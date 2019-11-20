@@ -12,9 +12,8 @@
           entity-ein
       b-row
         b-col
-          entity-name
-          //- entity-email-verify
-          //- entity-email-input
+          entity-email-switch
+          entity-email-input(v-if="useDifferentEmail")
       b-row
         b-col
           entity-name
@@ -38,12 +37,21 @@
 import EntityName from "@/components/Form/Entity/EntityName";
 import EntityType from "@/components/Form/Entity/EntityType";
 import EntityEin from "@/components/Form/Entity/EntityEin";
+import EntityEmailSwitch from "@/components/Form/Entity/EntityEmailSwitch";
+import EntityEmailInput from "@/components/Form/Entity/EntityEmailInput";
 
 export default {
   components: {
     EntityName,
     EntityType,
-    EntityEin
+    EntityEin,
+    EntityEmailSwitch,
+    EntityEmailInput
+  },
+  computed: {
+    useDifferentEmail() {
+      return this.$store.getters["user/entityForm"].differentEmail;
+    }
   }
 };
 </script>
