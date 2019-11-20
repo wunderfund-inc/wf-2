@@ -11,8 +11,8 @@ aside
           v-b-toggle="'investment-' + investment.companyId"
           size="sm"
         )
-          span.when-opened Collapse
-          span.when-closed Details
+          span.when-opened Close
+          span.when-closed Expand
   b-collapse(:id="`investment-${investment.companyId}`" accordion="investments")
     b-row
       b-col

@@ -5,8 +5,8 @@ b-card.mb-4(no-body)
         b-col
           h1.mb-0 My Profile
         b-col(cols="3").text-right
-          b-button(variant="outline-success" v-b-toggle.profile)
-            span.when-opened Collapse
+          b-button(variant="outline-success" v-b-toggle.profile size="sm")
+            span.when-opened Close
             span.when-closed Expand
     b-collapse#profile.pt-4
       section-spend-limit(:spend-pool="spendPool" :spend-max="spendMax")
