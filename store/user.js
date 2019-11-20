@@ -9,6 +9,21 @@ export const state = () => ({
     // "Wunderfund, Inc."
   ],
   userData: {},
+  form: {
+    entity: {
+      name: null,
+      type: null,
+      ein: null,
+      email: null,
+      address: {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        postal: null
+      }
+    }
+  },
   personal: {
     firstName: null,
     lastName: null
@@ -24,6 +39,7 @@ export const state = () => ({
 
 export const getters = {
   address: state => state.address,
+  entityForm: state => state.form.entity,
   personal: state => state.personal,
   passwordOld: state => state.passwordOld,
   passwordNew: state => state.passwordNew,
@@ -36,6 +52,9 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_ENTITY_FORM_ATTRIBUTE(state, payload) {
+    state.form.entity = Object.assign(cloneDeep(state.form.entity), payload);
+  },
   SET_PERSONAL_ATTRIBUTE(state, payload) {
     state.personal = Object.assign(cloneDeep(state.personal), payload);
   },
