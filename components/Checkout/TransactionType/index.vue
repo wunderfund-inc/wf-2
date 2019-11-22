@@ -1,16 +1,16 @@
 <template lang="pug">
-  b-form-group(label="Which type of investment is this?")
+  b-form-group(label="I'd like to invest...")
     b-form-radio(
-      value="PERSONAL" 
-      v-model="selectedType" 
+      value="PERSONAL"
+      v-model="selectedType"
       name="selected-type"
-    ) A Personal investment.
+    ) Personally.
     b-form-radio(
-      value="ENTITY" 
-      v-model="selectedType" 
+      value="ENTITY"
+      v-model="selectedType"
       name="selected-type"
       :disabled="!hasEntities"
-    ) An investment on behalf an Entity.
+    ) On behalf an Entity.
       br(v-if="!hasEntities")
       small.text-muted(v-if="!hasEntities") You don't have any entities filed. Apply Here!
 </template>
@@ -20,7 +20,7 @@ export default {
   computed: {
     selectedType: {
       get() {
-        return this.$store.getters["checkout/transactionType"];
+        return this.$store.getters["checkout/selectedType"];
       },
       set(val) {
         this.$store.commit("checkout/SET_TRANSACTION_TYPE", val);
