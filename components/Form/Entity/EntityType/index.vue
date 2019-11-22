@@ -27,7 +27,9 @@ export default {
         return this.$store.getters["user/entityForm"].type;
       },
       set(val) {
-        this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", { type: val });
+        this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", {
+          classification: val
+        });
       }
     }
   }

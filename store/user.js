@@ -11,8 +11,9 @@ export const state = () => ({
   userData: {},
   form: {
     entity: {
+      uid: null,
       name: null,
-      type: null,
+      classification: null,
       ein: null,
       differentEmail: false,
       email: null,

@@ -28,5 +28,21 @@
       "agreementUrl": ""
     }
   ],
-  "entities": []
+  "entities": [
+    {
+      "uid": "asdfqwer",
+      "name": "Lion Share Holdings, LLC.",
+      "classification": "C-Corporation",
+      "ein": "12-1234567",
+      "differentEmail": true,
+      "email": "justin@wunderfund.co",
+      "address": {
+        "street1": "1053 Saint Gregory Street",
+        "street2": "Floor 2",
+        "city": "Cincinnati",
+        "state": "OH",
+        "postal": "45208"
+      }
+    }
+  ]
 }
