@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-form-group(v-if="selectedType")
+  b-form-group
     label Which Entity?
     b-form-select(v-model="selectedEntity" :options="entities")
       template(v-slot:first)
@@ -10,7 +10,7 @@
 export default {
   computed: {
     entities() {
-      return this.$store.getters["user/entities"];
+      return this.$store.getters["user/entitySelection"];
     },
     selectedEntity: {
       get() {
@@ -19,9 +19,6 @@ export default {
       set(val) {
         this.$store.commit("checkout/SET_ENTITY", val);
       }
-    },
-    selectedType() {
-      return this.$store.getters["checkout/selectedType"] === "ENTITY";
     }
   }
 };
