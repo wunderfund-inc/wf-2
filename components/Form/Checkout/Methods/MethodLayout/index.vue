@@ -45,14 +45,14 @@
 </template>
 
 <script>
-import AchAccountNumber from "@/components/Checkout/Methods/AchAccountNumber";
-import AchRoutingNumber from "@/components/Checkout/Methods/AchRoutingNumber";
-import CcCardholderName from "@/components/Checkout/Methods/CcCardholderName";
-import CcCardNumber from "@/components/Checkout/Methods/CcCardNumber";
-import CcExpiryMonth from "@/components/Checkout/Methods/CcExpiryMonth";
-import CcExpiryYear from "@/components/Checkout/Methods/CcExpiryYear";
-import CcCvv from "@/components/Checkout/Methods/CcCvv";
-import CryptoAddress from "@/components/Checkout/Methods/CryptoAddress";
+import AchAccountNumber from "@/components/Form/Checkout/Methods/AchAccountNumber";
+import AchRoutingNumber from "@/components/Form/Checkout/Methods/AchRoutingNumber";
+import CcCardholderName from "@/components/Form/Checkout/Methods/CcCardholderName";
+import CcCardNumber from "@/components/Form/Checkout/Methods/CcCardNumber";
+import CcExpiryMonth from "@/components/Form/Checkout/Methods/CcExpiryMonth";
+import CcExpiryYear from "@/components/Form/Checkout/Methods/CcExpiryYear";
+import CcCvv from "@/components/Form/Checkout/Methods/CcCvv";
+import CryptoAddress from "@/components/Form/Checkout/Methods/CryptoAddress";
 
 export default {
   components: {
