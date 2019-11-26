@@ -1,3 +1,4 @@
+import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -36,7 +37,14 @@ export const getters = {
   cc: state => state.cc,
   ccExpiry: state => state.cc.expiry,
   ccExpiration: state => state.cc.expiry.month + "/" + state.cc.expiry.year,
-  cryptoAddress: state => state.crypto.address
+  cryptoAddress: state => state.crypto.address,
+  validMethod: state => {
+    const validTransactionMethod =
+      state.selectedMethod && state.selectedMethod.length > 0;
+    const validExtras = validMethodExtras(state);
+
+    return validTransactionMethod && validExtras;
+  }
 };
 
 export const mutations = {
