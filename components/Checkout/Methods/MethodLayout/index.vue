@@ -16,7 +16,7 @@
             b-img(src="~assets/logo/tapi_secure.png")
       section(v-if="selectedMethod === 'CHECK'")
         p We will email you details for sending the check.
-      seciton(v-if="selectedMethod === 'WIRE'")
+      section(v-if="selectedMethod === 'WIRE'")
         p We will email you details for the wire transfer.
       section(v-if="selectedMethod === 'CC'")
         b-row

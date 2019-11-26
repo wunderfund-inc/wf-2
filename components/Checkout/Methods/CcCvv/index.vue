@@ -9,7 +9,7 @@
 <script>
 export default {
   computed: {
-    ccName: {
+    ccCVV: {
       get() {
         return this.$store.getters["checkout/ccCVV"];
       },

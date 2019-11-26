@@ -16,6 +16,7 @@
         b-row
           b-col
             transaction-method
+            method-layout
         b-row
           b-col
             transaction-agreements
@@ -28,6 +29,7 @@ import EntityList from "@/components/Form/Checkout/EntityList";
 import OfferingList from "@/components/Form/Checkout/OfferingList";
 import TransactionAmount from "@/components/Form/Checkout/TransactionAmount";
 import TransactionMethod from "@/components/Form/Checkout/TransactionMethod";
+import MethodLayout from "@/components/Checkout/Methods/MethodLayout";
 import TransactionAgreements from "@/components/Form/Checkout/TransactionAgreements";
 
 export default {
@@ -37,6 +39,7 @@ export default {
     OfferingList,
     TransactionAmount,
     TransactionMethod,
+    MethodLayout,
     TransactionAgreements
   },
   computed: {
