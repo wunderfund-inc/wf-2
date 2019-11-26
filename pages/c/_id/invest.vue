@@ -3,19 +3,19 @@
     b-container.py-5
       b-row
         b-col(md="8")
-          invest-form
+          checkout-form
         b-col(md="4")
-          invest-summary
+          checkout-summary
 </template>
 
 <script>
-import InvestForm from "@/components/Form/Checkout/CheckoutForm";
-import InvestSummary from "@/components/Checkout/InvestSummary";
+import CheckoutForm from "@/components/Form/Checkout/CheckoutForm";
+import CheckoutSummary from "@/components/Form/Checkout/CheckoutSummary";
 
 export default {
   components: {
-    InvestForm,
-    InvestSummary
+    CheckoutForm,
+    CheckoutSummary
   },
   async fetch({ store }) {
     await store.dispatch("company/GET_OFFERINGS");
