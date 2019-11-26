@@ -1,3 +1,5 @@
+const cloneDeep = require("lodash.clonedeep");
+
 export const state = () => ({
   validAgreementList: false,
   selectedOffering: null,
@@ -6,8 +8,8 @@ export const state = () => ({
   selectedType: null,
   selectedEntity: null,
   ach: {
-    accountNumber: null,
-    routingNumber: null
+    account: null,
+    routing: null
   },
   cc: {
     name: null,
@@ -28,8 +30,7 @@ export const getters = {
   selectedMethod: state => state.selectedMethod,
   selectedType: state => state.selectedType,
   selectedEntity: state => state.selectedEntity,
-  achAccountNumber: state => state.ach.accountNumber,
-  achRoutingNumber: state => state.ach.routingNumber,
+  ach: state => state.ach,
   ccCardholderName: state => state.cc.name,
   ccCardNumber: state => state.cc.number,
   ccCVV: state => state.cc.cvv,
@@ -49,10 +50,9 @@ export const mutations = {
   SET_PAYMENT_METHOD: (state, payload) => (state.selectedMethod = payload),
   SET_TRANSACTION_TYPE: (state, payload) => (state.selectedType = payload),
   SET_ENTITY: (state, payload) => (state.selectedEntity = payload),
-  SET_ACH_ACCOUNT_NUMBER: (state, payload) =>
-    (state.ach.accountNumber = payload),
-  SET_ACH_ROUTING_NUMBER: (state, payload) =>
-    (state.ach.routingNumber = payload),
+  SET_ACH_ATTRIBUTE: (state, payload) => {
+    state.ach = Object.assign(cloneDeep(state.ach), payload);
+  },
   SET_CC_CARDHOLDER_NAME: (state, payload) => (state.cc.name = payload),
   SET_CC_CARD_NUMBER: (state, payload) => (state.cc.number = payload),
   SET_CC_CVV: (state, payload) => (state.cc.cvv = payload),

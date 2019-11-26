@@ -8,10 +8,10 @@ export default {
   computed: {
     achAccountNumber: {
       get() {
-        return this.$store.getters["checkout/achAccountNumber"];
+        return this.$store.getters["checkout/ach"].account;
       },
       set(val) {
-        this.$store.commit("checkout/SET_ACH_ACCOUNT_NUMBER", val);
+        this.$store.commit("checkout/SET_ACH_ATTRIBUTE", { account: val });
       }
     }
   }

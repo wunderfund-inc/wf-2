@@ -8,10 +8,10 @@ export default {
   computed: {
     achRoutingNumber: {
       get() {
-        return this.$store.getters["checkout/achRoutingNumber"];
+        return this.$store.getters["checkout/ach"].routing;
       },
       set(val) {
-        this.$store.commit("checkout/SET_ACH_ROUTING_NUMBER", val);
+        this.$store.commit("checkout/SET_ACH_ATTRIBUTE", { routing: val });
       }
     }
   }
