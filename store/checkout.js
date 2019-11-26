@@ -15,8 +15,10 @@ export const state = () => ({
     name: null,
     number: null,
     cvv: null,
-    expiryMonth: null,
-    expiryYear: null
+    expiry: {
+      month: null,
+      year: null
+    }
   },
   crypto: {
     address: null
@@ -31,12 +33,9 @@ export const getters = {
   selectedType: state => state.selectedType,
   selectedEntity: state => state.selectedEntity,
   ach: state => state.ach,
-  ccCardholderName: state => state.cc.name,
-  ccCardNumber: state => state.cc.number,
-  ccCVV: state => state.cc.cvv,
-  ccExpiryMonth: state => state.cc.expiryMonth,
-  ccExpiryYear: state => state.cc.expiryYear,
-  ccExpiry: state => state.cc.expiryMonth + "/" + state.cc.expiryYear,
+  cc: state => state.cc,
+  ccExpiry: state => state.cc.expiry,
+  ccExpiration: state => state.cc.expiry.month + "/" + state.cc.expiry.year,
   cryptoAddress: state => state.crypto.address
 };
 
@@ -53,10 +52,11 @@ export const mutations = {
   SET_ACH_ATTRIBUTE: (state, payload) => {
     state.ach = Object.assign(cloneDeep(state.ach), payload);
   },
-  SET_CC_CARDHOLDER_NAME: (state, payload) => (state.cc.name = payload),
-  SET_CC_CARD_NUMBER: (state, payload) => (state.cc.number = payload),
-  SET_CC_CVV: (state, payload) => (state.cc.cvv = payload),
-  SET_CC_EXPIRY_MONTH: (state, payload) => (state.cc.expiryMonth = payload),
-  SET_CC_EXPIRY_YEAR: (state, payload) => (state.cc.expiryYear = payload),
+  SET_CC_ATTRIBUTE: (state, payload) => {
+    state.cc = Object.assign(cloneDeep(state.cc), payload);
+  },
+  SET_CC_EXPIRY_ATTRIBUTE: (state, payload) => {
+    state.cc.expiry = Object.assign(cloneDeep(state.cc.expiry), payload);
+  },
   SET_CRYPTO_ADDRESS: (state, payload) => (state.crypto.address = payload)
 };

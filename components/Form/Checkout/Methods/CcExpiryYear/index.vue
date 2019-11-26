@@ -20,10 +20,10 @@ export default {
     },
     ccExpiryYear: {
       get() {
-        return this.$store.getters["checkout/ccExpiryYear"];
+        return this.$store.getters["checkout/ccExpiry"].year;
       },
       set(val) {
-        this.$store.commit("checkout/SET_CC_EXPIRY_YEAR", val);
+        this.$store.commit("checkout/SET_CC_EXPIRY_ATTRIBUTE", { year: val });
       }
     }
   }

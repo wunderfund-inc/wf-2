@@ -11,10 +11,10 @@ export default {
   computed: {
     ccName: {
       get() {
-        return this.$store.getters["checkout/ccCardholderName"];
+        return this.$store.getters["checkout/cc"].name;
       },
       set(val) {
-        this.$store.commit("checkout/SET_CC_CARDHOLDER_NAME", val);
+        this.$store.commit("checkout/SET_CC_ATTRIBUTE", { name: val });
       }
     }
   }

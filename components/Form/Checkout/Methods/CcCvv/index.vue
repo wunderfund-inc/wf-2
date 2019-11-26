@@ -11,10 +11,10 @@ export default {
   computed: {
     ccCVV: {
       get() {
-        return this.$store.getters["checkout/ccCVV"];
+        return this.$store.getters["checkout/cc"].cvv;
       },
       set(val) {
-        this.$store.commit("checkout/SET_CC_CVV", val);
+        this.$store.commit("checkout/SET_CC_ATTRIBUTE", { cvv: val });
       }
     }
   }

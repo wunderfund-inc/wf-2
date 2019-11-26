@@ -3,7 +3,7 @@
     label="Card Number (no spaces nor dashes)"
     label-for="cc-number"
   )
-    b-form-input#cc-number(v-model="ccNumber")
+    b-form-input#cc-number(v-model.number="ccNumber")
 </template>
 
 <script>
@@ -11,10 +11,10 @@ export default {
   computed: {
     ccNumber: {
       get() {
-        return this.$store.getters["checkout/ccCardNumber"];
+        return this.$store.getters["checkout/cc"].number;
       },
       set(val) {
-        this.$store.commit("checkout/SET_CC_CARD_NUMBER", val);
+        this.$store.commit("checkout/SET_CC_ATTRIBUTE", { number: val });
       }
     }
   }

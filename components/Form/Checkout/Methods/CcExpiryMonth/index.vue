@@ -29,10 +29,10 @@ export default {
   computed: {
     ccExpiryMonth: {
       get() {
-        return this.$store.getters["checkout/ccExpiryMonth"];
+        return this.$store.getters["checkout/ccExpiry"].month;
       },
       set(val) {
-        this.$store.commit("checkout/SET_CC_EXPIRY_MONTH", val);
+        this.$store.commit("checkout/SET_CC_EXPIRY_ATTRIBUTE", { month: val });
       }
     }
   }
