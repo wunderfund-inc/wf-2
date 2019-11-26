@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import InvestForm from "@/components/Checkout/InvestForm";
+import InvestForm from "@/components/Form/Checkout/CheckoutForm";
 import InvestSummary from "@/components/Checkout/InvestSummary";
 
 export default {

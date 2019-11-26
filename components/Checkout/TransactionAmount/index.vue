@@ -35,9 +35,6 @@ export default {
         this.$store.commit("checkout/SET_TRANSACTION_AMOUNT", val);
       }
     }
-  },
-  async created() {
-    await this.$store.dispatch("offering/SET_OFFERING_DATA");
   }
 };
 </script>

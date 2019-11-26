@@ -1,7 +1,10 @@
 <template lang="pug">
-  section.py-3
+  section
     b-row
-      b-col.py-1(
+      b-col
+        h6 Select an Offering below:
+    b-row.pb-3
+      b-col(
         cols="12"
         md="6"
         lg="4"
@@ -21,20 +24,19 @@
             small.text-muted Price Per Share: $20
             br
             small.text-muted Post-Money Valuation: $4M
-        small.py-2.pl-2.text-muted(v-if="offering !== 'CF'") Why can't I invest?
-
 </template>
 
 <script>
-import OfferingCard from "@/components/Checkout/OfferingCard";
+import OfferingCard from "@/components/Form/Checkout/OfferingCard";
 
 export default {
-  components: {
-    OfferingCard
-  },
+  components: { OfferingCard },
   computed: {
     offerings() {
       return this.$store.getters["company/offerings"];
+    },
+    selectedOffering() {
+      return this.$store.getters["checkout/selectedOffering"];
     }
   }
 };

@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-card(bg-variant="light" v-if="selectedMethod")
+  b-card.my-3(bg-variant="light" v-if="selectedMethod")
     b-form-group(
       label="Extra Information"
       label-size="lg"

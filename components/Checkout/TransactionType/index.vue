@@ -27,7 +27,6 @@ export default {
       }
     },
     hasEntities() {
-      // return false;
       return this.$store.getters["user/hasEntities"];
     }
   }

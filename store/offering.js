@@ -31,5 +31,10 @@ export const actions = {
       "CC",
       "CRYPTO"
     ]);
+  },
+  async SET_SECONDARY_DATA({ commit }) {
+    await commit("SET_SECURITY_TYPE", "D");
+    await commit("SET_MINIMUM_INVESTMENT", 10000);
+    await commit("SET_PAYMENT_METHODS", ["CHECK", "WIRE", "CRYPTO"]);
   }
 };

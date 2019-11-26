@@ -4,11 +4,26 @@ export const state = () => ({
   passwordOld: null,
   passwordNew: null,
   entities: [
-    // "Lion Share Holdings, LLC.",
-    // "Thrivera Venture I, LLC.",
-    // "Wunderfund, Inc."
+    {
+      uid: "asdfqwer",
+      name: "Lion Share Holdings, LLC.",
+      classification: "C-Corporation",
+      ein: "12-1234567",
+      differentEmail: true,
+      email: "justin@wunderfund.co",
+      accredited: true,
+      address: {
+        street1: "1053 Saint Gregory Street",
+        street2: "Floor 2",
+        city: "Cincinnati",
+        state: "OH",
+        postal: "45208"
+      }
+    }
   ],
-  userData: {},
+  userData: {
+    accredited: false
+  },
   form: {
     entity: {
       uid: null,
@@ -17,6 +32,7 @@ export const state = () => ({
       ein: null,
       differentEmail: false,
       email: null,
+      accredited: true,
       address: {
         street1: null,
         street2: null,
@@ -51,7 +67,17 @@ export const getters = {
   },
   entities: state => state.entities,
   hasEntities: state => state.entities.length > 0,
-  userData: state => state.userData
+  userData: state => state.userData,
+  entitySelection: state => {
+    const entityList = state.entities;
+    return entityList.map(el => {
+      return { value: el, text: el.name };
+    });
+  },
+  getEntityById: state => uid => {
+    if (uid) return state.entities.find(entity => entity.uid === uid);
+    return null;
+  }
 };
 
 export const mutations = {

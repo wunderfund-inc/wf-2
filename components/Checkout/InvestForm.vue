@@ -2,14 +2,23 @@
   section
     h3 Invest in Esoteric Brewing
     b-form
+      b-row
+        b-col
+          transaction-type
+      b-row(v-if="selectedType === 'ENTITY'")
+        b-col
+          entity-list
       offering-list(:offerings="offerings")
-      div(v-if="selectedOffering")
-        transaction-type
-        entity-list
-        transaction-amount
-        transaction-method
-        method-layout
-        transaction-agreements
+      //- b-row
+      //-   b-col
+      //-     transaction-amount
+      //- b-row
+      //-   b-col
+      //-     transaction-method
+      //-     method-layout
+      //- b-row
+      //-   b-col
+      //-     transaction-agreements
 </template>
 
 <script>
@@ -37,6 +46,9 @@ export default {
     },
     selectedOffering() {
       return this.$store.getters["checkout/selectedOffering"];
+    },
+    selectedType() {
+      return this.$store.getters["checkout/selectedType"];
     }
   }
 };
