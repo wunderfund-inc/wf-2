@@ -5,8 +5,8 @@
       b-card-text(v-if="validPersonal") I want to personally invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing].
       b-card-text(v-if="validEntity") I want to invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing] on behalf of #[strong {{ selectedEntity.name }}].
       b-card-text(v-if="validTransaction") I'm committed to investing #[strong USD] #[strong {{ transactionAmount | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}].
-      //- b-card-text I've understood and agree to the terms necessary for this investment to be valid.
-      //- b-button(block variant="success") Invest Now
+      b-card-text(v-if="validAgreementList") I've understood and agree to the terms necessary for this investment to be valid.
+      //- b-button(block variant="success" v-if="validEverything") Invest Now
 </template>
 
 <script>
@@ -19,7 +19,8 @@ export default {
       selectedOffering: "checkout/selectedOffering",
       selectedEntity: "checkout/selectedEntity",
       transactionAmount: "checkout/transactionAmount",
-      selectedMethod: "checkout/selectedMethod"
+      selectedMethod: "checkout/selectedMethod",
+      validAgreementList: "checkout/validAgreementList"
     }),
     validPersonal() {
       return this.selectedType === "PERSONAL" && this.selectedOffering;

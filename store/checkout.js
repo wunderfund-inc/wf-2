@@ -1,4 +1,5 @@
 export const state = () => ({
+  validAgreementList: false,
   selectedOffering: null,
   transactionAmount: null,
   selectedMethod: null,
@@ -21,7 +22,7 @@ export const state = () => ({
 });
 
 export const getters = {
-  notQualified: () => true,
+  validAgreementList: state => state.validAgreementList,
   selectedOffering: state => state.selectedOffering,
   transactionAmount: state => state.transactionAmount,
   selectedMethod: state => state.selectedMethod,
@@ -39,6 +40,9 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_AGREEMENT_LIST_VALIDITY: (state, payload) => {
+    state.validAgreementList = payload;
+  },
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
   SET_TRANSACTION_AMOUNT: (state, payload) =>
     (state.transactionAmount = payload),

@@ -4,17 +4,18 @@
       v-for="(agreement, index) in agreements"
       :key="index"
       :value="agreement.value"
-      v-model="agreedTo[index]"
+      v-model="agreementList[index]"
       switch
+      @input="setValidity"
     )
-      span(:class="agreedTo[index] ? 'text-muted' : ''") {{ agreement.text }}
+      span(:class="agreementList[index] ? 'text-muted' : ''") {{ agreement.text }}
 </template>
 
 <script>
 export default {
   data() {
     return {
-      agreedTo: [],
+      agreementList: [false, false, false, false, false],
       agreements: [
         {
           text:
@@ -44,10 +45,10 @@ export default {
       ]
     };
   },
-  computed: {
-    allTrue() {
-      if (this.agreedTo.length < 5) return false;
-      return this.agreedTo.every(x => x);
+  methods: {
+    setValidity() {
+      const validList = this.agreementList.every(x => x);
+      this.$store.commit("checkout/SET_AGREEMENT_LIST_VALIDITY", validList);
     }
   }
 };
