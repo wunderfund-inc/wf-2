@@ -9,30 +9,45 @@
         b-col
           entity-list
       offering-list(v-if="selectedTypeSet")
+      div(v-if="selectedOfferingSet")
+        b-row
+          b-col
+            transaction-amount
+        b-row
+          b-col
+            transaction-method
 </template>
 
 <script>
-import TransactionType from "@/components/Checkout/TransactionType";
-import EntityList from "@/components/Checkout/EntityList";
+import { mapGetters } from "vuex";
+import TransactionType from "@/components/Form/Checkout/TransactionType";
+import EntityList from "@/components/Form/Checkout/EntityList";
 import OfferingList from "@/components/Form/Checkout/OfferingList";
+import TransactionAmount from "@/components/Form/Checkout/TransactionAmount";
+import TransactionMethod from "@/components/Form/Checkout/TransactionMethod";
 
 export default {
   components: {
     TransactionType,
     EntityList,
-    OfferingList
+    OfferingList,
+    TransactionAmount,
+    TransactionMethod
   },
   computed: {
-    selectedType() {
-      return this.$store.getters["checkout/selectedType"];
-    },
+    ...mapGetters({
+      selectedType: "checkout/selectedType",
+      selectedEntity: "checkout/selectedEntity",
+      selectedOffering: "checkout/selectedOffering"
+    }),
     selectedTypeSet() {
-      const selectedType = this.$store.getters["checkout/selectedType"];
-      const selectedEntity = this.$store.getters["checkout/selectedEntity"];
       return (
-        selectedType === "PERSONAL" ||
-        (selectedType === "ENTITY" && selectedEntity)
+        this.selectedType === "PERSONAL" ||
+        (this.selectedType === "ENTITY" && this.selectedEntity)
       );
+    },
+    selectedOfferingSet() {
+      return ["CF", "A", "D"].includes(this.selectedOffering);
     }
   }
 };

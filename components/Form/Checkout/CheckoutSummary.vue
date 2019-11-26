@@ -3,36 +3,36 @@
     b-card(header="Commitment Summary" header-class="text-center")
       b-card-text Hello! My name is #[strong Justin Chiou].
       b-card-text(v-if="validPersonal") I want to personally invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing].
-      b-card-text(v-if="validEntity") I want to invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing] on behalf of #[strong {{ entityName }}].
-      //- b-card-text I'm committing #[strong $100.00] and paying via #[strong a check].
+      b-card-text(v-if="validEntity") I want to invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing] on behalf of #[strong {{ selectedEntity.name }}].
+      b-card-text(v-if="validTransaction") I'm committed to investing #[strong USD] #[strong {{ transactionAmount | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}].
       //- b-card-text I've understood and agree to the terms necessary for this investment to be valid.
       //- b-button(block variant="success") Invest Now
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    selectedType() {
-      return this.$store.getters["checkout/selectedType"];
-    },
-    selectedOffering() {
-      return this.$store.getters["checkout/selectedOffering"];
-    },
-    selectedEntity() {
-      return this.$store.getters["checkout/selectedEntity"];
-    },
-    entityName() {
-      return this.selectedEntity.name;
-    },
+    ...mapGetters({
+      selectedType: "checkout/selectedType",
+      selectedOffering: "checkout/selectedOffering",
+      selectedEntity: "checkout/selectedEntity",
+      transactionAmount: "checkout/transactionAmount",
+      selectedMethod: "checkout/selectedMethod"
+    }),
     validPersonal() {
       return this.selectedType === "PERSONAL" && this.selectedOffering;
     },
     validEntity() {
       return (
         this.selectedType === "ENTITY" &&
-        this.selectedEntity &&
-        this.selectedOffering
+        this.selectedOffering &&
+        this.selectedEntity
       );
+    },
+    validTransaction() {
+      return this.transactionAmount > 0 && this.selectedMethod;
     }
   }
 };

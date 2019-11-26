@@ -33,8 +33,13 @@ export default {
       get() {
         return this.$store.getters["checkout/selectedOffering"];
       },
-      set(val) {
-        this.$store.commit("checkout/SET_OFFERING", val);
+      async set(val) {
+        await this.$store.commit("checkout/SET_OFFERING", val);
+        if (val === "CF") {
+          await this.$store.dispatch("offering/SET_REG_CF_DATA");
+        } else if (val === "D") {
+          await this.$store.dispatch("offering/SET_REG_D_DATA");
+        }
       }
     },
     personallyQualified() {

@@ -21,7 +21,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async SET_OFFERING_DATA({ commit }) {
+  async SET_REG_CF_DATA({ commit }) {
     await commit("SET_SECURITY_TYPE", "CF");
     await commit("SET_MINIMUM_INVESTMENT", 20);
     await commit("SET_PAYMENT_METHODS", [
@@ -32,7 +32,7 @@ export const actions = {
       "CRYPTO"
     ]);
   },
-  async SET_SECONDARY_DATA({ commit }) {
+  async SET_REG_D_DATA({ commit }) {
     await commit("SET_SECURITY_TYPE", "D");
     await commit("SET_MINIMUM_INVESTMENT", 10000);
     await commit("SET_PAYMENT_METHODS", ["CHECK", "WIRE", "CRYPTO"]);
