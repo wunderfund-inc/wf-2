@@ -12,6 +12,8 @@ export const state = () => ({
       differentEmail: true,
       email: "justin@wunderfund.co",
       accredited: true,
+      annualRevenue: 1000000,
+      netAssets: 5000000,
       address: {
         street1: "1053 Saint Gregory Street",
         street2: "Floor 2",
@@ -33,6 +35,8 @@ export const state = () => ({
       differentEmail: false,
       email: null,
       accredited: false,
+      annualRevenue: null,
+      netAssets: null,
       address: {
         street1: null,
         street2: null,

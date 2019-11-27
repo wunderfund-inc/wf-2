@@ -12,6 +12,11 @@
           entity-ein
       b-row
         b-col
+          entity-annual-revenue
+        b-col
+          entity-net-assets
+      b-row
+        b-col
           entity-email-switch
           entity-email-input(v-if="useDifferentEmail")
       b-form-group(
@@ -39,6 +44,8 @@
 import EntityName from "@/components/Form/Entity/EntityName";
 import EntityType from "@/components/Form/Entity/EntityType";
 import EntityEin from "@/components/Form/Entity/EntityEin";
+import EntityAnnualRevenue from "@/components/Form/Entity/EntityAnnualRevenue";
+import EntityNetAssets from "@/components/Form/Entity/EntityNetAssets";
 import EntityEmailSwitch from "@/components/Form/Entity/EntityEmailSwitch";
 import EntityEmailInput from "@/components/Form/Entity/EntityEmailInput";
 import EntityStreet1Input from "@/components/Form/Entity/EntityAddress/Street1Input";
@@ -53,6 +60,8 @@ export default {
     EntityName,
     EntityType,
     EntityEin,
+    EntityAnnualRevenue,
+    EntityNetAssets,
     EntityEmailSwitch,
     EntityEmailInput,
     EntityStreet1Input,
