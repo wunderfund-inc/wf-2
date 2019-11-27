@@ -6,7 +6,7 @@
       b-card-text(v-if="validEntity") I want to invest in the #[strong Regulation] #[strong {{ selectedOffering }}] offering of #[strong Esoteric Brewing] on behalf of #[strong {{ selectedEntity.name }}].
       b-card-text(v-if="validTransaction") I'm committed to investing #[strong USD] #[strong {{ transactionAmount | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}].
       b-card-text(v-if="validAgreementList") I've understood and agree to the terms necessary for this investment to be valid.
-      b-button(block variant="success" :disabled="validEverything") Invest Now
+      b-button(block variant="success" :disabled="!validEverything") Invest Now
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
       validAgreementList: "checkout/validAgreementList"
     }),
     validPersonal() {
-      return this.selectedType === "PERSONAL" && this.selectedOffering;
+      return this.selectedType === "PERSONAL" && this.selectedOffering !== null;
     },
     validEntity() {
       return (
@@ -33,7 +33,7 @@ export default {
       );
     },
     validTransaction() {
-      return this.transactionAmount > 0 && this.selectedMethod;
+      return this.transactionAmount > 0 && this.selectedMethod !== null;
     },
     validEverything() {
       const validType = this.validPersonal || this.validEntity;
