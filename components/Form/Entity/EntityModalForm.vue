@@ -11,9 +11,9 @@
         b-col
           entity-ein
       b-row
-        b-col
+        b-col(md="6")
           entity-annual-revenue
-        b-col
+        b-col(md="6")
           entity-net-assets
       b-row
         b-col
@@ -24,16 +24,16 @@
         label-class="font-weight-bold py-2"
       )
         b-row
-          b-col
+          b-col(md="6")
             entity-street-1-input
-          b-col
+          b-col(md="6")
             entity-street-2-input
         b-row
-          b-col
+          b-col(md="4")
             entity-city-input
-          b-col
+          b-col(md="4")
             entity-state-input
-          b-col
+          b-col(md="4")
             entity-postal-input
       b-row
         b-col
