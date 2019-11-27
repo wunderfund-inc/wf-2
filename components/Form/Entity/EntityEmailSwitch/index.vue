@@ -1,10 +1,6 @@
 <template lang="pug">
   b-form-group
-    b-form-checkbox.py-2(v-model="differentEmail" switch) I want to use a different email address (other than
-      |
-      |
-      span.text-success {{ accountEmail }}
-      | ) when signing agreements on behalf of this entity.
+    b-form-checkbox.py-2(v-model="differentEmail" switch) I want to use a different email address (other than #[span.text-success {{ accountEmail }}]) when signing agreements on behalf of this entity.
 </template>
 
 <script>
@@ -22,7 +18,7 @@ export default {
     },
     accountEmail() {
       // TODO: Refax eventually to store data
-      return "chiou.kai@gmail.com";
+      return "justin@wunderfund.co";
     }
   }
 };

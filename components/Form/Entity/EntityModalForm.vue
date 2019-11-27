@@ -30,6 +30,9 @@
             entity-state-input
           b-col
             entity-postal-input
+      b-row
+        b-col
+          entity-accreditation
 </template>
 
 <script>
@@ -43,6 +46,7 @@ import EntityStreet2Input from "@/components/Form/Entity/EntityAddress/Street2In
 import EntityCityInput from "@/components/Form/Entity/EntityAddress/CityInput";
 import EntityStateInput from "@/components/Form/Entity/EntityAddress/StateInput";
 import EntityPostalInput from "@/components/Form/Entity/EntityAddress/PostalInput";
+import EntityAccreditation from "@/components/Form/Entity/EntityAccreditation";
 
 export default {
   components: {
@@ -55,7 +59,8 @@ export default {
     EntityStreet2Input,
     EntityCityInput,
     EntityStateInput,
-    EntityPostalInput
+    EntityPostalInput,
+    EntityAccreditation
   },
   computed: {
     useDifferentEmail() {

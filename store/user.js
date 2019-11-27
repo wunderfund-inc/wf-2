@@ -32,7 +32,7 @@ export const state = () => ({
       ein: null,
       differentEmail: false,
       email: null,
-      accredited: true,
+      accredited: false,
       address: {
         street1: null,
         street2: null,
