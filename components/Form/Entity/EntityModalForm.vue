@@ -1,6 +1,12 @@
 <template lang="pug">
-  b-modal#modal-entity-form(title="Creating an Entity")
-    form
+  b-modal#modal-entity-form(
+    title="Create an Entity"
+    ok-title="Create"
+    @show="resetModal"
+    @hidden="resetModal"
+    @ok="handleOk"
+  )
+    form(@submit.stop.prevent="handleSubmit")
       b-row
         b-col
           entity-name
@@ -74,6 +80,20 @@ export default {
   computed: {
     useDifferentEmail() {
       return this.$store.getters["user/entityForm"].differentEmail;
+    }
+  },
+  methods: {
+    resetModal() {
+      // eslint-disable-next-line
+      console.log("modal reset");
+    },
+    handleOk(event) {
+      event.preventDefault();
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // eslint-disable-next-line
+      console.log("submit handling");
     }
   }
 };
