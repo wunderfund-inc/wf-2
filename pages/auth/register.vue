@@ -1,10 +1,10 @@
 <template lang="pug">
   main
-    b-container.py-5.text-center.mx-auto
+    b-container.py-5.mx-auto
       b-row
         b-col.d-none.d-md-block
         b-col
-          h1.pb-4 Register
+          h1.pb-4.text-center Register
           section-social-media-login
           hr.py-3
           registration-form

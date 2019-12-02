@@ -1,6 +1,6 @@
 <template lang="pug">
-  b-form
-    b-form-group.text-left(
+  b-form(@submit.stop.prevent="handleRegistration")
+    b-form-group(
       label="Email Address"
       label-for="input-email"
       :invalid-feedback="invalidFeedback"
@@ -13,7 +13,7 @@
         :state="state"
         trim
       )
-    b-form-group.text-left(
+    b-form-group(
       label="Password"
       label-for="input-password"
       :invalid-feedback="invalidFeedback"
@@ -26,7 +26,7 @@
         :state="state"
         trim
       )
-    b-form-group.text-left(
+    b-form-group(
       label="Confirm Password"
       label-for="input-password"
       :invalid-feedback="invalidFeedback"
@@ -35,10 +35,15 @@
     )
       b-form-input#input-password(
         type="password"
-        v-model="confirm_password"
+        v-model="confirmPassword"
         :state="state"
         trim
       )
+    b-form-group(label="Please also acknowledge the following:")
+      b-form-checkbox.py-2(switch) I understand there are risks in investing on a crowdfunding platform, outlined here.
+      b-form-checkbox.py-2(switch) I am agreeing to Wunderfund's Terms of Service.
+      b-form-checkbox.py-2(switch) I am agreeing to Wunderfund's Privacy Policy.
+      b-form-checkbox.py-2(switch) I understand Wunderfund earns its income as described by...
     button.mb-3.btn.btn-lg.btn-primary.btn-block Register
 </template>
 
@@ -50,7 +55,7 @@ export default {
       password: null,
       invalidFeedback: null,
       validFeedback: null,
-      confirm_password: null,
+      confirmPassword: null,
       state: null
     };
   }
