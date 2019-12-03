@@ -23,9 +23,10 @@ export const state = () => ({
       }
     }
   ],
-  userData: {
-    accredited: false
-  },
+  // userData: {
+  //   accredited: false
+  // },
+  userData: null,
   form: {
     entity: {
       uid: null,
