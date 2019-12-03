@@ -6,7 +6,13 @@
         b-col
           h1.pb-4.text-center Log In
           section-social-media-login
-          hr.py-3
+          b-row
+            b-col(cols="5")
+              hr.py-3
+            b-col.text-center.pt-1(cols="2")
+              span or
+            b-col(cols="5")
+              hr.py-3
           login-form
           small.text-muted Don't have an account?
             |
