@@ -4,7 +4,7 @@
       b-card-header(header-tag="header" class="p-1" role="tab")
         b-button(block size="lg" href="#" v-b-toggle.accordion-1 variant="success") Register via Magic Link
         b-collapse(id="accordion-1" accordion="my-accordion" role="tabpanel")
-          b-card-body
+          b-card-body(v-if="formState")
             b-form#magic-link(@submit.stop.prevent="registerViaMagicLink")
               b-form-group(
                 label="Email Address"
@@ -22,6 +22,8 @@
                 b-form-checkbox.py-2(switch v-model="agreements[2]") I am agreeing to Wunderfund's Privacy Policy.
                 b-form-checkbox.py-2(switch v-model="agreements[3]") I understand Wunderfund earns its income as described by...
               b-button(size="lg" variant="primary" block :disabled="!validMagicLinkForm" type="submit") Send Link
+          b-card-body(v-else)
+            b-card-text Check your email. We sent you a link!
     b-card.my-2(no-body)
       b-card-header(header-tag="header" class="p-1" role="tab")
         b-button(block size="lg" href="#" v-b-toggle.accordion-2 variant="info" @click="setRegistrationType('password')") Register via a Password
@@ -70,7 +72,7 @@
 export default {
   data() {
     return {
-      registrationType: null,
+      formState: true,
       email: null,
       password: null,
       confirmPassword: null,
@@ -101,12 +103,9 @@ export default {
     }
   },
   methods: {
-    setRegistrationType(val) {
-      if (val === "link") this.registrationType = "link";
-      if (val === "password") this.registrationType = "password";
-    },
-    registerViaMagicLink() {
-      this.$store.dispatch("auth/REGISTER_VIA_MAGIC_LINK", this.email);
+    async registerViaMagicLink() {
+      await this.$store.dispatch("auth/registerViaMagicLink", this.email);
+      this.formState = false;
     },
     async registerViaPassword() {
       const credentials = {
@@ -114,7 +113,7 @@ export default {
         password: this.password
       };
 
-      await this.$store.dispatch("auth/REGISTER_VIA_PASSWORD", credentials);
+      await this.$store.dispatch("auth/registerViaPassword", credentials);
     }
   }
 };

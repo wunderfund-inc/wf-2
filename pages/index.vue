@@ -19,7 +19,7 @@ export default {
     EmailCapture,
     SectionBrowse
   },
-  data() {
+  asyncData() {
     return {
       campaigns: d.campaigns
     };
