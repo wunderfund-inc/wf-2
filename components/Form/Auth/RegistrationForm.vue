@@ -2,8 +2,13 @@
   section#manual-auth
     b-card.my-2(no-body)
       b-card-header(header-tag="header" class="p-1" role="tab")
-        b-button(block size="lg" href="#" v-b-toggle.accordion-1 variant="success") Register via Magic Link
-        b-collapse(id="accordion-1" accordion="my-accordion" role="tabpanel")
+        b-button(
+          block
+          size="lg"
+          v-b-toggle.accordion-1
+          variant="success"
+        ) Register via Magic Link
+        b-collapse#accordion-1(accordion="registration" role="tabpanel")
           b-card-body(v-if="formState")
             b-form#magic-link(@submit.stop.prevent="registerViaMagicLink")
               b-form-group(
@@ -17,17 +22,24 @@
                   trim
                 )
               b-form-group(label="Also, please acknowledge the following:")
-                b-form-checkbox.py-2(switch v-model="agreements[0]") I understand there are risks in investing on a crowdfunding platform, outlined here.
-                b-form-checkbox.py-2(switch v-model="agreements[1]") I am agreeing to Wunderfund's Terms of Service.
-                b-form-checkbox.py-2(switch v-model="agreements[2]") I am agreeing to Wunderfund's Privacy Policy.
-                b-form-checkbox.py-2(switch v-model="agreements[3]") I understand Wunderfund earns its income as described by...
+                b-form-checkbox.py-2(
+                  switch
+                  v-for="(attestation, index) in attestations"
+                  :key="index"
+                  v-model="agreements[index]"
+                ) {{ attestation }}
               b-button(size="lg" variant="primary" block :disabled="!validMagicLinkForm" type="submit") Send Link
           b-card-body(v-else)
             b-card-text Check your email. We sent you a link!
     b-card.my-2(no-body)
       b-card-header(header-tag="header" class="p-1" role="tab")
-        b-button(block size="lg" href="#" v-b-toggle.accordion-2 variant="info" @click="setRegistrationType('password')") Register via a Password
-        b-collapse#accordion-2(accordion="my-accordion" role="tabpanel")
+        b-button(
+          block
+          size="lg"
+          v-b-toggle.accordion-2
+          variant="info"
+        ) Register via a Password
+        b-collapse#accordion-2(accordion="registration" role="tabpanel")
           b-card-body
             b-form#via-password(@submit.stop.prevent="registerViaPassword")
               b-form-group(
@@ -61,10 +73,12 @@
                   :state="matchingPasswords"
                 )
               b-form-group(label="Also, please acknowledge the following:")
-                b-form-checkbox.py-2(switch v-model="agreements[0]") I understand there are risks in investing on a crowdfunding platform, outlined here.
-                b-form-checkbox.py-2(switch v-model="agreements[1]") I am agreeing to Wunderfund's Terms of Service.
-                b-form-checkbox.py-2(switch v-model="agreements[2]") I am agreeing to Wunderfund's Privacy Policy.
-                b-form-checkbox.py-2(switch v-model="agreements[3]") I understand Wunderfund earns its income as described by...
+                b-form-checkbox.py-2(
+                  switch
+                  v-for="(attestation, index) in attestations"
+                  :key="index"
+                  v-model="agreements[index]"
+                ) {{ attestation }}
               b-button(size="lg" variant="primary" block :disabled="!validRegistrationForm" type="submit") Register
 </template>
 
@@ -76,7 +90,13 @@ export default {
       email: null,
       password: null,
       confirmPassword: null,
-      agreements: [false, false, false, false]
+      agreements: [false, false, false, false],
+      attestations: [
+        "I understand there are risks in investing on a crowdfunding platform, outlined here.",
+        "I am agreeing to Wunderfund's Terms of Service.",
+        "I am agreeing to Wunderfund's Privacy Policy.",
+        "I understand Wunderfund earns its income as described by..."
+      ]
     };
   },
   computed: {
