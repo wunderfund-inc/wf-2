@@ -6,10 +6,7 @@
     #campaign-content
       b-container.py-5
         b-row
-          b-col(md="3")
-            campaign-sidebar
-          b-col(md="9")
-            h1 Main content
+          h1 Insert main content here
 </template>
 
 <script>
