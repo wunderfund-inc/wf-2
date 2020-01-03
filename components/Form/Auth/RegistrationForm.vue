@@ -1,86 +1,47 @@
 <template lang="pug">
   section#manual-auth
     b-card.my-2(no-body)
-      b-card-header(header-tag="header" class="p-1" role="tab")
-        b-button(
-          block
-          size="lg"
-          v-b-toggle.accordion-1
-          variant="success"
-        ) Register via Magic Link
-        b-collapse#accordion-1(accordion="registration" role="tabpanel")
-          b-card-body(v-if="formState")
-            b-form#magic-link(@submit.stop.prevent="submitRegister")
-              b-form-group(
-                label="Email Address"
-                label-for="input-email-1"
-                description="Get a secure link to your email that will sign you in instantly."
-              )
-                b-form-input#input-email-1(
-                  type="email"
-                  v-model="email"
-                  trim
-                )
-              b-form-group(label="Also, please acknowledge the following:")
-                b-form-checkbox.py-2(
-                  switch
-                  v-for="(attestation, index) in attestations"
-                  :key="index"
-                  v-model="agreements[index]"
-                ) {{ attestation }}
-              b-button(size="lg" variant="primary" block :disabled="!validMagicLinkForm" type="submit") Send Link
-          b-card-body(v-else)
-            b-card-text Check your email. We sent you a link!
-    b-card.my-2(no-body)
-      b-card-header(header-tag="header" class="p-1" role="tab")
-        b-button(
-          block
-          size="lg"
-          v-b-toggle.accordion-2
-          variant="info"
-        ) Register via a Password
-        b-collapse#accordion-2(accordion="registration" role="tabpanel")
-          b-card-body
-            b-form#via-password(@submit.stop.prevent="submitRegister")
-              b-form-group(
-                label="Email Address"
-                label-for="input-email-2"
-              )
-                b-form-input#input-email-2(
-                  type="email"
-                  v-model="email"
-                  trim
-                )
-              b-form-group(
-                label="Enter a password"
-                label-for="input-password"
-              )
-                b-form-input#input-password(
-                  type="password"
-                  v-model="password"
-                  trim
-                )
-              b-form-group(
-                label="Confirm your password"
-                label-for="confirm-password"
-                :state="matchingPasswords"
-                invalid-feedback="Passwords don't match"
-              )
-                b-form-input#confirm-password(
-                  type="password"
-                  v-model="confirmPassword"
-                  trim
-                  :state="matchingPasswords"
-                )
-              b-form-group(label="Also, please acknowledge the following:")
-                b-form-checkbox.py-2(
-                  switch
-                  v-for="(attestation, index) in attestations"
-                  :key="index"
-                  v-model="agreements[index]"
-                ) {{ attestation }}
-              b-button(size="lg" variant="primary" block :disabled="!validRegistrationForm" type="submit") Register
-              p.text-danger.pt-3 {{ error }}
+      b-card-body
+        b-form#via-password(@submit.stop.prevent="submitRegister")
+          b-form-group(
+            label="Email Address"
+            label-for="input-email-2"
+          )
+            b-form-input#input-email-2(
+              type="email"
+              v-model="email"
+              trim
+            )
+          b-form-group(
+            label="Enter a password"
+            label-for="input-password"
+          )
+            b-form-input#input-password(
+              type="password"
+              v-model="password"
+              trim
+            )
+          b-form-group(
+            label="Confirm your password"
+            label-for="confirm-password"
+            :state="matchingPasswords"
+            invalid-feedback="Passwords don't match"
+          )
+            b-form-input#confirm-password(
+              type="password"
+              v-model="confirmPassword"
+              trim
+              :state="matchingPasswords"
+            )
+          b-form-group(label="Also, please acknowledge the following:")
+            b-form-checkbox.py-2(
+              switch
+              v-for="(attestation, index) in attestations"
+              :key="index"
+              v-model="agreements[index]"
+            ) {{ attestation }}
+          b-button(size="lg" variant="primary" block :disabled="!validRegistrationForm" type="submit") Register
+          p.text-danger.pt-3 {{ error }}
 </template>
 
 <script>
