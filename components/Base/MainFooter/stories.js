@@ -4,7 +4,5 @@ import MainFooter from "./index.vue";
 
 storiesOf("Layout", module).add("Main Footer", () => ({
   components: { MainFooter },
-  template: `
-    <main-footer />
-  `
+  template: `<main-footer />`
 }));
