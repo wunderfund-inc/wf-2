@@ -27,6 +27,7 @@
         trim
       )
     b-button(size="lg" variant="primary" block type="submit") Login
+    p.text-danger.pt-3 {{ error }}
 </template>
 
 <script>
@@ -39,7 +40,8 @@ export default {
       password: null,
       invalidFeedback: null,
       validFeedback: null,
-      state: null
+      state: null,
+      error: null
     };
   },
   methods: {
@@ -54,7 +56,7 @@ export default {
       } catch (error) {
         // eslint-disable-next-line
         console.error(error);
-        this.error = error;
+        this.error = error.message;
       }
     }
   }

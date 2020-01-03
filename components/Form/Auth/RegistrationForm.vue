@@ -80,6 +80,7 @@
                   v-model="agreements[index]"
                 ) {{ attestation }}
               b-button(size="lg" variant="primary" block :disabled="!validRegistrationForm" type="submit") Register
+              p.text-danger.pt-3 {{ error }}
 </template>
 
 <script>
@@ -98,7 +99,8 @@ export default {
         "I am agreeing to Wunderfund's Terms of Service.",
         "I am agreeing to Wunderfund's Privacy Policy.",
         "I understand Wunderfund earns its income as described by..."
-      ]
+      ],
+      error: null
     };
   },
   computed: {
@@ -137,7 +139,7 @@ export default {
       } catch (error) {
         // eslint-disable-next-line
         console.error(error);
-        this.error = error;
+        this.error = error.message;
       }
     },
     async createUser(uid, dto) {
