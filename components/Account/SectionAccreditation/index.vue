@@ -4,7 +4,7 @@
     b-container
       div(v-if="!isAccredited")
         h4.pb-3 Are you an Accredited Investor?
-        p Base on the
+        p Based on the
           |
           |
           b-link(href="https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/updated-investor-bulletin-accredited-investors" target="_blank") SEC standards

@@ -4,24 +4,36 @@ export const state = () => ({
   passwordOld: null,
   passwordNew: null,
   entities: [
-    {
-      uid: "asdfqwer",
-      name: "Lion Share Holdings, LLC.",
-      classification: "C-Corporation",
-      ein: "12-1234567",
-      differentEmail: true,
-      email: "justin@wunderfund.co",
-      accredited: true,
-      annualRevenue: 1000000,
-      netAssets: 5000000,
-      address: {
-        street1: "1053 Saint Gregory Street",
-        street2: "Floor 2",
-        city: "Cincinnati",
-        state: "OH",
-        postal: "45208"
-      }
-    }
+    // {
+    //   uid: "asdfqwer",
+    //   name: "Lion Share Holdings, LLC.",
+    //   classification: "C-Corporation",
+    //   ein: "12-1234567",
+    //   differentEmail: true,
+    //   email: "justin@wunderfund.co",
+    //   accredited: true,
+    //   annualRevenue: 1000000,
+    //   netAssets: 5000000,
+    //   address: {
+    //     street1: "1053 Saint Gregory Street",
+    //     street2: "Floor 2",
+    //     city: "Cincinnati",
+    //     state: "OH",
+    //     postal: "45208"
+    //   }
+    // }
+  ],
+  investments: [
+    // {
+    //   companyId: "1",
+    //   companyLogo:
+    //     "http://33ngfg4d8cu73qlgogo5zau1.wpengine.netdna-cdn.com/wp-content/uploads/2017/11/Esoteric-Logo-300x300.jpg",
+    //   companyNickname: "Esoteric Brewing Company",
+    //   companyPricePerShare: 100,
+    //   companyUnitPrice: 100,
+    //   amount: 25000,
+    //   agreementUrl: ""
+    // }
   ],
   currentUser: null,
   form: {
@@ -69,6 +81,7 @@ export const getters = {
   },
   entities: state => state.entities,
   hasEntities: state => state.entities.length > 0,
+  investments: state => state.investments,
   currentUser: state => state.currentUser,
   entitySelection: state => {
     const entityList = state.entities;
@@ -121,8 +134,5 @@ export const actions = {
   },
   setCurrentUserProfile({ commit }, payload) {
     commit("SET_CURRENT_USER_PROFILE", payload);
-  },
-  async LOGOUT_USER({ commit }) {
-    await commit("SET_CURRENT_USER", null);
   }
 };

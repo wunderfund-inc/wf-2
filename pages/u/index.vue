@@ -20,7 +20,7 @@ import AccountInvestmentList from "@/components/Account/AccountInvestmentList";
 import SectionVerifyEmail from "@/components/Account/SectionVerifyEmail";
 
 // TODO: remove when we have a Store Action for this.
-import d from "@/components/Account/data.json";
+// import d from "@/components/Account/data.json";
 
 export default {
   middleware: "authenticated",
@@ -30,13 +30,13 @@ export default {
     AccountInvestmentList,
     SectionVerifyEmail
   },
-  data() {
-    return {
-      investments: d.investments,
-      entities: d.entities
-    };
-  },
   computed: {
+    entities() {
+      return this.$store.getters["user/entities"];
+    },
+    investments() {
+      return this.$store.getters["user/investments"];
+    },
     loggedIn() {
       return this.$store.getters["auth/loggedIn"];
     },
