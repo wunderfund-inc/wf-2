@@ -33,7 +33,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~plugins/filters", "~plugins/firebase"],
+  plugins: ["~plugins/filters"],
   pageTransition: "page",
   /*
    ** Nuxt.js modules
@@ -67,6 +67,7 @@ export default {
       }
     ]
   ],
+  vendor: ["firebase"],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
