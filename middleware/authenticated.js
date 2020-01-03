@@ -1,13 +1,7 @@
-export default function({ store, redirect, route }) {
-  const isAuthenticated = () => store.getters["user/userData"];
-  const atRoute = url => route.matched.some(record => record.path === url);
+import { auth } from "@/plugins/firebase";
+import { getUserFromCookie } from "@/helpers";
 
-  if (
-    isAuthenticated &&
-    (atRoute("/auth/login") || atRoute("/auth/register"))
-  ) {
-    return redirect("/u");
-  } else if (!store.getters["user/userData"] && atRoute("/u")) {
-    return redirect("/auth/login");
-  }
+export default function({ redirect, req, store }) {
+  const user = process.server ? getUserFromCookie(req) : auth.currentUser;
+  if (!user) redirect("/auth/login");
 }
