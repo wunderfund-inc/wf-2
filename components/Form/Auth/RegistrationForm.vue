@@ -10,7 +10,7 @@
         ) Register via Magic Link
         b-collapse#accordion-1(accordion="registration" role="tabpanel")
           b-card-body(v-if="formState")
-            b-form#magic-link(@submit.stop.prevent="registerViaMagicLink")
+            b-form#magic-link(@submit.stop.prevent="submitRegister")
               b-form-group(
                 label="Email Address"
                 label-for="input-email-1"
@@ -41,7 +41,7 @@
         ) Register via a Password
         b-collapse#accordion-2(accordion="registration" role="tabpanel")
           b-card-body
-            b-form#via-password(@submit.stop.prevent="registerViaPassword")
+            b-form#via-password(@submit.stop.prevent="submitRegister")
               b-form-group(
                 label="Email Address"
                 label-for="input-email-2"
@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { auth, db, timestamp } from "@/plugins/firebase";
+
 export default {
   data() {
     return {
@@ -123,17 +125,33 @@ export default {
     }
   },
   methods: {
-    async registerViaMagicLink() {
-      await this.$store.dispatch("auth/registerViaMagicLink", this.email);
-      this.formState = false;
+    async submitRegister() {
+      try {
+        const user = await auth.createUserWithEmailAndPassword(
+          this.email,
+          this.password
+        );
+        await this.createUser(user.user.uid, user);
+        await this.$store.dispatch("auth/login", user.user.toJSON());
+        await this.$router.replace("/u");
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error);
+        this.error = error;
+      }
     },
-    async registerViaPassword() {
-      const credentials = {
-        email: this.email,
-        password: this.password
+    async createUser(uid, dto) {
+      const user = {
+        uid: dto.user.uid,
+        email: dto.user.email,
+        emailVerified: dto.user.emailVerified,
+        createdAt: timestamp,
+        updatedAt: timestamp
       };
-
-      await this.$store.dispatch("auth/registerViaPassword", credentials);
+      await db
+        .collection("users")
+        .doc(dto.user.uid)
+        .set(user);
     }
   }
 };

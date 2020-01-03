@@ -1,30 +1,43 @@
+import Cookies from "js-cookie";
 import { auth } from "@/plugins/firebase";
-import { actionCodeSettings } from "@/plugins/firebase-config";
+
+export const state = () => ({
+  currentUserAuth: null
+});
+
+export const getters = {
+  currentUserAuth: state => state.currentUserAuth,
+  loggedIn: state => !!state.currentUserAuth
+};
+
+export const mutations = {
+  SET_AUTH_DATA(state, payload) {
+    state.currentUserAuth = payload;
+  }
+};
 
 export const actions = {
-  async REGISTER_VIA_MAGIC_LINK({ commit }, email) {
+  async login({ dispatch }, user) {
     try {
-      await auth.sendSignInLinkToEmail(email, actionCodeSettings);
-      // eslint-disable-next-line
-      console.log("Magic link sent!");
+      const token = await auth.currentUser.getIdToken(true);
+      Cookies.set("access_token", token);
+      await dispatch("setAuth", user);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
     }
   },
-  async REGISTER_VIA_PASSWORD({ commit }, payload) {
+  async logout({ dispatch }) {
     try {
-      // eslint-disable-next-line
-      console.log("Signing in via password...");
-      // eslint-disable-next-line
-      console.log(payload);
-      await auth.createUserWithEmailAndPassword(
-        payload.email,
-        payload.password
-      );
+      await auth.signOut();
+      Cookies.remove("access_token");
+      await dispatch("setAuth", null);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
     }
+  },
+  setAuth({ commit }, authData) {
+    commit("SET_AUTH_DATA", authData);
   }
 };

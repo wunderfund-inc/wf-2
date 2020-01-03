@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-form
+  b-form#via-password(@submit.stop.prevent="submitLogin")
     b-form-group.text-left(
       label="Email Address"
       label-for="input-email"
@@ -26,10 +26,12 @@
         :state="state"
         trim
       )
-    button.mb-3.btn.btn-lg.btn-primary.btn-block Sign in
+    b-button(size="lg" variant="primary" block type="submit") Login
 </template>
 
 <script>
+import { auth } from "@/plugins/firebase";
+
 export default {
   data() {
     return {
@@ -39,6 +41,22 @@ export default {
       validFeedback: null,
       state: null
     };
+  },
+  methods: {
+    async submitLogin() {
+      try {
+        const user = await auth.signInWithEmailAndPassword(
+          this.email,
+          this.password
+        );
+        await this.$store.dispatch("auth/login", user.user.toJSON());
+        await this.$router.replace("/u");
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error);
+        this.error = error;
+      }
+    }
   }
 };
 </script>

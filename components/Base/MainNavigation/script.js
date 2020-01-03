@@ -1,12 +1,12 @@
 export default {
   computed: {
-    signedIn() {
-      return this.$store.getters["user/userData"];
+    loggedIn() {
+      return this.$store.getters["auth/currentUserAuth"];
     }
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("user/LOGOUT_USER");
+      await this.$store.dispatch("auth/logout");
     }
   }
 };

@@ -23,10 +23,7 @@ export const state = () => ({
       }
     }
   ],
-  // userData: {
-  //   accredited: false
-  // },
-  userData: null,
+  currentUser: null,
   form: {
     entity: {
       uid: null,
@@ -72,7 +69,7 @@ export const getters = {
   },
   entities: state => state.entities,
   hasEntities: state => state.entities.length > 0,
-  userData: state => state.userData,
+  currentUser: state => state.currentUser,
   entitySelection: state => {
     const entityList = state.entities;
     return entityList.map(el => {
@@ -110,13 +107,22 @@ export const mutations = {
   SET_NEW_PASSWORD(state, payload) {
     state.passwordNew = payload;
   },
-  SET_USER_DATA(state, payload) {
-    state.userData = payload;
+  SET_CURRENT_USER_PROFILE(state, payload) {
+    state.currentUser.profile = payload;
+  },
+  SET_CURRENT_USER(state, payload) {
+    state.currentUser = payload;
   }
 };
 
 export const actions = {
+  setCurrentUser({ commit }, payload) {
+    commit("SET_CURRENT_USER", payload);
+  },
+  setCurrentUserProfile({ commit }, payload) {
+    commit("SET_CURRENT_USER_PROFILE", payload);
+  },
   async LOGOUT_USER({ commit }) {
-    await commit("SET_USER_DATA", null);
+    await commit("SET_CURRENT_USER", null);
   }
 };

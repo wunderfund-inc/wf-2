@@ -9,13 +9,13 @@ header
           b-nav-item(to="/c") Browse
           b-nav-item(to="/raise-capital") Raise Capital
           b-nav-item(to="/faq") FAQ
-          div(v-if="signedIn")
+          div(v-if="loggedIn")
             b-nav-item.d-block.d-md-none(to="/u") Dashboard
             b-nav-item.d-block.d-md-none(to="/" @click="logout") Logout
           div(v-else)
             b-nav-item.d-block.d-md-none(to="/auth/login") Login
             b-nav-item.d-block.d-md-none(to="/auth/register") Sign Up
-      b-navbar-nav.ml-auto.d-none.d-md-flex(v-if="signedIn")
+      b-navbar-nav.ml-auto.d-none.d-md-flex(v-if="loggedIn")
         b-nav-item-dropdown(right no-caret)
           template(slot="button-content")
             b-img(
