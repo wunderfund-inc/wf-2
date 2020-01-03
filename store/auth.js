@@ -7,7 +7,16 @@ export const state = () => ({
 
 export const getters = {
   currentUserAuth: state => state.currentUserAuth,
-  loggedIn: state => !!state.currentUserAuth
+  loggedIn: state => !!state.currentUserAuth,
+  emailVerified: state => {
+    if (state.currentUserAuth) {
+      return (
+        state.currentUserAuth.emailVerified ||
+        state.currentUserAuth.email_verified
+      );
+    }
+    return false;
+  }
 };
 
 export const mutations = {
