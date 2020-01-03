@@ -1,9 +1,12 @@
-import firebase from "firebase/app";
+import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import { firebaseConfig } from "./firebase-config";
 
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const app = firebase.apps.length
+  ? firebase.app()
+  : firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth();
-export const db = firebase.firestore();
+export const auth = app.auth();
+export const db = app.firestore();
+export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
