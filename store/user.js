@@ -37,23 +37,6 @@ export const state = () => ({
   ],
   currentUser: null,
   form: {
-    profile: {
-      name: {
-        first: null,
-        last: null
-      },
-      address: {
-        street1: null,
-        street2: null,
-        city: null,
-        state: null,
-        postal: null
-      }
-    },
-    password: {
-      old: null,
-      new: null
-    },
     entity: {
       uid: null,
       name: null,
@@ -71,6 +54,23 @@ export const state = () => ({
         state: null,
         postal: null
       }
+    },
+    password: {
+      old: null,
+      new: null
+    },
+    profile: {
+      address: {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        postal: null
+      },
+      name: {
+        first: null,
+        last: null
+      }
     }
   },
   personal: {
@@ -87,12 +87,12 @@ export const state = () => ({
 });
 
 export const getters = {
-  address: state => state.address,
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
-  personal: state => state.personal,
-  name: state => state.form.profile.name,
   password: state => state.form.password,
+  address: state => state.form.profile.address,
+  name: state => state.form.profile.name,
+  personal: state => state.personal,
   passwordsMatch: state => {
     const password = state.form.password;
     return password.old === password.new;
@@ -162,6 +162,9 @@ export const mutations = {
 export const actions = {
   setPasswordAttribute({ commit }, payload) {
     commit("SET_PASSWORD_ATTRIBUTE", payload);
+  },
+  setProfileNameAttribute({ commit }, payload) {
+    commit("SET_PROFILE_NAME_ATTRIBUTE", payload);
   },
   setCurrentUser({ commit }, payload) {
     commit("SET_CURRENT_USER", payload);

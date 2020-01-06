@@ -14,7 +14,7 @@ export default {
         return this.$store.getters["user/name"].first;
       },
       set(val) {
-        this.$store.commit("user/SET_PROFILE_NAME_ATTRIBUTE", { first: val });
+        this.$store.dispatch("user/setProfileNameAttribute", { first: val });
       }
     }
   }
