@@ -48,7 +48,12 @@ export default {
       .collection("users")
       .doc(uid)
       .get();
-    await store.dispatch("user/setCurrentUser", user.data());
+    const userData = user.data();
+    await store.dispatch("user/setCurrentUser", userData);
+    await store.dispatch("user/setProfileNameAttribute", { ...userData.name });
+    await store.dispatch("user/setProfileAddressAttribute", {
+      ...userData.address
+    });
   }
 };
 </script>

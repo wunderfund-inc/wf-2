@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-form(@submit.stop.prevent="updateProfile")
+  b-form(@submit.stop.prevent="updateProfileOnFirebase")
     b-row
       b-col(md="6")
         first-name-input
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { db } from "@/plugins/firebase";
 import FirstNameInput from "@/components/Form/Profile/FirstNameInput";
 import LastNameInput from "@/components/Form/Profile/LastNameInput";
 import Street1Input from "@/components/Form/Profile/Address/Street1Input";
@@ -46,26 +48,20 @@ export default {
     PostalInput
   },
   computed: {
-    name() {
-      return this.$store.getters["user/name"];
-    },
-    address() {
-      return this.$store.getters["user/address"];
-    },
-    formData() {
-      const name = { ...this.name };
-      const address = { ...this.address };
-      return { name, address };
-    },
-    validProfileForm() {
-      return this.$store.getters["user/validProfileForm"];
-    }
+    ...mapGetters({
+      name: "user/name",
+      address: "user/address",
+      validProfileForm: "user/validProfileForm",
+      currentUser: ["user/currentUser"]
+    })
   },
   methods: {
-    updateProfile() {
-      // TODO: send to firebase
-      // eslint-disable-next-line
-      console.log("Form submission to update profile:", this.formData);
+    async updateProfileOnFirebase() {
+      await db
+        .collection("users")
+        .doc(this.currentUser.uid)
+        .update({ name: this.name, address: this.address });
+      window.location.reload(true);
     }
   }
 };
