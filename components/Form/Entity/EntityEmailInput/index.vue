@@ -3,7 +3,7 @@
     label="Which email address do you want to use instead?"
     label-for="entity-email"
   )
-    b-form-input#entity-email(v-model="entityEmail" trim)
+    b-form-input#entity-email(v-model="entityEmail" trim type="email")
 </template>
 
 <script>

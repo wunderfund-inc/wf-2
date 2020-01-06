@@ -18,7 +18,7 @@ export default {
     },
     accountEmail() {
       // TODO: Refax eventually to store data
-      return "justin@wunderfund.co";
+      return this.$store.getters["auth/currentUserAuth"].email;
     }
   }
 };

@@ -1,8 +1,6 @@
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
-  passwordOld: null,
-  passwordNew: null,
   entities: [
     // {
     //   uid: "asdfqwer",
@@ -72,17 +70,6 @@ export const state = () => ({
         last: null
       }
     }
-  },
-  personal: {
-    firstName: null,
-    lastName: null
-  },
-  address: {
-    street1: null,
-    street2: null,
-    city: null,
-    state: null,
-    postal: null
   }
 });
 
@@ -104,7 +91,6 @@ export const getters = {
       address.postal
     );
   },
-  personal: state => state.personal,
   passwordsMatch: state => {
     const password = state.form.password;
     return password.old === password.new;
@@ -156,12 +142,6 @@ export const mutations = {
   },
   SET_ENTITY_LIST(state, payload) {
     state.entities = payload;
-  },
-  SET_OLD_PASSWORD(state, payload) {
-    state.passwordOld = payload;
-  },
-  SET_NEW_PASSWORD(state, payload) {
-    state.passwordNew = payload;
   },
   SET_CURRENT_USER_PROFILE(state, payload) {
     state.currentUser.profile = payload;

@@ -92,6 +92,7 @@ export default {
       this.handleSubmit();
     },
     handleSubmit() {
+      // TODO: send to firebase
       // eslint-disable-next-line
       console.log("submit handling");
     }
