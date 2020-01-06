@@ -37,6 +37,23 @@ export const state = () => ({
   ],
   currentUser: null,
   form: {
+    profile: {
+      name: {
+        first: null,
+        last: null
+      },
+      address: {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        postal: null
+      }
+    },
+    password: {
+      old: null,
+      new: null
+    },
     entity: {
       uid: null,
       name: null,
@@ -74,10 +91,18 @@ export const getters = {
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
   personal: state => state.personal,
-  passwordOld: state => state.passwordOld,
-  passwordNew: state => state.passwordNew,
+  password: state => state.form.password,
   passwordsMatch: state => {
-    return state.passwordOld === state.passwordNew;
+    const password = state.form.password;
+    return password.old === password.new;
+  },
+  validPasswordChange: state => {
+    const password = state.form.password;
+    if (password.old === null && password.new === null) return null;
+    if (password.old !== null && password.new !== null) {
+      return password.old !== password.new && password.new.length >= 6;
+    }
+    return false;
   },
   entities: state => state.entities,
   hasEntities: state => state.entities.length > 0,
@@ -97,19 +122,24 @@ export const getters = {
 
 export const mutations = {
   SET_ENTITY_FORM_ATTRIBUTE(state, payload) {
-    state.form.entity = Object.assign(cloneDeep(state.form.entity), payload);
+    const entity = state.form.entity;
+    state.form.entity = Object.assign(cloneDeep(entity), payload);
   },
   SET_ENTITY_ADDRESS_ATTRIBUTE(state, payload) {
-    state.form.entity.address = Object.assign(
-      cloneDeep(state.form.entity.address),
-      payload
-    );
+    const address = state.form.entity.address;
+    state.form.entity.address = Object.assign(cloneDeep(address), payload);
   },
-  SET_PERSONAL_ATTRIBUTE(state, payload) {
-    state.personal = Object.assign(cloneDeep(state.personal), payload);
+  SET_PROFILE_NAME_ATTRIBUTE(state, payload) {
+    const name = state.form.profile.name;
+    state.form.profile.name = Object.assign(cloneDeep(name), payload);
   },
-  SET_ADDRESS_ATTRIBUTE(state, payload) {
-    state.address = Object.assign(cloneDeep(state.address), payload);
+  SET_PROFILE_ADDRESS_ATTRIBUTE(state, payload) {
+    const address = state.form.profile.address;
+    state.form.profile.address = Object.assign(cloneDeep(address), payload);
+  },
+  SET_PASSWORD_ATTRIBUTE(state, payload) {
+    const password = state.form.password;
+    state.form.password = Object.assign(cloneDeep(password), payload);
   },
   SET_ENTITY_LIST(state, payload) {
     state.entities = payload;
@@ -129,6 +159,9 @@ export const mutations = {
 };
 
 export const actions = {
+  setPasswordAttribute({ commit }, payload) {
+    commit("SET_PASSWORD_ATTRIBUTE", payload);
+  },
   setCurrentUser({ commit }, payload) {
     commit("SET_CURRENT_USER", payload);
   },
