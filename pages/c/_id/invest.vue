@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
 import CheckoutForm from "@/components/Form/Checkout/CheckoutForm";
 import CheckoutSummary from "@/components/Form/Checkout/CheckoutSummary";
 
@@ -18,7 +19,19 @@ export default {
     CheckoutSummary
   },
   async fetch({ store }) {
+    // Fetch company data, set to store
     await store.dispatch("company/GET_OFFERINGS");
+
+    // Fetch user auth data
+    const authData = store.getters["auth/currentUserAuth"];
+
+    // Fetch user db data, set to store
+    const uid = authData.uid || authData.user_id;
+    const user = await db
+      .collection("users")
+      .doc(uid)
+      .get();
+    await store.dispatch("user/setCurrentUser", user.data());
   }
 };
 </script>
