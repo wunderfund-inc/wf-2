@@ -61,6 +61,7 @@ export default {
   },
   methods: {
     changePassword() {
+      // TODO: check Firebase on how to reset password
       // eslint-disable-next-line
       console.log(`Password changed from "${this.passwordOld}" to "${this.passwordNew}"`);
     }
