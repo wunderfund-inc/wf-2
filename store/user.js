@@ -91,6 +91,7 @@ export const getters = {
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
   personal: state => state.personal,
+  name: state => state.form.profile.name,
   password: state => state.form.password,
   passwordsMatch: state => {
     const password = state.form.password;
