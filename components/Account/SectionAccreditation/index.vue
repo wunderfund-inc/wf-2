@@ -19,10 +19,9 @@
 
 <script>
 export default {
-  props: {
-    isAccredited: {
-      type: Boolean,
-      required: true
+  computed: {
+    isAccredited() {
+      return this.$store.getters["user/currentUser"].accredited;
     }
   },
   methods: {

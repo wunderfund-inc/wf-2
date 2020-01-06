@@ -1,20 +1,21 @@
 <template lang="pug">
   section
     b-container
-      h2 Current Invest Limit: {{ spendPool | asCurrency }}
+      h2 Current Invest Limit: {{ spendCurrent | asCurrency }}
       h6.text-muted.mb-0 Annual Maximum Invest Limit: {{ spendMax | asCurrency }}
 </template>
 
 <script>
 export default {
-  props: {
-    spendPool: {
-      type: Number,
-      required: true
+  computed: {
+    spendPool() {
+      return this.$store.getters["user/currentUser"].spendPool;
     },
-    spendMax: {
-      type: Number,
-      required: true
+    spendCurrent() {
+      return this.spendPool.current;
+    },
+    spendMax() {
+      return this.spendPool.max;
     }
   }
 };

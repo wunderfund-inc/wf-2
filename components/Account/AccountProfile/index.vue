@@ -10,9 +10,9 @@
               span.when-opened Close
               span.when-closed Expand
       b-collapse#profile.pt-4
-        section-spend-limit(:spend-pool="spendPool" :spend-max="spendMax")
+        section-spend-limit
         section-profile-form
-        section-accreditation(:is-accredited="isAccredited")
+        section-accreditation
         section-password-reset
 </template>
 
@@ -28,20 +28,6 @@ export default {
     SectionProfileForm,
     SectionAccreditation,
     SectionPasswordReset
-  },
-  props: {
-    spendPool: {
-      type: Number,
-      required: true
-    },
-    spendMax: {
-      type: Number,
-      required: true
-    },
-    isAccredited: {
-      type: Boolean,
-      required: true
-    }
   }
 };
 </script>

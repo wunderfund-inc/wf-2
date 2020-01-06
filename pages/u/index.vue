@@ -2,11 +2,7 @@
   main
     b-container.py-5
       section(v-if="loggedIn && emailVerified")
-        account-profile(
-          :spend-pool="2000"
-          :spend-max="2200"
-          :is-accredited="false"
-        )
+        account-profile
         account-entity-list(:entities="entities")
         account-investment-list(:investments="investments")
       section(v-else)
@@ -14,6 +10,7 @@
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
 import AccountProfile from "@/components/Account/AccountProfile";
 import AccountEntityList from "@/components/Account/AccountEntityList";
 import AccountInvestmentList from "@/components/Account/AccountInvestmentList";
@@ -43,6 +40,15 @@ export default {
     emailVerified() {
       return this.$store.getters["auth/emailVerified"];
     }
+  },
+  async fetch({ store }) {
+    const authData = store.getters["auth/currentUserAuth"];
+    const uid = authData.uid || authData.user_id;
+    const user = await db
+      .collection("users")
+      .doc(uid)
+      .get();
+    await store.dispatch("user/setCurrentUser", user.data());
   }
 };
 </script>
