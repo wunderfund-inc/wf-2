@@ -34,7 +34,7 @@ export default {
         return this.$store.getters["checkout/selectedOffering"];
       },
       async set(val) {
-        await this.$store.commit("checkout/SET_OFFERING", val);
+        await this.$store.dispatch("checkout/setOffering", val);
         if (val === "CF") {
           await this.$store.dispatch("offering/SET_REG_CF_DATA");
         } else if (val === "D") {
@@ -45,9 +45,7 @@ export default {
     personallyQualified() {
       const selectedType = this.$store.getters["checkout/selectedType"];
       const isPersonal = selectedType === "PERSONAL";
-      // const isAccredited = this.$store.getters["user/accredited"];
-      const isAccredited = true;
-
+      const isAccredited = this.$store.getters["user/currentUser"].accredited;
       return isPersonal && isAccredited;
     },
     selectedEntityQualified() {

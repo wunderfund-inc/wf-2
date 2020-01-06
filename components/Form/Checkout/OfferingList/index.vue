@@ -27,17 +27,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import OfferingCard from "@/components/Form/Checkout/OfferingCard";
 
 export default {
   components: { OfferingCard },
   computed: {
-    offerings() {
-      return this.$store.getters["company/offerings"];
-    },
-    selectedOffering() {
-      return this.$store.getters["checkout/selectedOffering"];
-    }
+    ...mapGetters({ offerings: "company/offerings" })
   }
 };
 </script>

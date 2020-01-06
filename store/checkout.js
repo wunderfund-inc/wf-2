@@ -68,3 +68,9 @@ export const mutations = {
   },
   SET_CRYPTO_ADDRESS: (state, payload) => (state.crypto.address = payload)
 };
+
+export const actions = {
+  setOffering({ commit }, payload) {
+    commit("SET_OFFERING", payload);
+  }
+};
