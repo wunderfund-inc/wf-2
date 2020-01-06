@@ -92,6 +92,18 @@ export const getters = {
   password: state => state.form.password,
   address: state => state.form.profile.address,
   name: state => state.form.profile.name,
+  validProfileForm: state => {
+    const name = state.form.profile.name;
+    const address = state.form.profile.address;
+    return (
+      name.first &&
+      name.last &&
+      address.street1 &&
+      address.city &&
+      address.state &&
+      address.postal
+    );
+  },
   personal: state => state.personal,
   passwordsMatch: state => {
     const password = state.form.password;
@@ -99,8 +111,8 @@ export const getters = {
   },
   validPasswordChange: state => {
     const password = state.form.password;
-    if (password.old === null && password.new === null) return null;
-    if (password.old !== null && password.new !== null) {
+    if (!password.old && !password.new) return null;
+    if (password.old && password.new) {
       return password.old !== password.new && password.new.length >= 6;
     }
     return false;
@@ -165,6 +177,9 @@ export const actions = {
   },
   setProfileNameAttribute({ commit }, payload) {
     commit("SET_PROFILE_NAME_ATTRIBUTE", payload);
+  },
+  setProfileAddressAttribute({ commit }, payload) {
+    commit("SET_PROFILE_ADDRESS_ATTRIBUTE", payload);
   },
   setCurrentUser({ commit }, payload) {
     commit("SET_CURRENT_USER", payload);

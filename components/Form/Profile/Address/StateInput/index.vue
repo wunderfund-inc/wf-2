@@ -20,7 +20,7 @@ export default {
         return this.$store.getters["user/address"].state;
       },
       set(val) {
-        this.$store.commit("user/SET_ADDRESS_ATTRIBUTE", { state: val });
+        this.$store.dispatch("user/setProfileAddressAttribute", { state: val });
       }
     }
   }

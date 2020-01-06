@@ -14,7 +14,9 @@ export default {
         return this.$store.getters["user/address"].street2;
       },
       set(val) {
-        this.$store.commit("user/SET_ADDRESS_ATTRIBUTE", { street2: val });
+        this.$store.dispatch("user/setProfileAddressAttribute", {
+          street2: val
+        });
       }
     }
   }

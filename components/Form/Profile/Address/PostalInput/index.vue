@@ -16,7 +16,9 @@ export default {
         return this.$store.getters["user/address"].postal;
       },
       set(val) {
-        this.$store.commit("user/SET_ADDRESS_ATTRIBUTE", { postal: val });
+        this.$store.dispatch("user/setProfileAddressAttribute", {
+          postal: val
+        });
       }
     },
     isValid() {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  form
+  b-form(@submit.stop.prevent="updateProfile")
     b-row
       b-col(md="6")
         first-name-input
@@ -19,7 +19,11 @@
         postal-input
     b-row
       b-col
-        b-button(variant="success") Save Changes
+        b-button(
+          variant="success"
+          type="submit"
+          :disabled="!validProfileForm"
+        ) Save Changes
 </template>
 
 <script>
@@ -40,6 +44,29 @@ export default {
     CityInput,
     StateInput,
     PostalInput
+  },
+  computed: {
+    name() {
+      return this.$store.getters["user/name"];
+    },
+    address() {
+      return this.$store.getters["user/address"];
+    },
+    formData() {
+      const name = { ...this.name };
+      const address = { ...this.address };
+      return { name, address };
+    },
+    validProfileForm() {
+      return this.$store.getters["user/validProfileForm"];
+    }
+  },
+  methods: {
+    updateProfile() {
+      // TODO: send to firebase
+      // eslint-disable-next-line
+      console.log("Form submission to update profile:", this.formData);
+    }
   }
 };
 </script>
