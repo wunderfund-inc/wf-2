@@ -107,10 +107,26 @@ export default {
       const user = {
         uid: dto.user.uid,
         email: dto.user.email,
-        emailVerified: dto.user.emailVerified,
+        accredited: false,
+        spendPool: {
+          current: 2200,
+          max: 2200
+        },
+        name: {
+          first: null,
+          last: null
+        },
+        address: {
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          postal: null
+        },
         createdAt: timestamp,
         updatedAt: timestamp
       };
+
       await db
         .collection("users")
         .doc(dto.user.uid)
