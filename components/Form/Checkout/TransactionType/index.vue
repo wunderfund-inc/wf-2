@@ -12,7 +12,10 @@
       :disabled="!hasEntities"
     ) On behalf an Entity.
       br(v-if="!hasEntities")
-      small.text-muted(v-if="!hasEntities") You don't have any entities filed. Apply Here!
+      small.text-muted(v-if="!hasEntities") You don't have any entities filed.
+        |
+        |
+        b-link Create one here!
 </template>
 
 <script>

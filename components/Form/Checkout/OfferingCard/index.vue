@@ -43,9 +43,11 @@ export default {
       }
     },
     personallyQualified() {
-      const isPersonal =
-        this.$store.getters["checkout/selectedType"] === "PERSONAL";
-      const isAccredited = this.$store.getters["user/userData"].accredited;
+      const selectedType = this.$store.getters["checkout/selectedType"];
+      const isPersonal = selectedType === "PERSONAL";
+      // const isAccredited = this.$store.getters["user/accredited"];
+      const isAccredited = true;
+
       return isPersonal && isAccredited;
     },
     selectedEntityQualified() {
