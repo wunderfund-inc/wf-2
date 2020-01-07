@@ -5,7 +5,8 @@ import {
   asPercentage,
   regulationFormat,
   pluralFaq,
-  paymentMethodFormat
+  paymentMethodFormat,
+  einNumToStr
 } from "./filters";
 
 describe("testing filter functions", () => {
@@ -63,6 +64,12 @@ describe("testing filter functions", () => {
       expect(paymentMethodFormat("WIRE")).toBe("a Wire Transfer");
       expect(paymentMethodFormat("CC")).toBe("Credit Card");
       expect(paymentMethodFormat("CRYPTO")).toBe("Cryptocurrency (Ethereum)");
+    });
+  });
+
+  describe("format EIN numbers to a string", () => {
+    it("adds a hyphen between 2nd and 3rd digit", () => {
+      expect(einNumToStr(121234567)).toBe("12-1234567");
     });
   });
 });
