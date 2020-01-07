@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { auth } from "@/plugins/firebase";
+
 export default {
   computed: {
     state() {
@@ -60,10 +62,10 @@ export default {
     }
   },
   methods: {
-    changePassword() {
-      // TODO: check Firebase on how to reset password
-      // eslint-disable-next-line
-      console.log(`Password changed from "${this.passwordOld}" to "${this.passwordNew}"`);
+    async changePassword() {
+      await auth.currentUser.updatePassword(this.passwordNew);
+      await this.$store.dispatch("auth/logout");
+      await this.$router.replace("/auth/login");
     }
   }
 };

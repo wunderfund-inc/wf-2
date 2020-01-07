@@ -108,6 +108,8 @@ export default {
         uid: dto.user.uid,
         email: dto.user.email,
         accredited: false,
+        entities: [],
+        investments: [],
         spendPool: {
           current: 2200,
           max: 2200
