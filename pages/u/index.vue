@@ -10,14 +10,12 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { db } from "@/plugins/firebase";
 import AccountProfile from "@/components/Account/AccountProfile";
 import AccountEntityList from "@/components/Account/AccountEntityList";
 import AccountInvestmentList from "@/components/Account/AccountInvestmentList";
 import SectionVerifyEmail from "@/components/Account/SectionVerifyEmail";
-
-// TODO: remove when we have a Store Action for this.
-// import d from "@/components/Account/data.json";
 
 export default {
   middleware: "authenticated",
@@ -28,18 +26,12 @@ export default {
     SectionVerifyEmail
   },
   computed: {
-    entities() {
-      return this.$store.getters["user/entities"];
-    },
-    investments() {
-      return this.$store.getters["user/investments"];
-    },
-    loggedIn() {
-      return this.$store.getters["auth/loggedIn"];
-    },
-    emailVerified() {
-      return this.$store.getters["auth/emailVerified"];
-    }
+    ...mapGetters({
+      entities: "user/entities",
+      investments: "user/investments",
+      loggedIn: "auth/loggedIn",
+      emailVerified: "auth/emailVerified"
+    })
   },
   async fetch({ store }) {
     const authData = store.getters["auth/currentUserAuth"];

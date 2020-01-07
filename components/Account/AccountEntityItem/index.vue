@@ -20,7 +20,7 @@
       h5 Employer Identification Number:
         |
         |
-        span.text-success {{ entity.ein }}
+        span.text-success {{ entity.ein | einStrFormat }}
       h5 Email used for signing agreements:
         |
         |

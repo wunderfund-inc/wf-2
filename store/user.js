@@ -102,9 +102,8 @@ export const getters = {
     }
     return false;
   },
-  entities: state => state.entities,
-  hasEntities: state => state.entities.length > 0,
-  investments: state => state.investments,
+  entities: state => state.currentUser.entities,
+  investments: state => state.currentUser.investments,
   currentUser: state => state.currentUser,
   entitySelection: state => {
     const entityList = state.entities;

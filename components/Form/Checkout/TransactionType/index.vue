@@ -30,7 +30,7 @@ export default {
       }
     },
     hasEntities() {
-      return this.$store.getters["user/hasEntities"];
+      return this.$store.getters["user/entities"].length > 0;
     }
   }
 };

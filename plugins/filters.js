@@ -71,3 +71,12 @@ export const paymentMethodFormat = val => {
   }
 };
 Vue.filter("paymentMethodFormat", paymentMethodFormat);
+
+/**
+ * EIN formatter (int to str)
+ */
+export const einNumToStr = val => {
+  const word = String(val).split("");
+  return word.slice(0, 2).join("") + "-" + word.slice(2).join("");
+};
+Vue.filter("einStrFormat", einNumToStr);
