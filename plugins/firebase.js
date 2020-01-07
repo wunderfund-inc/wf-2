@@ -14,3 +14,5 @@ export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 export function verifyEmail() {
   auth.currentUser.sendEmailVerification(actionCodeSettings);
 }
+
+export default firebase;

@@ -36,7 +36,6 @@ export const state = () => ({
   currentUser: null,
   form: {
     entity: {
-      uid: null,
       name: null,
       classification: null,
       ein: null,

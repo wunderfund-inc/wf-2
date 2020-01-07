@@ -2,8 +2,6 @@
   b-modal#modal-entity-form(
     title="Create an Entity"
     ok-title="Create"
-    @show="resetModal"
-    @hidden="resetModal"
     @ok="handleOk"
   )
     form(@submit.stop.prevent="handleSubmit")
@@ -47,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import firebase, { db, timestamp } from "@/plugins/firebase";
 import EntityName from "@/components/Form/Entity/EntityName";
 import EntityType from "@/components/Form/Entity/EntityType";
 import EntityEin from "@/components/Form/Entity/EntityEin";
@@ -78,23 +78,39 @@ export default {
     EntityAccreditation
   },
   computed: {
+    ...mapGetters({
+      entityData: "user/entityForm",
+      currentUserAuth: "auth/currentUserAuth"
+    }),
     useDifferentEmail() {
-      return this.$store.getters["user/entityForm"].differentEmail;
+      return this.entityData.differentEmail;
     }
   },
   methods: {
-    resetModal() {
-      // eslint-disable-next-line
-      console.log("modal reset");
-    },
     handleOk(event) {
       event.preventDefault();
       this.handleSubmit();
     },
-    handleSubmit() {
-      // TODO: send to firebase
-      // eslint-disable-next-line
-      console.log("submit handling");
+    async handleSubmit() {
+      // Save entity data to its own collection, referencing a user's uid
+      const ref = await db.collection("entities").doc();
+      const data = {
+        uid: ref.id,
+        ...this.entityData
+      };
+      await ref.set({
+        ...data,
+        createdAt: timestamp,
+        updatedAt: timestamp
+      });
+      // Save entity data to a current user's list of entities
+      const uid = this.currentUserAuth.uid || this.currentUserAuth.user_id;
+      await db
+        .collection("users")
+        .doc(uid)
+        .update({ entities: firebase.firestore.FieldValue.arrayUnion(data) });
+      // Refresh the page
+      window.location.reload();
     }
   }
 };

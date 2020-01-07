@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db } from "@/plugins/firebase";
+import { db, timestamp } from "@/plugins/firebase";
 import FirstNameInput from "@/components/Form/Profile/FirstNameInput";
 import LastNameInput from "@/components/Form/Profile/LastNameInput";
 import Street1Input from "@/components/Form/Profile/Address/Street1Input";
@@ -60,8 +60,12 @@ export default {
       await db
         .collection("users")
         .doc(this.currentUser.uid)
-        .update({ name: this.name, address: this.address });
-      window.location.reload(true);
+        .update({
+          name: this.name,
+          address: this.address,
+          updatedAt: timestamp
+        });
+      await this.$router.replace("/u");
     }
   }
 };
