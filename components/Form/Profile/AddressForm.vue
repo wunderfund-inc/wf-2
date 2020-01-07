@@ -65,7 +65,7 @@ export default {
           address: this.address,
           updatedAt: timestamp
         });
-      await this.$router.replace("/u");
+      window.location.reload();
     }
   }
 };
