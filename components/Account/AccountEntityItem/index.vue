@@ -25,7 +25,7 @@
         |
         |
         span.text-success(v-if="entity.differentEmail") {{ entity.email }}
-        span.text-success(v-else) chiou.kai@gmail.com
+        span.text-success(v-else) {{ currentUserEmail }}
       h5 Entity Address:
       h6
         address.text-success 1053 Saint Gregory Street
@@ -85,6 +85,11 @@ export default {
           required: true
         }
       }
+    }
+  },
+  computed: {
+    currentUserEmail() {
+      return this.$store.getters["user/currentUser"].email;
     }
   }
 };
