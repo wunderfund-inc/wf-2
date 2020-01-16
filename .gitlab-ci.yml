@@ -45,22 +45,22 @@ deploy site:
   only:
     - master
 
-build storybook:
-  stage: build
-  script:
-    - npm run build-storybook
-  artifacts:
-    paths:
-      - storybook-static
-  only:
-    - master
+# build storybook:
+#   stage: build
+#   script:
+#     - npm run build-storybook
+#   artifacts:
+#     paths:
+#       - storybook-static
+#   only:
+#     - master
 
-deploy storybook:
-  stage: deploy
-  script:
-    - npm i -g netlify-cli
-    - netlify deploy --site $NETLIFY_STORYBOOK_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir storybook-static --prod
-  dependencies:
-    - build storybook
-  only:
-    - master
+# deploy storybook:
+#   stage: deploy
+#   script:
+#     - npm i -g netlify-cli
+#     - netlify deploy --site $NETLIFY_STORYBOOK_SITE_ID --auth $NETLIFY_AUTH_TOKEN --dir storybook-static --prod
+#   dependencies:
+#     - build storybook
+#   only:
+#     - master
