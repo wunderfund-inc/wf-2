@@ -1,24 +1,23 @@
 <template lang="pug">
   main#campaign
-    #campaign-summary
-      hero-summary
-      progress-section
     #campaign-content
-      b-container.py-5
-        b-row
-          h1 Insert main content here
+      campaign-content(:company="company")
 </template>
 
 <script>
-import HeroSummary from "@/components/Campaign/HeroSummary";
-import ProgressSection from "@/components/Campaign/ProgressSection";
-import CampaignSidebar from "@/components/Campaign/CampaignSidebar";
+import CampaignContent from "@/components/Campaign/CampaignContent";
 
 export default {
   components: {
-    HeroSummary,
-    ProgressSection,
-    CampaignSidebar
+    CampaignContent
+  },
+  async fetch({ store, params }) {
+    try {
+      await store.dispatch("company/fetchCompany", params.id);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>
