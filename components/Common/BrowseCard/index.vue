@@ -1,16 +1,16 @@
 <template lang="pug">
-  nuxt-link.text-dark(:to="`/c/${campaign.uid}`")
+  nuxt-link.text-dark(:to="`/c/${company.uid}`")
     b-card
       .text-center.pb-3
-        b-card-img(top :src="campaign.logo")
-      b-card-title {{ campaign.name.short }}
-      b-card-text {{ campaign.motto }}
+        b-card-img(top :src="company.logo")
+      b-card-title {{ company.name.short }}
+      b-card-text {{ company.motto }}
       b-row(justify-content-end)
         b-col
-          small.text-muted {{ campaign.location.city }}, {{ campaign.location.state }}
+          small.text-muted {{ company.location.city }}, {{ company.location.state }}
         b-col
           b-badge.card-badge(
-            v-for="(offering, index) in campaign.offerings"
+            v-for="(offering, index) in company.offerings"
             :key="index"
             size="sm"
           ) Reg {{ offering.offeringType }}
@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    campaign: {
+    company: {
       type: Object,
       default() {}
     }

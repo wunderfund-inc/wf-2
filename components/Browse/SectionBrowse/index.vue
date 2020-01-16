@@ -4,25 +4,24 @@
       slot
       b-card-group(deck)
         browse-card(
-          v-for="(campaign, index) in campaigns"
+          v-for="(company, index) in companies"
           :key="index"
-          :campaign="campaign"
+          :company="company"
         )
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import BrowseCard from "@/components/Common/BrowseCard";
 
 export default {
   components: {
     BrowseCard
   },
-  props: {
-    campaigns: {
-      type: Array,
-      default() {},
-      required: true
-    }
+  computed: {
+    ...mapGetters({
+      companies: "company/companies"
+    })
   }
 };
 </script>

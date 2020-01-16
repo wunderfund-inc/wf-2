@@ -1,20 +1,31 @@
+import { db } from "@/plugins/firebase";
+
 export const state = () => ({
-  offerings: []
+  companies: []
 });
 
+// use getters for filters, like:
+// - "companies actively fundraising"
+// - "companies browsed for, based on search filter"
 export const getters = {
-  offerings: state => state.offerings
+  companies: state => state.companies
 };
 
 export const mutations = {
-  SET_OFFERINGS(state, payload) {
-    state.offerings = payload;
+  SET_COMPANIES(state, payload) {
+    state.companies = payload;
   }
 };
 
 export const actions = {
-  async GET_OFFERINGS({ commit }) {
-    await commit("SET_OFFERINGS", ["CF", "D"]);
-    // await commit("SET_OFFERINGS", ["A"]);
+  async fetchCompanies({ commit }) {
+    try {
+      const querySnapshot = await db.collection("companies").get();
+      const listOfCompanies = querySnapshot.docs.map(doc => doc.data());
+      await commit("SET_COMPANIES", listOfCompanies);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
