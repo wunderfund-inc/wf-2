@@ -57,8 +57,8 @@
               a.pl-3.text-muted
                 font-awesome-icon.fa-2x(:icon="['fab', 'twitter-square']")
     section#metrics
-      b-container
-        b-row.text-center(v-if="company.offerings.length > 0")
+      .container
+        .row.text-center(v-if="company.offerings.length > 0")
           b-col.py-4(sm="4")
             h4 Amount Raised:
             span $0.00
@@ -75,45 +75,44 @@
               size="lg"
             ) Invest {{ company.offerings[index] && company.offerings[index].equity.minSharesNeededToBuy * company.offerings[index].equity.pricePerShare }} Minimum
     section#content
-      .row
-        .col
-          b-tabs(justified)
-            b-tab(
-              title="The Story"
-              :disabled="company.otherContent === null"
-              active
-            )
-              .container.py-5
-                .row
-                  .col(v-html="company.otherContent")
-            b-tab(title="FAQs" :disabled="company.faqs.length === 0")
-              .container.py-5
-                .row.row-cols-1
-                  .col-3
-                  .col-12.col-md-6
-                    details(v-for="(faq, index) in company.faqs" :key="index")
-                      summary {{ faq.question }}
-                      p {{ faq.answer }}
-                  .col-3
-            b-tab(title="The Team" :disabled="company.employees.length === 0")
-              .container.py-5
-                .row.row-cols-1
-                  .col-3
-                  .col-12.col-md-6
-                    .row.py-3(
-                      v-for="(employee, idx) in company.employees"
-                      :key="idx"
-                    )
-                      .col.text-right
-                        b-img(
-                          thumbnail
-                          style="max-height: 100px; max-width: 100px"
-                        )
-                      .col
-                        h4.mt-2 {{ employee.name }}
-                        p {{ employee.title }}
-                  .col-3
-            b-tab(title="Questions?" disabled)
+      .container.pt-4
+        b-tabs(justified)
+          b-tab(
+            title="The Story"
+            :disabled="company.otherContent === null"
+            active
+          )
+            .container.py-5
+              .row
+                .col(v-html="company.otherContent")
+          b-tab(title="FAQs" :disabled="company.faqs.length === 0")
+            .container.py-5
+              .row.row-cols-1
+                .col-3
+                .col-12.col-md-6
+                  details(v-for="(faq, index) in company.faqs" :key="index")
+                    summary {{ faq.question }}
+                    p {{ faq.answer }}
+                .col-3
+          b-tab(title="The Team" :disabled="company.employees.length === 0")
+            .container.py-5
+              .row.row-cols-1
+                .col-3
+                .col-12.col-md-6
+                  .row.py-3(
+                    v-for="(employee, idx) in company.employees"
+                    :key="idx"
+                  )
+                    .col.text-right
+                      b-img(
+                        thumbnail
+                        style="max-height: 100px; max-width: 100px"
+                      )
+                    .col
+                      h4.mt-2 {{ employee.name }}
+                      p {{ employee.title }}
+                .col-3
+          b-tab(title="Questions?" disabled)
 </template>
 
 <script>
