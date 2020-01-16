@@ -1,10 +1,13 @@
 <template lang="pug">
   section
-    b-container.py-5
+    .container.py-5
       slot
-      b-row
-        b-col(v-for="(campaign, index) in campaigns" :key="index" md="4")
-          browse-card(:campaign="campaign")
+      b-card-group(deck)
+        browse-card(
+          v-for="(campaign, index) in campaigns"
+          :key="index"
+          :campaign="campaign"
+        )
 </template>
 
 <script>

@@ -1,16 +1,19 @@
 <template lang="pug">
-  nuxt-link(:to="`/c/${campaign.id}`")
-    b-card(
-      :img-src="campaign.cardImg"
-      img-top
-    )
-      b-card-title {{ campaign.companyName }}
-      b-card-text {{ campaign.companyMotto }}
+  nuxt-link.text-dark(:to="`/c/${campaign.uid}`")
+    b-card
+      .text-center.pb-3
+        b-card-img(top :src="campaign.logo")
+      b-card-title {{ campaign.name.short }}
+      b-card-text {{ campaign.motto }}
       b-row(justify-content-end)
         b-col
-          small.text-muted {{ campaign.companyCity }}, {{ campaign.companyState }}
+          small.text-muted {{ campaign.location.city }}, {{ campaign.location.state }}
         b-col
-          b-badge.card-badge(size="sm") Reg {{ campaign.offeringType | regulationFormat }}
+          b-badge.card-badge(
+            v-for="(offering, index) in campaign.offerings"
+            :key="index"
+            size="sm"
+          ) Reg {{ offering.offeringType }}
 </template>
 
 <script>
@@ -18,35 +21,7 @@ export default {
   props: {
     campaign: {
       type: Object,
-      default() {},
-      cardImg: {
-        type: String,
-        required: true
-      },
-      companyName: {
-        type: String,
-        required: true
-      },
-      companyMotto: {
-        type: String,
-        required: true
-      },
-      companyCity: {
-        type: String,
-        required: true
-      },
-      companyState: {
-        type: String,
-        required: true
-      },
-      id: {
-        type: String,
-        required: true
-      },
-      offeringType: {
-        type: String,
-        default: "CF"
-      }
+      default() {}
     }
   }
 };
@@ -60,7 +35,8 @@ a {
   text-decoration: none;
   .card {
     img {
-      height: 250px;
+      max-height: 200px;
+      max-width: 200px;
     }
     .card-badge {
       background-color: rgba(236, 195, 11, 0.5);

@@ -10,8 +10,7 @@
 </template>
 
 <script>
-// TODO: remove when store Action replaces this.
-import d from "@/components/Browse/data.json";
+import { db } from "@/plugins/firebase";
 import SectionFilter from "@/components/Browse/SectionFilter";
 import SectionBrowse from "@/components/Browse/SectionBrowse";
 
@@ -20,10 +19,10 @@ export default {
     SectionFilter,
     SectionBrowse
   },
-  data() {
-    return {
-      campaigns: d.campaigns
-    };
+  async asyncData() {
+    const querySnapshot = await db.collection("companies").get();
+    const companyList = querySnapshot.docs.map(doc => doc.data());
+    return { campaigns: companyList };
   }
 };
 </script>

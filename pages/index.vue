@@ -7,8 +7,7 @@
 </template>
 
 <script>
-// TODO: remove when store Action replaces this.
-import d from "@/components/Browse/data.json";
+import { db } from "@/plugins/firebase";
 import HeroSection from "@/components/Home/HeroSection";
 import EmailCapture from "@/components/Home/EmailCapture";
 import SectionBrowse from "@/components/Browse/SectionBrowse";
@@ -19,10 +18,10 @@ export default {
     EmailCapture,
     SectionBrowse
   },
-  asyncData() {
-    return {
-      campaigns: d.campaigns
-    };
+  async asyncData() {
+    const querySnapshot = await db.collection("companies").get();
+    const companyList = querySnapshot.docs.map(doc => doc.data());
+    return { campaigns: companyList };
   }
 };
 </script>
