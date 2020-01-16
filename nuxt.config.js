@@ -39,9 +39,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://bootstrap-vue.js.org/docs/
     "bootstrap-vue/nuxt",
-    // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
     "@nuxtjs/pwa",
@@ -51,14 +49,20 @@ export default {
       {
         imports: [
           {
+            set: "@fortawesome/free-solid-svg-icons",
+            icons: ["faMapMarkerAlt", "faLink"]
+          },
+          {
             set: "@fortawesome/free-brands-svg-icons",
             icons: [
               "faFacebook",
               "faFacebookF",
               "faFacebookSquare",
+              "faInstagram",
               "faLinkedin",
               "faTwitter",
               "faTwitterSquare",
+              "faYoutube",
               "faYoutubeSquare",
               "faGoogle"
             ]
@@ -73,6 +77,18 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  /*
+   ** Environment variables
+   */
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_DB_URL: process.env.FIREBASE_DB_URL,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+    FIREBASE_MESSAGING_ID: process.env.FIREBASE_MESSAGING_ID,
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID
+  },
   /*
    ** Build configuration
    */
