@@ -18,7 +18,12 @@ export default {
     SectionBrowse
   },
   async fetch({ store }) {
-    await store.dispatch("company/fetchCompanies");
+    try {
+      await store.dispatch("company/fetchCompanies");
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>
