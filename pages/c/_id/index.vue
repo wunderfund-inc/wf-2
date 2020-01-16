@@ -1,7 +1,7 @@
 <template lang="pug">
   main#campaign
     #campaign-content
-      campaign-content(:company="company")
+      campaign-content
 </template>
 
 <script>
