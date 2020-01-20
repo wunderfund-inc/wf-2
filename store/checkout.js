@@ -1,3 +1,4 @@
+import firebase, { db, timestamp } from "@/plugins/firebase";
 import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
@@ -74,5 +75,64 @@ export const actions = {
   },
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
+  },
+  async submitInvestment({ state }, { company, user }) {
+    const investment = await db.collection("investments").doc();
+
+    const data = {
+      createdAt: timestamp,
+      updatedAt: timestamp,
+      user,
+      company,
+      offering: state.selectedOffering,
+      type: state.selectedType,
+      method: state.selectedMethod,
+      amount: state.transactionAmount,
+      agreements: state.agreedTo,
+      // uid: investment.id
+      uid: "123456"
+    };
+
+    if (state.selectedEntity) data.entity = state.selectedEntity;
+
+    switch (state.selectedMethod) {
+      case "ACH":
+        data.extras = Object.assign(cloneDeep({ ach: state.ach }));
+        break;
+      case "CC":
+        data.extras = Object.assign(cloneDeep({ cc: state.cc }));
+        break;
+      case "CRYPTO":
+        data.extras = Object.assign(cloneDeep({ crypto: state.crypto }));
+        break;
+    }
+
+    await investment.set(data);
+
+    const userDoc = await db.collection("users").doc(user.uid);
+    await userDoc.update({
+      investments: firebase.firestore.FieldValue.arrayUnion(data)
+    });
+
+    if (state.selectedEntity) {
+      const entityDoc = await db
+        .collection("entities")
+        .doc(state.selectedEntity.uid);
+      await entityDoc.update({
+        investments: firebase.firestore.FieldValue.arrayUnion(data)
+      });
+    }
+
+    const companyDoc = await db.collection("companies").doc(company.uid);
+    await companyDoc.update({
+      investments: firebase.firestore.FieldValue.arrayUnion(data)
+    });
+
+    const offeringDoc = await db
+      .collection("offerings")
+      .doc(state.selectedOffering.uid);
+    await offeringDoc.update({
+      investments: firebase.firestore.FieldValue.arrayUnion(data)
+    });
   }
 };
