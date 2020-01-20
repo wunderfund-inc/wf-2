@@ -13,18 +13,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import AccountInvestmentItem from "@/components/Account/AccountInvestmentItem";
 
 export default {
   components: {
     AccountInvestmentItem
   },
-  props: {
-    investments: {
-      type: Array,
-      default() {},
-      required: true
-    }
+  computed: {
+    ...mapGetters({
+      investments: "user/investments"
+    })
   }
 };
 </script>

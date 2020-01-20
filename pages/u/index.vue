@@ -49,6 +49,22 @@ export default {
       await store.dispatch("user/setProfileAddressAttribute", {
         ...userData.address
       });
+      const investments = await Promise.all(
+        userData.investments.map(async id => {
+          try {
+            const investmentRef = await db
+              .collection("investments")
+              .doc(id)
+              .get();
+
+            return investmentRef.data();
+          } catch (error) {
+            // eslint-disable-next-line
+            console.error(error);
+          }
+        })
+      );
+      await store.dispatch("user/setInvestments", investments);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
