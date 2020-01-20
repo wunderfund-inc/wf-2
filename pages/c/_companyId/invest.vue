@@ -1,10 +1,10 @@
 <template lang="pug">
   main
-    b-container.py-5
-      b-row
-        b-col(md="8")
+    .container.py-5
+      .row
+        .col-12.col-md-8
           checkout-form
-        b-col(md="4")
+        .col-12.col-md-4
           checkout-summary
 </template>
 

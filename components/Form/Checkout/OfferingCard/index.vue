@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
     offering: {
@@ -30,6 +32,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      currentUser: "user/currentUser",
+      selectedType: "checkout/selectedType",
+      selectedEntity: "checkout/selectedEntity"
+    }),
     selectedOffering: {
       get() {
         return this.$store.getters["checkout/selectedOffering"];
@@ -39,22 +46,10 @@ export default {
       }
     },
     personallyQualified() {
-      const selectedType = this.$store.getters["checkout/selectedType"];
-      const isPersonal = selectedType === "PERSONAL";
-      const isAccredited = this.$store.getters["user/currentUser"].accredited;
-      return isPersonal && isAccredited;
+      return this.currentUser.accredited && this.selectedType === "PERSONAL";
     },
     selectedEntityQualified() {
-      const selectedEntity = this.$store.getters["checkout/selectedEntity"];
-      if (selectedEntity) {
-        const entityIsAccredited = this.$store.getters["user/getEntityById"](
-          selectedEntity.uid
-        );
-        const isEntity =
-          this.$store.getters["checkout/selectedType"] === "ENTITY";
-        return isEntity && entityIsAccredited;
-      }
-      return false;
+      return this.selectedEntity && this.selectedEntity.accredited;
     },
     qualified() {
       if (this.offering.offeringType === "CF") return true;

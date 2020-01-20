@@ -14,7 +14,7 @@
     )
       span(
         :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
-      ) Your commitment to invest needs to be at least {{ minInvestmentAmount | asCurrency }}
+      ) Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}
 </template>
 
 <script>
@@ -27,12 +27,18 @@ export default {
       offerings: "company/offerings",
       selectedOffering: "checkout/selectedOffering"
     }),
-    minInvestmentAmount() {
-      return this.selectedOffering.minInvestment;
+    minInvestment() {
+      const securityType = this.selectedOffering.securityType;
+      const minSharesToBuy = this.selectedOffering.equity.minSharesNeededToBuy;
+      const pricePerShare = this.selectedOffering.equity.pricePerShare;
+      const minInvestmentAmount = this.selectedOffering.minInvestment;
+      return securityType === "EQUITY"
+        ? minSharesToBuy * pricePerShare
+        : minInvestmentAmount;
     },
     validAmount() {
       if (this.transactionAmount === null) return null;
-      return this.transactionAmount >= this.minInvestmentAmount;
+      return this.transactionAmount >= this.minInvestment;
     },
     transactionAmount: {
       get() {
