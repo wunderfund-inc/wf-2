@@ -63,18 +63,28 @@ export default {
     };
   },
   async created() {
-    const allInvestments = this.investment.offering.investments;
-    const amounts = await Promise.all(
-      allInvestments.map(async investment => {
-        const investmentRef = await db
-          .collection("investments")
-          .doc(investment)
-          .get();
-        const investmentData = investmentRef.data();
-        return investmentData.amount;
-      })
-    );
-    this.amountRaised = amounts.reduce((total, val) => total + val);
+    try {
+      const allInvestments = this.investment.offering.investments;
+      const amounts = await Promise.all(
+        allInvestments.map(async investment => {
+          try {
+            const investmentRef = await db
+              .collection("investments")
+              .doc(investment)
+              .get();
+            const investmentData = investmentRef.data();
+            return investmentData.amount;
+          } catch (error) {
+            // eslint-disable-next-line
+            console.error(error);
+          }
+        })
+      );
+      this.amountRaised = amounts.reduce((total, val) => total + val);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>
