@@ -1,7 +1,5 @@
 export default {
-  data() {
-    return {
-      slug: this.$route.params.slug
-    };
+  asyncData({ route }) {
+    return { slug: route.params.slug };
   }
 };

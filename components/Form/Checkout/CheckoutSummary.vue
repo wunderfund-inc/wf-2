@@ -50,11 +50,11 @@ export default {
   methods: {
     async submitInvestment() {
       await this.$store.dispatch("checkout/submitInvestment", {
-        company: this.company,
-        user: this.user
+        companyId: this.company.uid,
+        userId: this.user.uid
       });
 
-      await this.$route.replace("/u");
+      await this.$router.replace("/u");
     }
   }
 };

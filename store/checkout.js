@@ -76,21 +76,18 @@ export const actions = {
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   },
-  async submitInvestment({ state }, { company, user }) {
+  async submitInvestment({ state }, { companyId, userId }) {
     const investment = await db.collection("investments").doc();
 
     const data = {
-      createdAt: timestamp,
-      updatedAt: timestamp,
-      user,
-      company,
-      offering: state.selectedOffering,
+      userId,
+      companyId,
+      offeringId: state.selectedOffering.uid,
       type: state.selectedType,
       method: state.selectedMethod,
       amount: state.transactionAmount,
       agreements: state.agreedTo,
-      // uid: investment.id
-      uid: "123456"
+      uid: investment.id
     };
 
     if (state.selectedEntity) data.entity = state.selectedEntity;
@@ -107,11 +104,16 @@ export const actions = {
         break;
     }
 
-    await investment.set(data);
+    await investment.set({
+      ...data,
+      createdAt: timestamp,
+      updatedAt: timestamp
+    });
 
-    const userDoc = await db.collection("users").doc(user.uid);
+    const userDoc = await db.collection("users").doc(userId);
     await userDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(data)
+      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
+      updatedAt: timestamp
     });
 
     if (state.selectedEntity) {
@@ -119,20 +121,23 @@ export const actions = {
         .collection("entities")
         .doc(state.selectedEntity.uid);
       await entityDoc.update({
-        investments: firebase.firestore.FieldValue.arrayUnion(data)
+        investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
+        updatedAt: timestamp
       });
     }
 
-    const companyDoc = await db.collection("companies").doc(company.uid);
+    const companyDoc = await db.collection("companies").doc(companyId);
     await companyDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(data)
+      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
+      updatedAt: timestamp
     });
 
     const offeringDoc = await db
       .collection("offerings")
       .doc(state.selectedOffering.uid);
     await offeringDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(data)
+      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
+      updatedAt: timestamp
     });
   }
 };
