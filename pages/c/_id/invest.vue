@@ -18,20 +18,27 @@ export default {
     CheckoutForm,
     CheckoutSummary
   },
-  async fetch({ store }) {
-    // Fetch company data, set to store
-    await store.dispatch("company/GET_OFFERINGS");
-
-    // Fetch user auth data
-    const authData = store.getters["auth/currentUserAuth"];
-
-    // Fetch user db data, set to store
-    const uid = authData.uid || authData.user_id;
-    const user = await db
-      .collection("users")
-      .doc(uid)
-      .get();
-    await store.dispatch("user/setCurrentUser", user.data());
+  async fetch({ store, params }) {
+    try {
+      const authData = store.getters["auth/currentUserAuth"];
+      const uid = authData.uid || authData.user_id;
+      const user = await db
+        .collection("users")
+        .doc(uid)
+        .get();
+      const userData = user.data();
+      await store.dispatch("user/setCurrentUser", userData);
+      await store.dispatch("user/setProfileNameAttribute", {
+        ...userData.name
+      });
+      await store.dispatch("user/setProfileAddressAttribute", {
+        ...userData.address
+      });
+      await store.dispatch("company/fetchCompany", params.id);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>
