@@ -6,42 +6,42 @@
       label-class="font-weight-bold pt-0 mb-4"
     )
       section(v-if="selectedMethod === 'ACH'")
-        b-row
-          b-col
+        .row
+          .col-12.col-md-6
             ach-account-number
-          b-col
+          .col-12.col-md-6
             ach-routing-number
-        b-row
-          b-col
+        .row
+          .col
             b-img(src="~assets/logo/tapi_secure.png")
       section(v-if="selectedMethod === 'CHECK'")
         p We will email you details for sending a check.
       section(v-if="selectedMethod === 'WIRE'")
         p We will email you details for sending a wire transfer.
       section(v-if="selectedMethod === 'CC'")
-        b-row
-          b-col
+        .row
+          .col-12
             cc-cardholder-name
-        b-row
-          b-col
+        .row
+          .col-12
             cc-card-number
-        b-row
-          b-col
+        .row
+          .col-12.col-md-4
             cc-expiry-month
-          b-col
+          .col-12.col-md-4
             cc-expiry-year
-          b-col
+          .col-12.col-md-4
             cc-cvv
-        b-row
-          b-col
+        .row
+          .col-12
             b-img(src="~assets/logo/tapi_secure.png")
       section(v-if="selectedMethod === 'CRYPTO'")
-        b-row
-          b-col
+        .row
+          .col
             crypto-address
-        b-row
-          b-col
-            b-img(src="~assets/logo/tapi_secure.png")
+        .row
+          .col
+            b-img(thumbnail src="~assets/logo/tapi_secure.png")
 </template>
 
 <script>
