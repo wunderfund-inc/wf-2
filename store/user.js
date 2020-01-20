@@ -1,3 +1,4 @@
+import { db } from "@/plugins/firebase";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -138,7 +139,24 @@ export const actions = {
   setCurrentUserProfile({ commit }, payload) {
     commit("SET_CURRENT_USER_PROFILE", payload);
   },
-  setInvestments({ commit }, payload) {
-    commit("SET_INVESTMENTS", payload);
+  async setInvestments({ commit }, investments) {
+    const d = await Promise.all(
+      investments.map(async investment => {
+        const companyRef = await db
+          .collection("companies")
+          .doc(investment.companyId)
+          .get();
+        const offeringRef = await db
+          .collection("offerings")
+          .doc(investment.offeringId)
+          .get();
+        return {
+          ...investment,
+          company: companyRef.data(),
+          offering: offeringRef.data()
+        };
+      })
+    );
+    commit("SET_INVESTMENTS", d);
   }
 };
