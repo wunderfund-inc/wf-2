@@ -2,7 +2,7 @@ import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
-  validAgreementList: false,
+  agreedTo: [],
   selectedOffering: null,
   transactionAmount: null,
   selectedMethod: null,
@@ -27,7 +27,8 @@ export const state = () => ({
 });
 
 export const getters = {
-  validAgreementList: state => state.validAgreementList,
+  validAgreementList: state => state.agreedTo.length === 5,
+  agreedTo: state => state.agreedTo,
   selectedOffering: state => state.selectedOffering,
   transactionAmount: state => state.transactionAmount,
   selectedMethod: state => state.selectedMethod,
@@ -48,9 +49,7 @@ export const getters = {
 };
 
 export const mutations = {
-  SET_AGREEMENT_LIST_VALIDITY: (state, payload) => {
-    state.validAgreementList = payload;
-  },
+  SET_AGREEMENTS: (state, payload) => (state.agreedTo = payload),
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
   SET_TRANSACTION_AMOUNT: (state, payload) =>
     (state.transactionAmount = payload),
@@ -70,6 +69,9 @@ export const mutations = {
 };
 
 export const actions = {
+  setAgreements({ commit }, payload) {
+    commit("SET_AGREEMENTS", payload);
+  },
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   }

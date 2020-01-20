@@ -56,7 +56,7 @@ export default {
       );
     },
     selectedOfferingSet() {
-      return ["CF", "A+", "D"].includes(this.selectedOffering.offeringType);
+      return this.selectedOffering;
     }
   }
 };
