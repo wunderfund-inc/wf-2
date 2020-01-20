@@ -2,7 +2,7 @@
   nuxt-link.text-dark(:to="`/c/${company.uid}`")
     b-card
       .text-center.pb-3
-        b-card-img(top :src="company.logo")
+        b-card-img(top :src="company.logo.url")
       b-card-title {{ company.name.short }}
       b-card-text {{ company.motto }}
       b-row(justify-content-end)

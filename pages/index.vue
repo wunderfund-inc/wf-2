@@ -3,7 +3,8 @@
     hero-section
     email-capture
     section-browse
-      h5.text-center.pb-4 Live Campaigns:
+      template(#header)
+        h5.text-center.pb-4 Live Campaigns:
 </template>
 
 <script>

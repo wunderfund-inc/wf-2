@@ -1,7 +1,6 @@
 <template lang="pug">
   main#campaign
-    #campaign-content
-      campaign-content
+    campaign-content#campaign-content
 </template>
 
 <script>

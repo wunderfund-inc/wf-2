@@ -2,7 +2,8 @@
   main
     section-filter
     section-browse
-      h5.title.text-center Companies Currently Fundraising:
+      template(#header)
+        h5.title.text-center Companies Currently Fundraising:
       p.subtitle.text-center (We diligently
         |
         |

@@ -1,7 +1,7 @@
 <template lang="pug">
   section
     .container.py-5
-      slot
+      slot(name="header")
       b-card-group(deck)
         browse-card(
           v-for="(company, index) in companies"
