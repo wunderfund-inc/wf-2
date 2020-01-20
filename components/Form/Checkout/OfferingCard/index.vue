@@ -52,8 +52,14 @@ export default {
       return this.selectedEntity && this.selectedEntity.accredited;
     },
     qualified() {
-      if (this.offering.offeringType === "CF") return true;
-      return this.personallyQualified || this.selectedEntityQualified;
+      if (this.offering.offeringType === "CF") {
+        return true;
+      } else if (this.selectedType === "ENTITY") {
+        return this.selectedEntity.accredited;
+      } else if (this.selectedType === "PERSONAL") {
+        return this.currentUser.accredited;
+      }
+      return false;
     }
   },
   methods: {
