@@ -34,18 +34,25 @@ export default {
     })
   },
   async fetch({ store }) {
-    const authData = store.getters["auth/currentUserAuth"];
-    const uid = authData.uid || authData.user_id;
-    const user = await db
-      .collection("users")
-      .doc(uid)
-      .get();
-    const userData = user.data();
-    await store.dispatch("user/setCurrentUser", userData);
-    await store.dispatch("user/setProfileNameAttribute", { ...userData.name });
-    await store.dispatch("user/setProfileAddressAttribute", {
-      ...userData.address
-    });
+    try {
+      const authData = store.getters["auth/currentUserAuth"];
+      const uid = authData.uid || authData.user_id;
+      const user = await db
+        .collection("users")
+        .doc(uid)
+        .get();
+      const userData = user.data();
+      await store.dispatch("user/setCurrentUser", userData);
+      await store.dispatch("user/setProfileNameAttribute", {
+        ...userData.name
+      });
+      await store.dispatch("user/setProfileAddressAttribute", {
+        ...userData.address
+      });
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>

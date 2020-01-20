@@ -73,6 +73,7 @@ export const state = () => ({
 });
 
 export const getters = {
+  accredited: state => state.currentUser.accredited,
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
   password: state => state.form.password,

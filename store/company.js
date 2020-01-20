@@ -10,7 +10,8 @@ export const state = () => ({
 // - "companies browsed for, based on search filter"
 export const getters = {
   company: state => state.company,
-  companies: state => state.companies
+  companies: state => state.companies,
+  offerings: state => state.company.offerings
 };
 
 export const mutations = {

@@ -7,7 +7,10 @@
       b-card-text {{ company.motto }}
       b-row(justify-content-end)
         b-col
-          small.text-muted {{ company.location.city }}, {{ company.location.state }}
+          small.text-muted
+            font-awesome-icon(:icon="['fas', 'map-marker-alt']")
+            |
+            | {{ company.location.city }}, {{ company.location.state }}
         b-col
           b-badge.card-badge(
             v-for="(offering, index) in company.offerings"
