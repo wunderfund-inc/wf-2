@@ -34,7 +34,7 @@ export default {
       await store.dispatch("user/setProfileAddressAttribute", {
         ...userData.address
       });
-      await store.dispatch("company/fetchCompany", params.id);
+      await store.dispatch("company/fetchCompany", params.companyId);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);

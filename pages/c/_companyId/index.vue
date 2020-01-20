@@ -12,7 +12,7 @@ export default {
   },
   async fetch({ store, params }) {
     try {
-      await store.dispatch("company/fetchCompany", params.id);
+      await store.dispatch("company/fetchCompany", params.companyId);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);

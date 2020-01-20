@@ -47,10 +47,11 @@ export default {
     }
   },
   methods: {
-    submitInvestment() {
+    async submitInvestment() {
       // TODO: route to action to save to firebase
       // eslint-disable-next-line
       console.log("investment submitted");
+      await this.$store.dispatch("checkout/submitInvestment");
     }
   }
 };
