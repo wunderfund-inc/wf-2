@@ -9,7 +9,7 @@
             size="lg"
             v-model="selectedOffering"
           )
-          span.form-check-label Regulation {{ offering | regulationFormat }}
+          span.form-check-label Regulation {{ offering.offeringType | regulationFormat }}
         .form-row
           slot
             span
@@ -24,7 +24,8 @@
 export default {
   props: {
     offering: {
-      type: String,
+      type: Object,
+      default() {},
       required: true
     }
   },
@@ -35,11 +36,6 @@ export default {
       },
       async set(val) {
         await this.$store.dispatch("checkout/setOffering", val);
-        if (val === "CF") {
-          await this.$store.dispatch("offering/SET_REG_CF_DATA");
-        } else if (val === "D") {
-          await this.$store.dispatch("offering/SET_REG_D_DATA");
-        }
       }
     },
     personallyQualified() {
@@ -61,7 +57,7 @@ export default {
       return false;
     },
     qualified() {
-      if (this.offering === "CF") return true;
+      if (this.offering.offeringType === "CF") return true;
       return this.personallyQualified || this.selectedEntityQualified;
     }
   },

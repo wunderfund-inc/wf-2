@@ -18,10 +18,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
+    ...mapGetters({
+      company: "company/company",
+      offerings: "company/offerings",
+      selectedOffering: "checkout/selectedOffering"
+    }),
     minInvestmentAmount() {
-      return this.$store.getters["offering/minimumInvestmentAmount"];
+      return this.selectedOffering.minInvestment;
     },
     validAmount() {
       if (this.transactionAmount === null) return null;

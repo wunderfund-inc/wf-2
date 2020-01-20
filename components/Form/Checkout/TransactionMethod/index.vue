@@ -10,8 +10,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
+    ...mapGetters({
+      offering: "checkout/selectedOffering"
+    }),
     selectedMethod: {
       get() {
         return this.$store.getters["checkout/selectedMethod"];
@@ -21,7 +26,7 @@ export default {
       }
     },
     availablePaymentMethods() {
-      return this.$store.getters["offering/availablePaymentMethods"];
+      return this.offering.paymentMethods;
     }
   }
 };

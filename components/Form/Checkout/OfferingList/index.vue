@@ -7,23 +7,19 @@
       b-col(
         cols="12"
         md="6"
-        lg="4"
+        lg="6"
         v-for="(offering, index) in offerings"
         :key="index"
       )
         offering-card(:offering="offering")
-          span(v-if="offering === 'CF'")
-            small.text-muted Minimum Investment: $20
+          span(v-if="offering.securityType !== 'EQUITY'")
+            small.text-muted Minimum Investment: {{ offering.minInvestment | asCurrency }}
             br
-            small.text-muted Raising: $10k - $107k
-          span(v-if="offering === 'D'")
-            small.text-muted Minimum Investment: $25k
+            small.text-muted Raising: {{ offering.goal.min | asCurrency }} - {{ offering.goal.max | asCurrency }}
+          span(v-else)
+            small.text-muted Price Per Share: {{ offering.equity.minSharesNeededToBuy * offering.equity.pricePerShare | asCurrency }}
             br
-            small.text-muted Raising: $10M
-          span(v-if="offering === 'A'")
-            small.text-muted Price Per Share: $20
-            br
-            small.text-muted Post-Money Valuation: $4M
+            small.text-muted {{ offering.equity.valuationType }}-money valuation: {{ offering.equity.numberOfSecurities * offering.equity.pricePerShare | asCurrency }}
 </template>
 
 <script>

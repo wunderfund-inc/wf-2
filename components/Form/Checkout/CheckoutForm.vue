@@ -1,6 +1,6 @@
 <template lang="pug">
   section
-    h3 Invest in Esoteric Brewing
+    h3 Invest in {{ company.name.short }}
     b-form(@submit.stop.prevent)
       b-row
         b-col
@@ -44,6 +44,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      company: "company/company",
       selectedType: "checkout/selectedType",
       selectedEntity: "checkout/selectedEntity",
       selectedOffering: "checkout/selectedOffering"
@@ -55,7 +56,7 @@ export default {
       );
     },
     selectedOfferingSet() {
-      return ["CF", "A", "D"].includes(this.selectedOffering);
+      return ["CF", "A+", "D"].includes(this.selectedOffering.offeringType);
     }
   }
 };
