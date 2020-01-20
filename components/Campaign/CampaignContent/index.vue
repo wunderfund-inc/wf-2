@@ -67,13 +67,25 @@
             span 0
           b-col.py-4(sm="4")
             b-button.mt-2(
-              v-if="company.offerings[index] && company.offerings[index].securityType !== 'EQUITY'"
+              v-if="!signedIn"
               size="lg"
-            ) Invest {{ company.offerings[index].minInvestment }} Minimum
+              to="/auth/login"
+            ) Login to Invest
             b-button.mt-2(
-              v-else
+              v-if="signedIn && company.offerings[index] && company.offerings[index].securityType !== 'EQUITY'"
               size="lg"
-            ) Invest {{ company.offerings[index] && company.offerings[index].equity.minSharesNeededToBuy * company.offerings[index].equity.pricePerShare }} Minimum
+              :to="`/c/${$route.params.id}/invest`"
+            ) Invest {{ company.offerings[index].minInvestment | asCurrency }} Minimum
+            b-button.mt-2(
+              v-if="signedIn && company.offerings[index] && company.offerings[index].securityType === 'EQUITY'"
+              size="lg"
+              :to="`/c/${$route.params.id}/invest`"
+              :disabled="!accredited"
+            ) Invest {{ company.offerings[index] && company.offerings[index].equity.minSharesNeededToBuy * company.offerings[index].equity.pricePerShare | asCurrency }} Minimum
+            br
+            small.text-muted(
+              v-if="signedIn && !accredited && company.offerings[index] && company.offerings[index].offeringType !== 'CF'"
+            ) Why can't I invest in this offering?
     section#content
       .container.pt-4
         b-tabs(justified)
@@ -126,7 +138,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ company: "company/company" })
+    ...mapGetters({
+      company: "company/company",
+      signedIn: "auth/currentUserAuth",
+      accredited: "user/accredited"
+    })
   },
   methods: {
     setIndex(i) {
