@@ -74,12 +74,12 @@
             b-button.mt-2(
               v-if="signedIn && company.offerings[index] && company.offerings[index].securityType !== 'EQUITY'"
               size="lg"
-              :to="`/c/${$route.params.companyId}/${company.offerings[index].uid}/invest`"
+              :to="`/c/${$route.params.companyId}/invest`"
             ) Invest {{ company.offerings[index].minInvestment | asCurrency }} Minimum
             b-button.mt-2(
               v-if="signedIn && company.offerings[index] && company.offerings[index].securityType === 'EQUITY'"
               size="lg"
-              :to="`/c/${$route.params.companyId}/${company.offerings[index].uid}/invest`"
+              :to="`/c/${$route.params.companyId}/invest`"
               :disabled="!accredited"
             ) Invest {{ company.offerings[index] && company.offerings[index].equity.minSharesNeededToBuy * company.offerings[index].equity.pricePerShare | asCurrency }} Minimum
             br
