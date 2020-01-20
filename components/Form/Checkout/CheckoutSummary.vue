@@ -54,7 +54,7 @@ export default {
         user: this.user
       });
 
-      // await this.$store.replace("/u");
+      await this.$route.replace("/u");
     }
   }
 };
