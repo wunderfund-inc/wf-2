@@ -15,6 +15,12 @@
       span(
         :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
       ) Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}
+      |
+      |
+      span(
+        v-if="selectedOffering.securityType === 'EQUITY'"
+        :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
+      ) ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share)
 </template>
 
 <script>

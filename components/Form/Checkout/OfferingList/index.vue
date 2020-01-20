@@ -12,14 +12,16 @@
         :key="index"
       )
         offering-card(:offering="offering")
-          span(v-if="offering.securityType !== 'EQUITY'")
+          span(v-if="offering.securityType === 'EQUITY'")
+            small.text-muted Price Per Share: {{ offering.equity.pricePerShare | asCurrency }}
+            br
+            small.text-muted Minimum shares to invest: {{ offering.equity.minSharesNeededToBuy }}
+            br
+            small.text-muted {{ offering.equity.valuationType }}-money valuation: {{ offering.equity.numberOfSecurities * offering.equity.pricePerShare | asCurrency }}
+          span(v-else)
             small.text-muted Minimum Investment: {{ offering.minInvestment | asCurrency }}
             br
             small.text-muted Raising: {{ offering.goal.min | asCurrency }} - {{ offering.goal.max | asCurrency }}
-          span(v-else)
-            small.text-muted Price Per Share: {{ offering.equity.minSharesNeededToBuy * offering.equity.pricePerShare | asCurrency }}
-            br
-            small.text-muted {{ offering.equity.valuationType }}-money valuation: {{ offering.equity.numberOfSecurities * offering.equity.pricePerShare | asCurrency }}
 </template>
 
 <script>
