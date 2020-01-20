@@ -1,13 +1,13 @@
 <template lang="pug">
   b-form-group
-    label Which Entity?
+    label Which Entity are you representing?
     b-form-select(v-model="selectedEntity")
       template(v-slot:first)
         option(:value="null" disabled) Please select an Entity
       option(
         v-for="(entity, index) in entities"
         :key="index"
-        :value="{ id: entity.uid, name: entity.name }"
+        :value="entity"
       ) {{ entity.name }}
 </template>
 

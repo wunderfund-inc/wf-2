@@ -20,6 +20,7 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
+      user: "user/currentUser",
       company: "company/company",
       selectedType: "checkout/selectedType",
       selectedOffering: "checkout/selectedOffering",
@@ -48,10 +49,12 @@ export default {
   },
   methods: {
     async submitInvestment() {
-      // TODO: route to action to save to firebase
-      // eslint-disable-next-line
-      console.log("investment submitted");
-      await this.$store.dispatch("checkout/submitInvestment");
+      await this.$store.dispatch("checkout/submitInvestment", {
+        company: this.company,
+        user: this.user
+      });
+
+      // await this.$store.replace("/u");
     }
   }
 };
