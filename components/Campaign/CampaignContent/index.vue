@@ -107,9 +107,10 @@
                       b-img(
                         thumbnail
                         style="max-height: 100px; max-width: 100px"
+                        :src="employee.image.url"
                       )
                     .col
-                      h4.mt-2 {{ employee.name }}
+                      h4.mt-4 {{ employee.name }}
                       p {{ employee.title }}
                 .col-3
           b-tab(title="Questions?" disabled)
