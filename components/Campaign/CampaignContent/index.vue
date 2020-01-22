@@ -87,45 +87,45 @@
               v-if="signedIn && !accredited && company.offerings[index] && company.offerings[index].offeringType !== 'CF'"
             ) Why can't I invest in this offering?
     section#content
-      .container.pt-4
-        b-tabs(justified)
-          b-tab(
-            title="The Story"
-            :disabled="company.otherContent === null"
-            active
-          )
-            .container.py-5
-              .row
-                .col(v-html="company.otherContent")
-          b-tab(title="FAQs" :disabled="company.faqs.length === 0")
-            .container.py-5
-              .row.row-cols-1
-                .col-3
-                .col-12.col-md-6
-                  details(v-for="(faq, index) in company.faqs" :key="index")
-                    summary {{ faq.question }}
-                    p {{ faq.answer }}
-                .col-3
-          b-tab(title="The Team" :disabled="company.employees.length === 0")
-            .container.py-5
-              .row.row-cols-1
-                .col-3
-                .col-12.col-md-6
-                  .row.py-3(
-                    v-for="(employee, idx) in company.employees"
-                    :key="idx"
-                  )
-                    .col.text-right
-                      b-img(
-                        thumbnail
-                        style="max-height: 100px; max-width: 100px"
-                        :src="employee.image.url"
-                      )
-                    .col
-                      h4.mt-4 {{ employee.name }}
-                      p {{ employee.title }}
-                .col-3
-          b-tab(title="Questions?" disabled)
+      .container
+        .row.pt-5
+          .col-12.col-md-1
+          .col
+            .text-center
+              h1.pb-3 The Pitch
+            div(v-html="company.otherContent")
+          .col-12.col-md-1
+        .row.pt-5
+          .col
+            .text-center
+              h1 The Team
+            .row.py-3(v-for="(employee, idx) in company.employees" :key="idx")
+              .col
+              .col.text-right
+                b-img(
+                  thumbnail
+                  :src="employee.image.url"
+                  style="max-height: 100px; max-width: 100px"
+                )
+              .col
+                h4.mt-2 {{ employee.name }}
+                p {{ employee.title }}
+              .col
+        .row.pt-5
+          .col
+            .text-center
+              h1 FAQs
+            .row
+              .col-12.col-md-4
+              .col-12.col-md-4
+                details(v-for="(faq, index) in company.faqs" :key="index")
+                  summary {{ faq.question }}
+                  p {{ faq.answer }}
+              .col-12.col-md-4
+        .row.pt-5
+          .col
+            .text-center
+              h1 Questions?
 </template>
 
 <script>
