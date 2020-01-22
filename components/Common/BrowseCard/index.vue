@@ -1,22 +1,26 @@
 <template lang="pug">
   nuxt-link.text-dark(:to="`/c/${company.uid}`")
-    b-card
-      .text-center.pb-3
-        b-card-img(top :src="company.logo.url")
-      b-card-title {{ company.name.short }}
-      b-card-text {{ company.motto }}
+    b-card(:style="`background-image: url(${company.background.browse.url || ''}); background-repeat: no-repeat; background-position: top; background-size: auto 125px`")
+      .text-center
+        b-card-img-lazy.mb-3(
+          :src="company.logo.url || ''"
+          style="max-height: 150px; max-width: 150px"
+        )
+        b-card-title {{ company.name.short }}
+        b-card-text.mb-3
+          small.text-muted {{ company.motto }}
       b-row(justify-content-end)
         b-col
           small.text-muted
             font-awesome-icon(:icon="['fas', 'map-marker-alt']")
             |
             | {{ company.location.city }}, {{ company.location.state }}
-        b-col
-          b-badge.card-badge(
+        b-col.text-right
+          b-badge.card-badge.mx-1(
             v-for="(offering, index) in company.offerings"
             :key="index"
-            size="sm"
-          ) Reg {{ offering.offeringType }}
+            size="lg"
+          ) Reg. {{ offering.offeringType }}
 </template>
 
 <script>

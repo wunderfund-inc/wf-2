@@ -5,9 +5,6 @@ export const state = () => ({
   companies: []
 });
 
-// use getters for filters, like:
-// - "companies actively fundraising"
-// - "companies browsed for, based on search filter"
 export const getters = {
   company: state => state.company,
   companies: state => state.companies,
@@ -26,12 +23,14 @@ export const mutations = {
 export const actions = {
   async fetchCompany({ commit }, id) {
     try {
-      const document = await db
+      const companyRef = await db
         .collection("companies")
         .doc(id)
         .get();
-
-      await commit("SET_COMPANY", document.data());
+      const offerings = await db.collection(`companies/${id}/offerings`).get();
+      const company = companyRef.data();
+      company.offerings = offerings.docs.map(offering => offering.data());
+      await commit("SET_COMPANY", company);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
@@ -40,7 +39,21 @@ export const actions = {
   async fetchCompanies({ commit }) {
     try {
       const querySnapshot = await db.collection("companies").get();
-      const listOfCompanies = querySnapshot.docs.map(doc => doc.data());
+      const listOfCompanies = await Promise.all(
+        querySnapshot.docs.map(async company => {
+          const companyData = company.data();
+
+          const offerings = await db
+            .collection(`companies/${company.id}/offerings`)
+            .get();
+          companyData.offerings = offerings.docs.map(offering =>
+            offering.data()
+          );
+
+          return companyData;
+        })
+      );
+
       await commit("SET_COMPANIES", listOfCompanies);
     } catch (error) {
       // eslint-disable-next-line
