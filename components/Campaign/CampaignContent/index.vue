@@ -61,10 +61,10 @@
         .row.text-center(v-if="company.offerings.length > 0")
           b-col.py-4(sm="4")
             h4 Amount Raised:
-            span $0.00
+            span {{ amountRaised | asCurrency }}
           b-col.py-4(sm="4")
             h4 Investments:
-            span 0
+            span {{ company.investments.length }}
           b-col.py-4(sm="4")
             b-button.mt-2(
               v-if="!signedIn"
@@ -130,11 +130,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { db } from "@/plugins/firebase";
 
 export default {
   data() {
     return {
-      index: 0
+      index: 0,
+      amountRaised: 0
     };
   },
   computed: {
@@ -143,6 +145,19 @@ export default {
       signedIn: "auth/currentUserAuth",
       accredited: "user/accredited"
     })
+  },
+  async created() {
+    const amounts = await Promise.all(
+      this.company.investments.map(async investmentId => {
+        const investment = await db
+          .collection("investments")
+          .doc(investmentId)
+          .get();
+        const investmentData = investment.data();
+        return investmentData.amount;
+      })
+    );
+    this.amountRaised = amounts.reduce((total, num) => total + num);
   },
   methods: {
     setIndex(i) {
