@@ -45,7 +45,7 @@
                   b-card-text
                     p Security: {{ offering.securityType }}
                       br
-                      span Raising: {{ offering.goal.min }} - {{ offering.goal.max }}
+                      span Raising: {{ offering.goal.min | currencyDisplayFormat }} - {{ offering.goal.max | currencyDisplayFormat }}
                       br
                       span Days Left: {{ offering.date.end | timeDistance }}
             p Share this offering with your friends!

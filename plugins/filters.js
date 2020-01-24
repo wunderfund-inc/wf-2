@@ -1,5 +1,6 @@
 import Vue from "vue";
 import formatDistance from "date-fns/formatDistance";
+import numeral from "numeral";
 
 /**
  * Capitalize all letters of a string
@@ -89,3 +90,9 @@ export const timeDistance = val => {
   return formatDistance(new Date(val), new Date());
 };
 Vue.filter("timeDistance", timeDistance);
+
+/**
+ * Format currency to its abbreviated form
+ */
+export const currencyDisplayFormat = val => numeral(val).format("($0.0a)");
+Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
