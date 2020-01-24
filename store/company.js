@@ -8,16 +8,17 @@ export const state = () => ({
 export const getters = {
   company: state => state.company,
   companies: state => state.companies,
-  offerings: state => state.company.offerings
+  offerings: state => state.company.offerings,
+  amountRaised: state => {
+    const investments = state.company.investments;
+    const listOfAmounts = investments.map(investment => investment.amount);
+    return listOfAmounts.reduce((tot, num) => tot + num);
+  }
 };
 
 export const mutations = {
-  SET_COMPANY(state, payload) {
-    state.company = payload;
-  },
-  SET_COMPANIES(state, payload) {
-    state.companies = payload;
-  }
+  SET_COMPANY: (state, payload) => (state.company = payload),
+  SET_COMPANIES: (state, payload) => (state.companies = payload)
 };
 
 export const actions = {
@@ -29,7 +30,18 @@ export const actions = {
         .get();
       const offerings = await db.collection(`companies/${id}/offerings`).get();
       const company = companyRef.data();
+      // Add in Offerings data, if any
       company.offerings = offerings.docs.map(offering => offering.data());
+      // Add in Investments data, if any
+      company.investments = await Promise.all(
+        company.investments.map(async investmentId => {
+          const investment = await db
+            .collection("investments")
+            .doc(investmentId)
+            .get();
+          return investment.data();
+        })
+      );
       await commit("SET_COMPANY", company);
     } catch (error) {
       // eslint-disable-next-line

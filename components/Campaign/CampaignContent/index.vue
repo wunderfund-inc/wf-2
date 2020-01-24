@@ -100,7 +100,7 @@
             .text-center
               h1 The Team
             .row.py-3(v-for="(employee, idx) in company.employees" :key="idx")
-              .col
+              .col-12.col-md-3
               .col.text-right
                 b-img(
                   thumbnail
@@ -110,11 +110,11 @@
               .col
                 h4.mt-2 {{ employee.name }}
                 p {{ employee.title }}
-              .col
+              .col-12.col-md-3
         .row.pt-5
           .col
             .text-center
-              h1 FAQs
+              h1.pb-3 FAQs
             .row
               .col-12.col-md-4
               .col-12.col-md-4
@@ -122,7 +122,7 @@
                   summary {{ faq.question }}
                   p {{ faq.answer }}
               .col-12.col-md-4
-        .row.pt-5
+        .row.py-5
           .col
             .text-center
               h1 Questions?
@@ -130,34 +130,20 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db } from "@/plugins/firebase";
 
 export default {
   data() {
     return {
-      index: 0,
-      amountRaised: 0
+      index: 0
     };
   },
   computed: {
     ...mapGetters({
       company: "company/company",
+      amountRaised: "company/amountRaised",
       signedIn: "auth/currentUserAuth",
       accredited: "user/accredited"
     })
-  },
-  async created() {
-    const amounts = await Promise.all(
-      this.company.investments.map(async investmentId => {
-        const investment = await db
-          .collection("investments")
-          .doc(investmentId)
-          .get();
-        const investmentData = investment.data();
-        return investmentData.amount;
-      })
-    );
-    this.amountRaised = amounts.reduce((total, num) => total + num);
   },
   methods: {
     setIndex(i) {
