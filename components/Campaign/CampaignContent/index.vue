@@ -47,7 +47,7 @@
                       br
                       span Raising: {{ offering.goal.min }} - {{ offering.goal.max }}
                       br
-                      span Days Left: {{ 40 }}
+                      span Days Left: {{ offering.date.end | timeDistance }}
             p Share this offering with your friends!
             p
               a.pr-3.text-muted

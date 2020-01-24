@@ -1,4 +1,5 @@
 import Vue from "vue";
+import formatDistance from "date-fns/formatDistance";
 
 /**
  * Capitalize all letters of a string
@@ -80,3 +81,11 @@ export const einNumToStr = val => {
   return word.slice(0, 2).join("") + "-" + word.slice(2).join("");
 };
 Vue.filter("einStrFormat", einNumToStr);
+
+/**
+ * Function to calculate days left
+ */
+export const timeDistance = val => {
+  return formatDistance(new Date(val), new Date());
+};
+Vue.filter("timeDistance", timeDistance);
