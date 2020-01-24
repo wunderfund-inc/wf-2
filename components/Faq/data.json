@@ -1,0 +1,76 @@
+{
+  "faqs": {
+    "general": {
+      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
+      "intro": "This is the designated area for the first “introductory” paragraph, often the answer to the first question in the original text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.",
+      "faqItems": [
+        {
+          "question": "question 1",
+          "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna ali enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        },
+        {
+          "question": "question 2",
+          "answer": "answer 2"
+        },
+        {
+          "question": "question 3",
+          "answer": "answer 3"
+        }
+      ]
+    },
+    "investor": {
+      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
+      "intro": "This is the designated area for the first “introductory” paragraph, often the answer to the first question in the original text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.",
+      "faqItems": [
+        {
+          "question": "question 1",
+          "answer": "answer 1"
+        },
+        {
+          "question": "question 2",
+          "answer": "answer 2"
+        },
+        {
+          "question": "question 3",
+          "answer": "answer 3"
+        }
+      ]
+    },
+    "company": {
+      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
+      "intro": "This is the designated area for the first “introductory” paragraph, often the answer to the first question in the original text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.",
+      "faqItems": [
+        {
+          "question": "question 1",
+          "answer": "answer 1"
+        },
+        {
+          "question": "question 2",
+          "answer": "answer 2"
+        },
+        {
+          "question": "question 3",
+          "answer": "answer 3"
+        }
+      ]
+    },
+    "legal": {
+      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
+      "intro": "This is the designated area for the first “introductory” paragraph, often the answer to the first question in the original text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id.",
+      "faqItems": [
+        {
+          "question": "question 1",
+          "answer": "answer 1"
+        },
+        {
+          "question": "question 2",
+          "answer": "answer 2"
+        },
+        {
+          "question": "question 3",
+          "answer": "answer 3"
+        }
+      ]
+    }
+  }
+}

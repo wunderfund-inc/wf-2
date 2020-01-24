@@ -1,22 +1,22 @@
 <template lang="pug">
   .container.py-5.text-center
     h1 Frequently Asked Questions (FAQs)
-    b-row.py-5
-      b-col.py-2(cols="12" md="3" v-for="link in links" :key="link.id")
-        faq-card(:faq-link="link")
+    .row.py-5
+      .col-12.col-md-3.py-2(v-for="(faq, index) in faqs" :key="index")
+        faq-card(:img-src="faq.image" :faq-link="index")
 </template>
 
 <script>
+import { faqs } from "@/components/Faq/data.json";
 import FaqCard from "@/components/Faq/FaqCard";
 
 export default {
   components: {
     FaqCard
   },
-  data() {
-    return {
-      links: ["general", "investor", "company", "legal"]
-    };
+  computed: {
+    faqs: () => faqs,
+    links: () => Object.keys(faqs)
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  nuxt-link.text-dark(:to="`/c/${company.uid}`")
+  nuxt-link.text-decoration-none.text-dark(:to="`/c/${company.uid}`")
     b-card(:style="`background-image: url(${company.background.browse.url || ''}); background-repeat: no-repeat; background-position: top; background-size: auto 125px`")
       .text-center
         b-card-img-lazy.mb-3(
@@ -39,7 +39,6 @@ $primary: #0091ea;
 $font: "Montserrat", sans-serif;
 
 a {
-  text-decoration: none;
   .card {
     img {
       max-height: 200px;

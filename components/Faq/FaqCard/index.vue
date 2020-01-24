@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-link.text-decoration-none(:to="`/faq/${faqLink}`")
+  nuxt-link.text-decoration-none.text-dark(:to="`/faq/${faqLink}`")
     b-card(
       :img-src="imgSrc"
       img-top
@@ -22,10 +22,20 @@ export default {
     },
     imgSrc: {
       type: String,
-      required: false,
-      default:
-        "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD"
+      required: true
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+a {
+  .card:hover {
+    cursor: pointer;
+    text-decoration: none;
+    -webkit-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
+    -moz-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
+    box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
+  }
+}
+</style>

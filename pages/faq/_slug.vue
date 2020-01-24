@@ -1,40 +1,58 @@
 <template lang="pug">
-  main
-    section#faq-nav
-      b-container
-        .py-2
-          b-row
-            b-col(lg="3")
-            b-col(cols="12")
-              faq-navbar(:menu="links")
-            b-col(lg="3")
-    section
-      b-container
-        .py-2
-          b-row
-            b-col(md="5")
-              faq-left-col
-            b-col(md="7")
-              faq-right-col(
-                faq-intro="This is the designated area for the first “introductory” paragraph, often the answer to the first question in the original text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id."
-              )
+main
+  header#faq-nav
+    .container
+      .py-2
+        .row
+          .col-12.col-md-2
+          .col
+            b-navbar(type="light")
+              b-navbar-nav.mx-auto(justified)
+                .row
+                  .col-12.col-md-3(
+                    v-for="(link, index) in links"
+                    :key="index"
+                  )
+                    b-nav-item(
+                      active-class="font-weight-bolder"
+                      :to="`/faq/${link}`"
+                    ) {{ link | pluralFaq | properCase }}
+          .col-12.col-md-2
+  section#faq-content
+    .container
+      .py-2
+        .row
+          .col-12.col-md-5
+            aside
+              .text-center
+                .pb-3
+                  b-img-lazy(
+                    thumbnail
+                    :src="faqs[slug].image"
+                  )
+                p {{ slug | pluralFaq | properCase }} FAQs
+          .col-12.col-md-7
+            aside
+              p {{ faqs[slug].intro }}
+              hr
+              div(v-for="item in faqs[slug].faqItems")
+                faq-item(:question="item.question" :answer="item.answer")
 </template>
 
 <script>
-import FaqNavbar from "@/components/Faq/_Slug/FaqNavbar";
-import FaqLeftCol from "@/components/Faq/_Slug/FaqLeftCol";
-import FaqRightCol from "@/components/Faq/_Slug/FaqRightCol";
+import { faqs } from "@/components/Faq/data.json";
+import FaqItem from "@/components/Faq/_Slug/FaqItem";
 
 export default {
   components: {
-    FaqNavbar,
-    FaqLeftCol,
-    FaqRightCol
+    FaqItem
   },
-  data() {
-    return {
-      links: ["general", "investor", "company", "legal"]
-    };
+  computed: {
+    faqs: () => faqs,
+    links: () => Object.keys(faqs)
+  },
+  asyncData({ route }) {
+    return { slug: route.params.slug };
   }
 };
 </script>
