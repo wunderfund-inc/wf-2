@@ -1,4 +1,4 @@
-import firebase, { db, timestamp } from "@/plugins/firebase";
+import { db, timestamp } from "@/plugins/firebase";
 import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
@@ -77,67 +77,97 @@ export const actions = {
     commit("SET_OFFERING", payload);
   },
   async submitInvestment({ state }, { companyId, userId }) {
-    const investment = await db.collection("investments").doc();
+    try {
+      const offeringId = state.selectedOffering.uid;
 
-    const data = {
-      userId,
-      companyId,
-      offeringId: state.selectedOffering.uid,
-      type: state.selectedType,
-      method: state.selectedMethod,
-      amount: state.transactionAmount,
-      agreements: state.agreedTo,
-      uid: investment.id
-    };
+      const investmentRef = await db.collection("investments").doc();
 
-    if (state.selectedEntity) data.entity = state.selectedEntity;
-
-    switch (state.selectedMethod) {
-      case "ACH":
-        data.extras = Object.assign(cloneDeep({ ach: state.ach }));
-        break;
-      case "CC":
-        data.extras = Object.assign(cloneDeep({ cc: state.cc }));
-        break;
-      case "CRYPTO":
-        data.extras = Object.assign(cloneDeep({ crypto: state.crypto }));
-        break;
-    }
-
-    await investment.set({
-      ...data,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    });
-
-    const userDoc = await db.collection("users").doc(userId);
-    await userDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
-      updatedAt: timestamp
-    });
-
-    if (state.selectedEntity) {
-      const entityDoc = await db
-        .collection("entities")
-        .doc(state.selectedEntity.uid);
-      await entityDoc.update({
-        investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
+      const dto = {
+        uid: investmentRef.id,
+        type: state.selectedType,
+        method: state.selectedMethod,
+        amount: state.transactionAmount,
+        agreements: state.agreedTo,
+        createdAt: timestamp,
         updatedAt: timestamp
+      };
+
+      switch (state.selectedMethod) {
+        case "ACH":
+          dto.extras = Object.assign(cloneDeep({ ach: state.ach }));
+          break;
+        case "CC":
+          dto.extras = Object.assign(cloneDeep({ cc: state.cc }));
+          break;
+        case "CRYPTO":
+          dto.extras = Object.assign(cloneDeep({ crypto: state.crypto }));
+          break;
+      }
+
+      await investmentRef.set({
+        ...dto,
+        offeringId,
+        companyId,
+        userId
       });
+
+      const offeringRef = await db
+        .collection(`offerings/${offeringId}/investments`)
+        .doc();
+
+      await offeringRef.set({
+        ...dto,
+        companyId,
+        userId
+      });
+
+      const companyOffering = await db
+        .collection(
+          `companies/${companyId}/offerings/${offeringId}/investments`
+        )
+        .doc();
+
+      await companyOffering.set({
+        ...dto,
+        userId
+      });
+
+      if (state.selectedType === "ENTITY") {
+        const entityId = state.selectedEntity.uid;
+
+        const entityRef = db
+          .collection(`entities/${entityId}/investments`)
+          .doc();
+
+        await entityRef.set({
+          ...dto,
+          offeringId,
+          companyId,
+          userId
+        });
+
+        const userEntity = db
+          .collection(`users/${userId}/entities/${entityId}/investments`)
+          .doc();
+
+        await userEntity.set({
+          ...dto,
+          offeringId,
+          companyId
+        });
+      } else {
+        const userInvestment = await db
+          .collection(`users/${userId}/investments`)
+          .doc();
+        await userInvestment.set({
+          ...dto,
+          offeringId: state.selectedOffering.uid,
+          companyId
+        });
+      }
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
     }
-
-    const companyDoc = await db.collection("companies").doc(companyId);
-    await companyDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
-      updatedAt: timestamp
-    });
-
-    const offeringDoc = await db
-      .collection("offerings")
-      .doc(state.selectedOffering.uid);
-    await offeringDoc.update({
-      investments: firebase.firestore.FieldValue.arrayUnion(investment.id),
-      updatedAt: timestamp
-    });
   }
 };

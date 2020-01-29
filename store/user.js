@@ -170,7 +170,7 @@ export const actions = {
         updatedAt: timestamp
       };
 
-      await entityRef.set(dto);
+      await entityRef.set({ ...dto, userId });
       await userEntity.set(dto);
     } catch (error) {
       // eslint-disable-next-line
