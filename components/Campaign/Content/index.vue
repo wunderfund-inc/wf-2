@@ -13,11 +13,11 @@
                   allowfullscreen
                 )
             .row
-              .col.pt-2
-                small.px-1(v-if="company.website")
+              .col.pt-2.text-center
+                small.px-2(v-if="company.website")
                   a.text-muted(:href="company.website" target="_blank")
                     font-awesome-icon.fa-lg(:icon="['fas', 'link']")
-                small.px-1(
+                small.px-2(
                   v-for="(link, index) in company.socialMediaLinks"
                   :key="index"
                 )
@@ -34,7 +34,7 @@
               |
               | {{ company.location.city }}, {{ company.location.state }}
             b-card.my-3(no-body)
-              b-tabs(card pills justified)
+              b-tabs(card justified)
                 b-tab(
                   v-for="(offering, key) in offerings"
                   :key="key"
@@ -48,11 +48,11 @@
                     br
                     span Days Left: {{ offering.date.end | timeDistance }}
             small Share this offering with your friends!
-              a.px-3.text-muted
+              a.pl-3.pr-2.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
-              a.px-3.text-muted
+              a.px-2.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'linkedin']")
-              a.pl-3.text-muted
+              a.pl-2.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
     section#metrics.bg-light
       .container
