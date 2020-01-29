@@ -2,46 +2,63 @@ import { db } from "@/plugins/firebase";
 
 export const state = () => ({
   company: null,
-  companies: []
+  companies: [],
+  offerings: []
 });
 
 export const getters = {
   company: state => state.company,
   companies: state => state.companies,
-  offerings: state => state.company.offerings,
-  amountRaised: state => {
-    const investments = state.company.investments;
-    const listOfAmounts = investments.map(investment => investment.amount);
-    return listOfAmounts.reduce((tot, num) => tot + num);
-  }
+  offerings: state => state.offerings
 };
 
 export const mutations = {
   SET_COMPANY: (state, payload) => (state.company = payload),
-  SET_COMPANIES: (state, payload) => (state.companies = payload)
+  SET_COMPANIES: (state, payload) => (state.companies = payload),
+  SET_OFFERINGS: (state, payload) => (state.offerings = payload)
 };
 
 export const actions = {
-  async fetchCompany({ commit }, id) {
+  async fetchOfferings({ state, commit }, companyId) {
+    try {
+      const activeOfferings = await db
+        .collection("offerings")
+        .where("companyId", "==", companyId)
+        // .where("published", "==", true)
+        .get();
+
+      const offerings = await Promise.all(
+        activeOfferings.docs.map(async offeringRef => {
+          const offering = offeringRef.data();
+          const offeringInvestments = await db
+            .collection(`offerings/${offering.uid}/investments`)
+            .get();
+          const investments = offeringInvestments.docs.map(investment => {
+            return investment.data();
+          });
+          offering.investments = investments;
+          return offering;
+        })
+      );
+
+      const sortedOfferings = offerings.sort((a, b) => {
+        return a.goal.min - b.goal.min;
+      });
+
+      await commit("SET_OFFERINGS", sortedOfferings);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
+  },
+  async fetchCompany({ commit, dispatch }, id) {
     try {
       const companyRef = await db
         .collection("companies")
         .doc(id)
         .get();
-      const offerings = await db.collection(`companies/${id}/offerings`).get();
       const company = companyRef.data();
-      // Add in Offerings data, if any
-      company.offerings = offerings.docs.map(offering => offering.data());
-      // Add in Investments data, if any
-      company.investments = await Promise.all(
-        company.investments.map(async investmentId => {
-          const investment = await db
-            .collection("investments")
-            .doc(investmentId)
-            .get();
-          return investment.data();
-        })
-      );
+      await dispatch("fetchOfferings", company.uid);
       await commit("SET_COMPANY", company);
     } catch (error) {
       // eslint-disable-next-line

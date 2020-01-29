@@ -36,18 +36,17 @@
             b-card.my-3(no-body)
               b-tabs(card pills justified)
                 b-tab(
-                  v-for="(offering, key) in company.offerings"
+                  v-for="(offering, key) in offerings"
                   :key="key"
                   :title="`Reg. ${offering.offeringType}`"
                   :active="key === index"
                   @click="setIndex(key)"
                 )
-                  b-card-text
-                    p Security: {{ offering.securityType }}
-                      br
-                      span Raising: {{ offering.goal.min | currencyDisplayFormat }} - {{ offering.goal.max | currencyDisplayFormat }}
-                      br
-                      span Days Left: {{ offering.date.end | timeDistance }}
+                  b-card-text Security: {{ offering.securityType }}
+                    br
+                    span Raising: {{ offering.goal.min | currencyDisplayFormat }} - {{ offering.goal.max | currencyDisplayFormat }}
+                    br
+                    span Days Left: {{ offering.date.end | timeDistance }}
             small Share this offering with your friends!
               a.px-3.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
@@ -57,13 +56,13 @@
                 font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
     section#metrics
       .container
-        .row.text-center(v-if="company.offerings.length > 0")
+        .row.text-center(v-if="offerings.length > 0")
           b-col.py-4(sm="4")
             h5 Amount Raised:
-            span {{ amountRaised | asCurrency }}
+            span {{ offerings[index].investments | amountRaised | asCurrency }}
           b-col.py-4(sm="4")
             h5 Investments:
-            span {{ company.investments.length }}
+            span {{ offerings[index].investments.length }}
           b-col.py-4(sm="4")
             b-button.mt-2(
               v-if="!signedIn"
@@ -71,19 +70,19 @@
               to="/auth/login"
             ) Login to Invest
             b-button.mt-2(
-              v-if="signedIn && company.offerings[index] && company.offerings[index].securityType !== 'EQUITY'"
+              v-if="signedIn && offerings[index] && offerings[index].securityType !== 'EQUITY'"
               size="lg"
               :to="`/c/${$route.params.companyId}/invest`"
-            ) Invest {{ company.offerings[index].minInvestment | asCurrency }} Minimum
+            ) Invest {{ offerings[index].minInvestment | asCurrency }} Minimum
             b-button.mt-2(
-              v-if="signedIn && company.offerings[index] && company.offerings[index].securityType === 'EQUITY'"
+              v-if="signedIn && offerings[index] && offerings[index].securityType === 'EQUITY'"
               size="lg"
               :to="`/c/${$route.params.companyId}/invest`"
               :disabled="!accredited"
-            ) Invest {{ company.offerings[index] && company.offerings[index].equity.minSharesNeededToBuy * company.offerings[index].equity.pricePerShare | asCurrency }} Minimum
+            ) Invest {{ offerings[index] && offerings[index].equity.minSharesNeededToBuy * offerings[index].equity.pricePerShare | asCurrency }} Minimum
             br
             small.text-muted(
-              v-if="signedIn && !accredited && company.offerings[index] && company.offerings[index].offeringType !== 'CF'"
+              v-if="signedIn && !accredited && offerings[index] && offerings[index].offeringType !== 'CF'"
             ) Why can't I invest in this offering?
     section#content
       .container
@@ -107,9 +106,8 @@
                       :src="employee.image.url"
                       style="max-height: 100px; max-width: 100px"
                     )
-                    b-card-text.pt-3
-                      h6.mb-0 {{ employee.name }}
-                      small.text-muted.mb-0 {{ employee.title }}
+                    b-card-text.pt-3.mb-0 {{ employee.name }}
+                    small.text-muted.mb-0 {{ employee.title }}
           .col-12.col-md-1
         .row.pt-5
           .col-12.col-md-1
@@ -138,7 +136,7 @@ export default {
   computed: {
     ...mapGetters({
       company: "company/company",
-      amountRaised: "company/amountRaised",
+      offerings: "company/offerings",
       signedIn: "auth/currentUserAuth",
       accredited: "user/accredited"
     })
