@@ -93,14 +93,11 @@
     section#content
       .container
         .row.pt-5
-          .col-12.col-md-1
           .col
             .text-center
             h1.pb-3 The Pitch
             div(v-html="company.otherContent")
-          .col-12.col-md-1
         .row.pt-5
-          .col-12.col-md-1
           .col
             h1.pb-3 The Team
             .row
@@ -114,20 +111,15 @@
                     )
                     b-card-text.pt-3.mb-0 {{ employee.name }}
                     small.text-muted.mb-0 {{ employee.title }}
-          .col-12.col-md-1
         .row.pt-5
-          .col-12.col-md-1
           .col
             h1.pb-3 FAQs
             details(v-for="(faq, index) in company.faqs" :key="index")
               summary {{ faq.question }}
               p {{ faq.answer }}
-          .col-12.col-md-1
         .row.py-5
-          .col-12.col-md-1
           .col
             h1 Questions?
-          .col-12.col-md-1
 </template>
 
 <script>
