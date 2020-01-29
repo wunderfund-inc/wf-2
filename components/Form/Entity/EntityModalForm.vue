@@ -95,7 +95,7 @@ export default {
         entityData: this.entityData,
         currentUserAuth: this.currentUserAuth
       });
-      await window.location.reload();
+      await window.location.reload(true);
     }
   }
 };

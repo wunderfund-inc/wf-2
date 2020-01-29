@@ -77,6 +77,7 @@ export const getters = {
   entities: state => state.entities,
   investments: state => state.investments,
   currentUser: state => state.currentUser,
+  spendPool: state => state.currentUser.spendPool,
   entitySelection: state => {
     const entityList = state.entities;
     return entityList.map(el => {
@@ -126,57 +127,55 @@ export const mutations = {
 
 export const actions = {
   async setAccountData({ dispatch }) {
-    const userId = auth.currentUser.uid || auth.currentUser.user_id;
+    try {
+      const userId = auth.currentUser.uid || auth.currentUser.user_id;
+      const user = await db
+        .collection("users")
+        .doc(userId)
+        .get();
+      const userData = user.data();
 
-    const user = await db
-      .collection("users")
-      .doc(userId)
-      .get();
+      await dispatch("setCurrentUser", userData);
+      await dispatch("setProfileNameAttribute", { ...userData.name });
+      await dispatch("setProfileAddressAttribute", { ...userData.address });
 
-    const userData = user.data();
+      const entitiesList = await db
+        .collection(`users/${userId}/entities`)
+        .get();
+      const entities = entitiesList.docs.map(entity => entity.data());
+      await dispatch("setEntities", entities);
 
-    await dispatch("setCurrentUser", userData);
-    await dispatch("setProfileNameAttribute", { ...userData.name });
-    await dispatch("setProfileAddressAttribute", { ...userData.address });
-
-    // const investments = await Promise.all(
-    //   userData.investments.map(async id => {
-    //     try {
-    //       const investmentRef = await db
-    //         .collection("investments")
-    //         .doc(id)
-    //         .get();
-
-    //       return investmentRef.data();
-    //     } catch (error) {
-    //       // eslint-disable-next-line
-    //       console.error(error);
-    //     }
-    //   })
-    // );
-
-    const entitiesList = await db.collection(`users/${userId}/entities`).get();
-    const entities = entitiesList.docs.map(entity => entity.data());
-
-    await dispatch("setEntities", entities);
-
-    const investments = [];
-    await dispatch("setInvestments", investments);
+      const investmentsList = await db
+        .collection(`users/${userId}/investments`)
+        .get();
+      const investments = investmentsList.docs.map(investment => {
+        return investment.data();
+      });
+      await dispatch("setInvestments", investments);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   },
   async createEntity(context, { entityData, currentUserAuth }) {
-    const entityRef = await db.collection("entities").doc();
-    const userId = currentUserAuth.uid || currentUserAuth.user_id;
-    const userEntity = await db.collection(`users/${userId}/entities`).doc();
+    try {
+      const entityRef = await db.collection("entities").doc();
+      const userId = currentUserAuth.uid || currentUserAuth.user_id;
+      const userEntity = await db.collection(`users/${userId}/entities`).doc();
 
-    const dto = {
-      uid: entityRef.id,
-      ...entityData,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    };
+      const dto = {
+        uid: entityRef.id,
+        ...entityData,
+        createdAt: timestamp,
+        updatedAt: timestamp
+      };
 
-    await entityRef.set(dto);
-    await userEntity.set(dto);
+      await entityRef.set(dto);
+      await userEntity.set(dto);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   },
   setPasswordAttribute({ commit }, payload) {
     commit("SET_PASSWORD_ATTRIBUTE", payload);
