@@ -47,6 +47,12 @@
                     span Raising: {{ offering.goal.min | currencyDisplayFormat }} - {{ offering.goal.max | currencyDisplayFormat }}
                     br
                     span Days Left: {{ offering.date.end | timeDistance }}
+                    .text-dark(v-if="offering.agreements.offering.url")
+                      br
+                      b-link(:src="offering.agreements.offering.url || '#'") Offering Agreement
+                    .text-dark(v-if="offering.agreements.subscription.url")
+                      br
+                      b-link(:src="offering.agreements.subscription.url || '#'") Subscription Agreement
             small Share this offering with your friends!
               a.pl-3.pr-2.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
