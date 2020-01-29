@@ -46,7 +46,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import firebase, { db, timestamp } from "@/plugins/firebase";
 import EntityName from "@/components/Form/Entity/EntityName";
 import EntityType from "@/components/Form/Entity/EntityType";
 import EntityEin from "@/components/Form/Entity/EntityEin";
@@ -92,25 +91,11 @@ export default {
       this.handleSubmit();
     },
     async handleSubmit() {
-      // Save entity data to its own collection, referencing a user's uid
-      const ref = await db.collection("entities").doc();
-      const data = {
-        uid: ref.id,
-        ...this.entityData
-      };
-      await ref.set({
-        ...data,
-        createdAt: timestamp,
-        updatedAt: timestamp
+      await this.$store.dispatch("user/createEntity", {
+        entityData: this.entityData,
+        currentUserAuth: this.currentUserAuth
       });
-      // Save entity data to a current user's list of entities
-      const uid = this.currentUserAuth.uid || this.currentUserAuth.user_id;
-      await db
-        .collection("users")
-        .doc(uid)
-        .update({ entities: firebase.firestore.FieldValue.arrayUnion(data) });
-      // Refresh the page
-      window.location.reload();
+      await window.location.reload();
     }
   }
 };

@@ -1,4 +1,4 @@
-import { db } from "@/plugins/firebase";
+import { db, timestamp } from "@/plugins/firebase";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -124,6 +124,21 @@ export const mutations = {
 };
 
 export const actions = {
+  async createEntity(context, { entityData, currentUserAuth }) {
+    const entityRef = await db.collection("entities").doc();
+    const userId = currentUserAuth.uid || currentUserAuth.user_id;
+    const userEntity = await db.collection(`users/${userId}/entities`).doc();
+
+    const dto = {
+      uid: entityRef.id,
+      ...entityData,
+      createdAt: timestamp,
+      updatedAt: timestamp
+    };
+
+    await entityRef.set(dto);
+    await userEntity.set(dto);
+  },
   setPasswordAttribute({ commit }, payload) {
     commit("SET_PASSWORD_ATTRIBUTE", payload);
   },
