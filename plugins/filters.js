@@ -96,3 +96,12 @@ Vue.filter("timeDistance", timeDistance);
  */
 export const currencyDisplayFormat = val => numeral(val).format("($0.0a)");
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
+
+/**
+ * Reduce array of investments to raw amount total that's been raised
+ */
+export const amountRaised = investments => {
+  const listOfAmounts = investments.map(investment => investment.amount);
+  return listOfAmounts.reduce((tot, num) => tot + num, 0);
+};
+Vue.filter("amountRaised", amountRaised);
