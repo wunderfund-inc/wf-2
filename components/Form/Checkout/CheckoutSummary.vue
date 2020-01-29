@@ -1,5 +1,5 @@
 <template lang="pug">
-  section
+  section(style="position: sticky; top: 20px;")
     b-card(header="Commitment Summary" header-class="text-center")
       b-card-text Hello! My name is #[strong Justin Chiou].
       b-card-text(v-if="validPersonal") I want to personally invest in the #[strong Regulation {{ selectedOffering.offeringType }}] offering of #[strong {{ company.name.short }}].
