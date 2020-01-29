@@ -1,7 +1,8 @@
-import { db, timestamp } from "@/plugins/firebase";
+import { auth, db, timestamp } from "@/plugins/firebase";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
+  entities: [],
   investments: [],
   currentUser: null,
   form: {
@@ -73,7 +74,7 @@ export const getters = {
     }
     return false;
   },
-  entities: state => state.currentUser.entities,
+  entities: state => state.entities,
   investments: state => state.investments,
   currentUser: state => state.currentUser,
   entitySelection: state => {
@@ -124,6 +125,44 @@ export const mutations = {
 };
 
 export const actions = {
+  async setAccountData({ dispatch }) {
+    const userId = auth.currentUser.uid || auth.currentUser.user_id;
+
+    const user = await db
+      .collection("users")
+      .doc(userId)
+      .get();
+
+    const userData = user.data();
+
+    await dispatch("setCurrentUser", userData);
+    await dispatch("setProfileNameAttribute", { ...userData.name });
+    await dispatch("setProfileAddressAttribute", { ...userData.address });
+
+    // const investments = await Promise.all(
+    //   userData.investments.map(async id => {
+    //     try {
+    //       const investmentRef = await db
+    //         .collection("investments")
+    //         .doc(id)
+    //         .get();
+
+    //       return investmentRef.data();
+    //     } catch (error) {
+    //       // eslint-disable-next-line
+    //       console.error(error);
+    //     }
+    //   })
+    // );
+
+    const entitiesList = await db.collection(`users/${userId}/entities`).get();
+    const entities = entitiesList.docs.map(entity => entity.data());
+
+    await dispatch("setEntities", entities);
+
+    const investments = [];
+    await dispatch("setInvestments", investments);
+  },
   async createEntity(context, { entityData, currentUserAuth }) {
     const entityRef = await db.collection("entities").doc();
     const userId = currentUserAuth.uid || currentUserAuth.user_id;
@@ -153,6 +192,9 @@ export const actions = {
   },
   setCurrentUserProfile({ commit }, payload) {
     commit("SET_CURRENT_USER_PROFILE", payload);
+  },
+  setEntities({ commit }, entities) {
+    commit("SET_ENTITY_LIST", entities);
   },
   async setInvestments({ commit }, investments) {
     const d = await Promise.all(

@@ -11,7 +11,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db } from "@/plugins/firebase";
 import AccountProfile from "@/components/Account/AccountProfile";
 import AccountEntityList from "@/components/Account/AccountEntityList";
 import AccountInvestmentList from "@/components/Account/AccountInvestmentList";
@@ -35,36 +34,7 @@ export default {
   },
   async fetch({ store }) {
     try {
-      const authData = store.getters["auth/currentUserAuth"];
-      const uid = authData.uid || authData.user_id;
-      const user = await db
-        .collection("users")
-        .doc(uid)
-        .get();
-      const userData = user.data();
-      await store.dispatch("user/setCurrentUser", userData);
-      await store.dispatch("user/setProfileNameAttribute", {
-        ...userData.name
-      });
-      await store.dispatch("user/setProfileAddressAttribute", {
-        ...userData.address
-      });
-      const investments = await Promise.all(
-        userData.investments.map(async id => {
-          try {
-            const investmentRef = await db
-              .collection("investments")
-              .doc(id)
-              .get();
-
-            return investmentRef.data();
-          } catch (error) {
-            // eslint-disable-next-line
-            console.error(error);
-          }
-        })
-      );
-      await store.dispatch("user/setInvestments", investments);
+      await store.dispatch("user/setAccountData");
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
