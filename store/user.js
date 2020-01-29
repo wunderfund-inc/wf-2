@@ -195,6 +195,19 @@ export const actions = {
   setEntities({ commit }, entities) {
     commit("SET_ENTITY_LIST", entities);
   },
+  async updateProfileData({ state }) {
+    const userId = state.currentUser.uid || state.currentUser.user_id;
+    const profile = state.form.profile;
+
+    await db
+      .collection("users")
+      .doc(userId)
+      .update({
+        name: profile.name,
+        address: profile.address,
+        updatedAt: timestamp
+      });
+  },
   async setInvestments({ commit }, investments) {
     const d = await Promise.all(
       investments.map(async investment => {

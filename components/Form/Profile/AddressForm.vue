@@ -28,7 +28,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db, timestamp } from "@/plugins/firebase";
 import FirstNameInput from "@/components/Form/Profile/FirstNameInput";
 import LastNameInput from "@/components/Form/Profile/LastNameInput";
 import Street1Input from "@/components/Form/Profile/Address/Street1Input";
@@ -57,15 +56,8 @@ export default {
   },
   methods: {
     async updateProfileOnFirebase() {
-      await db
-        .collection("users")
-        .doc(this.currentUser.uid)
-        .update({
-          name: this.name,
-          address: this.address,
-          updatedAt: timestamp
-        });
-      window.location.reload();
+      await this.$store.dispatch("updateProfileData");
+      await window.location.reload();
     }
   }
 };
