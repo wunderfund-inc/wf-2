@@ -5,7 +5,7 @@
 
 <script>
 import { db } from "@/plugins/firebase";
-import CampaignContent from "@/components/Campaign/CampaignContent";
+import CampaignContent from "@/components/Campaign/Content";
 
 export default {
   components: {

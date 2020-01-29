@@ -54,27 +54,27 @@
                 font-awesome-icon.fa-lg(:icon="['fab', 'linkedin']")
               a.pl-3.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
-    section#metrics
+    section#metrics.bg-light
       .container
         .row.text-center(v-if="offerings.length > 0")
           b-col.py-4(sm="4")
-            h5 Amount Raised:
+            h5.text__gold-dark Amount Raised:
             span {{ offerings[index].investments | amountRaised | asCurrency }}
           b-col.py-4(sm="4")
-            h5 Investments:
+            h5.text__gold-dark Investments:
             span {{ offerings[index].investments.length }}
           b-col.py-4(sm="4")
-            b-button.mt-2(
+            b-button.mt-2.btn__gold(
               v-if="!signedIn"
               size="lg"
               to="/auth/login"
             ) Login to Invest
-            b-button.mt-2(
+            b-button.mt-2.btn__gold(
               v-if="signedIn && offerings[index] && offerings[index].securityType !== 'EQUITY'"
               size="lg"
               :to="`/c/${$route.params.companyId}/invest`"
             ) Invest {{ offerings[index].minInvestment | asCurrency }} Minimum
-            b-button.mt-2(
+            b-button.mt-2.btn__gold(
               v-if="signedIn && offerings[index] && offerings[index].securityType === 'EQUITY'"
               size="lg"
               :to="`/c/${$route.params.companyId}/invest`"
@@ -164,3 +164,28 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+$gold: #c89f5c;
+$darker-gold: #84683c;
+
+.text {
+  &__gold-dark {
+    color: $gold;
+  }
+}
+
+.btn {
+  &__gold {
+    border: $gold 1px solid;
+    background-color: $gold;
+
+    &:hover,
+    &:focus {
+      border: $gold 1px solid;
+      background-color: transparent;
+      color: $gold;
+    }
+  }
+}
+</style>
