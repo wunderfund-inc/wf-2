@@ -100,7 +100,7 @@
             h1.pb-3 The Team
             .row
               .col-12.col-md-3.col-sm-6.py-3(v-for="(employee, idx) in company.employees" :key="idx")
-                b-card(no-body)
+                b-card(no-body style="border:none")
                   .text-center.py-3
                     b-img(
                       thumbnail
@@ -108,8 +108,8 @@
                       style="max-height: 100px; max-width: 100px"
                     )
                     b-card-text.pt-3
-                      h6 {{ employee.name }}
-                      small.mb-0 {{ employee.title }}
+                      h6.mb-0 {{ employee.name }}
+                      small.text-muted.mb-0 {{ employee.title }}
           .col-12.col-md-1
         .row.pt-5
           .col-12.col-md-1

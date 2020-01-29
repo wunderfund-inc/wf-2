@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import { auth, db, timestamp } from "@/plugins/firebase";
-
 export default {
   data() {
     return {
@@ -90,49 +88,16 @@ export default {
   methods: {
     async submitRegister() {
       try {
-        const user = await auth.createUserWithEmailAndPassword(
-          this.email,
-          this.password
-        );
-        await this.createUser(user.user.uid, user);
-        await this.$store.dispatch("auth/login", user.user.toJSON());
+        await this.$store.dispatch("auth/createUser", {
+          email: this.email,
+          password: this.password
+        });
         await this.$router.replace("/u");
       } catch (error) {
         // eslint-disable-next-line
         console.error(error);
         this.error = error.message;
       }
-    },
-    async createUser(uid, dto) {
-      const user = {
-        uid: dto.user.uid,
-        email: dto.user.email,
-        accredited: false,
-        entities: [],
-        investments: [],
-        spendPool: {
-          current: 2200,
-          max: 2200
-        },
-        name: {
-          first: null,
-          last: null
-        },
-        address: {
-          street1: null,
-          street2: null,
-          city: null,
-          state: null,
-          postal: null
-        },
-        createdAt: timestamp,
-        updatedAt: timestamp
-      };
-
-      await db
-        .collection("users")
-        .doc(dto.user.uid)
-        .set(user);
     }
   }
 };

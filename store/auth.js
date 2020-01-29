@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { auth } from "@/plugins/firebase";
+import { auth, db, timestamp } from "@/plugins/firebase";
 
 export const state = () => ({
   currentUserAuth: null
@@ -26,6 +26,59 @@ export const mutations = {
 };
 
 export const actions = {
+  async createUser({ dispatch }, { email, password }) {
+    try {
+      const user = await auth.createUserWithEmailAndPassword(email, password);
+      await dispatch("createUserInDb", { uid: user.user.uid, dto: user });
+      await dispatch("login", user);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
+  },
+  async createUserInDb(context, { uid, dto }) {
+    try {
+      const user = {
+        uid,
+        email: dto.user.email,
+        accredited: false,
+        spendPool: {
+          current: 2200,
+          max: 2200
+        },
+        name: {
+          first: null,
+          last: null
+        },
+        address: {
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          postal: null
+        },
+        createdAt: timestamp,
+        updatedAt: timestamp
+      };
+
+      await db
+        .collection("users")
+        .doc(uid)
+        .set(user);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
+  },
+  async loginUser({ dispatch }, { email, password }) {
+    try {
+      const user = await auth.signInWithEmailAndPassword(email, password);
+      await dispatch("login", user.user.toJSON());
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
+  },
   async login({ dispatch }, user) {
     try {
       const token = await auth.currentUser.getIdToken(true);

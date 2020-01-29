@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import { auth } from "@/plugins/firebase";
-
 export default {
   data() {
     return {
@@ -47,11 +45,10 @@ export default {
   methods: {
     async submitLogin() {
       try {
-        const user = await auth.signInWithEmailAndPassword(
-          this.email,
-          this.password
-        );
-        await this.$store.dispatch("auth/login", user.user.toJSON());
+        await this.$store.dispatch("auth/loginUser", {
+          email: this.email,
+          password: this.password
+        });
         await this.$router.replace("/u");
       } catch (error) {
         // eslint-disable-next-line
