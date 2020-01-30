@@ -8,7 +8,7 @@ section.py-5.cta__section
       b-col.d-none.d-md-block
       b-col(cols="12" md="5")
         transition(name="fade" mode="out-in")
-          b-form(v-if="show")
+          b-form(v-if="show" @submit.stop.prevent="subscribeUser")
             b-input-group
               b-form-input(
                 v-model="email"
@@ -18,24 +18,34 @@ section.py-5.cta__section
               )
               b-input-group-append
                 b-button.color__gold(size="sm" @click="subscribeUser") Sign Up
-          div(v-else)
-            p.text-center You have subscribed to our newsletter. Thanks!
+          p.text-center(v-else) You have subscribed to our newsletter. Thanks!
+        .text-center(v-if="error")
+          small.text-danger {{ error }}
       b-col.d-none.d-md-block
 </template>
 
 <script>
+import { validEmail } from "@/plugins/validators";
+
 export default {
   data() {
     return {
       email: null,
-      show: true
+      show: true,
+      error: null
     };
   },
   methods: {
     subscribeUser() {
-      this.show = !this.show;
-      // this.$store.dispatch('subscribeToNewsletter', this.email)
-      this.email = null;
+      const valid = validEmail(this.email);
+
+      if (valid) {
+        this.error = null;
+        this.show = !this.show;
+        this.email = null;
+      } else {
+        this.error = "Error: please input a valid email address.";
+      }
     }
   }
 };

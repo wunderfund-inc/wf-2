@@ -1,7 +1,7 @@
 export const validPostal = val => {
   if (val === null) return null;
   const reg = /^[0-9]{5}(?:-[0-9]{4})?$/;
-  return reg.test(val);
+  return val === null ? val : reg.test(val);
 };
 
 export const validMethodExtras = state => {
@@ -24,4 +24,9 @@ export const validMethodExtras = state => {
     return validEthereumAddress;
   }
   return false;
+};
+
+export const validEmail = val => {
+  const reg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  return val === null ? val : reg.test(val);
 };
