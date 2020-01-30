@@ -35,7 +35,7 @@
             b-link.text-light(href="tel:5135492502") Call Us
             br
         b-col.py-2(cols="12" md="7")
-          p.text-light.text-justify #[nuxt-link(to="/") Wunderfund.co] is run by Wunderfund, Inc. By using this #[nuxt-link(to="/") Wunderfund.co], you accept our #[nuxt-link(to="/") Terms of Use] and #[nuxt-link(to="/") Privacy Policy]. By choosing to invest using Wunderfund.co, you accept our #[nuxt-link(to="/") Investor Agreement]. By choosing to campaign using #[nuxt-link(to="/") Wunderfund.co's] technologies, you accept our #[nuxt-link(to="/") Startup Agreement]. #[nuxt-link(to="/") Wunderfund.co] is registered with the SEC and is a member of FINRA. We partner with #[b-link(href="https://www.northcapital.com/" target="_blank") North Capital Private Securities] and Transfer Online, who are also registered with the SEC and are members of FINRA.
+          p.text-light.text-justify #[nuxt-link(to="/") Wunderfund.co] is run by Wunderfund, Inc. By using this #[nuxt-link(to="/") Wunderfund.co], you accept our #[nuxt-link(to="/") Terms of Use] and #[nuxt-link(to="/") Privacy Policy]. By choosing to invest using Wunderfund.co, you accept our #[nuxt-link(to="/") Investor Agreement]. By choosing to campaign using #[nuxt-link(to="/") Wunderfund.co's] technologies, you accept our #[nuxt-link(to="/") Startup Agreement]. #[nuxt-link(to="/") Wunderfund.co], along with #[b-link(href="https://www.northcapital.com/" target="_blank") North Capital Private Securities] and #[b-link(href="https://www.transferonline.com" target="_blank") Transfer Online] as partners, are all registered with the SEC and are members of FINRA.
 </template>
 
 <script>
