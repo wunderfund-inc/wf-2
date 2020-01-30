@@ -1,5 +1,5 @@
 <template lang="pug" functional>
-  details.pb-3
+  details.pb-3(open)
     summary {{ props.question }}
     br
     p {{ props.answer }}
