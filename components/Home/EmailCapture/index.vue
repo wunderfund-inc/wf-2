@@ -41,8 +41,9 @@ export default {
 
       if (valid) {
         try {
-          const url = `https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe`;
-          await this.$axios.post(url, { email: this.email });
+          const url =
+            "https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe";
+          await this.$axios.$post(url, { email: this.email });
           this.error = null;
           this.show = !this.show;
           this.email = null;
