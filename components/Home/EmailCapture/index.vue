@@ -36,13 +36,21 @@ export default {
     };
   },
   methods: {
-    subscribeUser() {
+    async subscribeUser() {
       const valid = validEmail(this.email);
 
       if (valid) {
-        this.error = null;
-        this.show = !this.show;
-        this.email = null;
+        try {
+          const url = `https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe`;
+          await this.$axios.post(url, { email: this.email });
+          this.error = null;
+          this.show = !this.show;
+          this.email = null;
+        } catch (error) {
+          // eslint-disable-next-line
+          console.error(error);
+          this.error = error;
+        }
       } else {
         this.error = "Error: please input a valid email address.";
       }
