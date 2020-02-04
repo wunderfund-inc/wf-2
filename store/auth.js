@@ -26,21 +26,29 @@ export const mutations = {
 };
 
 export const actions = {
-  async createUser({ dispatch }, { email, password }) {
+  async createUser({ dispatch }, form) {
     try {
+      const { email, password, attestations } = form;
       const user = await auth.createUserWithEmailAndPassword(email, password);
-      await dispatch("createUserInDb", { uid: user.user.uid, dto: user });
+
+      await dispatch("createUserInDb", {
+        uid: user.user.uid,
+        email,
+        attestations
+      });
+
       await dispatch("login", user);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
     }
   },
-  async createUserInDb(context, { uid, dto }) {
+  async createUserInDb(context, { uid, email, attestations }) {
     try {
       const user = {
         uid,
-        email: dto.user.email,
+        email,
+        attestations,
         accredited: false,
         spendPool: {
           current: 2200,

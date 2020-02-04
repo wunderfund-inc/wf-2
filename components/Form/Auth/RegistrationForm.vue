@@ -2,96 +2,133 @@
   section#manual-auth
     b-card.my-2(no-body)
       b-card-body
-        b-form#via-password(@submit.stop.prevent="submitRegister")
+        b-form#via-password(@submit.stop.prevent="submitRegistrationForm")
           b-form-group(
             label="Email Address"
             label-for="input-email-2"
+            :state="validateState('email')"
+            invalid-feedback="Not an email address."
           )
             b-form-input#input-email-2(
-              type="email"
-              v-model="email"
               trim
+              type="email"
+              v-model="$v.form.email.$model"
+              :state="validateState('email')"
             )
           b-form-group(
             label="Enter a password"
             label-for="input-password"
+            :state="validateState('password')"
+            invalid-feedback="Must be at least 8 characters long."
           )
             b-form-input#input-password(
-              type="password"
-              v-model="password"
               trim
+              type="password"
+              v-model="$v.form.password.$model"
+              :state="validateState('password')"
             )
           b-form-group(
             label="Confirm your password"
             label-for="confirm-password"
-            :state="matchingPasswords"
+            :state="validateState('confirmPassword')"
             invalid-feedback="Passwords don't match"
           )
             b-form-input#confirm-password(
-              type="password"
-              v-model="confirmPassword"
               trim
-              :state="matchingPasswords"
+              type="password"
+              v-model="$v.form.confirmPassword.$model"
+              :state="validateState('confirmPassword')"
             )
           b-form-group(label="Also, please acknowledge the following:")
+
             b-form-checkbox.py-2(
               switch
-              v-for="(attestation, index) in attestations"
-              :key="index"
-              v-model="agreements[index]"
-            ) {{ attestation }}
-          b-button(size="lg" variant="primary" block :disabled="!validRegistrationForm" type="submit") Register
-          p.text-danger.pt-3 {{ error }}
+              value="The user acknowledges there are inherent risks investing in a startup."
+              v-model="$v.form.attestations.$model[0]"
+            ) I understand there are risks in investing on a crowdfunding platform, outlined #[nuxt-link(to="/faq" target="_blank") here].
+
+            b-form-checkbox.py-2(
+              switch
+              value="The user acknowledges Wunderfund's Terms of Service."
+              v-model="$v.form.attestations.$model[1]"
+            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq" target="_blank") Terms of Service].
+
+            b-form-checkbox.py-2(
+              switch
+              value="The user acknowledges Wunderfund's Privacy Policy."
+              v-model="$v.form.attestations.$model[2]"
+            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq" target="_blank") Privacy Policy].
+
+            b-form-checkbox.py-2(
+              switch
+              value="The user acknowledges Wunderfund's disclosure for the platform generating income."
+              v-model="$v.form.attestations.$model[3]"
+            ) I understand that Wunderfund has a way to #[nuxt-link(to="/faq" target="_blank") earns an income] with every campaign offered on this platform.
+
+          b-button(
+            size="lg"
+            variant="primary"
+            block
+            :disabled="$v.validRegistration.$invalid"
+            type="submit"
+          ) Register
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
 export default {
+  mixins: [validationMixin],
   data() {
     return {
-      formState: true,
-      email: null,
-      password: null,
-      confirmPassword: null,
-      agreements: [false, false, false, false],
-      attestations: [
+      form: {
+        email: null,
+        password: null,
+        confirmPassword: null,
+        attestations: []
+      },
+      attestationsList: [
         "I understand there are risks in investing on a crowdfunding platform, outlined here.",
         "I am agreeing to Wunderfund's Terms of Service.",
         "I am agreeing to Wunderfund's Privacy Policy.",
         "I understand Wunderfund earns its income as described by..."
-      ],
-      error: null
+      ]
     };
   },
-  computed: {
-    validEmail() {
-      const reg = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return reg.test(this.email);
-    },
-    validAttestations() {
-      return this.agreements.every(x => x);
-    },
-    validMagicLinkForm() {
-      return this.validEmail && this.validAttestations;
-    },
-    validRegistrationForm() {
-      return (
-        this.validEmail && this.validAttestations && this.matchingPasswords
-      );
-    },
-    matchingPasswords() {
-      if (this.password !== null && this.confirmPassword !== null) {
-        return this.password === this.confirmPassword;
+  validations: {
+    form: {
+      email: {
+        required,
+        email
+      },
+      password: {
+        required,
+        minLength: minLength(8)
+      },
+      confirmPassword: {
+        matchPassword: sameAs("password")
+      },
+      attestations: {
+        required,
+        minLength: minLength(4)
       }
-      return null;
-    }
+    },
+    validRegistration: [
+      "form.email",
+      "form.password",
+      "form.confirmPassword",
+      "form.attestations"
+    ]
   },
   methods: {
-    async submitRegister() {
+    validateState(name) {
+      const { $dirty, $error } = this.$v.form[name];
+      return $dirty ? !$error : null;
+    },
+    async submitRegistrationForm() {
       try {
-        await this.$store.dispatch("auth/createUser", {
-          email: this.email,
-          password: this.password
-        });
+        await this.$store.dispatch("auth/createUser", this.form);
         await this.$router.replace("/u");
       } catch (error) {
         // eslint-disable-next-line
