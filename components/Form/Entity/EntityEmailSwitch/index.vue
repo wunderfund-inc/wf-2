@@ -4,8 +4,16 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
+    ...mapGetters({
+      user: "auth/currentUserAuth"
+    }),
+    accountEmail() {
+      return this.user.email;
+    },
     differentEmail: {
       get() {
         return this.$store.getters["user/entityForm"].differentEmail;
@@ -15,10 +23,6 @@ export default {
           differentEmail: val
         });
       }
-    },
-    accountEmail() {
-      // TODO: Refax eventually to store data
-      return this.$store.getters["auth/currentUserAuth"].email;
     }
   }
 };

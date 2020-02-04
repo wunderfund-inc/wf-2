@@ -11,13 +11,15 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { verifyEmail } from "@/plugins/firebase";
 
 export default {
   computed: {
-    email() {
-      return this.$store.getters["auth/currentUserAuth"].email;
-    }
+    ...mapGetters({
+      user: "auth/currentUserAuth"
+    }),
+    email: () => this.user.email
   },
   methods: {
     linkToVerify() {
