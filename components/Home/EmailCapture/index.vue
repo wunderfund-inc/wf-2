@@ -25,7 +25,7 @@ section.py-5.cta__section
 </template>
 
 <script>
-import { validEmail } from "@/plugins/validators";
+import { email } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -35,11 +35,14 @@ export default {
       error: null
     };
   },
+  validations: {
+    email: {
+      email
+    }
+  },
   methods: {
     async subscribeUser() {
-      const valid = validEmail(this.email);
-
-      if (valid) {
+      if (!this.$v.$invalid) {
         try {
           const url =
             "https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe";
