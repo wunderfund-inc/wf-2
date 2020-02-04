@@ -1,7 +1,7 @@
 <template lang="pug">
   main
     b-container.py-5
-      section(v-if="loggedIn && emailVerified")
+      section(v-if="emailVerified")
         account-profile
         account-entity-list(:entities="entities")
         account-investment-list(:investments="investments")
@@ -28,17 +28,8 @@ export default {
     ...mapGetters({
       entities: "user/entities",
       investments: "user/investments",
-      loggedIn: "auth/loggedIn",
       emailVerified: "auth/emailVerified"
     })
-  },
-  async fetch({ store }) {
-    try {
-      await store.dispatch("user/setAccountData");
-    } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
-    }
   }
 };
 </script>

@@ -5,6 +5,8 @@ export const actions = {
     const user = getUserFromCookie(req);
     if (user) {
       await dispatch("auth/setAuth", user);
+      const userId = user.uid || user.user_id;
+      await dispatch("user/setAccountData", userId);
     }
   }
 };

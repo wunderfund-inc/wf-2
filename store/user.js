@@ -1,4 +1,4 @@
-import { auth, db, timestamp } from "@/plugins/firebase";
+import { db, timestamp } from "@/plugins/firebase";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -126,32 +126,32 @@ export const mutations = {
 };
 
 export const actions = {
-  async setAccountData({ dispatch }) {
+  async setAccountData({ dispatch }, userId) {
     try {
-      const userId = auth.currentUser.uid || auth.currentUser.user_id;
-      const user = await db
-        .collection("users")
-        .doc(userId)
-        .get();
-      const userData = user.data();
+      if (userId) {
+        const user = await db
+          .collection("users")
+          .doc(userId)
+          .get();
+        const userData = user.data();
+        await dispatch("setCurrentUser", userData);
+        await dispatch("setProfileNameAttribute", { ...userData.name });
+        await dispatch("setProfileAddressAttribute", { ...userData.address });
 
-      await dispatch("setCurrentUser", userData);
-      await dispatch("setProfileNameAttribute", { ...userData.name });
-      await dispatch("setProfileAddressAttribute", { ...userData.address });
+        const entitiesList = await db
+          .collection(`users/${userId}/entities`)
+          .get();
+        const entities = entitiesList.docs.map(entity => entity.data());
+        await dispatch("setEntities", entities);
 
-      const entitiesList = await db
-        .collection(`users/${userId}/entities`)
-        .get();
-      const entities = entitiesList.docs.map(entity => entity.data());
-      await dispatch("setEntities", entities);
-
-      const investmentsList = await db
-        .collection(`users/${userId}/investments`)
-        .get();
-      const investments = investmentsList.docs.map(investment => {
-        return investment.data();
-      });
-      await dispatch("setInvestments", investments);
+        const investmentsList = await db
+          .collection(`users/${userId}/investments`)
+          .get();
+        const investments = investmentsList.docs.map(investment => {
+          return investment.data();
+        });
+        await dispatch("setInvestments", investments);
+      }
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
@@ -186,7 +186,7 @@ export const actions = {
   setProfileAddressAttribute({ commit }, payload) {
     commit("SET_PROFILE_ADDRESS_ATTRIBUTE", payload);
   },
-  setCurrentUser({ commit }, payload) {
+  setCurrentUser: ({ commit }, payload) => {
     commit("SET_CURRENT_USER", payload);
   },
   setCurrentUserProfile({ commit }, payload) {

@@ -7,7 +7,7 @@ export const state = () => ({
 
 export const getters = {
   currentUserAuth: state => state.currentUserAuth,
-  loggedIn: state => !!state.currentUserAuth,
+  userId: state => state.currentUserAuth.uid || state.currentUserAuth.user_id,
   emailVerified: state => {
     if (state.currentUserAuth) {
       return (
