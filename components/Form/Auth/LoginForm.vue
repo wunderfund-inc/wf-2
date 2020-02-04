@@ -49,6 +49,8 @@ export default {
           email: this.email,
           password: this.password
         });
+        const userId = this.$store.getters["auth/userId"];
+        await this.$store.dispatch("user/setAccountData", userId);
         await this.$router.replace("/u");
       } catch (error) {
         // eslint-disable-next-line

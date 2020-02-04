@@ -62,15 +62,23 @@ header
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   computed: {
-    loggedIn() {
-      return this.$store.getters["auth/currentUserAuth"];
-    }
+    ...mapGetters({
+      loggedIn: "auth/currentUserAuth"
+    })
   },
   methods: {
     async logout() {
-      await this.$store.dispatch("auth/logout");
+      try {
+        await this.$store.dispatch("auth/logout");
+        await this.$route.replace("/");
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error);
+      }
     }
   }
 };
