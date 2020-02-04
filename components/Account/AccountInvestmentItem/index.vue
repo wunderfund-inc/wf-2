@@ -2,7 +2,12 @@
 aside
   b-media.my-auto(vertical-align="center")
     template(#aside)
-      b-img(thumbnail :src="investment.company.logo.url" width="80")
+      b-img(
+        v-if="investment.company.logo.url"
+        :src="investment.company.logo.url"
+        thumbnail
+        width="80"
+      )
     b-row.form-inline
       b-col
         h2.mb-0.py-4.align-middle {{ investment.company.name.short }}
