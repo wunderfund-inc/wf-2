@@ -33,7 +33,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~plugins/filters", "~plugins/vuelidate"],
+  plugins: ["~plugins/filters"],
   pageTransition: "page",
   /*
    ** Nuxt.js modules
