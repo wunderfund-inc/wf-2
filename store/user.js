@@ -219,5 +219,25 @@ export const actions = {
       })
     );
     commit("SET_INVESTMENTS", d);
+  },
+  clearEntityForm({ commit }) {
+    const entity = {
+      name: null,
+      classification: null,
+      ein: null,
+      differentEmail: false,
+      email: null,
+      accredited: false,
+      annualRevenue: null,
+      netAssets: null,
+      address: {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        postal: null
+      }
+    };
+    commit("SET_ENTITY_FORM_ATTRIBUTE", entity);
   }
 };

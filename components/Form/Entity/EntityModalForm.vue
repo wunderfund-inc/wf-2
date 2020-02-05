@@ -1,10 +1,11 @@
 <template lang="pug">
   b-modal#modal-entity-form(
+    ref="entity-modal"
     title="Create an Entity"
-    ok-title="Create"
-    @ok="handleOk"
+    size="lg"
+    hide-footer
   )
-    form(@submit.stop.prevent="handleSubmit")
+    form(@submit.prevent="handleSubmit")
       b-row
         b-col
           entity-name
@@ -42,6 +43,10 @@
       b-row
         b-col
           entity-accreditation
+      b-row
+        b-col
+          b-button.mr-2(type="submit" variant="success") Create
+          b-button(@click="cancelForm" variant="danger") Cancel
 </template>
 
 <script>
@@ -89,6 +94,10 @@ export default {
     handleOk(event) {
       event.preventDefault();
       this.handleSubmit();
+    },
+    async cancelForm() {
+      await this.$store.dispatch("user/clearEntityForm");
+      await this.$refs["entity-modal"].hide();
     },
     async handleSubmit() {
       await this.$store.dispatch("user/createEntity", {

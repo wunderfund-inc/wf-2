@@ -2,7 +2,7 @@
   b-card(no-body)
     b-card-body.px-0
       b-container
-        h1.mb-0 My investments
+        h1.mb-0 My Investments
       b-card-text.mt-3.mb-0.px-3(v-if="investments.length === 0") It doesn't look like you've made any investments yet.
     b-list-group(flush)
       b-list-group-item(
