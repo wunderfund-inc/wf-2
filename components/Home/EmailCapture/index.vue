@@ -1,32 +1,31 @@
 <template lang="pug">
 section.py-5.cta__section
-  b-container
-    b-row.pb-3
-      b-col
+  .container
+    .row.pb-3
+      .col
         h6.text-center Be the first to hear about investment opportunities!
-    b-row
-      b-col.d-none.d-md-block
-      b-col(cols="12" md="5")
+    .row
+      .col.d-none.d-md-block
+      .col-12.col-md-5
         transition(name="fade" mode="out-in")
-          b-form(v-if="show" @submit.stop.prevent="subscribeUser")
-            b-input-group
-              b-form-input(
-                required
-                type="email"
-                placeholder="Your email address"
+          form(v-if="show" @submit.prevent="subscribeUser")
+            .input-group
+              input.form-control(
                 v-model="$v.form.email.$model"
                 :state="validateState('email')"
+                placeholder="Your email address"
+                type="text"
+                required
               )
-              b-input-group-append
-                b-button.color__gold(
-                  size="sm"
+              .input-group-append
+                button.btn.btn-secondary.btn-sm.color__gold(
                   @click="subscribeUser"
-                  :disabled="!$v.form.email.$dirty || $v.form.email.$invalid"
+                  :disabled="!$v.form.email.email"
                 ) Sign Up
           p.text-center(v-else) You have subscribed to our newsletter. Thanks!
         .text-center(v-if="$v.form.email.$error")
           small.text-danger Invalid email address.
-      b-col.d-none.d-md-block
+      .col.d-none.d-md-block
 </template>
 
 <script>
