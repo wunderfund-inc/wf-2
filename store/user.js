@@ -66,14 +66,6 @@ export const getters = {
     const password = state.form.password;
     return password.old === password.new;
   },
-  validPasswordChange: state => {
-    const password = state.form.password;
-    if (!password.old && !password.new) return null;
-    if (password.old && password.new) {
-      return password.old !== password.new && password.new.length >= 6;
-    }
-    return false;
-  },
   entities: state => state.entities,
   investments: state => state.investments,
   currentUser: state => state.currentUser,

@@ -109,5 +109,13 @@ export const actions = {
   },
   setAuth({ commit }, authData) {
     commit("SET_AUTH_DATA", authData);
+  },
+  async resetPassword(context, password) {
+    try {
+      await auth.currentUser.updatePassword(password);
+      return null;
+    } catch (error) {
+      return error;
+    }
   }
 };
