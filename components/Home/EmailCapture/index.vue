@@ -20,8 +20,15 @@ section.py-5.cta__section
               .input-group-append
                 button.btn.btn-secondary.btn-sm.color__gold(
                   @click="subscribeUser"
-                  :disabled="!$v.form.email.email"
-                ) Sign Up
+                  :disabled="$v.form.$anyError || submitting"
+                )
+                  span.spinner-border.spinner-border-sm.mr-2(
+                    role="status"
+                    aria-hiden="true"
+                    v-if="submitting"
+                  )
+                  span(v-if="submitting") Submitting...
+                  span(v-if="!submitting") Sign Up
           p.text-center(v-else) You have subscribed to our newsletter. Thanks!
         .text-center(v-if="$v.form.email.$error")
           small.text-danger Invalid email address.
@@ -37,8 +44,9 @@ export default {
   data() {
     return {
       form: {
-        email: null
+        email: ""
       },
+      submitting: false,
       show: true
     };
   },
@@ -56,11 +64,13 @@ export default {
     },
     async subscribeUser() {
       try {
+        this.submitting = true;
         const url =
           "https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe";
-        await this.$axios.$post(url, { email: this.$v.email.$model });
-        this.show = !this.show;
+        await this.$axios.$post(url, { email: this.form.email });
+        await setTimeout(() => (this.show = !this.show), 2000);
       } catch (error) {
+        this.submitting = false;
         // eslint-disable-next-line
         console.error(error);
         this.error = error;
