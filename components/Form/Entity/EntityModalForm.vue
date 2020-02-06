@@ -45,6 +45,9 @@
           entity-accreditation
       b-row
         b-col
+          entity-nonspecific
+      b-row
+        b-col
           b-button.mr-2(type="submit" variant="success") Create
           b-button(@click="cancelForm" variant="danger") Cancel
 </template>
@@ -64,6 +67,7 @@ import EntityCityInput from "@/components/Form/Entity/EntityAddress/CityInput";
 import EntityStateInput from "@/components/Form/Entity/EntityAddress/StateInput";
 import EntityPostalInput from "@/components/Form/Entity/EntityAddress/PostalInput";
 import EntityAccreditation from "@/components/Form/Entity/EntityAccreditation";
+import EntityNonspecific from "@/components/Form/Entity/EntityNonspecific";
 
 export default {
   components: {
@@ -79,7 +83,8 @@ export default {
     EntityCityInput,
     EntityStateInput,
     EntityPostalInput,
-    EntityAccreditation
+    EntityAccreditation,
+    EntityNonspecific
   },
   computed: {
     ...mapGetters({
