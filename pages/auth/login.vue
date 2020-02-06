@@ -3,7 +3,7 @@
     b-container.py-5.mx-auto
       b-row
         b-col.d-none.d-md-block
-        b-col
+        b-col(md="6")
           h1.pb-4.text-center Log In
           section-social-media-login
           b-row
@@ -14,10 +14,7 @@
             b-col(cols="5")
               hr.py-3
           login-form
-          small.text-muted Don't have an account?
-            |
-            |
-            nuxt-link(to="/auth/register") Register
+          small.text-muted Don't have an account? #[nuxt-link(to="/auth/register") Make one!]
         b-col.d-none.d-md-block
 </template>
 
