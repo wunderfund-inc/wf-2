@@ -6,12 +6,12 @@
           h2.mb-0.py-4.align-middle {{ entity.name }}
         b-col(cols="3").text-right
           b-button(
-            variant="outline-secondary"
+            variant="outline-success"
             v-b-toggle="'entity-' + entity.uid"
             size="sm"
           )
             span.when-opened Close
-            span.when-closed Expand
+            span.when-closed Details
     b-collapse(:id="`entity-${entity.uid}`" accordion="entity")
       b-table(
         :items="[{ classification: entity.classification, employer_identification_number: entity.ein, email: entity.differentEmail ? entity.email : currentUserEmail, address: entity.address }]"

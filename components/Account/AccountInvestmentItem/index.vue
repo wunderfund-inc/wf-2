@@ -13,12 +13,12 @@ aside
         h2.mb-0.py-4.align-middle {{ investment.company.name.short }}
       b-col(cols="3").text-right
         b-button(
-          variant="outline-secondary"
+          variant="outline-success"
           v-b-toggle="`investment-${investment.uid}`"
           size="sm"
         )
           span.when-opened Close
-          span.when-closed Expand
+          span.when-closed Details
   b-collapse(:id="`investment-${investment.uid}`" accordion="investments")
     .row
       .col
