@@ -13,26 +13,20 @@
             span.when-opened Close
             span.when-closed Expand
     b-collapse(:id="`entity-${entity.uid}`" accordion="entity")
-      h5 Business Classification:
-        |
-        |
-        span.text-success {{ entity.classification }}
-      h5 Employer Identification Number:
-        |
-        |
-        span.text-success {{ entity.ein | einStrFormat }}
-      h5 Email used for signing agreements:
-        |
-        |
-        span.text-success(v-if="entity.differentEmail") {{ entity.email }}
-        span.text-success(v-else) {{ currentUserEmail }}
-      h5 Entity Address:
-      h6
-        address.text-success 1053 Saint Gregory Street
-          br
-          span Floor 2
-          br
-          span Cincinnati, OH 45208
+      b-table(
+        :items="[{ classification: entity.classification, employer_identification_number: entity.ein, email: entity.differentEmail ? entity.email : currentUserEmail, address: entity.address }]"
+        outlined
+        responsive
+        stacked
+        small
+      )
+        template(v-slot:cell(address)="data")
+          address.mb-0
+            span {{ data.value.street1 }}
+            br
+            span(v-if="data.value.street2") {{ data.value.street2 }}
+            br(v-if="data.value.street2")
+            span {{ data.value.city }}, {{ data.value.state }} {{ data.value.postal }}
 </template>
 
 <script>
