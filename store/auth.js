@@ -9,13 +9,10 @@ export const getters = {
   currentUserAuth: state => state.currentUserAuth,
   userId: state => state.currentUserAuth.uid || state.currentUserAuth.user_id,
   emailVerified: state => {
-    if (state.currentUserAuth) {
-      return (
-        state.currentUserAuth.emailVerified ||
-        state.currentUserAuth.email_verified
-      );
-    }
-    return false;
+    return state.currentUserAuth
+      ? state.currentUserAuth.emailVerified ||
+          state.currentUserAuth.email_verified
+      : false;
   }
 };
 

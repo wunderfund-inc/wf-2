@@ -5,7 +5,7 @@
       b-card
         b-card-body
           h1 Next Steps
-          p It looks like your email hasn't been verified yet. Please check the inbox of #[span.text-success {{ email }}] for the link to verify.
+          p It looks like you haven't been verified yet. Please check your inbox (or spam folder!) of #[span.text-success {{ email }}] for a link to verify you.
           small #[b-btn(@click="linkToVerify") Click here to resend the link.]
     b-col.d-none.d-md-block
 </template>
@@ -19,7 +19,7 @@ export default {
     ...mapGetters({
       user: "auth/currentUserAuth"
     }),
-    email: () => this.user.email
+    email: () => (this.user ? this.user.email : null)
   },
   methods: {
     linkToVerify() {
