@@ -1,13 +1,13 @@
 <template lang="pug">
   section
-    .container.py-5
+    .container.pt-5
       slot(name="header")
-      b-card-group(deck)
-        browse-card(
+      .row
+        .col-12.col-md-4(
           v-for="(company, index) in companies"
           :key="index"
-          :company="company"
         )
+          browse-card(:company="company")
 </template>
 
 <script>

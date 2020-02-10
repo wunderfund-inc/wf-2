@@ -40,7 +40,7 @@ export const actions = {
       console.error(error);
     }
   },
-  async createUserInDb(context, { uid, email, attestations }) {
+  async createUserInDb(context, { uid, email, attestations, name }) {
     try {
       const user = {
         uid,
@@ -52,8 +52,8 @@ export const actions = {
           max: 2200
         },
         name: {
-          first: null,
-          last: null
+          first: name.first,
+          last: name.last
         },
         address: {
           street1: null,

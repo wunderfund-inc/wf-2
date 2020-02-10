@@ -1,6 +1,8 @@
 <template lang="pug">
   nuxt-link.text-decoration-none.text-dark(:to="`/c/${company.uid}`")
-    b-card(:style="`background-image: url(${company.background.browse.url || ''}); background-repeat: no-repeat; background-position: top; background-size: auto 125px`")
+    b-card.mb-5(
+      :style="`background-image: url(${company.background.browse.url || ''}); background-repeat: no-repeat; background-position: top; background-size: auto 125px`"
+    )
       .text-center
         b-card-img-lazy.mb-3(
           :src="company.logo.url || ''"

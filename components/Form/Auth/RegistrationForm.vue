@@ -6,6 +6,27 @@
           @submit.prevent="submitRegistrationForm"
           @keypress.enter.prevent="submitRegistrationForm"
         )
+          .form-row
+            .col-12.col-md-6
+              b-form-group(
+                label="First Name"
+                label-for="input-name-first"
+              )
+                b-form-input#input-name-first(
+                  v-model="form.name.first"
+                  type="text"
+                  trim
+                )
+            .col-12.col-md-6
+              b-form-group(
+                label="Last Name"
+                label-for="input-name-last"
+              )
+                b-form-input#input-name-last(
+                  v-model="form.name.last"
+                  type="text"
+                  trim
+                )
           b-form-group(
             label="Email Address"
             label-for="input-email-2"
@@ -42,7 +63,7 @@
               type="password"
               trim
             )
-          b-form-group(label="Also, please acknowledge the following:")
+          b-form-group(label="Also, you must acknowledge the following:")
 
             b-form-checkbox.py-2(
               v-model="$v.form.attestations.$model[0]"
@@ -54,13 +75,13 @@
               v-model="$v.form.attestations.$model[1]"
               value="The user acknowledges Wunderfund's Terms of Service."
               switch
-            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq" target="_blank") Terms of Service].
+            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq/legal#tos" target="_blank") Terms of Service].
 
             b-form-checkbox.py-2(
               v-model="$v.form.attestations.$model[2]"
               value="The user acknowledges Wunderfund's Privacy Policy."
               switch
-            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq" target="_blank") Privacy Policy].
+            ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq/legal#pp" target="_blank") Privacy Policy].
 
             b-form-checkbox.py-2(
               v-model="$v.form.attestations.$model[3]"
@@ -94,6 +115,10 @@ export default {
     return {
       submitting: false,
       form: {
+        name: {
+          first: null,
+          last: null
+        },
         email: null,
         password: null,
         confirmPassword: null,

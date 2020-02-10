@@ -5,8 +5,8 @@
         b-col.d-none.d-md-block
         b-col(md="6")
           h1.pb-4.text-center Log In
-          section-social-media-login
-          b-row
+          //- section-social-media-login
+          //- b-row
             b-col(cols="5")
               hr.py-3
             b-col.text-center.pt-1(cols="2")
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import SectionSocialMediaLogin from "@/components/Form/Auth/SectionSocialMediaLogin";
+// import SectionSocialMediaLogin from "@/components/Form/Auth/SectionSocialMediaLogin";
 import LoginForm from "@/components/Form/Auth/LoginForm";
 
 export default {
   components: {
-    SectionSocialMediaLogin,
+    // SectionSocialMediaLogin,
     LoginForm
   }
 };

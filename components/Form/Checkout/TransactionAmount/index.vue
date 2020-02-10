@@ -2,10 +2,12 @@
   b-form-group(
     label="Amount You Wish to Commit (USD $)"
     label-for="inv-amt"
+    :state="validAmount"
   )
     b-form-input#inv-amt.form-control(
       v-model.number="transactionAmount"
       aria-describedby="text-amount"
+      :state="validAmount"
     )
     b-form-text(
       v-if="validAmount === null || !validAmount"

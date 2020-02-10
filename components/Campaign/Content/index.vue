@@ -12,8 +12,16 @@
                   aspect="16by9"
                   allowfullscreen
                 )
+          .col-12.col-md-5
+            h1 {{ company.name.short }}
+            h4 {{ company.motto }}
             .row
-              .col.pt-2.text-center
+              .col
+                small.text-muted
+                  font-awesome-icon(:icon="['fas', 'map-marker-alt']")
+                  |
+                  | {{ company.location.city }}, {{ company.location.state }}
+              .col.text-right
                 small.px-2(v-if="company.website")
                   a.text-muted(:href="company.website" target="_blank")
                     font-awesome-icon.fa-lg(:icon="['fas', 'link']")
@@ -26,13 +34,6 @@
                     target="_blank"
                   )
                     font-awesome-icon.fa-lg(:icon="['fab', iconIt(link.platform)]")
-          .col-12.col-md-5
-            h1 {{ company.name.short }}
-            h4 {{ company.motto }}
-            small.text-muted
-              font-awesome-icon(:icon="['fas', 'map-marker-alt']")
-              |
-              | {{ company.location.city }}, {{ company.location.state }}
             b-card.my-3(no-body)
               b-tabs(card justified)
                 b-tab(
