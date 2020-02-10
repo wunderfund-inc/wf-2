@@ -5,7 +5,7 @@ const cloneDeep = require("lodash.clonedeep");
 export const state = () => ({
   agreedTo: [],
   selectedOffering: null,
-  transactionAmount: null,
+  selectedAmount: 0,
   selectedMethod: null,
   selectedType: null,
   selectedEntity: null,
@@ -31,7 +31,7 @@ export const getters = {
   validAgreementList: state => state.agreedTo.length === 5,
   agreedTo: state => state.agreedTo,
   selectedOffering: state => state.selectedOffering,
-  transactionAmount: state => state.transactionAmount,
+  selectedAmount: state => state.selectedAmount,
   selectedMethod: state => state.selectedMethod,
   selectedType: state => state.selectedType,
   selectedEntity: state => state.selectedEntity,
@@ -52,8 +52,7 @@ export const getters = {
 export const mutations = {
   SET_AGREEMENTS: (state, payload) => (state.agreedTo = payload),
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
-  SET_TRANSACTION_AMOUNT: (state, payload) =>
-    (state.transactionAmount = payload),
+  SET_TRANSACTION_AMOUNT: (state, payload) => (state.selectedAmount = payload),
   SET_PAYMENT_METHOD: (state, payload) => (state.selectedMethod = payload),
   SET_TRANSACTION_TYPE: (state, payload) => (state.selectedType = payload),
   SET_ENTITY: (state, payload) => (state.selectedEntity = payload),
@@ -86,7 +85,7 @@ export const actions = {
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
-        amount: state.transactionAmount,
+        amount: state.selectedAmount,
         agreements: state.agreedTo,
         createdAt: timestamp,
         updatedAt: timestamp

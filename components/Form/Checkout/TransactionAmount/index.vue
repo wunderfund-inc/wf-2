@@ -2,13 +2,8 @@
   b-form-group(
     label="Amount You Wish to Commit (USD $)"
     label-for="inv-amt"
-    :state="validAmount"
   )
-    b-form-input#inv-amt.form-control(
-      v-model.number="transactionAmount"
-      aria-describedby="text-amount"
-      :state="validAmount"
-    )
+    money.form-control(v-model="selectedAmount" v-bind="moneyConfig")
     b-form-text(
       v-if="validAmount === null || !validAmount"
       id="text-amount"
@@ -26,9 +21,23 @@
 </template>
 
 <script>
+import { Money } from "v-money";
 import { mapGetters } from "vuex";
 
 export default {
+  components: { Money },
+  data() {
+    return {
+      moneyConfig: {
+        decimal: ".",
+        thousands: ",",
+        prefix: "USD $",
+        suffix: "",
+        precision: 2,
+        masked: false
+      }
+    };
+  },
   computed: {
     ...mapGetters({
       company: "company/company",
@@ -44,13 +53,9 @@ export default {
         ? minSharesToBuy * pricePerShare
         : minInvestmentAmount;
     },
-    validAmount() {
-      if (this.transactionAmount === null) return null;
-      return this.transactionAmount >= this.minInvestment;
-    },
-    transactionAmount: {
+    selectedAmount: {
       get() {
-        return this.$store.getters["checkout/transactionAmount"];
+        return this.$store.getters["checkout/selectedAmount"];
       },
       set(val) {
         this.$store.commit("checkout/SET_TRANSACTION_AMOUNT", val);
