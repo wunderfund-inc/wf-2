@@ -25,13 +25,14 @@ export const mutations = {
 export const actions = {
   async createUser({ dispatch }, form) {
     try {
-      const { email, password, attestations } = form;
+      const { email, password, attestations, name } = form;
       const user = await auth.createUserWithEmailAndPassword(email, password);
 
       await dispatch("createUserInDb", {
         uid: user.user.uid,
         email,
-        attestations
+        attestations,
+        name
       });
 
       await dispatch("login", user);
