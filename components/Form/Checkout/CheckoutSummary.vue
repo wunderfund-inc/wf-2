@@ -51,6 +51,7 @@ export default {
     async submitInvestment() {
       await this.$store.dispatch("checkout/submitInvestment", {
         companyId: this.company.uid,
+        offeringId: this.selectedOffering.uid,
         userId: this.user.uid
       });
 

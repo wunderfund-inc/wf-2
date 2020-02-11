@@ -75,10 +75,8 @@ export const actions = {
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   },
-  async submitInvestment({ state }, { companyId, userId }) {
+  async submitInvestment(context, { companyId, offeringId, userId }) {
     try {
-      const offeringId = state.selectedOffering.uid;
-
       const investmentRef = await db.collection("investments").doc();
 
       const dto = {
@@ -88,7 +86,10 @@ export const actions = {
         amount: state.selectedAmount,
         agreements: state.agreedTo,
         createdAt: timestamp,
-        updatedAt: timestamp
+        updatedAt: timestamp,
+        companyId,
+        offeringId,
+        userId
       };
 
       switch (state.selectedMethod) {
@@ -103,67 +104,7 @@ export const actions = {
           break;
       }
 
-      await investmentRef.set({
-        ...dto,
-        offeringId,
-        companyId,
-        userId
-      });
-
-      const offeringRef = await db
-        .collection(`offerings/${offeringId}/investments`)
-        .doc();
-
-      await offeringRef.set({
-        ...dto,
-        companyId,
-        userId
-      });
-
-      const companyOffering = await db
-        .collection(
-          `companies/${companyId}/offerings/${offeringId}/investments`
-        )
-        .doc();
-
-      await companyOffering.set({
-        ...dto,
-        userId
-      });
-
-      if (state.selectedType === "ENTITY") {
-        const entityId = state.selectedEntity.uid;
-
-        const entityRef = db
-          .collection(`entities/${entityId}/investments`)
-          .doc();
-
-        await entityRef.set({
-          ...dto,
-          offeringId,
-          companyId,
-          userId
-        });
-
-        const userEntity = db
-          .collection(`users/${userId}/entities/${entityId}/investments`)
-          .doc();
-
-        await userEntity.set({
-          ...dto,
-          offeringId,
-          companyId
-        });
-      } else {
-        const userInvestment = await db
-          .collection(`users/${userId}/investments`)
-          .doc();
-        await userInvestment.set({
-          ...dto,
-          offeringId: state.selectedOffering.uid,
-          companyId
-        });
-      }
+      await investmentRef.set(dto);
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
