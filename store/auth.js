@@ -47,14 +47,11 @@ export const actions = {
         uid,
         email,
         attestations,
+        name,
         accredited: false,
         spendPool: {
           current: 2200,
           max: 2200
-        },
-        name: {
-          first: name.first,
-          last: name.last
         },
         address: {
           street1: null,

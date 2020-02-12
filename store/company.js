@@ -24,23 +24,13 @@ export const actions = {
       const activeOfferings = await db
         .collection("offerings")
         .where("companyId", "==", companyId)
-        // .where("published", "==", true)
+        .where("published", "==", true)
+        .where("platform", "array-contains", "WFP")
         .get();
 
       const offerings = await Promise.all(
-        activeOfferings.docs.map(async offeringRef => {
-          const offering = offeringRef.data();
-          const offeringInvestments = await db
-            .collection(`offerings/${offering.uid}/investments`)
-            .get();
-          const investments = offeringInvestments.docs.map(investment => {
-            return investment.data();
-          });
-          offering.investments = investments;
-          return offering;
-        })
+        activeOfferings.docs.map(offeringRef => offeringRef.data())
       );
-
       const sortedOfferings = offerings.sort((a, b) => {
         return a.goal.min - b.goal.min;
       });
@@ -53,11 +43,12 @@ export const actions = {
   },
   async fetchCompany({ commit, dispatch }, id) {
     try {
-      const companyRef = await db
+      const companyDocument = await db
         .collection("companies")
         .doc(id)
         .get();
-      const company = companyRef.data();
+      const company = companyDocument.data();
+
       await dispatch("fetchOfferings", company.uid);
       await commit("SET_COMPANY", company);
     } catch (error) {
@@ -71,11 +62,14 @@ export const actions = {
       const listOfCompanies = await Promise.all(
         querySnapshot.docs.map(async company => {
           const companyData = company.data();
-
-          const offerings = await db
-            .collection(`companies/${company.id}/offerings`)
+          const activeOfferings = await db
+            .collection("offerings")
+            .where("companyId", "==", companyData.uid)
+            .where("published", "==", true)
+            .where("platform", "array-contains", "WFP")
             .get();
-          companyData.offerings = offerings.docs.map(offering =>
+
+          companyData.offerings = activeOfferings.docs.map(offering =>
             offering.data()
           );
 
