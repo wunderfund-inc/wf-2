@@ -5,18 +5,18 @@
   )
     money.form-control(v-model="selectedAmount" v-bind="moneyConfig")
     b-form-text(
-      v-if="validAmount === null || !validAmount"
+      v-if="validAmount === 0 || !validAmount"
       id="text-amount"
-      :text-variant="(validAmount === null) ? `muted` : `danger`"
+      :text-variant="(validAmount === 0) ? `muted` : `danger`"
     )
       span(
-        :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
+        :class="(validAmount || validAmount === 0) ? `` : `font-weight-bold`"
       ) Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}
       |
       |
       span(
         v-if="selectedOffering.securityType === 'EQUITY'"
-        :class="(validAmount || validAmount === null) ? `` : `font-weight-bold`"
+        :class="(validAmount || validAmount === 0) ? `` : `font-weight-bold`"
       ) ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share)
 </template>
 
@@ -52,6 +52,9 @@ export default {
       return securityType === "EQUITY"
         ? minSharesToBuy * pricePerShare
         : minInvestmentAmount;
+    },
+    validAmount() {
+      return this.selectedAmount >= this.minInvestment;
     },
     selectedAmount: {
       get() {
