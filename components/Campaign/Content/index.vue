@@ -1,5 +1,5 @@
 <template lang="pug">
-  main
+  main.py-5
     section#hero
       .container.my-3
         .row
@@ -63,13 +63,13 @@
                 font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
     section#metrics.bg-light
       .container
-        .row.text-center(v-if="offerings.length > 0")
+        .row.text-center.py-md-5(v-if="offerings.length > 0")
           b-col.py-4(sm="4")
             h5.text__gold-dark Amount Raised:
-            span {{ offerings[index].investments | amountRaised | asCurrency }}
+            span {{ offerings[index].totalInvested | asCurrency }}
           b-col.py-4(sm="4")
             h5.text__gold-dark Investments:
-            span {{ offerings[index].investments.length }}
+            span {{ offerings[index].totalInvestments }}
           b-col.py-4(sm="4")
             b-button.mt-2.btn__gold(
               v-if="!signedIn"
