@@ -20,6 +20,9 @@
         b-row
           b-col
             transaction-agreements
+        b-row
+          b-col
+            testimonial-input
 </template>
 
 <script>
@@ -31,6 +34,7 @@ import TransactionAmount from "@/components/Form/Checkout/TransactionAmount";
 import TransactionMethod from "@/components/Form/Checkout/TransactionMethod";
 import MethodLayout from "@/components/Form/Checkout/Methods/MethodLayout";
 import TransactionAgreements from "@/components/Form/Checkout/TransactionAgreements";
+import TestimonialInput from "@/components/Form/Checkout/TestimonialInput";
 
 export default {
   components: {
@@ -40,7 +44,8 @@ export default {
     TransactionAmount,
     TransactionMethod,
     MethodLayout,
-    TransactionAgreements
+    TransactionAgreements,
+    TestimonialInput
   },
   computed: {
     ...mapGetters({

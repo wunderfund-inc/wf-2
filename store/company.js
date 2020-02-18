@@ -25,7 +25,7 @@ export const actions = {
         .collection("offerings")
         .where("companyId", "==", companyId)
         .where("published", "==", true)
-        .where("platform", "array-contains", "WFP")
+        .where("platforms", "array-contains", "WFP")
         .get();
 
       const offerings = await Promise.all(
