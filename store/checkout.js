@@ -1,9 +1,10 @@
-import { db, timestamp } from "@/plugins/firebase";
+import firebase, { db, timestamp } from "@/plugins/firebase";
 import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
   agreedTo: [],
+  testimonial: null,
   selectedOffering: null,
   selectedAmount: 0,
   selectedMethod: null,
@@ -28,6 +29,7 @@ export const state = () => ({
 });
 
 export const getters = {
+  testimonial: state => state.testimonial,
   validAgreementList: state => state.agreedTo.length === 5,
   agreedTo: state => state.agreedTo,
   selectedOffering: state => state.selectedOffering,
@@ -50,6 +52,7 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_TESTIMONIAL: (state, payload) => (state.testimonial = payload),
   SET_AGREEMENTS: (state, payload) => (state.agreedTo = payload),
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
   SET_TRANSACTION_AMOUNT: (state, payload) => (state.selectedAmount = payload),
@@ -105,6 +108,26 @@ export const actions = {
       }
 
       await investmentRef.set(dto);
+
+      if (state.testimonial) {
+        const userRef = await db
+          .collection("users")
+          .doc(userId)
+          .get();
+        const user = userRef.data();
+        const nameFormatted = `${user.name.first} ${user.name.last.charAt(0)}`;
+
+        await db
+          .collection("offerings")
+          .doc(offeringId)
+          .update({
+            testimonials: firebase.firestore.FieldValue.arrayUnion({
+              photoUrl: "",
+              name: nameFormatted,
+              testimonial: state.testimonial
+            })
+          });
+      }
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
