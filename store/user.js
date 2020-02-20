@@ -180,6 +180,7 @@ export const actions = {
 
       const dto = {
         uid: entityRef.id,
+        userId,
         ...entityData,
         createdAt: timestamp,
         updatedAt: timestamp
