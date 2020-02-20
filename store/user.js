@@ -99,7 +99,7 @@ export const getters = {
 export const mutations = {
   SET_ACCREDITATION_ATTRIBUTE(state, payload) {
     const accreditation = state.currentUser.accreditation;
-    state.currentUser.Accreditation = Object.assign(
+    state.currentUser.accreditation = Object.assign(
       cloneDeep(accreditation),
       payload
     );

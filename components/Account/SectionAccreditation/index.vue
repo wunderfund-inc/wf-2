@@ -97,11 +97,11 @@ export default {
         return this.$store.getters["user/accreditation"].nw;
       },
       set(val) {
-        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { ai: val });
+        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { nw: val });
       }
     },
     validForm() {
-      return this.attestations.length === 2 && this.ai > 0 && this.nw > 0;
+      return this.attestations.length === 2 && this.ai >= 0 && this.nw >= 0;
     }
   },
   methods: {
