@@ -117,9 +117,9 @@
         .row.pt-5
           .col
             h1.pb-3 FAQs
-            details(v-for="(faq, index) in company.faqs" :key="index")
+            details(v-for="(faq, index) in company.faqs" :key="index" open)
               summary {{ faq.question }}
-              p {{ faq.answer }}
+              p.py-3 {{ faq.answer }}
         .row.py-5
           .col
             h1 Questions?
