@@ -66,7 +66,8 @@ export const actions = {
             .collection("offerings")
             .where("companyId", "==", companyData.uid)
             .where("published", "==", true)
-            .where("platform", "array-contains", "WFP")
+            .where("platforms", "array-contains", "WFP")
+            .orderBy("createdAt")
             .get();
 
           companyData.offerings = activeOfferings.docs.map(offering =>
