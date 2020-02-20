@@ -46,11 +46,11 @@ export const state = () => ({
 });
 
 export const getters = {
+  accreditation: state => state.currentUser.accreditation,
   accredited: (state, getters) => {
     const { ai, nw } = getters.accreditation;
     return ai >= 200000 && nw >= 1000000;
   },
-  accreditation: state => state.currentUser.accreditation,
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
   password: state => state.form.password,
@@ -152,13 +152,15 @@ export const actions = {
         await dispatch("setProfileAddressAttribute", { ...userData.address });
 
         const entitiesList = await db
-          .collection(`users/${userId}/entities`)
+          .collection("entities")
+          .where("userId", "==", userId)
           .get();
         const entities = entitiesList.docs.map(entity => entity.data());
         await dispatch("setEntities", entities);
 
         const investmentsList = await db
-          .collection(`users/${userId}/investments`)
+          .collection("investments")
+          .where("userId", "==", userId)
           .get();
         const investments = investmentsList.docs.map(investment => {
           return investment.data();
