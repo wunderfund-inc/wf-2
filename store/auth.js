@@ -48,10 +48,9 @@ export const actions = {
         email,
         attestations,
         name,
-        accredited: false,
-        spendPool: {
-          current: 2200,
-          max: 2200
+        accreditation: {
+          ai: 0,
+          nw: 0
         },
         address: {
           street1: null,

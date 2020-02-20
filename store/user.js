@@ -1,4 +1,5 @@
 import { db, timestamp } from "@/plugins/firebase";
+import { calculatePersonalLimit } from "@/helpers/finance";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -45,7 +46,11 @@ export const state = () => ({
 });
 
 export const getters = {
-  accredited: state => state.currentUser.accredited,
+  accredited: (state, getters) => {
+    const { ai, nw } = getters.accreditation;
+    return ai >= 200000 && nw >= 1000000;
+  },
+  accreditation: state => state.currentUser.accreditation,
   entityForm: state => state.form.entity,
   entityAddress: state => state.form.entity.address,
   password: state => state.form.password,
@@ -70,7 +75,14 @@ export const getters = {
   entities: state => state.entities,
   investments: state => state.investments,
   currentUser: state => state.currentUser,
-  spendPool: state => state.currentUser.spendPool,
+  spendPool: (state, getters) => {
+    // TODO: subtract invested amounts for current value
+    const { ai, nw } = getters.accreditation;
+    return {
+      current: calculatePersonalLimit(ai, nw),
+      max: calculatePersonalLimit(ai, nw)
+    };
+  },
   entitySelection: state => {
     const entityList = state.entities;
     return entityList.map(el => {
