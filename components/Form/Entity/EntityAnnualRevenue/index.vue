@@ -3,11 +3,29 @@
     label="Estimated Annual Revenue"
     label-for="entity-annual-revenue"
   )
-    b-form-input#entity-annual-revenue(v-model.number="annualRevenue" trim)
+    money#entity-annual-revenue.form-control(
+      v-model="annualRevenue"
+      v-bind="moneyConfig"
+    )
 </template>
 
 <script>
+import { Money } from "v-money";
+
 export default {
+  components: { Money },
+  data() {
+    return {
+      moneyConfig: {
+        decimal: ".",
+        thousands: ",",
+        prefix: "USD $",
+        suffix: "",
+        precision: 2,
+        masked: false
+      }
+    };
+  },
   computed: {
     annualRevenue: {
       get() {

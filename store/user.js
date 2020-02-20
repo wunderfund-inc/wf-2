@@ -14,8 +14,8 @@ export const state = () => ({
       differentEmail: false,
       email: null,
       accredited: false,
-      annualRevenue: null,
-      netAssets: null,
+      annualRevenue: 0,
+      netAssets: 0,
       nonSpecific: false,
       address: {
         street1: null,
