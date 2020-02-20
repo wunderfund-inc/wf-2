@@ -75,6 +75,7 @@ export const getters = {
   entities: state => state.entities,
   investments: state => state.investments,
   currentUser: state => state.currentUser,
+  userId: state => state.currentUser.uid,
   spendPool: (state, getters) => {
     // TODO: subtract invested amounts for current value
     const { ai, nw } = getters.accreditation;
@@ -96,6 +97,13 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_ACCREDITATION_ATTRIBUTE(state, payload) {
+    const accreditation = state.currentUser.accreditation;
+    state.currentUser.Accreditation = Object.assign(
+      cloneDeep(accreditation),
+      payload
+    );
+  },
   SET_ENTITY_FORM_ATTRIBUTE(state, payload) {
     const entity = state.form.entity;
     state.form.entity = Object.assign(cloneDeep(entity), payload);

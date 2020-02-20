@@ -2,31 +2,118 @@
   section
     hr
     b-container
-      div(v-if="!accredited")
-        h4.pb-3 Are you an Accredited Investor?
-        p Based on the #[b-link(href="https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/updated-investor-bulletin-accredited-investors" target="_blank") SEC standards], if you want to invest more than $2,200 annually on our platform, you're required to let us know that you qualify. Click the button below, and we'll verify you via email.
-        b-button(variant="success" @click="applyForAccreditation") Verify Me!
-      div(v-else)
-        small.text-muted Need to change your Annual Income or Net Worth so you can invest more annually?
-            |
-            |
-            b-link(href="https://www.google.com") Re-verify!
+      h4.pb-3 Increase your investment limit!
+      p Based on the #[b-link(href="https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/updated-investor-bulletin-accredited-investors" target="_blank") SEC standards], if you want to invest more than $2,200 annually on our platform, you're required to let us know that you qualify. Fill out the information below to update how much you're allowed to spend on our platform.
+      form(@submit.prevent="updateAccreditation")
+        .form-row
+          .col-12.col-md-6
+            b-form-group.text-left(
+              label="Estimated Annual Income"
+              label-for="ai"
+              description=`Note: Must be over $200,000 to be considered "accredited"`
+            )
+              money#ai.form-control(
+                v-model="ai"
+                v-bind="moneyConfig"
+              )
+          .col-12.col-md-6
+            b-form-group.text-left(
+              label="Estimated Net Worth"
+              label-for="nw"
+              description=`Note: Must be over $1,000,000 to be considered "accredited"`
+            )
+              money#nw.form-control(
+                v-model="nw"
+                v-bind="moneyConfig"
+              )
+        .form-row
+          .col-12
+            b-form-checkbox.py-2(
+              v-model="attestations[0]"
+              value="The information above is true to my knowledge."
+              switch
+            ) The information above is true to my knowledge.
+        .form-row
+          .col-12
+            b-form-checkbox.py-2(
+              v-model="attestations[1]"
+              value="I understand if at any point in time the above is not true, Wunderfund reserves the right to cancel any investments I make on the platform."
+              switch
+            ) I understand if at any point in time the above is not true, Wunderfund reserves the right to cancel any investments I make on the platform.
+        b-form-row
+          b-col
+            b-button(
+              variant="success"
+              type="submit"
+              :disabled="!validForm"
+            )
+              span.spinner-border.spinner-border-sm.mr-2(
+                v-if="submitting"
+                role="status"
+                aria-hiden="true"
+                style="margin-bottom: 4px"
+              )
+              span(v-if="submitting") Updating...
+              span(v-if="!submitting") Attest
 </template>
 
 <script>
+import { Money } from "v-money";
 import { mapGetters } from "vuex";
+import { db, timestamp } from "@/plugins/firebase";
 
 export default {
+  components: { Money },
+  data() {
+    return {
+      attestations: [],
+      submitting: false,
+      moneyConfig: {
+        decimal: ".",
+        thousands: ",",
+        prefix: "USD $",
+        suffix: "",
+        precision: 2,
+        masked: false
+      }
+    };
+  },
   computed: {
     ...mapGetters({
-      accredited: "user/accredited"
-    })
+      accredited: "user/accredited",
+      accreditation: "user/accreditation",
+      userId: "user/userId"
+    }),
+    ai: {
+      get() {
+        return this.$store.getters["user/accreditation"].ai;
+      },
+      set(val) {
+        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { ai: val });
+      }
+    },
+    nw: {
+      get() {
+        return this.$store.getters["user/accreditation"].nw;
+      },
+      set(val) {
+        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { ai: val });
+      }
+    },
+    validForm() {
+      return this.attestations.length === 2 && this.ai > 0 && this.nw > 0;
+    }
   },
   methods: {
-    applyForAccreditation() {
-      // TODO: Change once we have e-verification set up
-      // eslint-disable-next-line
-      console.log("API call to send email");
+    async updateAccreditation() {
+      this.submitting = true;
+      const { ai, nw } = this.accreditation;
+      const accreditation = { ai, nw };
+      await db
+        .collection("users")
+        .doc(this.userId)
+        .update({ accreditation, updatedAt: timestamp });
+      await window.location.reload();
     }
   }
 };
