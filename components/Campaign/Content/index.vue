@@ -1,6 +1,6 @@
 <template lang="pug">
   main.py-5
-    section#hero
+    section.pb-md-5#hero
       .container.my-3
         .row
           .col-12.col-md-7
@@ -34,6 +34,8 @@
                     target="_blank"
                   )
                     font-awesome-icon.fa-lg(:icon="['fab', iconIt(link.platform)]")
+                small.px-2
+                  b-link.text-dark(:href="company.edgarUrl" target="_blank") EDGAR Filing
             b-card.my-3(no-body)
               b-tabs(card justified)
                 b-tab(
@@ -50,10 +52,10 @@
                     span Days Left: {{ offering.date.end | timeDistance }}
                     .text-dark(v-if="offering.agreements.offering.url")
                       br
-                      b-link(:src="offering.agreements.offering.url || '#'") Offering Agreement
+                      b-link(:src="offering.agreements.offering.url") Offering Agreement
                     .text-dark(v-if="offering.agreements.subscription.url")
                       br
-                      b-link(:src="offering.agreements.subscription.url || '#'") Subscription Agreement
+                      b-link(:src="offering.agreements.subscription.url") Subscription Agreement
             small Share this offering with your friends!
               a.pl-3.pr-2.text-muted
                 font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
