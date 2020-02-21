@@ -3,6 +3,8 @@ import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
+  agreementUrl: null,
+  showAgreementModal: false,
   agreedTo: [],
   testimonial: null,
   selectedOffering: null,
@@ -29,6 +31,8 @@ export const state = () => ({
 });
 
 export const getters = {
+  showAgreementModal: state => state.showAgreementModal,
+  agreementUrl: state => state.agreementUrl,
   testimonial: state => state.testimonial,
   validAgreementList: state => state.agreedTo.length === 5,
   agreedTo: state => state.agreedTo,
@@ -52,6 +56,10 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_AGREEMENT_URL: (state, payload) => (state.agreementUrl = payload),
+  SHOW_AGREEMENT_MODAL: (state, payload) => {
+    state.showAgreementModal = payload;
+  },
   SET_TESTIMONIAL: (state, payload) => (state.testimonial = payload),
   SET_AGREEMENTS: (state, payload) => (state.agreedTo = payload),
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
@@ -72,6 +80,12 @@ export const mutations = {
 };
 
 export const actions = {
+  getAgreementUrl({ commit }, payload) {
+    commit("SET_AGREEMENT_URL", "https://www.youtube.com/embed/tgbNymZ7vqY");
+  },
+  showAgreementModal({ commit }, payload) {
+    commit("SHOW_AGREEMENT_MODAL", payload);
+  },
   setAgreements({ commit }, payload) {
     commit("SET_AGREEMENTS", payload);
   },

@@ -2,6 +2,7 @@
   main
     .container.py-5
       .row
+        document-modal
         .col-12.col-md-8
           checkout-form
         .col-12.col-md-4
@@ -10,12 +11,14 @@
 
 <script>
 import { db } from "@/plugins/firebase";
+import DocumentModal from "@/components/Form/Checkout/DocumentModal";
 import CheckoutForm from "@/components/Form/Checkout/CheckoutForm";
 import CheckoutSummary from "@/components/Form/Checkout/CheckoutSummary";
 
 export default {
   middleware: "authenticated",
   components: {
+    DocumentModal,
     CheckoutForm,
     CheckoutSummary
   },
