@@ -28,14 +28,19 @@ main
               b-tab(href="#tos" title="Terms of Service" active)
                 b-card-text ToS
               b-tab(href="#pp" title="Privacy Policy")
-                b-card-text PP
+                b-card-text
+                  privacy-policy
         .col-12.col-md-1
 </template>
 
 <script>
 import { faqs } from "@/components/Faq/data.json";
+import PrivacyPolicy from "@/components/Faq/Legal/PrivacyPolicy";
 
 export default {
+  components: {
+    PrivacyPolicy
+  },
   data() {
     return {
       tabIndex: 0,
