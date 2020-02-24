@@ -105,3 +105,8 @@ export const amountRaised = investments => {
   return listOfAmounts.reduce((tot, num) => tot + num, 0);
 };
 Vue.filter("amountRaised", amountRaised);
+
+export const firstLetterOnly = val => {
+  return val.charAt(0);
+};
+Vue.filter("firstLetterOnly", firstLetterOnly);
