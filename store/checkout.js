@@ -80,8 +80,8 @@ export const mutations = {
 };
 
 export const actions = {
-  getAgreementUrl({ commit }, payload) {
-    commit("SET_AGREEMENT_URL", "https://www.youtube.com/embed/tgbNymZ7vqY");
+  setAgreementUrl({ commit }, payload) {
+    commit("SET_AGREEMENT_URL", payload);
   },
   showAgreementModal({ commit }, payload) {
     commit("SHOW_AGREEMENT_MODAL", payload);
@@ -92,7 +92,10 @@ export const actions = {
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   },
-  async submitInvestment(context, { companyId, offeringId, userId }) {
+  async submitInvestment(
+    { state, dispatch },
+    { companyId, offeringId, userId }
+  ) {
     try {
       const investmentRef = await db.collection("investments").doc();
 
@@ -109,36 +112,32 @@ export const actions = {
         userId
       };
 
-      switch (state.selectedMethod) {
-        case "ACH":
-          dto.extras = Object.assign(cloneDeep({ ach: state.ach }));
-          break;
-        case "CC":
-          dto.extras = Object.assign(cloneDeep({ cc: state.cc }));
-          break;
-        case "CRYPTO":
-          dto.extras = Object.assign(cloneDeep({ crypto: state.crypto }));
-          break;
-      }
-
+      const key = state.selectedMethod.toLowerCase();
+      dto.extras = Object.assign(cloneDeep({ [key]: state[key] }));
       await investmentRef.set(dto);
 
+      const apiEndpt =
+        "https://us-central1-wunderfund-server.cloudfunctions.net/agreementOnRequest";
+      const url = await this.$axios.$post(apiEndpt, { ...dto });
+      await dispatch("setAgreementUrl", url);
+      // await dispatch("showAgreementModal", true);
+
+      // Send testimonial to company
       if (state.testimonial) {
         const userRef = await db
           .collection("users")
           .doc(userId)
           .get();
         const user = userRef.data();
-        const nameFormatted = `${user.name.first} ${user.name.last.charAt(0)}`;
 
         await db
-          .collection("offerings")
-          .doc(offeringId)
+          .collection("companies")
+          .doc(companyId)
           .update({
             testimonials: firebase.firestore.FieldValue.arrayUnion({
-              photoUrl: "",
-              name: nameFormatted,
-              testimonial: state.testimonial
+              userId: user.uid,
+              testimonial: state.testimonial,
+              displayed: false
             })
           });
       }

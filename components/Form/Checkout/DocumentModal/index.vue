@@ -1,7 +1,7 @@
 <template lang="pug">
   b-modal(
     v-model="showAgreementModal"
-    title="Signing the Agreement"
+    title="Sign the Agreement"
     size="xl"
     hide-footer
     no-close-on-backdrop
