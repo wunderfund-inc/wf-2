@@ -72,7 +72,8 @@ export default {
       const offeringId = this.investment.offeringId;
 
       const querySnapshot = await db
-        .collection(`offerings/${offeringId}/investments`)
+        .collection("investments")
+        .where("offeringId", "==", offeringId)
         .get();
 
       const investments = querySnapshot.docs.map(investment => {
