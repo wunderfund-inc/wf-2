@@ -13,7 +13,7 @@
               description=`Note: Must be over $200,000 to be considered "accredited"`
             )
               money#ai.form-control(
-                v-model="ai"
+                v-model="form.ai"
                 v-bind="moneyConfig"
               )
           .col-12.col-md-6
@@ -23,7 +23,7 @@
               description=`Note: Must be over $1,000,000 to be considered "accredited"`
             )
               money#nw.form-control(
-                v-model="nw"
+                v-model="form.nw"
                 v-bind="moneyConfig"
               )
         .form-row
@@ -66,6 +66,10 @@ export default {
   components: { Money },
   data() {
     return {
+      form: {
+        ai: 0,
+        nw: 0
+      },
       attestations: [],
       submitting: false,
       moneyConfig: {
@@ -84,22 +88,6 @@ export default {
       accreditation: "user/accreditation",
       userId: "user/userId"
     }),
-    ai: {
-      get() {
-        return this.$store.getters["user/accreditation"].ai;
-      },
-      set(val) {
-        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { ai: val });
-      }
-    },
-    nw: {
-      get() {
-        return this.$store.getters["user/accreditation"].nw;
-      },
-      set(val) {
-        this.$store.commit("user/SET_ACCREDITATION_ATTRIBUTE", { nw: val });
-      }
-    },
     validForm() {
       return this.attestations.length === 2 && this.ai >= 0 && this.nw >= 0;
     }
@@ -107,12 +95,10 @@ export default {
   methods: {
     async updateAccreditation() {
       this.submitting = true;
-      const { ai, nw } = this.accreditation;
-      const accreditation = { ai, nw };
       await db
         .collection("users")
         .doc(this.userId)
-        .update({ accreditation, updatedAt: timestamp });
+        .update({ ...this.form, updatedAt: timestamp });
       await window.location.reload();
     }
   }
