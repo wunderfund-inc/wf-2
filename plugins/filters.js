@@ -1,6 +1,7 @@
 import Vue from "vue";
 import formatDistance from "date-fns/formatDistance";
 import numeral from "numeral";
+import fromUnixTime from "date-fns/fromUnixTime";
 
 /**
  * Capitalize all letters of a string
@@ -110,3 +111,8 @@ export const firstLetterOnly = val => {
   return val.charAt(0);
 };
 Vue.filter("firstLetterOnly", firstLetterOnly);
+
+export const dateFromSeconds = val => {
+  return fromUnixTime(val).toLocaleDateString();
+};
+Vue.filter("dateFromSeconds", dateFromSeconds);
