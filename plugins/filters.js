@@ -99,13 +99,15 @@ export const currencyDisplayFormat = val => numeral(val).format("($0.0a)");
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
 
 /**
- * Reduce array of investments to raw amount total that's been raised
+ * Given an array of money amounts, reduce array and sum total to return to the
+ * raw amount total that's been raised
+ * @param {array[object]}
  */
-export const amountRaised = investments => {
-  const listOfAmounts = investments.map(investment => investment.amount);
+export const reduceToTotal = items => {
+  const listOfAmounts = items.map(item => item.amount);
   return listOfAmounts.reduce((tot, num) => tot + num, 0);
 };
-Vue.filter("amountRaised", amountRaised);
+Vue.filter("reduceToTotal", reduceToTotal);
 
 export const firstLetterOnly = val => {
   return val.charAt(0);

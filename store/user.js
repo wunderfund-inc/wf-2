@@ -1,5 +1,6 @@
 import { db, timestamp } from "@/plugins/firebase";
 import { calculatePersonalLimit } from "@/helpers/finance";
+import { reduceToTotal } from "@/plugins/filters";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -77,10 +78,10 @@ export const getters = {
   currentUser: state => state.currentUser,
   userId: state => state.currentUser.uid,
   spendPool: (state, getters) => {
-    // TODO: subtract invested amounts for current value
+    const spent = reduceToTotal(getters.investments);
     const { ai, nw } = getters.accreditation;
     return {
-      current: calculatePersonalLimit(ai, nw),
+      current: calculatePersonalLimit(ai, nw) - spent,
       max: calculatePersonalLimit(ai, nw)
     };
   },
