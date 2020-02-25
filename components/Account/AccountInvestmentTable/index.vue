@@ -1,14 +1,10 @@
 <template lang="pug">
-table.table.text-center.mb-0
+table.table.mb-0
   thead
     tr
       th(scope="col") Company
-      th(scope="col") Invested
-      th(scope="col") Method
-      th(scope="col") Date Invested
-      th(scope="col") Raised
-      th(scope="col") Goal
-      th(scope="col") Status
+      th(scope="col") Offering Details
+      th(scope="col") Investment Details
       th(scope="col") Actions
   tbody
     tr(v-for="(investment, index) in investments" :key="index")
@@ -17,15 +13,17 @@ table.table.text-center.mb-0
           v-if="investment.company.logo.url"
           :src="investment.company.logo.url"
           thumbnail
-          width="25"
+          width="50"
         )
         span.ml-2 {{ investment.company.name.short }} (Reg. {{ investment.offering.offeringType }})
-      td {{ investment.amount | asCurrency }}
-      td {{ investment.method }}
-      td {{ investment.createdAt.seconds | dateFromSeconds }}
-      td {{ investment.offering.totalInvested | asCurrency }}
-      td {{ investment.offering.goal.min | currencyDisplayFormat }} - {{ investment.offering.goal.max | currencyDisplayFormat }}
-      td {{ investment.offering.date.end | timeDistance }} left
+      td
+        p Goal: {{ investment.offering.goal.min | currencyDisplayFormat }} - {{ investment.offering.goal.max | currencyDisplayFormat }}
+        p Raised So Far: {{ investment.offering.totalInvested | asCurrency }}
+        p.mb-0 Time Left: {{ investment.offering.date.end | timeDistance }}
+      td
+        p Date Invested: {{ investment.createdAt.seconds | dateFromSeconds }}
+        p Amount Invested: {{ investment.amount | asCurrency }}
+        p.mb-0 Method: {{ investment.method }}
       td.text-left
         b-link.text-success(href="https://google.com" target="_blank")
           font-awesome-icon.mx-2(:icon="['fas', 'file-pdf']")
