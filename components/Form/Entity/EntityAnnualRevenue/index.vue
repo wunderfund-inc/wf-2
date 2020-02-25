@@ -4,7 +4,7 @@
     label-for="entity-annual-revenue"
   )
     money#entity-annual-revenue.form-control(
-      v-model="annualRevenue"
+      v-model="ai"
       v-bind="moneyConfig"
     )
 </template>
@@ -27,13 +27,13 @@ export default {
     };
   },
   computed: {
-    annualRevenue: {
+    ai: {
       get() {
-        return this.$store.getters["user/entityForm"].annualRevenue;
+        return this.$store.getters["user/entityForm"].ai;
       },
       set(val) {
         this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", {
-          annualRevenue: val
+          ai: val
         });
       }
     }

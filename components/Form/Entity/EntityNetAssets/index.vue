@@ -4,7 +4,7 @@
     label-for="entity-net-assets"
   )
     money#entity-net-assets.form-control(
-      v-model="annualRevenue"
+      v-model="nw"
       v-bind="moneyConfig"
     )
 </template>
@@ -27,13 +27,13 @@ export default {
     };
   },
   computed: {
-    netAssets: {
+    nw: {
       get() {
-        return this.$store.getters["user/entityForm"].netAssets;
+        return this.$store.getters["user/entityForm"].nw;
       },
       set(val) {
         this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", {
-          netAssets: val
+          nw: val
         });
       }
     }

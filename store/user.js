@@ -15,8 +15,8 @@ export const state = () => ({
       differentEmail: false,
       email: null,
       accredited: false,
-      annualRevenue: 0,
-      netAssets: 0,
+      ai: 0,
+      nw: 0,
       nonSpecific: false,
       address: {
         street1: null,
@@ -253,8 +253,8 @@ export const actions = {
       differentEmail: false,
       email: null,
       accredited: false,
-      annualRevenue: null,
-      netAssets: null,
+      ai: null,
+      nw: null,
       nonSpecific: false,
       address: {
         street1: null,
