@@ -50,7 +50,7 @@ export default {
         imports: [
           {
             set: "@fortawesome/free-solid-svg-icons",
-            icons: ["faMapMarkerAlt", "faLink"]
+            icons: ["faMapMarkerAlt", "faLink", "faFilePdf", "faMinusCircle"]
           },
           {
             set: "@fortawesome/free-brands-svg-icons",
