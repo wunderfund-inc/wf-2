@@ -1,6 +1,15 @@
 <template lang="pug">
   main
     b-container.py-5
+      b-alert.pb-0(
+        v-if="$route.query.event && $route.query.event === 'signing_complete'"
+        variant="success"
+        show
+        dismissible
+        fade
+      )
+        h4 Success!
+        p Thanks for investing! Please check your email for a receipt of the agreement you've signed and details regarding your investment.
       section(v-if="emailVerified")
         account-profile
         account-entity-list(:entities="entities")
