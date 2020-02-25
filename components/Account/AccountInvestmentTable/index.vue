@@ -17,6 +17,7 @@ table.table.mb-0
         )
         span.ml-2 {{ investment.company.name.short }} (Reg. {{ investment.offering.offeringType }})
       td
+        p Security Type: {{ investment.offering.securityType }}
         p Goal: {{ investment.offering.goal.min | currencyDisplayFormat }} - {{ investment.offering.goal.max | currencyDisplayFormat }}
         p Raised So Far: {{ investment.offering.totalInvested | asCurrency }}
         p.mb-0 Time Left: {{ investment.offering.date.end | timeDistance }}
