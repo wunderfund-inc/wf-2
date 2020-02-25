@@ -22,20 +22,20 @@ aside
   b-collapse(:id="`investment-${investment.uid}`" accordion="investments")
     .row
       .col
-        h4.mb-0.py-4 The Offering
+        h4.mb-0.py-4 Offering Details:
     .row
-      .col-12.col-sm-4
+      .col-sm-4
         h5 Raised:
         h6 {{ totalRaised | asCurrency }}
-      .col-12.col-sm-4
+      .col-sm-4
         h5 Goal:
         h6 {{ investment.offering.goal.min | currencyDisplayFormat }} - {{ investment.offering.goal.max | currencyDisplayFormat }}
-      .col-12.col-sm-4
+      .col-sm-4
         h5 Status:
         h6 {{ investment.offering.date.end | timeDistance }} left
     .row
       .col
-        h4.mb-0.py-4 Your Investment
+        h4.mb-0.py-4 Your Investment:
     .row
       .col-12.col-sm-4
         h5 Amount Invested: #[small.text-success {{ investment.amount | asCurrency }}]
