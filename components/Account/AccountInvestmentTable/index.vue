@@ -22,6 +22,7 @@ table.table.mb-0
         p Raised So Far: {{ investment.offering.totalInvested | asCurrency }}
         p.mb-0 Time Left: {{ investment.offering.date.end | timeDistance }}
       td
+        p Type of Investment: {{ investment.type === "ENTITY" ? `On behalf of ${companyName(investment.userId)}`: "Personal" }}
         p Date Invested: {{ investment.createdAt.seconds | dateFromSeconds }}
         p Amount Invested: {{ investment.amount | asCurrency }}
         p.mb-0 Method: {{ investment.method }}
@@ -42,6 +43,15 @@ export default {
       type: Array,
       default() {},
       required: true
+    }
+  },
+  methods: {
+    companyName(id) {
+      const entities = this.$store.getters["user/entities"];
+      const item = entities.filter(investment => {
+        return investment.userId === id;
+      });
+      return item[0].name;
     }
   }
 };

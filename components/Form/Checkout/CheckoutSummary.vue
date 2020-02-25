@@ -75,7 +75,10 @@ export default {
       const payload = {
         companyId: this.company.uid,
         offeringId: this.selectedOffering.uid,
-        userId: this.user.uid
+        userId:
+          this.selectedType === "ENTITY"
+            ? this.selectedEntity.uid
+            : this.user.uid
       };
 
       await this.$store.dispatch("checkout/submitInvestment", payload);
