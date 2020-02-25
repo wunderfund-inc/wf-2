@@ -2,7 +2,7 @@
   .container.py-5.text-center
     h1 Frequently Asked Questions (FAQs)
     .row.py-5
-      .col-12.col-md-3.py-2(v-for="(faq, index) in faqs" :key="index")
+      .col-md-3.py-2(v-for="(faq, index) in faqs" :key="index")
         faq-card(:img-src="faq.image" :faq-link="index")
 </template>
 
@@ -15,8 +15,7 @@ export default {
     FaqCard
   },
   computed: {
-    faqs: () => faqs,
-    links: () => Object.keys(faqs)
+    faqs: () => faqs
   }
 };
 </script>

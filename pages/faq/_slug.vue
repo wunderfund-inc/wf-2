@@ -1,23 +1,6 @@
 <template lang="pug">
 main
-  header#faq-nav
-    .container
-      .py-2
-        .row
-          .col-12.col-md-2
-          .col
-            b-navbar(type="light")
-              b-navbar-nav.mx-auto(justified)
-                .row
-                  .col-12.col-md-3(
-                    v-for="(link, index) in links"
-                    :key="index"
-                  )
-                    b-nav-item(
-                      active-class="font-weight-bolder"
-                      :to="`/faq/${link}`"
-                    ) {{ link | pluralFaq | properCase }}
-          .col-12.col-md-2
+  faq-nav
   section#faq-content
     .container
       .py-2
@@ -41,15 +24,16 @@ main
 
 <script>
 import { faqs } from "@/components/Faq/data.json";
+import FaqNav from "@/components/Faq/FaqNav";
 import FaqItem from "@/components/Faq/_Slug/FaqItem";
 
 export default {
   components: {
+    FaqNav,
     FaqItem
   },
   computed: {
-    faqs: () => faqs,
-    links: () => Object.keys(faqs)
+    faqs: () => faqs
   },
   asyncData({ route }) {
     return { slug: route.params.slug };
