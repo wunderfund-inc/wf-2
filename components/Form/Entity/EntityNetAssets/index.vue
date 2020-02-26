@@ -29,12 +29,12 @@ export default {
   computed: {
     nw: {
       get() {
-        return this.$store.getters["user/entityForm"].nw;
+        return this.$store.getters["user/entityForm"].accreditation.nw;
       },
       set(val) {
-        this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", {
-          nw: val
-        });
+        if (val !== this.nw) {
+          this.$store.dispatch("user/setEntityAccreditation", { nw: val });
+        }
       }
     }
   }

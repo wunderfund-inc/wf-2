@@ -15,8 +15,10 @@ export const state = () => ({
       differentEmail: false,
       email: null,
       accredited: false,
-      ai: 0,
-      nw: 0,
+      accreditation: {
+        ai: 0,
+        nw: 0
+      },
       nonSpecific: false,
       address: {
         street1: null,
@@ -98,6 +100,13 @@ export const getters = {
 };
 
 export const mutations = {
+  SET_ENTITY_ACCREDITATION(state, payload) {
+    const accreditation = state.form.entity.accreditation;
+    state.form.entity.accreditation = Object.assign(
+      cloneDeep(accreditation),
+      payload
+    );
+  },
   SET_ACCREDITATION_ATTRIBUTE(state, payload) {
     const accreditation = state.currentUser.accreditation;
     state.currentUser.accreditation = Object.assign(
@@ -140,6 +149,9 @@ export const mutations = {
 };
 
 export const actions = {
+  setEntityAccreditation({ commit }, payload) {
+    commit("SET_ENTITY_ACCREDITATION", payload);
+  },
   async setAccountData({ dispatch }, userId) {
     try {
       if (userId) {

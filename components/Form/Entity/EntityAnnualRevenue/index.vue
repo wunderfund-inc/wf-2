@@ -29,12 +29,12 @@ export default {
   computed: {
     ai: {
       get() {
-        return this.$store.getters["user/entityForm"].ai;
+        return this.$store.getters["user/entityForm"].accreditation.ai;
       },
       set(val) {
-        this.$store.commit("user/SET_ENTITY_FORM_ATTRIBUTE", {
-          ai: val
-        });
+        if (val !== this.ai) {
+          this.$store.dispatch("user/setEntityAccreditation", { ai: val });
+        }
       }
     }
   }
