@@ -9,6 +9,7 @@ export const state = () => ({
   testimonial: null,
   selectedOffering: null,
   selectedAmount: 0,
+  selectedShares: 0,
   selectedMethod: null,
   selectedType: null,
   selectedEntity: null,
@@ -38,6 +39,7 @@ export const getters = {
   agreedTo: state => state.agreedTo,
   selectedOffering: state => state.selectedOffering,
   selectedAmount: state => state.selectedAmount,
+  selectedShares: state => state.selectedShares,
   selectedMethod: state => state.selectedMethod,
   selectedType: state => state.selectedType,
   selectedEntity: state => state.selectedEntity,
@@ -64,6 +66,7 @@ export const mutations = {
   SET_AGREEMENTS: (state, payload) => (state.agreedTo = payload),
   SET_OFFERING: (state, payload) => (state.selectedOffering = payload),
   SET_TRANSACTION_AMOUNT: (state, payload) => (state.selectedAmount = payload),
+  SET_TRANSACTION_SHARES: (state, payload) => (state.selectedShares = payload),
   SET_PAYMENT_METHOD: (state, payload) => (state.selectedMethod = payload),
   SET_TRANSACTION_TYPE: (state, payload) => (state.selectedType = payload),
   SET_ENTITY: (state, payload) => (state.selectedEntity = payload),
@@ -97,13 +100,17 @@ export const actions = {
     { companyId, offeringId, userId }
   ) {
     try {
+      const conditionalAmount =
+        state.selectedOffering.securityType === "EQUITY"
+          ? state.selectedOffering.equity.pricePerShare * state.selectedShares
+          : state.selectedAmount;
       const investmentRef = await db.collection("investments").doc();
 
       const dto = {
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
-        amount: state.selectedAmount,
+        amount: conditionalAmount,
         agreements: state.agreedTo,
         createdAt: timestamp,
         updatedAt: timestamp,

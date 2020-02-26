@@ -4,7 +4,8 @@
       b-card-text Hello! My name is #[strong {{ user.name.first }} {{ user.name.last }}].
       b-card-text(v-if="validPersonal") I want to personally invest in the #[strong Regulation {{ selectedOffering.offeringType }}] offering of #[strong {{ company.name.short }}].
       b-card-text(v-if="validEntity") I want to invest in the #[strong Regulation {{ selectedOffering.offeringType }}] offering of #[strong {{ company.name.short }}] on behalf of #[strong {{ selectedEntity.name }}].
-      b-card-text(v-if="validTransaction") I'm committed to investing #[strong USD] #[strong {{ selectedAmount | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}].
+      b-card-text(v-if="validEquityTransaction") I'm committed to investing #[strong USD {{ selectedShares * selectedOffering.equity.pricePerShare | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}] (#[strong {{ selectedShares }}] shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share).
+      b-card-text(v-if="validTransaction") I'm committed to investing #[strong USD {{ selectedAmount | asCurrency }}] and paying via #[strong {{ selectedMethod | paymentMethodFormat }}].
       b-card-text(v-if="validAgreementList") #[strong I've agreed to the terms] necessary for this investment to be valid.
       b-button(
         v-if="!submitting"
@@ -46,6 +47,7 @@ export default {
       selectedEntity: "checkout/selectedEntity",
       selectedAmount: "checkout/selectedAmount",
       selectedMethod: "checkout/selectedMethod",
+      selectedShares: "checkout/selectedShares",
       agreedTo: "checkout/agreedTo",
       validAgreementList: "checkout/validAgreementList",
       agreementUrl: "checkout/agreementUrl"
@@ -61,11 +63,27 @@ export default {
       );
     },
     validTransaction() {
-      return this.selectedAmount > 0 && this.selectedMethod !== null;
+      return (
+        this.selectedOffering.securityType !== "EQUITY" &&
+        this.selectedAmount >= this.selectedOffering.minInvestment &&
+        this.selectedMethod !== null
+      );
+    },
+    validEquityTransaction() {
+      return (
+        this.selectedOffering.securityType === "EQUITY" &&
+        this.selectedShares >=
+          this.selectedOffering.equity.minSharesNeededToBuy &&
+        this.selectedMethod
+      );
     },
     validEverything() {
       const validType = this.validPersonal || this.validEntity;
-      return validType && this.validTransaction && this.validAgreementList;
+      const validTransactionAmount =
+        this.selectedOffering.securityType === "EQUITY"
+          ? this.validEquityTransaction
+          : this.validTransaction;
+      return validType && validTransactionAmount && this.validAgreementList;
     }
   },
   methods: {

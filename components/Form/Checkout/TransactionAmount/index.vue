@@ -5,32 +5,18 @@
   )
     div(v-if="securityType === 'EQUITY'")
       b-form-input(
-        v-model.number="shares"
+        v-model.number="selectedShares"
         type="number"
       )
-      b-form-text(
-        :text-variant="(validAmount) ? `muted` : `danger`"
-      )
-        span(
-          :class="(validAmount || validAmount === 0) ? `` : `font-weight-bold`"
-        ) Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}
-        |
-        |
-        span(
-          :class="(validAmount || validAmount === 0) ? `` : `font-weight-bold`"
-        ) ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share)
+      b-form-text(:text-variant="validShares ? `muted` : `danger`")
+        span(:class="validShares ? `` : `font-weight-bold`") Your commitment to invest needs to be at least {{ minInvestment | asCurrency }} ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share)
     div(v-else)
       money.form-control(
         v-model="selectedAmount"
         v-bind="moneyConfig"
       )
-      b-form-text(
-        v-if="(validAmount === 0 || !validAmount)"
-        :text-variant="(validAmount === 0) ? `muted` : `danger`"
-      )
-        span(
-          :class="(validAmount || validAmount === 0) ? `` : `font-weight-bold`"
-        ) Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}.
+      b-form-text(:text-variant="validAmount ? `muted` : `danger`")
+        span(:class="validAmount ? `` : `font-weight-bold`") Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}.
 </template>
 
 <script>
@@ -41,7 +27,6 @@ export default {
   components: { Money },
   data() {
     return {
-      shares: 0,
       moneyConfig: {
         decimal: ".",
         thousands: ",",
@@ -72,24 +57,27 @@ export default {
         : minInvestmentAmount;
     },
     validAmount() {
-      const minSharesToBuy = this.selectedOffering.equity.minSharesNeededToBuy;
-      const pricePerShare = this.selectedOffering.equity.pricePerShare;
-
-      return this.securityType === "EQUITY"
-        ? minSharesToBuy * pricePerShare >= this.minInvestment
-        : this.selectedAmount >= this.minInvestment;
+      return this.selectedAmount >= this.minInvestment;
+    },
+    validShares() {
+      return (
+        this.selectedShares >= this.selectedOffering.equity.minSharesNeededToBuy
+      );
     },
     selectedAmount: {
       get() {
         return this.$store.getters["checkout/selectedAmount"];
       },
       set(val) {
-        this.$store.commit(
-          "checkout/SET_TRANSACTION_AMOUNT",
-          this.securityType === "EQUITY"
-            ? this.shares * this.selectedOffering.equity.pricePerShare
-            : val
-        );
+        this.$store.commit("checkout/SET_TRANSACTION_AMOUNT", val);
+      }
+    },
+    selectedShares: {
+      get() {
+        return this.$store.getters["checkout/selectedShares"];
+      },
+      set(val) {
+        this.$store.commit("checkout/SET_TRANSACTION_SHARES", val);
       }
     }
   }
