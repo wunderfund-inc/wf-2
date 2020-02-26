@@ -41,8 +41,7 @@ export default {
     ...mapGetters({
       company: "company/company",
       offerings: "company/offerings",
-      selectedOffering: "checkout/selectedOffering",
-      selectedType: "checkout/selectedType"
+      selectedOffering: "checkout/selectedOffering"
     }),
     securityType() {
       return this.selectedOffering.securityType;
