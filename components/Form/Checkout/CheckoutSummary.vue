@@ -63,27 +63,36 @@ export default {
       );
     },
     validTransaction() {
-      return (
-        this.selectedOffering.securityType !== "EQUITY" &&
-        this.selectedAmount >= this.selectedOffering.minInvestment &&
-        this.selectedMethod !== null
-      );
+      if (this.selectedOffering) {
+        return (
+          this.selectedOffering.securityType !== "EQUITY" &&
+          this.selectedAmount >= this.selectedOffering.minInvestment &&
+          this.selectedMethod !== null
+        );
+      }
+      return false;
     },
     validEquityTransaction() {
-      return (
-        this.selectedOffering.securityType === "EQUITY" &&
-        this.selectedShares >=
-          this.selectedOffering.equity.minSharesNeededToBuy &&
-        this.selectedMethod
-      );
+      if (this.selectedOffering) {
+        return (
+          this.selectedOffering.securityType === "EQUITY" &&
+          this.selectedShares >=
+            this.selectedOffering.equity.minSharesNeededToBuy &&
+          this.selectedMethod
+        );
+      }
+      return false;
     },
     validEverything() {
-      const validType = this.validPersonal || this.validEntity;
-      const validTransactionAmount =
-        this.selectedOffering.securityType === "EQUITY"
-          ? this.validEquityTransaction
-          : this.validTransaction;
-      return validType && validTransactionAmount && this.validAgreementList;
+      if (this.selectedOffering) {
+        const validType = this.validPersonal || this.validEntity;
+        const validTransactionAmount =
+          this.selectedOffering.securityType === "EQUITY"
+            ? this.validEquityTransaction
+            : this.validTransaction;
+        return validType && validTransactionAmount && this.validAgreementList;
+      }
+      return false;
     }
   },
   methods: {
