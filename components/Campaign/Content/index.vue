@@ -122,13 +122,28 @@
               p.py-3 {{ faq.answer }}
         .row.py-5
           .col
-            h1 Questions?
+            h1.mb-4 Got a Question or Comment?
+            #campaign-items.mb-2
+              comment-item(
+                v-for="(comment, index) in comments"
+                :key="index"
+                :comment="comment"
+              )
+            #campaign-form.mb-5
+              comment-form(v-if="signedIn")
+              p(v-else) #[nuxt-link(to="/auth/login") Log in] or #[nuxt-link(to="/auth/register") Sign up] to comment!
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import CommentItem from "@/components/Campaign/CommentItem";
+import CommentForm from "@/components/Campaign/CommentForm";
 
 export default {
+  components: {
+    CommentItem,
+    CommentForm
+  },
   data() {
     return {
       index: 0
