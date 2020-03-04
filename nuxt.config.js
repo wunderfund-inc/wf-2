@@ -81,6 +81,7 @@ export default {
    ** Environment variables
    */
   env: {
+    BASE_URL: process.env.BASE_URL || "http://localhost:3000",
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
     FIREBASE_DB_URL: process.env.FIREBASE_DB_URL,
