@@ -122,7 +122,7 @@
               p.py-3 {{ faq.answer }}
         .row.py-5
           .col
-            h1.mb-4 Got a Question or Comment?
+            h1.mb-4 Questions or Comments?
             #campaign-items.mb-2
               comment-item(
                 v-for="(comment, index) in comments"

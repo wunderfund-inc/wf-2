@@ -59,7 +59,7 @@ export default {
   methods: {
     submitComment() {
       this.formSubmitted = true;
-      // this.$store.dispatch("campaign/submitComment", this.form);
+      this.$store.dispatch("campaign/submitComment", this.form);
     },
     checkRole(e) {
       if (!e) this.form.role = "INVESTOR";

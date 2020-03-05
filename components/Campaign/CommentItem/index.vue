@@ -13,74 +13,27 @@
     <article class="pb-3">
       <section>
         <h5 class="my-0">
-          <strong>{{ `${comment.name.first} ${comment.name.last}` }}</strong>
+          <strong>
+            {{ comment.name.first }} {{ comment.name.last | firstLetterOnly }}.
+          </strong>
         </h5>
+        <b-badge v-if="comment.role" :variant="roleColors(comment.role)">
+          <small>{{ comment.role }}</small>
+        </b-badge>
         <small class="font-italic text-muted">
           {{ fromNow(comment.createdAt) }} ago
         </small>
-        <b-badge v-if="comment.role" variant="secondary">
-          <small>{{ comment.role }}</small>
-        </b-badge>
         <p class="mb-0">{{ comment.message }}</p>
       </section>
-      <div class="row">
-        <div class="col">
-          <small>
-            <b-link @click="displayForm" class="text-muted">
-              {{ toggleForm ? "Never Mind" : "Reply" }}
-            </b-link>
-          </small>
-        </div>
-      </div>
-      <comment-form v-if="toggleForm" />
     </article>
-    <div v-if="comment.replies.length > 0">
-      <comment-item
-        v-for="(reply, index) in comment.replies"
-        :key="index"
-        :comment="reply"
-      />
-    </div>
-    <!-- <div v-if="!toggleForm" class="comment-form">
-      <b-button
-        v-show="!toggleForm"
-        variant="light"
-        size="sm"
-        @click="toggleForm = !toggleForm"
-      >
-        Reply
-      </b-button>
-    </div>
-    <campaign-comment-form v-if="toggleForm">
-      <template v-slot:button-title>
-        Reply
-      </template>
-      <b-button
-        class="button--cancel"
-        variant="link"
-        size="sm"
-        @click="toggleForm = !toggleForm"
-      >
-        Cancel
-      </b-button>
-    </campaign-comment-form>
-    <div v-if="comment.replies && comment.replies.length">
-      <comment v-for="reply in comment.replies" :key="reply.id" :comment="reply" />
-    </div> -->
   </b-media>
 </template>
 
 <script>
 import { formatDistanceToNow } from "date-fns";
-import CommentItem from "@/components/Campaign/CommentItem";
-import CommentForm from "@/components/Campaign/CommentForm";
 
 export default {
   name: "CommentItem",
-  components: {
-    CommentItem,
-    CommentForm
-  },
   props: {
     comment: {
       type: Object,
@@ -104,6 +57,18 @@ export default {
     fromNow(dateCreated) {
       // return formatDistance(subDays(new Date(), dateCreated), );
       return formatDistanceToNow(dateCreated);
+    },
+    roleColors(role) {
+      switch (role) {
+        case "FOUNDER":
+          return "success";
+        case "EMPLOYEE":
+          return "warning";
+        case "PROMOTER":
+          return "danger";
+        default:
+          return "info";
+      }
     }
   }
 };
