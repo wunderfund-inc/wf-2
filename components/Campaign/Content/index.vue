@@ -152,6 +152,7 @@ export default {
   computed: {
     ...mapGetters({
       company: "company/company",
+      comments: "company/comments",
       offerings: "company/offerings",
       signedIn: "auth/currentUserAuth",
       accredited: "user/accredited"

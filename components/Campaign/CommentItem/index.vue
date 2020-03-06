@@ -55,8 +55,9 @@ export default {
       this.toggleForm = !this.toggleForm;
     },
     fromNow(dateCreated) {
-      // return formatDistance(subDays(new Date(), dateCreated), );
-      return formatDistanceToNow(dateCreated);
+      return formatDistanceToNow(
+        new Date(0).setUTCSeconds(dateCreated.seconds)
+      );
     },
     roleColors(role) {
       switch (role) {

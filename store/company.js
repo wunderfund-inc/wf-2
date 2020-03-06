@@ -1,25 +1,28 @@
-import { db } from "@/plugins/firebase";
+import { db, timestamp } from "@/plugins/firebase";
 
 export const state = () => ({
   company: null,
+  comments: [],
   companies: [],
   offerings: []
 });
 
 export const getters = {
   company: state => state.company,
+  comments: state => state.comments,
   companies: state => state.companies,
   offerings: state => state.offerings
 };
 
 export const mutations = {
   SET_COMPANY: (state, payload) => (state.company = payload),
+  SET_COMMENTS: (state, payload) => (state.comments = payload),
   SET_COMPANIES: (state, payload) => (state.companies = payload),
   SET_OFFERINGS: (state, payload) => (state.offerings = payload)
 };
 
 export const actions = {
-  async fetchOfferings({ state, commit }, companyId) {
+  async fetchOfferings({ commit }, companyId) {
     try {
       const activeOfferings = await db
         .collection("offerings")
@@ -49,7 +52,8 @@ export const actions = {
         .get();
       const company = companyDocument.data();
 
-      await dispatch("fetchOfferings", company.uid);
+      await dispatch("fetchOfferings", id);
+      await dispatch("fetchComments", id);
       await commit("SET_COMPANY", company);
     } catch (error) {
       // eslint-disable-next-line
@@ -83,5 +87,42 @@ export const actions = {
       // eslint-disable-next-line
       console.error(error);
     }
+  },
+  async fetchComments({ commit }, id) {
+    try {
+      const commentDocs = await db
+        .collection(`companies/${id}/comments`)
+        .orderBy("createdAt", "desc")
+        .get();
+
+      const comments = commentDocs.docs.map(comment => comment.data());
+
+      await commit("SET_COMMENTS", comments);
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+      return Error(error);
+    }
+  },
+  async submitComment({ state, rootState }, { message, role }) {
+    const dto = {
+      message,
+      role,
+      name: {
+        first: rootState.user.currentUser.name.first,
+        last: rootState.user.currentUser.name.last
+      },
+      userId: rootState.user.currentUser.uid,
+      avatar: rootState.user.currentUser.photoUrl || null,
+      companyId: state.company.uid,
+      approved: false,
+      createdAt: timestamp,
+      updatedAt: timestamp
+    };
+
+    await db
+      .collection(`companies/${state.company.uid}/comments`)
+      .doc()
+      .set(dto);
   }
 };

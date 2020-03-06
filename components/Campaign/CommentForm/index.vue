@@ -58,8 +58,8 @@ export default {
   },
   methods: {
     submitComment() {
+      this.$store.dispatch("company/submitComment", this.form);
       this.formSubmitted = true;
-      this.$store.dispatch("campaign/submitComment", this.form);
     },
     checkRole(e) {
       if (!e) this.form.role = "INVESTOR";
@@ -67,3 +67,14 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
