@@ -110,7 +110,7 @@
                     b-img(
                       thumbnail
                       :src="employee.image.url"
-                      style="max-height: 100px; max-width: 100px"
+                      style="max-height: 150px; max-width: 150px"
                     )
                     b-card-text.pt-3.mb-0 {{ employee.name }}
                     small.text-muted.mb-0 {{ employee.title }}
