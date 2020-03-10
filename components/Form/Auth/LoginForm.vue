@@ -37,7 +37,7 @@ section#manual-auth
             style="margin-bottom: 4px"
           )
           span(v-if="submitting") Logging In...
-          span(v-if="!submitting") Sign Up
+          span(v-if="!submitting") Login
         p.text-danger.pt-3 {{ error }}
 </template>
 
