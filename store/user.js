@@ -1,4 +1,4 @@
-import { db, timestamp } from "@/plugins/firebase";
+import { db, timestamp, uploadImage } from "@/plugins/firebase";
 import { calculatePersonalLimit } from "@/helpers/finance";
 import { reduceToTotal } from "@/plugins/filters";
 const cloneDeep = require("lodash.clonedeep");
@@ -43,7 +43,8 @@ export const state = () => ({
       name: {
         first: null,
         last: null
-      }
+      },
+      avatar: null
     }
   }
 });
@@ -58,6 +59,7 @@ export const getters = {
   entityAddress: state => state.form.entity.address,
   password: state => state.form.password,
   address: state => state.form.profile.address,
+  avatar: state => state.form.profile.avatar,
   name: state => state.form.profile.name,
   validProfileForm: state => {
     const name = state.form.profile.name;
@@ -130,6 +132,7 @@ export const mutations = {
     const address = state.form.profile.address;
     state.form.profile.address = Object.assign(cloneDeep(address), payload);
   },
+  SET_PROFILE_AVATAR: (state, payload) => (state.form.profile.avatar = payload),
   SET_PASSWORD_ATTRIBUTE(state, payload) {
     const password = state.form.password;
     state.form.password = Object.assign(cloneDeep(password), payload);
@@ -163,6 +166,7 @@ export const actions = {
         await dispatch("setCurrentUser", userData);
         await dispatch("setProfileNameAttribute", { ...userData.name });
         await dispatch("setProfileAddressAttribute", { ...userData.address });
+        await dispatch("setProfileAvatar", userData.avatar);
 
         const entitiesList = await db
           .collection("entities")
@@ -214,6 +218,9 @@ export const actions = {
   },
   setProfileAddressAttribute({ commit }, payload) {
     commit("SET_PROFILE_ADDRESS_ATTRIBUTE", payload);
+  },
+  setProfileAvatar({ commit }, payload) {
+    commit("SET_PROFILE_AVATAR", payload);
   },
   setCurrentUser: ({ commit }, payload) => {
     commit("SET_CURRENT_USER", payload);
@@ -277,5 +284,13 @@ export const actions = {
       }
     };
     commit("SET_ENTITY_FORM_ATTRIBUTE", entity);
+  },
+  async uploadAvatar({ dispatch }, { userId, file }) {
+    const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
+    await db
+      .collection("users")
+      .doc(userId)
+      .update({ avatar: url });
+    await dispatch("setProfileAvatar", url);
   }
 };

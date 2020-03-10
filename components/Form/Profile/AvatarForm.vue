@@ -1,7 +1,7 @@
 <template lang="pug">
 b-form(@submit.prevent="submitPhoto")
   b-img.mb-3(
-    :src="this.blob || this.url"
+    :src="blob ? blob : url"
     thumbnail
     alt="Avatar"
     style="max-height: 200px"
@@ -21,29 +21,33 @@ b-form(@submit.prevent="submitPhoto")
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  props: {
-    url: {
-      type: String,
-      default: null,
-      required: false
-    }
-  },
   data() {
     return {
       file: null,
       blob: null
     };
   },
+  computed: {
+    ...mapGetters({
+      url: "user/avatar",
+      userId: "auth/userId"
+    })
+  },
   methods: {
     previewAvatar() {
       const file = document.getElementById("avatar").files[0];
       this.blob = URL.createObjectURL(file);
     },
-    submitPhoto(e) {
+    async submitPhoto(e) {
       e.preventDefault();
-      // eslint-disable-next-line
-      console.log("Save Photo to Firebase Storage")
+      await this.$store.dispatch("user/uploadAvatar", {
+        userId: this.userId,
+        file: this.file
+      });
+      await window.location.reload();
     }
   }
 };
