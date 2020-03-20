@@ -4,9 +4,9 @@ b-form(@submit.prevent="submitPhoto")
     :src="blob ? blob : url"
     thumbnail
     alt="Avatar"
-    style="max-height: 200px"
+    style="max-height: 187px"
   )
-  b-form-file#avatar.mb-1(
+  b-form-file#avatar.mb-3(
     v-model="file"
     :state="Boolean(file)"
     placeholder="Choose a file"
