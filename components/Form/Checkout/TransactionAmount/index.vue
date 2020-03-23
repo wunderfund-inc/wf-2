@@ -9,7 +9,7 @@
         type="number"
       )
       b-form-text(:text-variant="validShares ? `muted` : `danger`")
-        span(:class="validShares ? `` : `font-weight-bold`") Your commitment to invest needs to be at least {{ minInvestment | asCurrency }} ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share)
+        span(:class="validShares ? `` : `font-weight-bold`") Your commitment to invest in this offering needs to be at minimum {{ selectedOffering.equity.minSharesNeededToBuy }} shares ({{ selectedOffering.equity.minSharesNeededToBuy }} shares at {{ selectedOffering.equity.pricePerShare | asCurrency }}/share will be {{ minInvestment | asCurrency }})
     div(v-else)
       money.form-control(
         v-model="selectedAmount"
