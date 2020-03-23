@@ -109,7 +109,7 @@ export default {
       };
 
       await this.$store.dispatch("checkout/submitInvestment", payload);
-      await window.location.replace(this.agreementUrl);
+      // await window.location.replace(this.agreementUrl);
     }
   }
 };

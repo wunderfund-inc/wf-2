@@ -127,7 +127,7 @@ export const actions = {
         "https://us-central1-wunderfund-server.cloudfunctions.net/agreementOnRequest";
       const url = await this.$axios.$post(apiEndpt, { ...dto });
       await dispatch("setAgreementUrl", url);
-      // await dispatch("showAgreementModal", true);
+      await dispatch("showAgreementModal", true);
 
       // Send testimonial to company
       if (state.testimonial) {
