@@ -2,7 +2,7 @@
   main
     b-container.py-5
       b-alert.pb-0(
-        v-if="$route.query.event && $route.query.event === 'signing_complete'"
+        v-if="investmentEvent"
         variant="success"
         show
         dismissible
@@ -38,7 +38,22 @@ export default {
       entities: "user/entities",
       investments: "user/investments",
       emailVerified: "auth/emailVerified"
-    })
+    }),
+    investmentEvent() {
+      return (
+        this.$route.query.event && this.$route.query.event === "investment"
+      );
+    }
+  },
+  async created() {
+    try {
+      if (this.investmentEvent) {
+        await this.$store.dispatch("checkout/submitInvestmentFromCookie");
+      }
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
+    }
   }
 };
 </script>

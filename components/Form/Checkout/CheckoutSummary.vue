@@ -50,7 +50,8 @@ export default {
       selectedShares: "checkout/selectedShares",
       agreedTo: "checkout/agreedTo",
       validAgreementList: "checkout/validAgreementList",
-      agreementUrl: "checkout/agreementUrl"
+      agreementUrl: "checkout/agreementUrl",
+      testimonial: "checkout/testimonial"
     }),
     validPersonal() {
       return this.selectedType === "PERSONAL" && this.selectedOffering !== null;
@@ -108,8 +109,18 @@ export default {
             : this.user.uid
       };
 
-      await this.$store.dispatch("checkout/submitInvestment", payload);
-      // await window.location.replace(this.agreementUrl);
+      await this.$store.dispatch("checkout/storeInvestmentCookie", payload);
+
+      if (this.testimonial) {
+        await this.$store.dispatch(
+          "checkout/storeTestimonialCookie",
+          payload.userId
+        );
+      }
+
+      await this.$store.dispatch("checkout/getSigningUrl", payload);
+
+      await window.location.replace(this.agreementUrl);
     }
   }
 };
