@@ -6,11 +6,18 @@
       p Based on the #[b-link(href="https://www.investor.gov/additional-resources/news-alerts/alerts-bulletins/updated-investor-bulletin-accredited-investors" target="_blank") SEC standards], if you want to invest more than $2,200 annually on our platform, you're required to let us know that you qualify. Fill out the information below to update how much you're allowed to spend on our platform.
       form(@submit.prevent="updateAccreditation")
         .form-row
+          .col-12.pb-4
+            b-form-checkbox(
+              v-model="form.ws"
+              :value="2"
+              :unchecked-value="1"
+              switch
+            ) I qualify to increase my limit if I combine my Annual Income and/or Net Worth with my Spouse's.
+        .form-row
           .col-12.col-md-6
             b-form-group.text-left(
               label="Estimated Annual Income"
               label-for="ai"
-              description=`Note: Must be over $200,000 to be considered "accredited"`
             )
               money#ai.form-control(
                 v-model="form.ai"
@@ -20,12 +27,14 @@
             b-form-group.text-left(
               label="Estimated Net Worth"
               label-for="nw"
-              description=`Note: Must be over $1,000,000 to be considered "accredited"`
             )
               money#nw.form-control(
                 v-model="form.nw"
                 v-bind="moneyConfig"
               )
+        .form-row.mb-2
+          .col-12
+            small.text-muted Note: Individual/Combined Annual Income must be over $200,000 *and* Net Worth must be over $1,000,000 to be considered "accredited".
         .form-row
           .col-12
             b-form-checkbox.py-2(
@@ -33,7 +42,7 @@
               value="The information above is true to my knowledge."
               switch
             ) The information above is true to my knowledge.
-        .form-row
+        .form-row.pb-2
           .col-12
             b-form-checkbox.py-2(
               v-model="attestations[1]"
@@ -68,7 +77,8 @@ export default {
     return {
       form: {
         ai: 0,
-        nw: 0
+        nw: 0,
+        ws: 1
       },
       attestations: [],
       submitting: false,

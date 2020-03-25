@@ -1,4 +1,5 @@
-import firebase, { db, timestamp } from "@/plugins/firebase";
+import Cookies from "js-cookie";
+import { db, timestamp } from "@/plugins/firebase";
 import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
 
@@ -95,7 +96,7 @@ export const actions = {
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   },
-  async submitInvestment(
+  async storeInvestmentCookie(
     { state, dispatch },
     { companyId, offeringId, userId }
   ) {
@@ -105,52 +106,77 @@ export const actions = {
           ? state.selectedOffering.equity.pricePerShare * state.selectedShares
           : state.selectedAmount;
       const investmentRef = await db.collection("investments").doc();
-
       const dto = {
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
         amount: conditionalAmount,
         agreements: state.agreedTo,
-        createdAt: timestamp,
-        updatedAt: timestamp,
         companyId,
         offeringId,
         userId
       };
-
       const key = state.selectedMethod.toLowerCase();
       dto.extras = Object.assign(cloneDeep({ [key]: state[key] }));
-      await investmentRef.set(dto);
+      Cookies.set("investment", JSON.stringify(dto), {
+        path: "/u",
+        expires: 1
+      });
+      await dispatch("getSigningLink", dto);
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+  async storeTestimonialCookie({ state }, userId) {
+    try {
+      const userRef = await db
+        .collection("users")
+        .doc(userId)
+        .get();
+      const user = userRef.data();
+      const payload = {
+        userId: user.uid,
+        testimonial: state.testimonial,
+        displayed: false
+      };
 
+      Cookies.set("testimonial", JSON.stringify(payload));
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+  async getSigningLink({ dispatch }, dto) {
+    try {
       const apiEndpt =
         "https://us-central1-wunderfund-server.cloudfunctions.net/agreementOnRequest";
-      const url = await this.$axios.$post(apiEndpt, { ...dto });
+      const url = await this.$axios.$post(apiEndpt, dto);
       await dispatch("setAgreementUrl", url);
       // await dispatch("showAgreementModal", true);
-
-      // Send testimonial to company
-      if (state.testimonial) {
-        const userRef = await db
-          .collection("users")
-          .doc(userId)
-          .get();
-        const user = userRef.data();
-
-        await db
-          .collection("companies")
-          .doc(companyId)
-          .update({
-            testimonials: firebase.firestore.FieldValue.arrayUnion({
-              userId: user.uid,
-              testimonial: state.testimonial,
-              displayed: false
-            })
-          });
-      }
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
+    }
+  },
+  submitInvestmentFromCookie({ state }, documentId) {
+    try {
+      const investment = Cookies.getJSON("investment");
+      investment.createdAt = investment.updatedAt = timestamp;
+      investment.documentId = documentId;
+      // await db
+      //   .collection("investments")
+      //   .doc(investment.uid)
+      //   .set(investment);
+      Cookies.remove("investment");
+
+      // const testimonial = await Cookies.getJSON("testimonial");
+      // await db
+      //   .collection("companies")
+      //   .doc(investment.companyId)
+      //   .update({
+      //     testimonials: firebase.firestore.FieldValue.arrayUnion(testimonial)
+      //   });
+      // Cookies.remove("testimonial");
+    } catch (error) {
+      throw Error(error.message);
     }
   }
 };
