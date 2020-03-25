@@ -30,7 +30,7 @@
     "jwt-decode": "^2.2.0",
     "lodash.clonedeep": "^4.5.0",
     "numeral": "^2.0.6",
-    "nuxt": "^2.12.0",
+    "nuxt": "^2.12.1",
     "nuxt-fontawesome": "^0.4.0",
     "v-money": "^0.8.1",
     "vuelidate": "^0.7.5"
@@ -57,7 +57,7 @@
     "eslint-plugin-promise": ">=4.0.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^5.2.2",
-    "jest": "^25.1.0",
+    "jest": "^25.2.0",
     "node-sass": "^4.13.1",
     "nodemon": "^1.19.4",
     "prettier": "^1.19.1",
