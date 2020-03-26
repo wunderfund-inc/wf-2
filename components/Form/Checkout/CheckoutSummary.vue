@@ -119,7 +119,6 @@ export default {
         }
 
         await this.$store.dispatch("checkout/getSigningUrl", payload);
-        await this.$store.dispatch("toggleOverlay", false);
         await window.location.replace(this.agreementUrl);
       } catch (error) {
         // eslint-disable-next-line
