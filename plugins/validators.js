@@ -30,3 +30,7 @@ export const validEmail = val => {
   const reg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   return val === null ? val : reg.test(val);
 };
+
+export const accredited = ({ ai, nw }) => {
+  return ai >= 200000 && nw >= 1000000;
+};
