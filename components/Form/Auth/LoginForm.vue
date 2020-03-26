@@ -28,16 +28,7 @@ section#manual-auth
           type="submit"
           variant="primary"
           block
-          :disabled="submitting"
-        )
-          span.spinner-border.spinner-border-sm.mr-2(
-            v-if="submitting"
-            role="status"
-            aria-hiden="true"
-            style="margin-bottom: 4px"
-          )
-          span(v-if="submitting") Logging In...
-          span(v-if="!submitting") Login
+        ) Login
         p.text-danger.pt-3 {{ error }}
 </template>
 
@@ -47,28 +38,23 @@ export default {
     return {
       email: null,
       password: null,
-      error: null,
-      submitting: false
+      error: null
     };
   },
   methods: {
-    toggleSubmission() {
-      this.submitting = !this.submitting;
-    },
     async submitLoginForm() {
       try {
-        this.submitting = true;
+        await this.$store.dispatch("toggleOverlay", true);
         await this.$store.dispatch("auth/loginUser", {
           email: this.email,
           password: this.password
         });
         const userId = this.$store.getters["auth/userId"];
         await this.$store.dispatch("user/setAccountData", userId);
+        await this.$store.dispatch("toggleOverlay", false);
         await this.$router.replace("/u");
       } catch (error) {
-        // eslint-disable-next-line
-        console.error(error);
-        this.submitting = false;
+        await this.$store.dispatch("toggleOverlay", false);
         this.error = error;
       }
     }
