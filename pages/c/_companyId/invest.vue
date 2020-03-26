@@ -1,5 +1,5 @@
 <template lang="pug">
-  main.invest-section
+  main
     .container.py-5
       .row
         document-modal
@@ -46,9 +46,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.invest-section {
-  min-height: 70vh;
-}
-</style>
