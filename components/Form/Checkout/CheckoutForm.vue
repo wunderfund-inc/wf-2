@@ -1,6 +1,6 @@
 <template lang="pug">
   section
-    h3 Invest in {{ company.name.short }}
+    h1 Invest in {{ company.name.short }}
     b-form(@submit.stop.prevent)
       b-row
         b-col

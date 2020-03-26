@@ -98,29 +98,34 @@ export default {
   },
   methods: {
     async submitInvestment() {
-      this.submitting = true;
+      try {
+        await this.$store.dispatch("toggleOverlay", true);
+        const payload = {
+          companyId: this.company.uid,
+          offeringId: this.selectedOffering.uid,
+          userId:
+            this.selectedType === "ENTITY"
+              ? this.selectedEntity.uid
+              : this.user.uid
+        };
 
-      const payload = {
-        companyId: this.company.uid,
-        offeringId: this.selectedOffering.uid,
-        userId:
-          this.selectedType === "ENTITY"
-            ? this.selectedEntity.uid
-            : this.user.uid
-      };
+        await this.$store.dispatch("checkout/storeInvestmentCookie", payload);
 
-      await this.$store.dispatch("checkout/storeInvestmentCookie", payload);
+        if (this.testimonial) {
+          await this.$store.dispatch(
+            "checkout/storeTestimonialCookie",
+            payload.userId
+          );
+        }
 
-      if (this.testimonial) {
-        await this.$store.dispatch(
-          "checkout/storeTestimonialCookie",
-          payload.userId
-        );
+        await this.$store.dispatch("checkout/getSigningUrl", payload);
+        await this.$store.dispatch("toggleOverlay", false);
+        await window.location.replace(this.agreementUrl);
+      } catch (error) {
+        // eslint-disable-next-line
+        console.error(error);
+        await this.$store.dispatch("toggleOverlay", false);
       }
-
-      await this.$store.dispatch("checkout/getSigningUrl", payload);
-
-      await window.location.replace(this.agreementUrl);
     }
   }
 };

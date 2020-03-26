@@ -1,26 +1,32 @@
 <template lang="pug">
-  main
-    .container.py-5
-      .row
-        document-modal
-        .col-12.col-md-8
-          checkout-form
-        .col-12.col-md-4
-          checkout-summary
+  b-overlay(:show="showOverlay")
+    template(#overlay)
+      .text-center
+        b-spinner(large variant="secondary")
+        p.pt-3 Getting Agreement to sign...
+    main
+      .container.py-5
+        .row
+          .col-12.col-md-8
+            checkout-form
+          .col-12.col-md-4
+            checkout-summary
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { db } from "@/plugins/firebase";
-import DocumentModal from "@/components/Form/Checkout/DocumentModal";
 import CheckoutForm from "@/components/Form/Checkout/CheckoutForm";
 import CheckoutSummary from "@/components/Form/Checkout/CheckoutSummary";
 
 export default {
   middleware: "authenticated",
   components: {
-    DocumentModal,
     CheckoutForm,
     CheckoutSummary
+  },
+  computed: {
+    ...mapGetters(["showOverlay"])
   },
   async fetch({ store, params }) {
     try {
