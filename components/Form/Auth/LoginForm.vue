@@ -69,7 +69,7 @@ export default {
         await this.$router.replace("/u");
       } catch (error) {
         await this.$store.dispatch("toggleOverlay", false);
-        this.error = error;
+        this.error = error.message;
       }
     }
   }
