@@ -44,16 +44,6 @@ export default {
         this.$route.query.event && this.$route.query.event === "investment"
       );
     }
-  },
-  async created() {
-    try {
-      if (this.investmentEvent) {
-        await this.$store.dispatch("checkout/submitInvestmentFromCookie");
-      }
-    } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
-    }
   }
 };
 </script>
