@@ -1,16 +1,11 @@
 <template lang="pug">
-  b-overlay(:show="showOverlay")
-    template(#overlay)
-      .text-center
-        b-spinner(large variant="secondary")
-        p.pt-3 Getting Agreement to sign...
-    main
-      .container.py-5
-        .row
-          .col-12.col-md-8
-            checkout-form
-          .col-12.col-md-4
-            checkout-summary
+  main
+    .container.py-5
+      .row
+        .col-12.col-md-8
+          checkout-form
+        .col-12.col-md-4
+          checkout-summary
 </template>
 
 <script>
