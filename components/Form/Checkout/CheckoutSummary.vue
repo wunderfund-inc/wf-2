@@ -106,25 +106,24 @@ export default {
     async submitInvestment() {
       try {
         await this.$store.dispatch("toggleOverlay", true);
+
         const payload = {
           companyId: this.company.uid,
           offeringId: this.selectedOffering.uid,
-          userId:
-            this.selectedType === "ENTITY"
-              ? this.selectedEntity.uid
-              : this.user.uid
+          userId: this.user.uid,
+          entityId:
+            this.selectedType === "ENTITY" ? this.selectedEntity.uid : null
         };
 
-        await this.$store.dispatch("checkout/storeInvestmentCookie", payload);
-
         if (this.testimonial) {
-          await this.$store.dispatch(
-            "checkout/storeTestimonialCookie",
-            payload.userId
-          );
+          await this.$store.dispatch("checkout/submitTestimonialForReview", {
+            companyId: this.company.uid,
+            userId: payload.userId
+          });
         }
 
-        await this.$store.dispatch("checkout/getSigningUrl", payload);
+        await this.$store.dispatch("checkout/submitInvestment", payload);
+
         await window.location.replace(this.agreementUrl);
       } catch (error) {
         // eslint-disable-next-line

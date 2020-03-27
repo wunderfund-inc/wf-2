@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { db, timestamp } from "@/plugins/firebase";
 import { validMethodExtras } from "@/plugins/validators";
 const cloneDeep = require("lodash.clonedeep");
@@ -96,51 +95,35 @@ export const actions = {
   setOffering({ commit }, payload) {
     commit("SET_OFFERING", payload);
   },
-  async storeInvestmentCookie(
+  async submitInvestment(
     { state, dispatch },
-    { companyId, offeringId, userId }
+    { companyId, offeringId, userId, entityId }
   ) {
     try {
-      const conditionalAmount =
+      const selectedShares =
         state.selectedOffering.securityType === "EQUITY"
           ? state.selectedOffering.equity.pricePerShare * state.selectedShares
-          : state.selectedAmount;
+          : null;
       const investmentRef = await db.collection("investments").doc();
       const dto = {
+        createdAt: timestamp,
+        updatedAt: timestamp,
+        documentId: null,
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
-        amount: conditionalAmount,
+        amount: state.selectedAmount,
+        shares: selectedShares,
         agreements: state.agreedTo,
         companyId,
         offeringId,
-        userId
+        userId,
+        entityId
       };
       const key = state.selectedMethod.toLowerCase();
       dto.extras = Object.assign(cloneDeep({ [key]: state[key] }));
-      Cookies.set("investment", JSON.stringify(dto), {
-        path: "/u",
-        expires: 1
-      });
+      await investmentRef.set(dto);
       await dispatch("getSigningLink", dto);
-    } catch (error) {
-      throw Error(error.message);
-    }
-  },
-  async storeTestimonialCookie({ state }, userId) {
-    try {
-      const userRef = await db
-        .collection("users")
-        .doc(userId)
-        .get();
-      const user = userRef.data();
-      const payload = {
-        userId: user.uid,
-        testimonial: state.testimonial,
-        displayed: false
-      };
-
-      Cookies.set("testimonial", JSON.stringify(payload));
     } catch (error) {
       throw Error(error.message);
     }
@@ -156,25 +139,18 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  submitInvestmentFromCookie({ state }, documentId) {
+  async submitTestimonialForReview({ state }, { companyId, userId }) {
     try {
-      const investment = Cookies.getJSON("investment");
-      investment.createdAt = investment.updatedAt = timestamp;
-      investment.documentId = documentId;
-      // await db
-      //   .collection("investments")
-      //   .doc(investment.uid)
-      //   .set(investment);
-      Cookies.remove("investment");
-
-      // const testimonial = await Cookies.getJSON("testimonial");
-      // await db
-      //   .collection("companies")
-      //   .doc(investment.companyId)
-      //   .update({
-      //     testimonials: firebase.firestore.FieldValue.arrayUnion(testimonial)
-      //   });
-      // Cookies.remove("testimonial");
+      const testimonialRef = await db.collection("testimonials").doc();
+      const payload = {
+        companyId,
+        userId,
+        testimonial: state.testimonial,
+        approved: false,
+        createdAt: timestamp,
+        updatedAt: timestamp
+      };
+      await testimonialRef.set(payload);
     } catch (error) {
       throw Error(error.message);
     }
