@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { validPostal } from "@/plugins/validators";
+import { validPostal } from "@/helpers/validators";
 
 export default {
   computed: {

@@ -33,7 +33,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~plugins/filters", "~plugins/firebase"],
+  plugins: ["~helpers/filters", "~plugins/firebase"],
   pageTransition: "page",
   /*
    ** Nuxt.js modules
@@ -42,7 +42,6 @@ export default {
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
-    "@nuxtjs/pwa",
     "@nuxtjs/eslint-module",
     [
       "nuxt-fontawesome",

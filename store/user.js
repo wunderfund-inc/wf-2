@@ -1,6 +1,6 @@
 import { db, timestamp, uploadImage } from "@/plugins/firebase";
 import { calculatePersonalLimit } from "@/helpers/finance";
-import { reduceToTotal } from "@/plugins/filters";
+import { reduceToTotal } from "@/helpers/filters";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({

@@ -1,5 +1,5 @@
 import { db, timestamp } from "@/plugins/firebase";
-import { validMethodExtras } from "@/plugins/validators";
+import { validMethodExtras } from "@/helpers/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({

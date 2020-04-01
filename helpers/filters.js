@@ -87,9 +87,7 @@ Vue.filter("einStrFormat", einNumToStr);
 /**
  * Function to calculate days left
  */
-export const timeDistance = val => {
-  return formatDistance(new Date(val), new Date());
-};
+export const timeDistance = val => formatDistance(new Date(val), new Date());
 Vue.filter("timeDistance", timeDistance);
 
 /**
@@ -109,12 +107,19 @@ export const reduceToTotal = items => {
 };
 Vue.filter("reduceToTotal", reduceToTotal);
 
-export const firstLetterOnly = val => {
-  return val.charAt(0);
-};
+/**
+ * Return first letter of a string.
+ * @example "Justin" => "J"
+ * @param {string} val
+ * @returns string
+ */
+const firstLetterOnly = val => val.charAt(0);
 Vue.filter("firstLetterOnly", firstLetterOnly);
 
-export const dateFromSeconds = val => {
-  return fromUnixTime(val).toLocaleDateString();
-};
+/**
+ * Converts unix time to locale date string
+ * @param {Date} val
+ * @returns date string
+ */
+const dateFromSeconds = val => fromUnixTime(val).toLocaleDateString();
 Vue.filter("dateFromSeconds", dateFromSeconds);

@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import { firebaseConfig, actionCodeSettings } from "./firebase-config";
+import { firebaseConfig, actionCodeSettings } from "../config/firebase.config";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
