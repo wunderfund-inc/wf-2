@@ -37,8 +37,7 @@ export const actions = {
 
       await dispatch("login", user);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async createUserInDb(context, { uid, email, attestations, name }) {
@@ -68,8 +67,7 @@ export const actions = {
         .doc(uid)
         .set(user);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async loginUser({ dispatch }, { email, password }) {
@@ -77,8 +75,7 @@ export const actions = {
       const user = await auth.signInWithEmailAndPassword(email, password);
       await dispatch("login", user.user.toJSON());
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async login({ dispatch }, user) {
@@ -87,8 +84,7 @@ export const actions = {
       Cookies.set("access_token", token);
       await dispatch("setAuth", user);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async logout({ dispatch }) {
@@ -97,8 +93,7 @@ export const actions = {
       Cookies.remove("access_token");
       await dispatch("setAuth", null);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   setAuth({ commit }, authData) {
@@ -109,7 +104,7 @@ export const actions = {
       await auth.currentUser.updatePassword(password);
       return null;
     } catch (error) {
-      return error;
+      throw Error(error.message);
     }
   }
 };

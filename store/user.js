@@ -185,8 +185,7 @@ export const actions = {
         await dispatch("setInvestments", investments);
       }
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async createEntity(context, { entityData, currentUserAuth }) {
@@ -206,8 +205,7 @@ export const actions = {
       await entityRef.set({ ...dto, userId });
       await userEntity.set(dto);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   setPasswordAttribute({ commit }, payload) {
@@ -232,17 +230,20 @@ export const actions = {
     commit("SET_ENTITY_LIST", entities);
   },
   async updateProfileData({ state }) {
-    const userId = state.currentUser.uid || state.currentUser.user_id;
-    const profile = state.form.profile;
-
-    await db
-      .collection("users")
-      .doc(userId)
-      .update({
-        name: profile.name,
-        address: profile.address,
-        updatedAt: timestamp
-      });
+    try {
+      const userId = state.currentUser.uid || state.currentUser.user_id;
+      const profile = state.form.profile;
+      await db
+        .collection("users")
+        .doc(userId)
+        .update({
+          name: profile.name,
+          address: profile.address,
+          updatedAt: timestamp
+        });
+    } catch (error) {
+      throw Error(error.message);
+    }
   },
   async setInvestments({ commit }, investments) {
     const d = await Promise.all(
@@ -286,11 +287,15 @@ export const actions = {
     commit("SET_ENTITY_FORM_ATTRIBUTE", entity);
   },
   async uploadAvatar({ dispatch }, { userId, file }) {
-    const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
-    await db
-      .collection("users")
-      .doc(userId)
-      .update({ avatar: url });
-    await dispatch("setProfileAvatar", url);
+    try {
+      const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
+      await db
+        .collection("users")
+        .doc(userId)
+        .update({ avatar: url });
+      await dispatch("setProfileAvatar", url);
+    } catch (error) {
+      throw Error(error.message);
+    }
   }
 };

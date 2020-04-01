@@ -40,8 +40,7 @@ export const actions = {
 
       await commit("SET_OFFERINGS", sortedOfferings);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async fetchCompany({ commit, dispatch }, id) {
@@ -56,8 +55,7 @@ export const actions = {
       await dispatch("fetchComments", id);
       await commit("SET_COMPANY", company);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async fetchCompanies({ commit }) {
@@ -84,8 +82,7 @@ export const actions = {
 
       await commit("SET_COMPANIES", listOfCompanies);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+      throw Error(error.message);
     }
   },
   async fetchComments({ commit }, id) {
@@ -99,30 +96,32 @@ export const actions = {
 
       await commit("SET_COMMENTS", comments);
     } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
-      return Error(error);
+      throw Error(error.message);
     }
   },
   async submitComment({ state, rootState }, { message, role }) {
-    const dto = {
-      message,
-      role,
-      name: {
-        first: rootState.user.currentUser.name.first,
-        last: rootState.user.currentUser.name.last
-      },
-      userId: rootState.user.currentUser.uid,
-      avatar: rootState.user.currentUser.photoUrl || null,
-      companyId: state.company.uid,
-      approved: false,
-      createdAt: timestamp,
-      updatedAt: timestamp
-    };
+    try {
+      const dto = {
+        message,
+        role,
+        name: {
+          first: rootState.user.currentUser.name.first,
+          last: rootState.user.currentUser.name.last
+        },
+        userId: rootState.user.currentUser.uid,
+        avatar: rootState.user.currentUser.photoUrl || null,
+        companyId: state.company.uid,
+        approved: false,
+        createdAt: timestamp,
+        updatedAt: timestamp
+      };
 
-    await db
-      .collection(`companies/${state.company.uid}/comments`)
-      .doc()
-      .set(dto);
+      await db
+        .collection(`companies/${state.company.uid}/comments`)
+        .doc()
+        .set(dto);
+    } catch (error) {
+      throw Error(error.message);
+    }
   }
 };
