@@ -108,7 +108,7 @@ export const actions = {
       const dto = {
         createdAt: timestamp,
         updatedAt: timestamp,
-        documentId: null,
+        agreementUrl: null,
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
