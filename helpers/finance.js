@@ -1,3 +1,10 @@
+/**
+ * Calculate spend limit based on annual income and net worth
+ *
+ * @param {number} ai - Annual Income
+ * @param {number} nw - Net Worth
+ * @returns number
+ */
 export function calculatePersonalLimit(ai, nw) {
   const choice = Math.min(ai, nw);
   const min = 2200;
