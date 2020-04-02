@@ -2,7 +2,7 @@
 main
   .container.py-5.mx-auto
     .row
-      .col-12.col-md-6.offset-md-3
+      .col-12.col-md-4.offset-md-4
         h1.pb-4.text-center Log In
         //- section-social-media-login
         //- b-row

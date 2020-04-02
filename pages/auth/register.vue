@@ -1,9 +1,8 @@
 <template lang="pug">
   main
-    b-container.py-5.mx-auto
-      b-row
-        b-col.d-none.d-md-block
-        b-col(md="6")
+    .container.py-5.mx-auto
+      .row
+        .col-12.col-md-4.offset-md-4
           h1.pb-4.text-center Register
           //- section-social-media-login
           //- b-row
@@ -15,7 +14,6 @@
               hr.py-3
           registration-form
           small.text-muted Already registered? #[nuxt-link(to="/auth/login") Log In]
-        b-col.d-none.d-md-block
 </template>
 
 <script>
