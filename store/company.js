@@ -100,6 +100,8 @@ export const actions = {
   },
   async submitComment({ state, rootState }, { message, role }) {
     try {
+      const commentRef = await db.collection("comments").doc();
+      const uid = commentRef.id;
       const dto = {
         message,
         role,
@@ -112,13 +114,10 @@ export const actions = {
         companyId: state.company.uid,
         approved: false,
         createdAt: timestamp,
-        updatedAt: timestamp
+        updatedAt: timestamp,
+        uid
       };
-
-      await db
-        .collection("comments")
-        .doc()
-        .set(dto);
+      await commentRef.set(dto);
     } catch (error) {
       throw Error(error.message);
     }
