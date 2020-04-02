@@ -1,15 +1,10 @@
 <template>
   <b-media v-if="comment.approved" class="comment">
-    <b-img
-      slot="aside"
-      :blank="!hasAvatar"
-      :src="comment.avatar"
-      blank-color="#ccc"
-      width="48"
-      height="48"
-      alt="placeholder"
-      class="comment-avatar"
-    />
+    <template v-slot:aside>
+      <b-avatar
+        :src="comment.avatar || require(`@/assets/logo/wf-circle.png`)"
+      />
+    </template>
     <article class="pb-3">
       <section>
         <h5 class="my-0">
