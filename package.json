@@ -31,6 +31,7 @@
     "nuxt": "^2.12.2",
     "nuxt-fontawesome": "^0.4.0",
     "sass-loader": "^8.0.2",
+    "v-mask": "^2.1.0",
     "v-money": "^0.8.1",
     "vuelidate": "^0.7.5"
   },

@@ -33,7 +33,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~helpers/filters", "~plugins/firebase"],
+  plugins: ["~helpers/filters", "~plugins/firebase", "~plugins/vmask"],
   pageTransition: "page",
   /*
    ** Nuxt.js modules

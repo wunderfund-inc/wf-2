@@ -1,9 +1,15 @@
-<template lang="pug">
-  b-form-group(
-    label="Card Number (no spaces nor dashes)"
-    label-for="cc-number"
-  )
-    b-form-input#cc-number(v-model.number="ccNumber")
+<template>
+  <div class="form-group">
+    <label for="cc-number">Credit Card Number</label>
+    <input
+      id="cc-number"
+      v-model.trim="ccNumber"
+      v-mask="'#### #### #### ####'"
+      class="form-control"
+      type="text"
+      placeholder="4242 4242 4242 4242"
+    />
+  </div>
 </template>
 
 <script>
