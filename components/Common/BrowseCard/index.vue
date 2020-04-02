@@ -11,18 +11,19 @@
         b-card-title {{ company.name.short }}
         b-card-text.mb-3
           small.text-muted {{ company.motto }}
-      b-row(justify-content-end)
-        b-col
+      .row
+        .col.pt-1
           small.text-muted
             font-awesome-icon(:icon="['fas', 'map-marker-alt']")
             |
             | {{ company.location.city }}, {{ company.location.state }}
-        b-col.text-right
-          b-badge.card-badge.mx-1(
-            v-for="(offering, index) in company.offerings"
-            :key="index"
-            size="lg"
-          ) Reg. {{ offering.offeringType }}
+        .col
+          .d-flex
+            b-badge.card-badge.mx-1(
+              v-for="(offering, index) in company.offerings"
+              :key="index"
+              size="lg"
+            ) Reg. {{ offering.offeringType }}
 </template>
 
 <script>
