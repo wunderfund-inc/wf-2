@@ -2,6 +2,14 @@
   <transition name="fade" mode="out-in">
     <b-form @submit.prevent="submitComment" v-if="!formSubmitted" class="form">
       <b-form-group>
+        <b-form-checkbox v-model="isPromoting" @change="checkRole" switch>
+          I work for this company and/or am promoting on behalf of them.
+        </b-form-checkbox>
+      </b-form-group>
+      <b-form-group v-if="isPromoting">
+        <b-form-radio-group v-model="form.role" :options="roleOptions" />
+      </b-form-group>
+      <b-form-group>
         <b-form-textarea
           v-model="form.message"
           name="comment-message"
@@ -9,14 +17,6 @@
           rows="3"
           max-rows="6"
         />
-      </b-form-group>
-      <b-form-group>
-        <b-form-checkbox v-model="isPromoting" @change="checkRole" switch>
-          I work for this company and/or am promoting on behalf of them.
-        </b-form-checkbox>
-      </b-form-group>
-      <b-form-group v-if="isPromoting">
-        <b-form-radio-group v-model="form.role" :options="roleOptions" />
       </b-form-group>
       <b-button
         :disabled="!formValidated"
