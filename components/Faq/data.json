@@ -4,23 +4,23 @@
       "faqItems": [
         {
           "question": "What is equity crowdfunding and how is it different from traditional crowdfunding?",
-          "answer": "Crowdfunding is the practice of funding a project or venture by raising many small amounts of money from a large number of people via the Internet. There are essentially two types of crowdfunding platforms. The first type of crowdfunding platform offers products or rewards in exchange for your funding commitment. Typical sites include: Kickstarter and IndieGogo. The second type, which is one that Thrivera runs, allows individuals to invest in a startup company in exchange for a percentage share (or equity) in that company. This fundraising method was legalized by the JOBS Act in 2012 and it's subsequent revision with Title III in 2015."
+          "answer": "Crowdfunding is the practice of funding a project or venture by raising many small amounts of money from a large number of people via the Internet. There are essentially two types of crowdfunding platforms. The first type of crowdfunding platform offers products or rewards in exchange for your funding commitment. Typical sites include: Kickstarter and IndieGogo. The second type, which is one that Wunderfund.co runs, allows individuals to invest in a startup company in exchange for a percentage share (or equity) in that company. This fundraising method was legalized by the JOBS Act in 2012 and it's subsequent revision with Title III in 2015."
         },
         {
-          "question": "How does Thrivera Capital work?",
+          "question": "How does the Wunderfund Platform work?",
           "answer": "We look for companies that have a chance of building a business that we believe in. Once a startup company launches a fundraising campaign, investors are given an opportunity to back the startup with an investment commitment. Ultimately, the crowd decides whether the campaign will reach their target goal. If that target goal is not met by the campaign deadline (usually 90-120 days), then the project goes unfunded, and your commitment is released."
         },
         {
           "question": "How is equity crowdfunding different from typical venture financing?",
-          "answer": "In short, we see equity crowdfunding as a step in deregulating the venture capital industry. Prior to May 2016, only wealthy accredited investors (i.e. individuals who earned >$200K a year or whose net worth was >$1M) were allowed to invest in startups. Even the early equity crowdfunding sites were only dedicated to serving wealthy indviduals. But with the recent change of Title III of the Jobs Act, now everyday investors like you can invest in a startup using equity crowdfunding sites like Thrivera."
+          "answer": "In short, we see equity crowdfunding as a step in deregulating the venture capital industry. Prior to May 2016, only wealthy accredited investors (i.e. individuals who earned >$200K a year or whose net worth was >$1M) were allowed to invest in startups. Even the early equity crowdfunding sites were only dedicated to serving wealthy indviduals. But with the recent change of Title III of the Jobs Act, now everyday investors like you can invest in a startup using equity crowdfunding sites like Wunderfund.co."
         },
         {
           "question": "How much money do I need to start investing?",
-          "answer": "You can invest as little as $100 in a startup company and up to a maximum limit that's based on the SEC's Regulation Crowdfunding guidelines. Thrivera will automatically calculate the limit you can invest based on your annual income and net worth you provide. Legally, we cannot allow you to invest more than the guidelines set by the SEC for every 12 month period: \n All investors can invest a least $2,000 \n If either your income or net worth are less than $100K, you may invest up to 5% of the smaller number. \n If both your income or net worth is >$100K, you can invest up to 10% of the smaller number. \n $100K is the maximum amount accredited investors can invest (i.e. people who earn $200K in annually or $300K jointly) or those have over $1M in assets. \n Regardless, we'll automatically calculate your maximum limit for you and you'll be able to see how much you are allowed to invest in your investor profile page."
+          "answer": "You can invest as little as $100 in a startup company and up to a maximum limit that's based on the SEC's Regulation Crowdfunding guidelines. Wunderfund.co will automatically calculate the limit you can invest based on your annual income and net worth you provide. Legally, we cannot allow you to invest more than the guidelines set by the SEC for every 12 month period: \n All investors can invest a least $2,000 \n If either your income or net worth are less than $100K, you may invest up to 5% of the smaller number. \n If both your income or net worth is >$100K, you can invest up to 10% of the smaller number. \n $100K is the maximum amount accredited investors can invest (i.e. people who earn $200K in annually or $300K jointly) or those have over $1M in assets. \n Regardless, we'll automatically calculate your maximum limit for you and you'll be able to see how much you are allowed to invest in your investor profile page."
         },
         {
-          "question": "Why did you create Thrivera Capital?",
-          "answer": "People in Cincinnati are excited about the fast growing entrepreneurial ecosystem in their backyard. It's transforming neighborhoods, creating jobs, and revitalizing the economy. In fact, the Cincinnati region is considered the fastest growing midwest economy, and includes incubators, accelerators, and universities creating thousands of new startups. The problem is that many of these new startups are looking for capital, but it's getting increasingly harder to raise capital. The bottom line is there is a greater demand for capital than there is available capital from institutional VCs and angels. That's why we want to democratize venture capital for the general public, and enable everyday people who are excited about the city's growth, but don't yet know how to engage. Now they can with Thrivera."
+          "question": "Why did you create the Wunderfund Platform?",
+          "answer": "People in Cincinnati are excited about the fast growing entrepreneurial ecosystem in their backyard. It's transforming neighborhoods, creating jobs, and revitalizing the economy. In fact, the Cincinnati region is considered the fastest growing midwest economy, and includes incubators, accelerators, and universities creating thousands of new startups. The problem is that many of these new startups are looking for capital, but it's getting increasingly harder to raise capital. The bottom line is there is a greater demand for capital than there is available capital from institutional VCs and angels. That's why we want to democratize venture capital for the general public, and enable everyday people who are excited about the city's growth, but don't yet know how to engage. Now they can with Wunderfund.co."
         }
       ]
     },
@@ -32,7 +32,7 @@
         },
         {
           "question": "Can anyone invest using this portal or do you have to be an accredited investor?",
-          "answer": "Before May 16, 2016, only wealthy people and banks were considered 'accredited investors' and allowed to invest in private companies. All that has changed with the Jobs Act, which allows the average American to invest using regulation crowdfunding. Although this has opened up a huge gate for investors, there are still some limitations on the amounts you can invest each year. Thrivera's platform will automatically let you know how much you can invest based on your annual income and net worth you set up in your profile."
+          "answer": "Before May 16, 2016, only wealthy people and banks were considered 'accredited investors' and allowed to invest in private companies. All that has changed with the Jobs Act, which allows the average American to invest using regulation crowdfunding. Although this has opened up a huge gate for investors, there are still some limitations on the amounts you can invest each year. Wunderfund.co will automatically let you know how much you can invest based on your annual income and net worth you set up in your profile."
         },
         {
           "question": "What happens when rounds are oversubscribed?",
@@ -40,15 +40,15 @@
         },
         {
           "question": "How are contracts signed?",
-          "answer": "All the signatures are handled electronically. once a contract is signed by both parties, a PDF copy of the executed forms will be emailed to all parties for their record keeping. A copy of your contract will also be available on Thrivera in your profile."
+          "answer": "All the signatures are handled electronically. once a contract is signed by both parties, a PDF copy of the executed forms will be emailed to all parties for their record keeping. A copy of your contract will also be available on Wunderfund.co in your profile."
         },
         {
           "question": "What is the minimum and maximum amount I can invest?",
           "answer": "The minimum investment is typically $100. However, the minimum could be set higher by the issuer who launches the campaign. These will be disclosed on their offering page."
         },
         {
-          "question": "How are invesments pre-vetted before being listed?",
-          "answer": "In order for an issuer's campaign can be listed publically on our platform, we conduct a full review of the the issuer's application. The appication includes a business plan, the financials, articles of organization, and other important documents. We then conduct a background & credit check on the issuer's founding team members & sponsors. Importantly, these measures don't take away the risks in the investment and Thrivera cannot gaurantee results. What the vetting process aims to do is put quality startup companies for you to select from so you get quality deal flow. You as an investor have the full authority and discretion to choose which opportunity is right for you and how much you want to invest."
+          "question": "How are investments pre-vetted before being listed?",
+          "answer": "In order for an issuer's campaign can be listed publically on our platform, we conduct a full review of the the issuer's application. The appication includes a business plan, the financials, articles of organization, and other important documents. We then conduct a background & credit check on the issuer's founding team members & sponsors. Importantly, these measures don't take away the risks in the investment and Wunderfund.co cannot gaurantee results. What the vetting process aims to do is put quality startup companies for you to select from so you get quality deal flow. You as an investor have the full authority and discretion to choose which opportunity is right for you and how much you want to invest."
         },
         {
           "question": "Is it okay if I've issued equity before via another crowdfunding site?",
@@ -60,7 +60,7 @@
         },
         {
           "question": "Is this free to join?",
-          "answer": "Yes, you can join Thrivera for free. You can also browse any of the investments on the site to see what's currently available to invest in. However, if you want access to an issuer's secured documents, growth plans, and other important information that will inform you before you invest, you have to create an account and sign in."
+          "answer": "Yes, you can join Wunderfund.co for free. You can also browse any of the investments on the site to see what's currently available to invest in. However, if you want access to an issuer's secured documents, growth plans, and other important information that will inform you before you invest, you have to create an account and sign in."
         },
         {
           "question": "What is startup investing and is it for me?",
@@ -76,7 +76,7 @@
         },
         {
           "question": "Am I able to resell my investment?",
-          "answer": "It's best to expect you cannot resell your investment. Regulation Crowdfunding law restricts the resale of securities for at least one year, and after that, it can only be sold back to a restricted group of individuals (i.e. the issuer, an accredited investor, a family member, or trust). Plus, there is no open stock market exchange where you can buy or sell your equity. Lastly, all the equity based securities on the Thrivera funding portal are prohibited for resale based on the terms & conditions set by the issuer to protect the number of shareholders on their cap table."
+          "answer": "It's best to expect you cannot resell your investment. Regulation Crowdfunding law restricts the resale of securities for at least one year, and after that, it can only be sold back to a restricted group of individuals (i.e. the issuer, an accredited investor, a family member, or trust). Plus, there is no open stock market exchange where you can buy or sell your equity. Lastly, all the equity based securities on Wunderfund.co are prohibited for resale based on the terms & conditions set by the issuer to protect the number of shareholders on their cap table."
         },
         {
           "question": "Will my percentage ownership be reduced over time? ",
@@ -95,7 +95,7 @@
           "answer": "If you want to cancel an investment, you have up to 48 hours of the end of the campaign deadline to get a full refund. After those last 48 hours, you can no longer cancel your investment."
         },
         {
-          "question": "Can the issuing startup or Thrivera cancel my investment?",
+          "question": "Can the issuing startup or Wunderfund.co cancel my investment?",
           "answer": "It's possible, but will likely not happen often. The startups have cancellation rights in their legal terms and could cancel for any reason. A likely scenario is that they discover that a competitor is trying to invest in the company to gain information. That only seems fair for them to be able to cancel, right? Only when the fundraising round is closed, and the funds have been transferred from the escrow account, will you be sure that your investment cannot be canceled."
         },
         {
@@ -132,11 +132,11 @@
         },
         {
           "question": "How do I earn a return?",
-          "answer": "The companies that raise money on Thrivera's platform are private companies who will issue a SAFE note also known as a convertible note to their investors. This simply means that your investment amount will convert to stock when a proper value is placed on the company, which typically happens when the company raises a subsequent investment round from instutional investors who put a price on the company. If the company grows successfully, the value of the stock increases with each round of financing until the company is acquired or goes public in an IPO at which point you can sell your shares."
+          "answer": "The companies that raise money on Wunderfund.co are private companies who will issue a SAFE note also known as a convertible note to their investors. This simply means that your investment amount will convert to stock when a proper value is placed on the company, which typically happens when the company raises a subsequent investment round from instutional investors who put a price on the company. If the company grows successfully, the value of the stock increases with each round of financing until the company is acquired or goes public in an IPO at which point you can sell your shares."
         },
         {
           "question": "How are payments collected and remitted to investors?",
-          "answer": "If a company is successfully acquired, Thrivera will collect the payments directly through a third party servicing company and will remit the payments directly to investors net any processing fees. All projected returns or distributions along with the schedule are unique to each offering and will be clearly spelled out in the offering page for that campaign."
+          "answer": "If a company is successfully acquired, Wunderfund.co will collect the payments directly through a third party servicing company and will remit the payments directly to investors net any processing fees. All projected returns or distributions along with the schedule are unique to each offering and will be clearly spelled out in the offering page for that campaign."
         },
         {
           "question": "How is the value of a company determined?",
@@ -151,7 +151,7 @@
           "answer": "A crowd of investors can validate your product in a way that institutional investors cannot. They understand your product from a customer standpoint and can give you feedback from the platform. With crowdfunding, if they're already customers, now you're enabling them to become owners, and with that you'll have brand ambassadors."
         },
         {
-          "question": "What kind of companies should use Thrivera's platform?",
+          "question": "What kind of companies should use Wunderfund.co?",
           "answer": "We will consider a broad range of consumer & B2B ideas that have mass appeal. We will accept everything from boutiques, breweries, restaurants, consumer goods, software as a service, the internet of things, gaming, clean tech, and more."
         },
         {
@@ -172,7 +172,7 @@
         },
         {
           "question": "Are there eligibility requirements for my company to create a campaign?",
-          "answer": "Before you can issue an offering on Thrivera, you have to apply and tell us about your team and your company. We look for a complete business plan, pitch deck, financial information, and other relevant historical information that we review for preliminary due diligence. Only companies that get through this preliminary due diligence criteria will be permitted to raise funding. Passing this process is not meant to be construed as investment advice or endorsement by Thrivera."
+          "answer": "Before you can issue an offering on Wunderfund.co, you have to apply and tell us about your team and your company. We look for a complete business plan, pitch deck, financial information, and other relevant historical information that we review for preliminary due diligence. Only companies that get through this preliminary due diligence criteria will be permitted to raise funding. Passing this process is not meant to be construed as investment advice or endorsement by Wunderfund.co."
         },
         {
           "question": "How much equity can be raised for a single campaign?",
@@ -196,7 +196,7 @@
         },
         {
           "question": "How do I know if I'm ready to start fundraising on Wunderfund?",
-          "answer": "We fund companies at all stages but we recommend that if you fundraise on Thrivera Capital, you have some proof points that can convince investors you can 'get stuff done' and not just in the idea stage. While there are no requirements, we recommend at least one experienced investor that publicly endorses your company. It also helps to have at least a working prototype, and ideally, a few paying customers. But before then, create a free profile, and start collecting followers!"
+          "answer": "We fund companies at all stages but we recommend that if you fundraise on Wunderfund.co, you have some proof points that can convince investors you can 'get stuff done' and not just in the idea stage. While there are no requirements, we recommend at least one experienced investor that publicly endorses your company. It also helps to have at least a working prototype, and ideally, a few paying customers. But before then, create a free profile, and start collecting followers!"
         },
         {
           "question": "Can I edit my campaign even after it is launched?",
@@ -216,11 +216,11 @@
         },
         {
           "question": "At what points am I allowed to promote my campaign?",
-          "answer": "You can begin promoting your campaign only after it is enabled on the Thrivera platform. Before then, you can publicly share your personal profile, and ask others to 'follow you'. However you cannot legally say that you are in fundraising mode or share any details about your planned offering until it's officialled launched. Per legal guidelines, you are not allowed to say, 'we plan to begin fundraising on July 4th a total raise of $500K.' You must also avoid saying things like, 'Once we file with the SEC...' They frown upon that."
+          "answer": "You can begin promoting your campaign only after it is enabled on Wunderfund.co. Before then, you can publicly share your personal profile, and ask others to 'follow you'. However you cannot legally say that you are in fundraising mode or share any details about your planned offering until it's officialled launched. Per legal guidelines, you are not allowed to say, 'we plan to begin fundraising on July 4th a total raise of $500K.' You must also avoid saying things like, 'Once we file with the SEC...' They frown upon that."
         },
         {
           "question": "What legal considerations should I be concerned about when advertising?",
-          "answer": "You can promote after the form C is filed with the SEC. Importantly, filing a Form C is not an 'approval' or 'endorsement' from the SEC. So definitely avoid advertising with any statements referring to the SEC. At this point, you can advertise in any channel you want, whether it's email, social media, youtube, or on a flyer you pass out on the streets. What's important is that your advertisements must be based on objective facts about your company. You certainly cannot say 'Invest in the the Best darn company on the planet'). All your adverstising must include a link to your Thrivera profile. More info about this is within our Legal Guide."
+          "answer": "You can promote after the form C is filed with the SEC. Importantly, filing a Form C is not an 'approval' or 'endorsement' from the SEC. So definitely avoid advertising with any statements referring to the SEC. At this point, you can advertise in any channel you want, whether it's email, social media, youtube, or on a flyer you pass out on the streets. What's important is that your advertisements must be based on objective facts about your company. You certainly cannot say 'Invest in the the Best darn company on the planet'). All your adverstising must include a link to your Wunderfund.co profile. More info about this is within our Legal Guide."
         },
         {
           "question": "How do I close my campaign?",

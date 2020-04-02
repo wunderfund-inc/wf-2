@@ -13,8 +13,8 @@ export default {
     return {
       list: [
         {
-          title: "Terms of Service",
-          slug: "terms-of-service"
+          title: "Terms of Use",
+          slug: "terms-of-use"
         },
         {
           title: "Privacy Policy",

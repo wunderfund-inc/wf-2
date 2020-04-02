@@ -19,7 +19,11 @@ header
           b-nav-item(
             to="/faq"
             active-class="font-weight-bolder"
-          ) FAQ
+          ) FAQs
+          b-nav-item(
+            to="/legal"
+            active-class="font-weight-bolder"
+          ) Legal
           div(v-if="loggedIn")
             b-nav-item.d-block.d-md-none(
               to="/u"

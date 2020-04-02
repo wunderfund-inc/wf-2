@@ -78,25 +78,25 @@
                 v-model="$v.form.attestations.$model[0]"
                 value="The user acknowledges there are inherent risks investing in a startup."
                 switch
-              ) I understand there are risks in investing on a crowdfunding platform, outlined #[nuxt-link(to="/faq" target="_blank") here].
+              ) I understand there are risks in investing on a crowdfunding platform, outlined #[nuxt-link(to="/legal/investor-agreement" target="_blank") here].
 
               b-form-checkbox.py-2(
                 v-model="$v.form.attestations.$model[1]"
-                value="The user acknowledges Wunderfund's Terms of Service."
+                value="The user acknowledges Wunderfund's Terms of Use."
                 switch
-              ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq/legal#tos" target="_blank") Terms of Service].
+              ) I'm agreeing to Wunderfund's #[nuxt-link(to="/legal/terms-of-use" target="_blank") Terms of Use].
 
               b-form-checkbox.py-2(
                 v-model="$v.form.attestations.$model[2]"
                 value="The user acknowledges Wunderfund's Privacy Policy."
                 switch
-              ) I'm agreeing to Wunderfund's #[nuxt-link(to="/faq/legal#pp" target="_blank") Privacy Policy].
+              ) I'm agreeing to Wunderfund's #[nuxt-link(to="/legal/privacy-policy" target="_blank") Privacy Policy].
 
               b-form-checkbox.py-2(
                 v-model="$v.form.attestations.$model[3]"
                 value="The user acknowledges Wunderfund's disclosure for the platform generating income."
                 switch
-              ) I understand that Wunderfund has a way to #[nuxt-link(to="/faq" target="_blank") earn income] with every campaign offered on this platform.
+              ) I understand that Wunderfund has a way to #[nuxt-link(to="/faq/company" target="_blank") earn income] with every campaign offered on this platform.
 
             b-button(
               variant="primary"
@@ -135,7 +135,7 @@ export default {
       },
       attestationsList: [
         "I understand there are risks in investing on a crowdfunding platform, outlined here.",
-        "I am agreeing to Wunderfund's Terms of Service.",
+        "I am agreeing to Wunderfund's Terms of Use.",
         "I am agreeing to Wunderfund's Privacy Policy.",
         "I understand Wunderfund earns its income as described by..."
       ]
