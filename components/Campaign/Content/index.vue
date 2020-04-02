@@ -107,10 +107,11 @@
               .col-12.col-md-3.col-sm-6.py-3(v-for="(employee, idx) in company.employees" :key="idx")
                 b-card(no-body style="border:none")
                   .text-center.py-3
-                    b-img(
-                      thumbnail
+                    b-avatar(
                       :src="employee.image.url"
-                      style="max-height: 150px; max-width: 150px"
+                      rounded="sm"
+                      size="8rem"
+                      square
                     )
                     b-card-text.pt-3.mb-0 {{ employee.name }}
                     small.text-muted.mb-0 {{ employee.title }}
