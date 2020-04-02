@@ -43,16 +43,16 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async fetchCompany({ commit, dispatch }, id) {
+  async fetchCompany({ commit, dispatch }, companyId) {
     try {
       const companyDocument = await db
         .collection("companies")
-        .doc(id)
+        .doc(companyId)
         .get();
       const company = companyDocument.data();
 
-      await dispatch("fetchOfferings", id);
-      await dispatch("fetchComments", id);
+      await dispatch("fetchOfferings", companyId);
+      await dispatch("fetchComments", companyId);
       await commit("SET_COMPANY", company);
     } catch (error) {
       throw Error(error.message);
@@ -85,15 +85,14 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async fetchComments({ commit }, id) {
+  async fetchComments({ commit }, companyId) {
     try {
       const commentDocs = await db
-        .collection(`companies/${id}/comments`)
+        .collection("comments")
+        .where("companyId", "==", companyId)
         .orderBy("createdAt", "desc")
         .get();
-
       const comments = commentDocs.docs.map(comment => comment.data());
-
       await commit("SET_COMMENTS", comments);
     } catch (error) {
       throw Error(error.message);
@@ -109,7 +108,7 @@ export const actions = {
           last: rootState.user.currentUser.name.last
         },
         userId: rootState.user.currentUser.uid,
-        avatar: rootState.user.currentUser.photoUrl || null,
+        avatar: rootState.user.currentUser.avatar || null,
         companyId: state.company.uid,
         approved: false,
         createdAt: timestamp,
@@ -117,7 +116,7 @@ export const actions = {
       };
 
       await db
-        .collection(`companies/${state.company.uid}/comments`)
+        .collection("comments")
         .doc()
         .set(dto);
     } catch (error) {
