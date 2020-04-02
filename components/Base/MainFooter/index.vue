@@ -12,7 +12,7 @@
                 )
           b-row
             b-col
-              p.text-light Early stage startup investing at its finest.
+              p.text-light Startup investing at its finest.
           b-row
             b-col
               b-link.pr-2.text-light(href="https://www.facebook.com/thewunderfund")
@@ -26,10 +26,10 @@
         b-col.py-2(cols="12" lg="2")
           address
             h4.d-none.d-sm-block.text-light About Us
-            nuxt-link.text-light(to="/") Our Story
-            br
-            b-link.text-light(href="https://blog.wunderfund.co" _target="blank") Blog
-            br
+            //- nuxt-link.text-light(to="/about") Our Story
+            //- br
+            //- b-link.text-light(href="https://blog.wunderfund.co" _target="blank") Blog
+            //- br
             b-link.text-light(href="mailto:taylor@wunderfund.co") Email Us
             br
             b-link.text-light(href="tel:5135492502") Call Us
