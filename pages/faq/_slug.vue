@@ -9,15 +9,13 @@ main
             aside
               .text-center
                 .pb-3
-                  b-img-lazy(
+                  b-img.d-none.d-md-inline(
                     thumbnail
-                    :src="faqs[slug].image"
+                    :src="require(`@/assets/faq/test.jpeg`)"
                   )
                 p {{ slug | pluralFaq | properCase }} FAQs
           .col-12.col-md-7
             aside
-              p {{ faqs[slug].intro }}
-              hr
               div(v-for="item in faqs[slug].faqItems")
                 faq-item(:question="item.question" :answer="item.answer")
 </template>

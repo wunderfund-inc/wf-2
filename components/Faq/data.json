@@ -1,8 +1,6 @@
 {
   "faqs": {
     "general": {
-      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
-      "intro": "Intro Paragraph for General",
       "faqItems": [
         {
           "question": "What is equity crowdfunding and how is it different from traditional crowdfunding?",
@@ -27,8 +25,6 @@
       ]
     },
     "investor": {
-      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
-      "intro": "Intro Paragraph for Investors",
       "faqItems": [
         {
           "question": "How does the investment process work?",
@@ -149,8 +145,6 @@
       ]
     },
     "company": {
-      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
-      "intro": "Intro Paragraph for Companies",
       "faqItems": [
         {
           "question": "Why should I consider crowdfunding to raise capital?",
@@ -255,8 +249,6 @@
       ]
     },
     "legal": {
-      "image": "https://www.worldphoto.org/sites/default/files/styles/field_gallery_images-masonry/public/239874_253580_0_%20%C2%A9%20Mojtaba%20Nobakht%2C%20Iran%2C%20Commended%2C%20Open%20Competition%2C%20Portraits%2C%202017%20Sony%20World%20Photography%20Awards.jpg?itok=jN6XnQwD",
-      "intro": "Legal intro",
       "faqItems": []
     }
   }

@@ -1,7 +1,7 @@
 <template lang="pug">
   nuxt-link.text-decoration-none.text-dark(:to="`/faq/${faqLink}`")
     b-card(
-      :img-src="imgSrc"
+      :img-src="require(`@/assets/faq/test.jpeg`)"
       img-top
       no-body
       border-variant="transparent"
