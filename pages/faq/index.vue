@@ -1,21 +1,18 @@
-<template lang="pug">
-  .container.py-5.text-center
-    h1 Frequently Asked Questions (FAQs)
-    .row.py-5
-      .col-md-4.py-2(v-for="(faq, index) in $options.faqs" :key="index")
-        faq-card(:faq-link="index")
+<template>
+  <main>
+    <faq-nav />
+    <div class="container py-5 text-center">
+      <h1>Frequently Asked Questions (FAQs)</h1>
+    </div>
+  </main>
 </template>
 
 <script>
-import { faqs } from "@/components/Faq/data.json";
-import FaqCard from "@/components/Faq/FaqCard";
+import FaqNav from "@/components/Faq/FaqNav";
 
 export default {
   components: {
-    FaqCard
-  },
-  fetch() {
-    this.$options.faqs = faqs;
+    FaqNav
   }
 };
 </script>

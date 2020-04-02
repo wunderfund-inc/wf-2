@@ -1,28 +1,31 @@
-<template lang="pug">
-header#faq-nav
-  .container
-    .py-2
-      .row
-        .col-md-10.offset-md-1
-          b-navbar(type="light")
-            b-navbar-nav.mx-auto(justified)
-              .row
-                .col-12.col-md-4(
-                  v-for="(link, index) in Object.keys($options.faqs)"
-                  :key="index"
-                )
-                  b-nav-item(
-                    active-class="font-weight-bolder"
-                    :to="`/faq/${link}`"
-                  ) {{ link | pluralFaq | properCase }}
+<template>
+  <base-sub-nav :list="list" category="faq" />
 </template>
 
 <script>
-import { faqs } from "@/components/Faq/data.json";
+import BaseSubNav from "@/components/Base/BaseSubNav";
 
 export default {
-  fetch() {
-    this.$options.faqs = faqs;
+  components: {
+    BaseSubNav
+  },
+  data() {
+    return {
+      list: [
+        {
+          title: "General",
+          slug: "general"
+        },
+        {
+          title: "Investors",
+          slug: "investor"
+        },
+        {
+          title: "Companies",
+          slug: "company"
+        }
+      ]
+    };
   }
 };
 </script>
