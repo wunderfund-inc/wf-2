@@ -11,13 +11,17 @@ main
                 .pb-3
                   b-img.d-none.d-md-inline(
                     thumbnail
-                    :src="require(`@/assets/faq/test.jpeg`)"
+                    :src="require(`@/assets/faq/${slug}.jpeg`)"
                   )
                 p {{ slug | pluralFaq | properCase }} FAQs
           .col-12.col-md-7
             aside
-              div(v-for="item in faqs[slug].faqItems")
-                faq-item(:question="item.question" :answer="item.answer")
+              faq-item(
+                v-for="(item, index) in $options.faqs[slug].faqItems"
+                :key="index"
+                :question="item.question"
+                :answer="item.answer"
+              )
 </template>
 
 <script>
@@ -30,11 +34,11 @@ export default {
     FaqNav,
     FaqItem
   },
-  computed: {
-    faqs: () => faqs
-  },
   asyncData({ route }) {
     return { slug: route.params.slug };
+  },
+  fetch() {
+    this.$options.faqs = faqs;
   }
 };
 </script>

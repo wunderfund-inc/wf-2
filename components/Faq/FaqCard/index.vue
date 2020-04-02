@@ -1,26 +1,26 @@
-<template lang="pug">
-  nuxt-link.text-decoration-none.text-dark(:to="`/faq/${faqLink}`")
-    b-card(
-      :img-src="require(`@/assets/faq/test.jpeg`)"
-      img-top
-      no-body
-      border-variant="transparent"
-      bg-variant="transparent"
-    )
-      b-card-footer.text-center(
+<template>
+  <nuxt-link :to="`/faq/${faqLink}`" class="text-decoration-none text-dark">
+    <b-card no-body border-variant="transparent" bg-variant="transparent">
+      <b-card-img
+        :src="require(`@/assets/faq/${faqLink}.jpeg`)"
+        class="d-none d-md-block"
+        top
+      />
+      <b-card-footer
+        class="text-center"
         footer-bg-variant="transparent"
         footer-border-variant="transparent"
-      ) {{ faqLink | pluralFaq | properCase }}
+      >
+        {{ faqLink | pluralFaq | properCase }}
+      </b-card-footer>
+    </b-card>
+  </nuxt-link>
 </template>
 
 <script>
 export default {
   props: {
     faqLink: {
-      type: String,
-      required: true
-    },
-    imgSrc: {
       type: String,
       required: true
     }

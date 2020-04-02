@@ -7,8 +7,8 @@ header#faq-nav
           b-navbar(type="light")
             b-navbar-nav.mx-auto(justified)
               .row
-                .col-12.col-md-3(
-                  v-for="(link, index) in links"
+                .col-12.col-md-4(
+                  v-for="(link, index) in Object.keys($options.faqs)"
                   :key="index"
                 )
                   b-nav-item(
@@ -21,8 +21,8 @@ header#faq-nav
 import { faqs } from "@/components/Faq/data.json";
 
 export default {
-  computed: {
-    links: () => Object.keys(faqs)
+  fetch() {
+    this.$options.faqs = faqs;
   }
 };
 </script>

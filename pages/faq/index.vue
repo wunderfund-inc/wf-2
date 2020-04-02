@@ -2,8 +2,8 @@
   .container.py-5.text-center
     h1 Frequently Asked Questions (FAQs)
     .row.py-5
-      .col-md-3.py-2(v-for="(faq, index) in faqs" :key="index")
-        faq-card(:img-src="faq.image" :faq-link="index")
+      .col-md-4.py-2(v-for="(faq, index) in $options.faqs" :key="index")
+        faq-card(:faq-link="index")
 </template>
 
 <script>
@@ -14,8 +14,8 @@ export default {
   components: {
     FaqCard
   },
-  computed: {
-    faqs: () => faqs
+  fetch() {
+    this.$options.faqs = faqs;
   }
 };
 </script>
