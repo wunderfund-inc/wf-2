@@ -1,10 +1,10 @@
 <template lang="pug">
-  footer.footer.pt-5.pb-4
-    b-container
-      b-row
-        b-col.py-2(cols="12" lg="3")
-          b-row
-            b-col
+  footer.footer.pt-4.pb-3
+    .container
+      .row
+        .col-12.col-lg-4.text-center.py-2
+          .row
+            .col
               nuxt-link(to="/")
                 b-img.pb-4.d-inline-block.align-middle(
                   :src="require(`@/assets/logo/logo.png`)"
@@ -23,7 +23,7 @@
                 brand-icon.fa-2x(i="twitter-square")
               b-link.px-2.text-light(href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ")
                 brand-icon.fa-2x(i="youtube-square")
-        b-col.py-2(cols="12" lg="2")
+        //- b-col.py-2(cols="12" lg="2")
           address
             h4.d-none.d-sm-block.text-light About Us
             //- nuxt-link.text-light(to="/about") Our Story
@@ -34,7 +34,7 @@
             br
             b-link.text-light(href="tel:5135492502") Call Us
             br
-        b-col.py-2(cols="12" md="7")
+        .col-12.col-md-8.py-2
           p.text-light.text-justify #[nuxt-link(to="/") Wunderfund.co] is run by Wunderfund, Inc. By using this #[nuxt-link(to="/") Wunderfund.co], you accept our #[nuxt-link(to="/") Terms of Use] and #[nuxt-link(to="/") Privacy Policy]. By choosing to invest using Wunderfund.co, you accept our #[nuxt-link(to="/") Investor Agreement]. By choosing to campaign using #[nuxt-link(to="/") Wunderfund.co's] technologies, you accept our #[nuxt-link(to="/") Startup Agreement]. #[nuxt-link(to="/") Wunderfund.co], along with #[b-link(href="https://www.northcapital.com/" target="_blank") North Capital Private Securities] and #[b-link(href="https://www.transferonline.com" target="_blank") Transfer Online] as partners, are all registered with the SEC and are members of FINRA.
 </template>
 
