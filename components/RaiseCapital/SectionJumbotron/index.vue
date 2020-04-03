@@ -9,9 +9,9 @@
             Fact: Women & Minorities make up less thatn 2% of venture backed
             capital. Crowdfunding is here to change that.
           </p>
-          <nuxt-link to="/auth">
-            <main-button>Start your raise</main-button>
-          </nuxt-link>
+          <b-link href="mailto:taylor@wunderfund.co">
+            <main-button>Apply to raise</main-button>
+          </b-link>
         </div>
         <div class="col-md-6 col-sm-8">
           <img
