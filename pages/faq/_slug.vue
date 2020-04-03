@@ -18,7 +18,7 @@
 <script>
 import { faqs } from "@/components/Faq/data.json";
 import FaqNav from "@/components/Faq/FaqNav";
-import FaqItem from "@/components/Faq/_Slug/FaqItem";
+import FaqItem from "@/components/Faq/FaqItem";
 
 export default {
   components: {
