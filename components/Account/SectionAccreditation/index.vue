@@ -102,6 +102,10 @@ export default {
       return this.attestations.length === 2 && this.ai >= 0 && this.nw >= 0;
     }
   },
+  created() {
+    this.form.ai = this.accreditation.ai;
+    this.form.nw = this.accreditation.nw;
+  },
   methods: {
     async updateAccreditation() {
       this.submitting = true;
