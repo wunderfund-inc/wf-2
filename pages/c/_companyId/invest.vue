@@ -15,7 +15,7 @@ import CheckoutForm from "@/components/Form/Checkout/CheckoutForm";
 import CheckoutSummary from "@/components/Form/Checkout/CheckoutSummary";
 
 export default {
-  middleware: "authenticated",
+  middleware: ["authenticated", "emailVerified"],
   components: {
     CheckoutForm,
     CheckoutSummary

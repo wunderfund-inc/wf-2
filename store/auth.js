@@ -8,6 +8,7 @@ export const state = () => ({
 export const getters = {
   currentUserAuth: state => state.currentUserAuth,
   userId: state => state.currentUserAuth.uid || state.currentUserAuth.user_id,
+  email: state => state.currentUserAuth.email,
   emailVerified: state => {
     return state.currentUserAuth
       ? state.currentUserAuth.emailVerified ||

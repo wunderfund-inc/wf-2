@@ -17,9 +17,8 @@ import { verifyEmail } from "@/plugins/firebase";
 export default {
   computed: {
     ...mapGetters({
-      user: "auth/currentUserAuth"
-    }),
-    email: () => (this.user ? this.user.email : null)
+      email: "auth/email"
+    })
   },
   methods: {
     linkToVerify() {
