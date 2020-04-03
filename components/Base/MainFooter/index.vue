@@ -15,7 +15,9 @@
               p.text-light Startup investing at its finest.
           b-row
             b-col
-              b-link.pr-2.text-light(href="https://www.facebook.com/thewunderfund")
+              b-link.pr-2.text-light(href="mailto:taylor@wunderfund.co")
+                solid-icon.fa-2x(i="envelope-square")
+              b-link.px-2.text-light(href="https://www.facebook.com/thewunderfund")
                 brand-icon.fa-2x(i="facebook-square")
               b-link.px-2.text-light(href="https://www.linkedin.com/company/wunderfund")
                 brand-icon.fa-2x(i="linkedin")
@@ -39,10 +41,12 @@
 </template>
 
 <script>
+import SolidIcon from "@/components/Common/SolidIcon";
 import BrandIcon from "@/components/Common/BrandIcon";
 
 export default {
   components: {
+    SolidIcon,
     BrandIcon
   }
 };
