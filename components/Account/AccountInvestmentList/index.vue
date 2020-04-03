@@ -2,7 +2,7 @@
   b-card(no-body)
     b-card-body.px-0
       b-container
-        h1.mb-4 My Investments
+        h1.mb-3 My Investments
         .row
           .col
             account-investment-table(:investments="investments")

@@ -55,7 +55,7 @@ div
           //- b-link.text-danger(href="mailto:taylor@wunderfund.co")
             font-awesome-icon.mx-2(:icon="['fas', 'minus-circle']")
             span Cancel
-  b-card-text.mt-3.mb-0(v-else) It doesn't look like you've made any investments yet. #[b-link(to="/c") Browse for some!]
+  b-card-text.mb-0(v-else) It doesn't look like you've made any investments yet. #[b-link(to="/c") Browse for some!]
 </template>
 
 <script>
