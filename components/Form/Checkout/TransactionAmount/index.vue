@@ -16,7 +16,9 @@
         v-bind="moneyConfig"
       )
       b-form-text(:text-variant="validAmount ? `muted` : `danger`")
-        span(:class="validAmount ? `` : `font-weight-bold`") Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}.
+        span(:class="validAmount ? `` : `font-weight-bold`") - Your commitment to invest needs to be at least {{ minInvestment | asCurrency }}.
+        br
+        span(:class="validAmount ? `` : `font-weight-bold`") - The maximum amount you're allowed to invest at this time is {{ spendPool.current | asCurrency }}.
 </template>
 
 <script>
@@ -41,7 +43,8 @@ export default {
     ...mapGetters({
       company: "company/company",
       offerings: "company/offerings",
-      selectedOffering: "checkout/selectedOffering"
+      selectedOffering: "checkout/selectedOffering",
+      spendPool: "user/spendPool"
     }),
     securityType() {
       return this.selectedOffering.securityType;

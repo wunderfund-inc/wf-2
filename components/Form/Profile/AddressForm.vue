@@ -56,8 +56,8 @@ export default {
   },
   methods: {
     async updateProfileOnFirebase() {
-      await this.$store.dispatch("updateProfileData");
-      await window.location.reload();
+      await this.$store.dispatch("user/updateProfileData");
+      await window.location.replace("/u");
     }
   }
 };
