@@ -1,15 +1,18 @@
 import { getUserFromCookie } from "@/helpers";
 
 export const state = () => ({
-  showOverlay: false
+  showOverlay: false,
+  error: null
 });
 
 export const getters = {
-  showOverlay: state => state.showOverlay
+  showOverlay: state => state.showOverlay,
+  error: state => state.error
 };
 
 export const mutations = {
-  TOGGLE_OVERLAY: (state, payload) => (state.showOverlay = payload)
+  TOGGLE_OVERLAY: (state, payload) => (state.showOverlay = payload),
+  DISPLAY_ERROR: (state, payload) => (state.error = payload)
 };
 
 export const actions = {
@@ -23,5 +26,8 @@ export const actions = {
   },
   toggleOverlay({ commit }, payload) {
     commit("TOGGLE_OVERLAY", payload);
+  },
+  displayError({ commit }, error) {
+    commit("DISPLAY_ERROR", error);
   }
 };

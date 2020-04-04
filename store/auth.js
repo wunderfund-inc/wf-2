@@ -1,5 +1,12 @@
 import Cookies from "js-cookie";
-import { auth, db, timestamp } from "@/plugins/firebase";
+import {
+  auth,
+  db,
+  timestamp,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  TwitterAuthProvider
+} from "@/plugins/firebase";
 
 export const state = () => ({
   currentUserAuth: null
@@ -41,13 +48,18 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async createUserInDb(context, { uid, email, attestations, name }) {
+  async createUserInDb(
+    context,
+    { uid, email, attestations, name, displayName = null, avatar = null }
+  ) {
     try {
       const user = {
         uid,
         email,
         attestations,
         name,
+        displayName,
+        avatar,
         accreditation: {
           ai: 0,
           nw: 0
@@ -67,6 +79,39 @@ export const actions = {
         .collection("users")
         .doc(uid)
         .set(user);
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+  async signInWithSocialMedia({ dispatch }, brand) {
+    try {
+      let provider;
+
+      if (brand === "facebook") {
+        provider = FacebookAuthProvider;
+      } else if (brand === "google") {
+        provider = GoogleAuthProvider;
+      } else {
+        provider = TwitterAuthProvider;
+      }
+
+      const user = await auth.signInWithPopup(provider);
+      const userData = user.user.toJSON();
+      if (user.additionalUserInfo.isNewUser) {
+        const payload = {
+          uid: userData.uid,
+          email: userData.email,
+          attestations: [],
+          name: {
+            first: null,
+            last: null
+          },
+          displayName: userData.displayName,
+          avatar: userData.photoURL
+        };
+        await dispatch("createUserInDb", payload);
+      }
+      await dispatch("login", userData);
     } catch (error) {
       throw Error(error.message);
     }

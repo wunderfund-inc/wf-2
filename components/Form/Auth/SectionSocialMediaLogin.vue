@@ -10,12 +10,10 @@
 
 <script>
 import SocialMediaButton from "./SocialMediaButton";
-import BrandIcon from "@/components/Common/BrandIcon";
 
 export default {
   components: {
-    SocialMediaButton,
-    BrandIcon
+    SocialMediaButton
   }
 };
 </script>

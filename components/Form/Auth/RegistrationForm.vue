@@ -103,15 +103,7 @@
               block
               :disabled="$v.validRegistration.$invalid"
               type="submit"
-            )
-              span.spinner-border.spinner-border-sm.mr-2(
-                v-if="submitting"
-                role="status"
-                aria-hiden="true"
-                style="margin-bottom: 4px"
-              )
-              span(v-if="submitting") Registering...
-              span(v-if="!submitting") Sign Up
+            ) Sign Up
 </template>
 
 <script>

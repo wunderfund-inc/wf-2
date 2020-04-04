@@ -19,6 +19,7 @@
 import AddressForm from "@/components/Form/Profile/AddressForm";
 
 export default {
+  middleware: "authenticated",
   components: { AddressForm }
 };
 </script>
