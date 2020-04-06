@@ -116,10 +116,16 @@ export default {
         };
 
         if (this.testimonial) {
-          await this.$store.dispatch("checkout/submitTestimonialForReview", {
+          const testimonialPayload = {
             companyId: this.company.uid,
-            userId: payload.userId
-          });
+            userId: this.user.uid,
+            name: this.user.name,
+            avatar: this.user.avatar || null
+          };
+          await this.$store.dispatch(
+            "checkout/submitTestimonialForReview",
+            testimonialPayload
+          );
         }
 
         await this.$store.dispatch("checkout/submitInvestment", payload);

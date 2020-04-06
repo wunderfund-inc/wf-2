@@ -108,7 +108,7 @@ export const actions = {
       const dto = {
         createdAt: timestamp,
         updatedAt: timestamp,
-        agreementUrl: null,
+        documentId: null,
         uid: investmentRef.id,
         type: state.selectedType,
         method: state.selectedMethod,
@@ -139,12 +139,17 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async submitTestimonialForReview({ state }, { companyId, userId }) {
+  async submitTestimonialForReview(
+    { state },
+    { companyId, userId, name, avatar }
+  ) {
     try {
       const testimonialRef = await db.collection("testimonials").doc();
       const payload = {
         companyId,
         userId,
+        name,
+        avatar,
         testimonial: state.testimonial,
         approved: false,
         createdAt: timestamp,

@@ -4,21 +4,24 @@ export const state = () => ({
   company: null,
   comments: [],
   companies: [],
-  offerings: []
+  offerings: [],
+  testimonials: []
 });
 
 export const getters = {
   company: state => state.company,
   comments: state => state.comments,
   companies: state => state.companies,
-  offerings: state => state.offerings
+  offerings: state => state.offerings,
+  testimonials: state => state.testimonials
 };
 
 export const mutations = {
   SET_COMPANY: (state, payload) => (state.company = payload),
   SET_COMMENTS: (state, payload) => (state.comments = payload),
   SET_COMPANIES: (state, payload) => (state.companies = payload),
-  SET_OFFERINGS: (state, payload) => (state.offerings = payload)
+  SET_OFFERINGS: (state, payload) => (state.offerings = payload),
+  SET_TESTIMONIALS: (state, payload) => (state.testimonials = payload)
 };
 
 export const actions = {
@@ -53,6 +56,7 @@ export const actions = {
 
       await dispatch("fetchOfferings", companyId);
       await dispatch("fetchComments", companyId);
+      await dispatch("fetchTestimonials", companyId);
       await commit("SET_COMPANY", company);
     } catch (error) {
       throw Error(error.message);
@@ -118,6 +122,20 @@ export const actions = {
         uid
       };
       await commentRef.set(dto);
+    } catch (error) {
+      throw Error(error.message);
+    }
+  },
+  async fetchTestimonials({ commit }, companyId) {
+    try {
+      const testimonialDocs = await db
+        .collection("testimonials")
+        .where("companyId", "==", companyId)
+        .get();
+      const testimonials = testimonialDocs.docs.map(testimonial => {
+        return testimonial.data();
+      });
+      await commit("SET_TESTIMONIALS", testimonials);
     } catch (error) {
       throw Error(error.message);
     }
