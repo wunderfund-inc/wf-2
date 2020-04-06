@@ -39,12 +39,7 @@ div
           p Amount Invested: {{ investment.amount | asCurrency }}
           p.mb-0 Method: {{ investment.method }}
         td
-          b-button(
-            :href="investment.agreementUrl"
-            target="_blank"
-            variant="success"
-            size="sm"
-          ) Download
+          agreement-download-button(:document-id="investment.documentId")
           b-link.pl-3.pt-1.text-muted.text-decoration-none(
             href="mailto:taylor@wunderfund.co"
           ) Cancel
@@ -59,7 +54,12 @@ div
 </template>
 
 <script>
+import AgreementDownloadButton from "@/components/Account/AgreementDownloadButton";
+
 export default {
+  components: {
+    AgreementDownloadButton
+  },
   props: {
     investments: {
       type: Array,

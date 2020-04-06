@@ -35,4 +35,14 @@ export const FacebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 export const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
 // export const TwitterAuthProvider = new firebase.auth.TwitterAuthProvider();
 
+export async function downloadURL(reference, filename) {
+  try {
+    const storageRef = firebase.storage().ref(reference);
+    const url = await storageRef.child(filename).getDownloadURL();
+    return url;
+  } catch (error) {
+    throw Error(error.message);
+  }
+}
+
 export default firebase;
