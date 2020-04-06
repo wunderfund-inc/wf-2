@@ -69,11 +69,20 @@
             .row.py-3
               .col
                 small Share this offering with your friends!
-                  a.pl-3.pr-2.text-muted
+                  a.pl-3.pr-2.text-muted(
+                    :href="`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`"
+                    target="_blank"
+                  )
                     font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
-                  a.px-2.text-muted
+                  a.px-2.text-muted(
+                    :href="`https://www.linkedin.com/shareArticle/?mini=true&url=wunderfund.co%2Fc%2F${$route.params.companyId}&title=I%20invested%20in%20${company.name.short}!`"
+                    target="_blank"
+                  )
                     font-awesome-icon.fa-lg(:icon="['fab', 'linkedin']")
-                  a.pl-2.text-muted
+                  a.pl-2.text-muted(
+                    :href="`https://twitter.com/intent/tweet?url=wunderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${company.name.short}!`"
+                    target="_blank"
+                  )
                     font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
     section-testimonial
     section#content
