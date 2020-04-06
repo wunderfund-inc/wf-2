@@ -4,8 +4,8 @@ import {
   db,
   timestamp,
   FacebookAuthProvider,
-  GoogleAuthProvider,
-  TwitterAuthProvider
+  GoogleAuthProvider
+  // TwitterAuthProvider
 } from "@/plugins/firebase";
 
 export const state = () => ({
@@ -91,9 +91,10 @@ export const actions = {
         provider = FacebookAuthProvider;
       } else if (brand === "google") {
         provider = GoogleAuthProvider;
-      } else {
-        provider = TwitterAuthProvider;
       }
+      // else {
+      //   provider = TwitterAuthProvider;
+      // }
 
       const user = await auth.signInWithPopup(provider);
       const userData = user.user.toJSON();

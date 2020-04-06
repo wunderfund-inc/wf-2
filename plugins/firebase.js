@@ -33,6 +33,6 @@ export async function uploadImage(refStr, file) {
 
 export const FacebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 export const GoogleAuthProvider = new firebase.auth.GoogleAuthProvider();
-export const TwitterAuthProvider = new firebase.auth.TwitterAuthProvider();
+// export const TwitterAuthProvider = new firebase.auth.TwitterAuthProvider();
 
 export default firebase;

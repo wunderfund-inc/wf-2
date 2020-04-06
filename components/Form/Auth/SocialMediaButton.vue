@@ -30,9 +30,9 @@ export default {
     async signIn() {
       try {
         await this.$store.dispatch("auth/signInWithSocialMedia", this.name);
-        // await window.location.replace("/u");
+        await window.location.replace("/u");
       } catch (error) {
-        await this.$store.dispatch("displayError", error.message);
+        await this.$store.dispatch("displaySocialMediaError", error.message);
       }
     }
   }

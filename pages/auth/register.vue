@@ -5,6 +5,7 @@
         .col-12.col-md-4.offset-md-4
           h1.pb-4.text-center Register
           section-social-media-login
+          p.text-danger {{ socialMediaError }}
           b-row
             b-col(cols="5")
               hr.py-3
@@ -24,6 +25,11 @@ export default {
   components: {
     SectionSocialMediaLogin,
     RegistrationForm
+  },
+  computed: {
+    socialMediaError() {
+      return this.$store.getters.socialMediaError;
+    }
   }
 };
 </script>
