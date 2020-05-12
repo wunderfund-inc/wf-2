@@ -1,3 +1,29 @@
+import Prismic from "prismic-javascript";
+
+const endpoint = "https://wunderfund.cdn.prismic.io/api/v2";
+
+const dynamicRoutes = async () => {
+  try {
+    // Get dynamic routes from Prismic-based campaigns
+    const api = await Prismic.getApi(endpoint);
+    const campaigns = await api.query(
+      Prismic.Predicates.at("document.type", "campaign")
+    );
+    const campaignRoutes = campaigns.results.map(
+      campaign => `/${campaign.uid}`
+    );
+
+    return campaignRoutes;
+    // Get dynamic routes from FAQ data
+    // const FaqList = Object.keys(FaqData.faqs);
+    // const faqRoutes = FaqList.map(faq => `/faq/${faq}`);
+
+    // return campaignRoutes.concat(faqRoutes);
+  } catch (error) {
+    throw Error(error);
+  }
+};
+
 export default {
   mode: "universal",
   /*
@@ -33,12 +59,15 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~helpers/filters", "~plugins/firebase", "~plugins/vmask"],
+  plugins: ["~helpers/filters", "~plugins/firebase"],
   pageTransition: "page",
   /*
    ** Nuxt.js modules
    */
   modules: [
+    // "@/modules/static",
+    // "@/modules/crawler",
+    "@nuxtjs/prismic",
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
     "@nuxtjs/dotenv",
@@ -76,7 +105,9 @@ export default {
       }
     ]
   ],
-  // vendor: ["firebase"],
+  prismic: {
+    endpoint: "https://wunderfund.cdn.prismic.io/api/v2"
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -102,6 +133,12 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      config.resolve.alias.vue = "vue/dist/vue.common";
+    }
+  },
+  generate: {
+    routes: dynamicRoutes,
+    fallback: "404.html"
   }
 };

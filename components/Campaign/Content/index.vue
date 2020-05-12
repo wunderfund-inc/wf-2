@@ -1,178 +1,258 @@
-<template lang="pug">
-  main.py-md-5
-    section#hero
-      .container.my-3
-        .row
-          .col-12.col-md-7
-            .row
-              .col.mb-1
-                b-embed(
-                  type="iframe"
-                  :src="`${company.campaignVideo.platform}/${company.campaignVideo.handle}`"
-                  aspect="16by9"
-                  allowfullscreen
-                )
-            .row
-              .col
-                small.text-muted
-                  font-awesome-icon(:icon="['fas', 'map-marker-alt']")
-                  |
-                  | {{ company.location.city }}, {{ company.location.state }}
-              .col.text-right
-                small.px-2(v-if="company.website")
-                  a.text-muted(:href="company.website" target="_blank")
-                    font-awesome-icon.fa-lg(:icon="['fas', 'link']")
-                small.px-2(
-                  v-for="(link, index) in company.socialMediaLinks"
+<template>
+  <main>
+    <div id="hero" class="container">
+      <div class="row">
+        <div class="col-12 d-block d-md-none py-3">
+          <aside>
+            <div>
+              <h1 class="text-center text-md-left">
+                {{ content.company_name_short }}
+              </h1>
+              <h4 class="pt-2 text-muted text-center text-md-left">
+                {{ content.company_motto }}
+              </h4>
+              <div class="text-center text-md-left">
+                <small class="text-muted">
+                  <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
+                  {{ content.company_location_city }},
+                  {{ content.company_location_state }}
+                </small>
+              </div>
+            </div>
+
+            <b-card class="mt-3" no-body>
+              <b-tabs pills card fill>
+                <offering-card
+                  v-for="(offering, index) in offerings"
                   :key="index"
-                )
-                  a.text-muted(
-                    :href="`${link.platform}/${link.handle}`"
+                  :company-name="content.company_name_short"
+                  :offering="offering"
+                />
+              </b-tabs>
+            </b-card>
+          </aside>
+        </div>
+        <div class="col-12 col-md-7">
+          <article>
+            <div class="pb-4">
+              <b-embed
+                :src="convertLink(content.campaign_video)"
+                type="iframe"
+                allowfullscreen
+              />
+              <div class="pt-3">
+                <small v-if="content.company_website_url.url" class="px-2">
+                  <a
+                    :href="content.company_website_url.url"
                     target="_blank"
-                  )
-                    font-awesome-icon.fa-lg(:icon="['fab', iconIt(link.platform)]")
-                small.px-2
-                  b-link.text-dark(:href="company.edgarUrl" target="_blank") EDGAR Filing
-          .col-12.col-md-5.pt-5.pt-md-0
-            h1 {{ company.name.short }}
-            h4 {{ company.motto }}
-            b-card.my-3(
-              v-for="(offering, index) in offerings"
-              :key="index"
-              no-body
-            )
-              b-card-header(header-tag="header" role="tab") Regulation {{ offering.offeringType }} Offering Details:
-              b-card-body
-                b-card-text
-                  .row
-                    .col
-                      span Security Type: {{ offering.securityType }}
-                      br
-                      span Raising: {{ offering.goal.min | currencyDisplayFormat }} - {{ offering.goal.max | currencyDisplayFormat }}
-                    .col
-                      span Raised: #[strong {{ offering.totalInvested | asCurrency }}]
-                      br
-                      span # Investments: #[strong {{ offering.totalInvestments }}]
-                      br
-                      span Days Left: {{ offering.date.end | timeDistance }}
-                  .text-dark.text-decoration-none(v-if="offering.agreements.offering.url")
-                    br
-                    b-link(:src="offering.agreements.offering.url") Offering Agreement
-                  .text-dark.text-decoration-none(v-if="offering.agreements.subscription.url")
-                    br
-                    b-link(:src="offering.agreements.subscription.url") Subscription Agreement
-            b-button.mt-2.btn__gold(
-              block
-              size="lg"
-              :to="signedIn ? `/c/${$route.params.companyId}/invest` : '/auth/login'"
-            ) {{ signedIn ? "Invest Now" : "Login to Invest" }}
-            .row.py-3
-              .col
-                small Share this offering with your friends!
-                  a.pl-3.pr-2.text-muted(
-                    :href="`https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`"
+                    class="text-muted"
+                  >
+                    <font-awesome-icon :icon="['fas', 'link']" class="fa-lg" />
+                  </a>
+                </small>
+                <small
+                  v-for="(link, index) in content.company_social_media"
+                  :key="index"
+                  class="px-2"
+                >
+                  <a :href="link.social_media_url.url" class="text-muted">
+                    <font-awesome-icon
+                      :icon="['fab', iconIt(link.social_media_brand)]"
+                      class="fa-lg"
+                    />
+                  </a>
+                </small>
+                <small class="px-2">
+                  <b-link
+                    :href="content.company_edgar_url.url"
                     target="_blank"
-                  )
-                    font-awesome-icon.fa-lg(:icon="['fab', 'facebook-square']")
-                  a.px-2.text-muted(
-                    :href="`https://www.linkedin.com/shareArticle/?mini=true&url=wunderfund.co%2Fc%2F${$route.params.companyId}&title=I%20invested%20in%20${company.name.short}!`"
+                    class="text-dark"
+                  >
+                    EDGAR Filing
+                  </b-link>
+                </small>
+                <small>
+                  Share with your friends!
+                  <a
+                    :href="
+                      `https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`
+                    "
                     target="_blank"
-                  )
-                    font-awesome-icon.fa-lg(:icon="['fab', 'linkedin']")
-                  a.pl-2.text-muted(
-                    :href="`https://twitter.com/intent/tweet?url=wunderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${company.name.short}!`"
+                    class="pl-3 pr-2 text-muted"
+                  >
+                    <font-awesome-icon
+                      :icon="['fab', 'facebook-square']"
+                      class="fa-lg"
+                    />
+                  </a>
+                  <a
+                    :href="
+                      `https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`
+                    "
                     target="_blank"
-                  )
-                    font-awesome-icon.fa-lg(:icon="['fab', 'twitter-square']")
-    section-testimonial
-    section#content
-      .container
-        .row.pt-5
-          .col
-            .text-center
-            h1.pb-3 The Pitch
-            div(v-html="company.otherContent")
-        .row.pt-5
-          .col
-            h1.pb-3 The Team
-            .row
-              .col-12.col-md-3.col-sm-6.py-3(
-                v-for="(employee, idx) in company.employees"
-                :key="idx"
-              )
-                b-card(no-body style="border:none")
-                  .text-center.py-3
-                    b-avatar(
-                      :src="employee.image.url"
-                      rounded="sm"
-                      size="8rem"
-                    )
-                    b-card-text.pt-3.mb-0 {{ employee.name }}
-                    small.text-muted.mb-0 {{ employee.title }}
-        .row.pt-5
-          .col
-            h1.pb-5 FAQs
-            details(v-for="(faq, index) in company.faqs" :key="index" open)
-              summary {{ faq.question }}
-              p.py-3 {{ faq.answer }}
-        .row.py-5
-          .col
-            h1.pb-5 Questions or Comments?
-            #campaign-items.mb-5
-              comment-item(
-                v-for="(comment, index) in comments"
-                :key="index"
-                :comment="comment"
-              )
-            #campaign-form.mb-5
-              comment-form(v-if="signedIn")
-              p(v-else) #[nuxt-link(to="/auth/login") Log in] or #[nuxt-link(to="/auth/register") Sign up] to comment!
+                    class="pl-3 pr-2 text-muted"
+                  >
+                    <font-awesome-icon
+                      :icon="['fab', 'linkedin']"
+                      class="fa-lg"
+                    />
+                  </a>
+                  <a
+                    :href="
+                      `https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`
+                    "
+                    target="_blank"
+                    class="pl-3 pr-2 text-muted"
+                  >
+                    <font-awesome-icon
+                      :icon="['fab', 'twitter-square']"
+                      class="fa-lg"
+                    />
+                  </a>
+                </small>
+              </div>
+            </div>
+
+            <section-slice
+              v-for="(slice, index) in content.body"
+              :key="`slice-${index}`"
+              :content="slice"
+            />
+
+            <section-testimonial
+              v-if="testimonials.length > 0"
+              :testimonials="testimonials"
+            />
+
+            <section class="py-3">
+              <h3 class="pb-4">Questions or Comments?</h3>
+              <div v-if="comments.length > 0" class="mb-4">
+                <comment-item
+                  v-for="(comment, index) in comments"
+                  :key="index"
+                  :comment="comment"
+                />
+              </div>
+              <div class="mb-4">
+                <comment-form v-if="signedIn" />
+                <p v-else>
+                  <nuxt-link to="/auth/login">Login</nuxt-link> or
+                  <nuxt-link to="/auth/register">Sign Up</nuxt-link> to comment!
+                </p>
+              </div>
+            </section>
+          </article>
+        </div>
+        <div class="col-12 col-md-5 d-none d-md-block">
+          <div>
+            <h1 class="text-center text-md-left">
+              {{ content.company_name_short }}
+            </h1>
+            <h4 class="pt-2 text-muted text-center text-md-left">
+              {{ content.company_motto }}
+            </h4>
+            <div class="text-center text-md-left">
+              <small class="text-muted">
+                <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
+                {{ content.company_location_city }},
+                {{ content.company_location_state }}
+              </small>
+            </div>
+          </div>
+          <aside style="position: sticky; top: 20px;">
+            <b-card class="mt-3" no-body style="position: sticky; top: 20px;">
+              <b-tabs pills card fill>
+                <offering-card
+                  v-for="(offering, index) in offerings"
+                  :key="index"
+                  :company-name="content.company_name_short"
+                  :offering="offering"
+                />
+              </b-tabs>
+            </b-card>
+            <nuxt-link
+              :to="
+                signedIn
+                  ? `/${$route.params.companyId}/verify`
+                  : `/auth/login?return_to=/${$route.params.companyId}`
+              "
+              class="text-decoration-none"
+            >
+              <main-button class="mt-2 py-3 btn-block d-none d-md-block">
+                {{ signedIn ? "Invest Now" : "Login to Invest" }}
+              </main-button>
+            </nuxt-link>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import MainButton from "@/components/Common/MainButton";
+import OfferingCard from "@/components/Campaign/OfferingCard";
 import CommentItem from "@/components/Campaign/CommentItem";
 import CommentForm from "@/components/Campaign/CommentForm";
 import SectionTestimonial from "@/components/Campaign/SectionTestimonial";
+import SectionSlice from "@/components/Campaign/SectionSlice";
 
 export default {
   components: {
+    MainButton,
+    OfferingCard,
     CommentItem,
     CommentForm,
-    SectionTestimonial
+    SectionTestimonial,
+    SectionSlice
+  },
+  props: {
+    content: {
+      type: Object,
+      default() {},
+      required: true
+    },
+    offerings: {
+      type: Array,
+      default() {},
+      required: true
+    }
   },
   data() {
     return {
-      index: 0
+      testimonials: []
     };
   },
   computed: {
     ...mapGetters({
-      company: "company/company",
-      comments: "company/comments",
-      offerings: "company/offerings",
-      signedIn: "auth/currentUserAuth",
-      accredited: "user/accredited"
-    })
+      comments: "company/comments"
+    }),
+    signedIn() {
+      return !!this.$store.state.auth.email;
+    }
+  },
+  created() {
+    const investorList = [];
+    this.offerings.forEach(offering => {
+      offering.investments.forEach(investment => {
+        investorList.push(investment);
+      });
+    });
+    this.testimonials = investorList;
   },
   methods: {
-    setIndex(i) {
-      this.index = i;
-    },
     iconIt(platform) {
-      switch (platform) {
-        case "https://instagram.com":
-          return "instagram";
-        case "https://facebook.com":
-          return "facebook-square";
-        case "https://youtube.com":
-          return "youtube";
-        case "https://twitter.com":
-          return "twitter";
-        case "https://linkedin.com/company":
-          return "linkedin";
-        default:
-          return "google";
+      const formatted = platform.toLowerCase();
+      return formatted === "facebook" ? "facebook-square" : formatted;
+    },
+    convertLink(url) {
+      if (url.provider_url === "https://www.youtube.com/") {
+        const videoId = url.embed_url.replace(
+          `${url.provider_url}watch?v=`,
+          ""
+        );
+        return `https://www.youtube.com/embed/${videoId}?feature=oembed`;
       }
     }
   }

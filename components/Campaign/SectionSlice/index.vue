@@ -1,0 +1,77 @@
+<template>
+  <section>
+    <div v-if="content.slice_type === 'text'">
+      <prismic-rich-text
+        :field="content.primary.content_text"
+        class="text-justify"
+      />
+    </div>
+
+    <!-- TODO: Discuss with Marvin for this -->
+    <div v-else-if="content.slice_type === 'image_gallery'"></div>
+
+    <div v-else-if="content.slice_type === 'faqs'">
+      <h3 class="pb-4 pt-2 text-center text-md-left">FAQs</h3>
+      <details
+        v-for="(faq, index) in content.items"
+        :key="index"
+        class="text-justify"
+        open
+      >
+        <summary>{{ faq.faq_question }}</summary>
+        <prismic-rich-text :field="faq.faq_answer" class="py-3" />
+      </details>
+    </div>
+
+    <div v-else-if="content.slice_type === 'team'">
+      <h3 class="pb-4 pt-2 text-center text-md-left">The Team</h3>
+      <div class="d-flex justify-content-around">
+        <b-card-group columns>
+          <b-card
+            v-for="(employee, index) in content.items"
+            :key="index"
+            no-body
+            style="border: none"
+          >
+            <div class="text-center py-3">
+              <b-avatar :src="employee.employee_photo.url" size="8rem" />
+
+              <b-card-text class="pt-3 mb-0">
+                {{ employee.employee_name }}
+              </b-card-text>
+
+              <small class="text-muted mb-0">
+                {{ employee.employee_role }}
+              </small>
+            </div>
+          </b-card>
+        </b-card-group>
+      </div>
+    </div>
+
+    <div v-else-if="content.slice_type === 'letter_to_investors'">
+      <h3 class="pb-4 pt-2 text-center text-md-left">Letter to Investors:</h3>
+      <em>
+        <prismic-rich-text
+          :field="content.primary.issuer_message"
+          class="text-justify"
+        />
+      </em>
+      <p class="text-muted">
+        - {{ content.primary.issuer_name }}, {{ content.primary.issuer_role }}
+      </p>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  props: {
+    content: {
+      type: Object,
+      default() {},
+      required: true
+    }
+  }
+};
+</script>

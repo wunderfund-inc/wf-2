@@ -62,9 +62,9 @@ export const paymentMethodFormat = val => {
     case "ACH":
       return "Bank Account (ACH)";
     case "CHECK":
-      return "a Check";
+      return "Check";
     case "WIRE":
-      return "a Wire Transfer";
+      return "Wire Transfer";
     case "CC":
       return "Credit Card";
     case "CRYPTO":

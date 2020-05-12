@@ -1,18 +1,19 @@
-<template lang="pug">
-  #app
-    main-navigation
-    nuxt.min-height
-    main-footer
+<template>
+  <div id="app">
+    <base-navigation />
+    <nuxt class="min-height" />
+    <base-footer />
+  </div>
 </template>
 
 <script>
-import MainNavigation from "@/components/Base/MainNavigation/index";
-import MainFooter from "@/components/Base/MainFooter/index";
+import BaseNavigation from "@/components/Base/BaseNavigation/index";
+import BaseFooter from "@/components/Base/BaseFooter/index";
 
 export default {
   components: {
-    MainNavigation,
-    MainFooter
+    BaseNavigation,
+    BaseFooter
   }
 };
 </script>

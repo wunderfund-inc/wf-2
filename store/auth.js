@@ -1,86 +1,32 @@
 import Cookies from "js-cookie";
 import {
   auth,
-  db,
-  timestamp,
+  verifyEmail,
   FacebookAuthProvider,
   GoogleAuthProvider
   // TwitterAuthProvider
 } from "@/plugins/firebase";
 
 export const state = () => ({
-  currentUserAuth: null
+  email: null,
+  emailVerified: false,
+  userId: null
 });
 
-export const getters = {
-  currentUserAuth: state => state.currentUserAuth,
-  userId: state => state.currentUserAuth.uid || state.currentUserAuth.user_id,
-  email: state => state.currentUserAuth.email,
-  emailVerified: state => {
-    return state.currentUserAuth
-      ? state.currentUserAuth.emailVerified ||
-          state.currentUserAuth.email_verified
-      : false;
-  }
-};
-
 export const mutations = {
-  SET_AUTH_DATA(state, payload) {
-    state.currentUserAuth = payload;
-  }
+  MUTATE: (state, payload) => (state[payload.prop] = payload.val)
 };
 
 export const actions = {
   async createUser({ dispatch }, form) {
     try {
-      const { email, password, attestations, name } = form;
+      const { email, password } = form;
       const user = await auth.createUserWithEmailAndPassword(email, password);
-
-      await dispatch("createUserInDb", {
-        uid: user.user.uid,
-        email,
-        attestations,
-        name
-      });
-
-      await dispatch("login", user);
+      await verifyEmail();
+      const userData = user.user.toJSON();
+      await dispatch("login", userData);
     } catch (error) {
-      throw Error(error.message);
-    }
-  },
-  async createUserInDb(
-    context,
-    { uid, email, attestations, name, displayName = null, avatar = null }
-  ) {
-    try {
-      const user = {
-        uid,
-        email,
-        attestations,
-        name,
-        displayName,
-        avatar,
-        accreditation: {
-          ai: 0,
-          nw: 0
-        },
-        address: {
-          street1: null,
-          street2: null,
-          city: null,
-          state: null,
-          postal: null
-        },
-        createdAt: timestamp,
-        updatedAt: timestamp
-      };
-
-      await db
-        .collection("users")
-        .doc(uid)
-        .set(user);
-    } catch (error) {
-      throw Error(error.message);
+      throw Error(error);
     }
   },
   async signInWithSocialMedia({ dispatch }, brand) {
@@ -98,29 +44,17 @@ export const actions = {
 
       const user = await auth.signInWithPopup(provider);
       const userData = user.user.toJSON();
-      if (user.additionalUserInfo.isNewUser) {
-        const payload = {
-          uid: userData.uid,
-          email: userData.email,
-          attestations: [],
-          name: {
-            first: null,
-            last: null
-          },
-          displayName: userData.displayName,
-          avatar: userData.photoURL
-        };
-        await dispatch("createUserInDb", payload);
-      }
       await dispatch("login", userData);
     } catch (error) {
       throw Error(error.message);
     }
   },
-  async loginUser({ dispatch }, { email, password }) {
+  async loginUser({ dispatch }, form) {
     try {
+      const { email, password } = form;
       const user = await auth.signInWithEmailAndPassword(email, password);
-      await dispatch("login", user.user.toJSON());
+      const userData = user.user.toJSON();
+      await dispatch("login", userData);
     } catch (error) {
       throw Error(error.message);
     }
@@ -129,7 +63,11 @@ export const actions = {
     try {
       const token = await auth.currentUser.getIdToken(true);
       Cookies.set("access_token", token);
-      await dispatch("setAuth", user);
+      await dispatch("set", {
+        email: user.email,
+        emailVerified: user.emailVerified,
+        userId: user.uid
+      });
     } catch (error) {
       throw Error(error.message);
     }
@@ -138,20 +76,26 @@ export const actions = {
     try {
       await auth.signOut();
       Cookies.remove("access_token");
-      await dispatch("setAuth", null);
+      await dispatch("unset");
     } catch (error) {
       throw Error(error.message);
     }
-  },
-  setAuth({ commit }, authData) {
-    commit("SET_AUTH_DATA", authData);
   },
   async resetPassword(context, password) {
     try {
       await auth.currentUser.updatePassword(password);
-      return null;
     } catch (error) {
       throw Error(error.message);
     }
+  },
+  set({ commit }, { email, emailVerified, userId }) {
+    commit("MUTATE", { prop: "email", val: email });
+    commit("MUTATE", { prop: "emailVerified", val: emailVerified });
+    commit("MUTATE", { prop: "userId", val: userId });
+  },
+  unset({ commit }) {
+    commit("MUTATE", { prop: "email", val: null });
+    commit("MUTATE", { prop: "emailVerified", val: null });
+    commit("MUTATE", { prop: "userId", val: null });
   }
 };

@@ -78,6 +78,7 @@ export const getters = {
     return password.old === password.new;
   },
   entities: state => state.entities,
+  hasEntities: state => state.entities.length > 0,
   investments: state => state.investments,
   currentUser: state => state.currentUser,
   userId: state => state.currentUser.uid,
@@ -175,14 +176,15 @@ export const actions = {
         const entities = entitiesList.docs.map(entity => entity.data());
         await dispatch("setEntities", entities);
 
-        const investmentsList = await db
-          .collection("investments")
-          .where("userId", "==", userId)
-          .get();
-        const investments = investmentsList.docs.map(investment => {
-          return investment.data();
-        });
-        await dispatch("setInvestments", investments);
+        // TODO: add this back in, somehow
+        // const investmentsList = await db
+        //   .collection("investments")
+        //   .where("userId", "==", userId)
+        //   .get();
+        // const investments = investmentsList.docs.map(investment => {
+        //   return investment.data();
+        // });
+        // await dispatch("setInvestments", investments);
       }
     } catch (error) {
       throw Error(error.message);
@@ -192,7 +194,6 @@ export const actions = {
     try {
       const entityRef = await db.collection("entities").doc();
       const userId = currentUserAuth.uid || currentUserAuth.user_id;
-      const userEntity = await db.collection(`users/${userId}/entities`).doc();
 
       const dto = {
         uid: entityRef.id,
@@ -203,7 +204,6 @@ export const actions = {
       };
 
       await entityRef.set({ ...dto, userId });
-      await userEntity.set(dto);
     } catch (error) {
       throw Error(error.message);
     }
