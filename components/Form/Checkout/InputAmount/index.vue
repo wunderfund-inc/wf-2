@@ -1,6 +1,6 @@
 <template>
   <div class="form-group mt-3">
-    <template v-if="securityType === 'Equity'">
+    <template v-if="offering.security_type === 'Equity'">
       <b-form-group
         label-cols-lg="6"
         label="Number of shares you wish to buy:"
@@ -58,10 +58,17 @@
           <div class="input-group-prepend">
             <span class="input-group-text text-muted">USD</span>
           </div>
-          <vue-autonumeric
+
+          <vue-numeric
             v-model="amount"
-            :options="'dollar'"
+            :empty-value="offering.minimum_investment_amount"
+            v-bind:min="offering.minimum_investment_amount"
+            v-bind:max="currentSpendPool"
+            v-bind:precision="2"
+            currency="$"
+            separator=","
             class="form-control"
+            type="tel"
           />
         </div>
 
@@ -72,13 +79,6 @@
             *Your commitment to invest needs to be at least
             {{ offering.minimum_investment_amount | asCurrency }}
           </span>
-          <!-- <br />
-          <span
-            :class="overInvested ? 'text-danger font-weight-bold' : 'text-muted'"
-          >
-            - The maximum amount you're allowed to invest at this time is
-            {{ spendPool.current | asCurrency }}
-          </span> -->
         </b-form-text>
       </b-form-group>
     </template>
@@ -86,12 +86,19 @@
 </template>
 
 <script>
-import VueAutonumeric from "vue-autonumeric";
+import { mapState, mapGetters } from "vuex";
+import VueNumeric from "vue-numeric";
 import { TheMask } from "vue-the-mask";
 
 export default {
-  components: { VueAutonumeric, TheMask },
+  components: { VueNumeric, TheMask },
   computed: {
+    ...mapState({
+      offering: state => state.agreement.offering
+    }),
+    ...mapGetters({
+      currentSpendPool: "profile/spendPoolCurrent"
+    }),
     amount: {
       get() {
         return this.$store.state.agreement.amount;
@@ -103,14 +110,8 @@ export default {
         });
       }
     },
-    offering() {
-      return this.$store.state.agreement.offering;
-    },
-    securityType() {
-      return this.offering.security_type;
-    },
     validInput() {
-      if (this.securityType === "Equity") {
+      if (this.offering.security_type === "Equity") {
         return (
           this.amount * this.offering.price_per_share >=
           this.offering.securities_min
@@ -119,12 +120,6 @@ export default {
         return this.amount >= this.offering.minimum_investment_amount;
       }
     }
-    // overInvested() {
-    //   return this.amount >= this.spendPool.current;
-    // },
-    // spendPool() {
-    //   return this.$store.getters["user/spendPool"];
-    // }
   }
 };
 </script>

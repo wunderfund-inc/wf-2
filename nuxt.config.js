@@ -135,8 +135,6 @@ export default {
      */
     extend(config, ctx) {
       config.resolve.alias.vue = "vue/dist/vue.common";
-      config.resolve.alias.autonumeric =
-        "node_modules/autonumeric/dist/autoNumeric.min";
     }
   },
   generate: {
