@@ -1,10 +1,11 @@
-<template lang="pug">
-  main
-    section-jumbotron
-    section-unique
-    section-ops
-    section-eligibility
-    section-faq
+<template>
+  <main>
+    <section-jumbotron />
+    <section-unique />
+    <section-ops />
+    <section-eligibility />
+    <section-faq />
+  </main>
 </template>
 
 <script>

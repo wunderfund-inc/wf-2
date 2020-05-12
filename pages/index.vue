@@ -1,10 +1,13 @@
-<template lang="pug">
-  main
-    hero-section
-    email-capture
-    section-browse
-      template(#header)
-        h5.text-center.pb-4 Live Campaigns:
+<template>
+  <main>
+    <hero-section />
+    <email-capture />
+    <section-browse v-if="companies.length > 0" :companies="companies">
+      <template #header>
+        <h5 class="text-center pb-4">Live Campaigns:</h5>
+      </template>
+    </section-browse>
+  </main>
 </template>
 
 <script>
@@ -18,13 +21,13 @@ export default {
     EmailCapture,
     SectionBrowse
   },
-  async fetch({ store }) {
-    try {
-      await store.dispatch("company/fetchCompanies");
-    } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
-    }
+  async asyncData({ $prismic }) {
+    const companies = (
+      await $prismic.api.query(
+        $prismic.predicates.at("document.type", "campaign")
+      )
+    ).results;
+    return { companies };
   }
 };
 </script>

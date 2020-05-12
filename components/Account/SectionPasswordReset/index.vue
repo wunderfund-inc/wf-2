@@ -1,59 +1,50 @@
 <template lang="pug">
   section
-    hr
-    .container
-      h4.pb-3 Password Reset
-      b-alert(
-        v-model="errorDisplay"
-        variant="danger"
-        dismissible
-      ) {{ errorMessage }}
-      form(@submit.prevent="submitPasswordChange")
-        .form-row
-          .col-12.col-md-6
-            b-form-group.text-left(
-              label="Type your old password below:"
-              label-for="password-old"
+    h4.pb-3 Password Reset
+    b-alert(
+      v-model="errorDisplay"
+      variant="danger"
+      dismissible
+    ) {{ errorMessage }}
+    form(@submit.prevent="submitPasswordChange")
+      .form-row
+        .col-12.col-md-6
+          b-form-group.text-left(
+            label="Type your old password below:"
+            label-for="password-old"
+            :state="validateState('old')"
+          )
+            b-form-input#password-old(
+              v-model="$v.password.old.$model"
               :state="validateState('old')"
+              type="password"
+              trim
             )
-              b-form-input#password-old(
-                v-model="$v.password.old.$model"
-                :state="validateState('old')"
-                type="password"
-                trim
-              )
-          .col-12.col-md-6
-            b-form-group.text-left(
-              label="New Password"
-              label-for="password-new"
+        .col-12.col-md-6
+          b-form-group.text-left(
+            label="New Password"
+            label-for="password-new"
+            :state="validateState('new')"
+          )
+            b-form-input#password-new(
+              v-model="$v.password.new.$model"
               :state="validateState('new')"
+              type="password"
             )
-              b-form-input#password-new(
-                v-model="$v.password.new.$model"
-                :state="validateState('new')"
-                type="password"
-              )
-              b-form-invalid-feedback(:state="validateState('new')")
-                ul(v-if="$v.password.$anyError")
-                  li(v-if="!$v.password.new.minLength")
-                    span Must be at least 8 characters.
-                  li(v-if="!$v.password.new.differentFromOld")
-                    span Cannot be the same as your old password.
-        b-form-row
-          b-col
-            b-button(
-              variant="success"
-              type="submit"
-              :disabled="$v.password.$invalid || submitting"
-            )
-              span.spinner-border.spinner-border-sm.mr-2(
-                v-if="submitting"
-                role="status"
-                aria-hiden="true"
-                style="margin-bottom: 4px"
-              )
-              span(v-if="submitting") Submitting...
-              span(v-if="!submitting") Sign Up
+            b-form-invalid-feedback(:state="validateState('new')")
+              ul(v-if="$v.password.$anyError")
+                li(v-if="!$v.password.new.minLength")
+                  span Must be at least 8 characters.
+                li(v-if="!$v.password.new.differentFromOld")
+                  span Cannot be the same as your old password.
+      .form-row
+        .col
+          b-button(
+            variant="success"
+            type="submit"
+            :disabled="$v.password.$invalid || submitting"
+          )
+            span Reset Password
 </template>
 
 <script>

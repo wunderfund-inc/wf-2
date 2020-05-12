@@ -1,5 +1,5 @@
 <template>
-  <base-sub-nav :list="list" category="legal" />
+  <base-sub-nav :links="links" />
 </template>
 
 <script>
@@ -11,26 +11,26 @@ export default {
   },
   data() {
     return {
-      list: [
+      links: [
         {
-          title: "Terms of Use",
-          slug: "terms-of-use"
+          name: "Terms of Use",
+          url: "/legal/terms-of-use"
         },
         {
-          title: "Privacy Policy",
-          slug: "privacy-policy"
+          name: "Privacy Policy",
+          url: "/legal/privacy-policy"
         },
         {
-          title: "Investor Agreement",
-          slug: "investor-agreement"
+          name: "Investor Agreement",
+          url: "/legal/investor-agreement"
         },
         {
-          title: "Startup Agreement",
-          slug: "startup-agreement"
+          name: "Startup Agreement",
+          url: "/legal/startup-agreement"
         },
         {
-          title: "Electronic Consent",
-          slug: "electronic-consent"
+          name: "Electronic Consent",
+          url: "/legal/electronic-consent"
         }
       ]
     };

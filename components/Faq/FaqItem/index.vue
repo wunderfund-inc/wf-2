@@ -1,9 +1,10 @@
-<template lang="pug" functional>
-  details.pb-3(open)
-    summary
-      strong {{ props.question }}
-    br
-    p {{ props.answer }}
+<template functional>
+  <details class="mb-3" open>
+    <summary class="mb-3">
+      <strong>{{ props.question }}</strong>
+    </summary>
+    <p>{{ props.answer }}</p>
+  </details>
 </template>
 
 <script>

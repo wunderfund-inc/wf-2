@@ -1,5 +1,5 @@
 <template>
-  <base-sub-nav :list="list" category="faq" />
+  <base-sub-nav :links="links" />
 </template>
 
 <script>
@@ -11,18 +11,18 @@ export default {
   },
   data() {
     return {
-      list: [
+      links: [
         {
-          title: "General",
-          slug: "general"
+          name: "General",
+          url: "/faq/general"
         },
         {
-          title: "Investors",
-          slug: "investor"
+          name: "Investors",
+          url: "/faq/investors"
         },
         {
-          title: "Companies",
-          slug: "company"
+          name: "Companies",
+          url: "/faq/companies"
         }
       ]
     };

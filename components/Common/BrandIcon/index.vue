@@ -1,5 +1,5 @@
-<template lang="pug">
-  font-awesome-icon(:icon="['fab', i]")
+<template>
+  <font-awesome-icon :icon="['fab', i]" />
 </template>
 
 <script>

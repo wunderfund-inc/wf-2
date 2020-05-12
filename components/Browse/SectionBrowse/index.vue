@@ -1,27 +1,29 @@
-<template lang="pug">
-  section
-    .container.pt-5
-      slot(name="header")
-      .row
-        .col-12.col-md-4(
-          v-for="(company, index) in companies"
-          :key="index"
-        )
-          browse-card(:company="company")
+<template>
+  <section class="container py-5">
+    <slot name="header"></slot>
+    <div class="row">
+      <div
+        v-for="(company, index) in companies"
+        :key="index"
+        class="col-12 col-md-4"
+      >
+        <browse-card :company="company" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import BrowseCard from "@/components/Common/BrowseCard";
+import BrowseCard from "@/components/Browse/BrowseCard";
 
 export default {
-  components: {
-    BrowseCard
-  },
-  computed: {
-    ...mapGetters({
-      companies: "company/companies"
-    })
+  components: { BrowseCard },
+  props: {
+    companies: {
+      type: Array,
+      default() {},
+      required: true
+    }
   }
 };
 </script>

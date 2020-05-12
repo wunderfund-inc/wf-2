@@ -1,5 +1,5 @@
-<template lang="pug">
-  font-awesome-icon(:icon="i")
+<template>
+  <font-awesome-icon :icon="i" />
 </template>
 
 <script>

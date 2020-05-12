@@ -1,44 +1,45 @@
-<template lang="pug">
-section#manual-auth
-  b-overlay(:show="showOverlay")
-    template(#overlay)
-      .d-flex.align-items-center
-        b-spinner(small type="grow" variant="secondary")
-        b-spinner(type="grow" variant="dark")
-        b-spinner(small type="grow" variant="secondary")
-        span.sr-only Please wait...
-      .text-center
-        p Logging in...
-    b-card.my-2(no-body)
-      b-card-body
-        b-form#via-password(
-          @submit.prevent="submitLoginForm"
-          @keypress.enter.prevent="submitLoginForm"
-        )
-          b-form-group.text-left(
-            label="Email Address"
-            label-for="input-email"
-          )
-            b-form-input#input-email(
-              type="email"
-              v-model="email"
-              trim
-            )
-          b-form-group.text-left(
-            label="Password"
-            label-for="input-password"
-          )
-            b-form-input#input-password(
-              type="password"
-              v-model="password"
-              trim
-            )
-          b-button(
-            type="submit"
-            variant="primary"
-            block
-          ) Login
-          p.text-danger.pt-3 {{ error }}
+<template>
+  <section>
+    <b-overlay :show="showOverlay">
+      <template #overlay>
+        <div class="d-flex justify-content-center mb-3">
+          <b-spinner large variant="secondary" />
+          <span class="sr-only">Please wait...</span>
+        </div>
+        <div class="text-center">
+          <p>Logging In...</p>
+        </div>
+      </template>
+      <div class="card bg-light mb-3">
+        <div class="container my-3">
+          <form @submit.prevent="submitLoginForm">
+            <div class="form-group">
+              <label for="input-email">Email address</label>
+              <input
+                id="input-email"
+                v-model.trim="form.email"
+                type="email"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="input-password">Password</label>
+              <input
+                id="input-password"
+                v-model.trim="form.password"
+                type="password"
+                class="form-control"
+              />
+            </div>
+            <button class="btn btn-block btn-primary" type="submit">
+              Login
+            </button>
+            <p class="text-danger mb-0">{{ error }}</p>
+          </form>
+        </div>
+      </div>
+    </b-overlay>
+  </section>
 </template>
 
 <script>
@@ -47,8 +48,10 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      email: null,
-      password: null,
+      form: {
+        email: null,
+        password: null
+      },
       error: null
     };
   },
@@ -59,14 +62,15 @@ export default {
     async submitLoginForm() {
       try {
         await this.$store.dispatch("toggleOverlay", true);
-        await this.$store.dispatch("auth/loginUser", {
-          email: this.email,
-          password: this.password
-        });
-        const userId = this.$store.getters["auth/userId"];
-        await this.$store.dispatch("user/setAccountData", userId);
+        await this.$store.dispatch("auth/loginUser", this.form);
         await this.$store.dispatch("toggleOverlay", false);
-        await this.$router.replace("/u");
+        if (this.$route.query.return_to) {
+          await this.$router.replace(
+            decodeURIComponent(this.$route.query.return_to)
+          );
+        } else {
+          await this.$router.go("/auth/attest");
+        }
       } catch (error) {
         await this.$store.dispatch("toggleOverlay", false);
         this.error = error.message;

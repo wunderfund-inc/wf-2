@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import d from "@/components/Form/data.json";
+import states from "@/components/Form/states";
 
 export default {
   data() {
     return {
-      states: d.states
+      states: states
     };
   },
   computed: {

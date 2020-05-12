@@ -60,8 +60,8 @@ describe("testing filter functions", () => {
   describe("format payment methods based on value", () => {
     it("adds context to ACH and Cryptocurrency transfers", () => {
       expect(paymentMethodFormat("ACH")).toBe("Bank Account (ACH)");
-      expect(paymentMethodFormat("CHECK")).toBe("a Check");
-      expect(paymentMethodFormat("WIRE")).toBe("a Wire Transfer");
+      expect(paymentMethodFormat("CHECK")).toBe("Check");
+      expect(paymentMethodFormat("WIRE")).toBe("Wire Transfer");
       expect(paymentMethodFormat("CC")).toBe("Credit Card");
       expect(paymentMethodFormat("CRYPTO")).toBe("Cryptocurrency (Ethereum)");
     });

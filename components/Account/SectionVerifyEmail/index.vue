@@ -1,28 +1,39 @@
-<template lang="pug">
-  b-row
-    b-col.d-none.d-md-block
-    b-col
-      b-card
-        b-card-body
-          h1 Next Steps
-          p It looks like you haven't been verified yet. Please check your inbox (or spam folder!) of #[span.text-success {{ email }}] for a link to verify you.
-          small #[b-btn(@click="linkToVerify") Click here to resend the link.]
-    b-col.d-none.d-md-block
+<template>
+  <b-alert show variant="info">
+    <div class="container py-4">
+      <h4 class="alert-heading">Please verify your email</h4>
+      <p>
+        You're almost ready to invest! Please check the inbox of
+        <strong>{{ email }}</strong> to verify your email.
+      </p>
+      <button @click="resendLink" v-if="showLink" class="btn btn-info">
+        Resend Link
+      </button>
+      <p v-else>
+        Link sent!
+      </p>
+    </div>
+  </b-alert>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import { verifyEmail } from "@/plugins/firebase";
 
 export default {
+  data() {
+    return {
+      showLink: true
+    };
+  },
   computed: {
-    ...mapGetters({
-      email: "auth/email"
-    })
+    email() {
+      return this.$store.state.auth.email;
+    }
   },
   methods: {
-    linkToVerify() {
+    resendLink() {
       verifyEmail();
+      this.showLink = false;
     }
   }
 };

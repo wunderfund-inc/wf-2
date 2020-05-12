@@ -6,11 +6,11 @@
           <h2>Startups need capital.</h2>
           <h2>We've made it easy.</h2>
           <p>
-            Fact: Women & Minorities make up less thatn 2% of venture backed
+            Fact: Women & Minorities make up less than 2% of venture backed
             capital. Crowdfunding is here to change that.
           </p>
           <b-link href="mailto:taylor@wunderfund.co">
-            <main-button>Apply to raise</main-button>
+            <main-button extra-classes="px-5">Apply to Campaign</main-button>
           </b-link>
         </div>
         <div class="col-md-6 col-sm-8">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import MainButton from "../../Common/MainButton";
+import MainButton from "@/components/Common/MainButton";
 
 export default {
   components: {
