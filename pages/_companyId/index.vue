@@ -35,7 +35,7 @@ async function getLocations(offeringId) {
 }
 
 async function getCompanyLocation(zip) {
-  const response = await fetch(`http://api.zippopotam.us/us/${zip}`);
+  const response = await fetch(`https://api.zippopotam.us/us/${zip}`);
   const location = await response.json();
   return {
     lat: Number(location.places[0].latitude),
