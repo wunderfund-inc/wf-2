@@ -6,7 +6,8 @@ import {
   validAchRoutingNumber,
   validCreditCard,
   validEthereumAddress,
-  validAttestations
+  validAttestations,
+  oneYearPassed
 } from "./validators";
 
 describe("testing validator functions", () => {
@@ -148,6 +149,8 @@ describe("testing validator functions", () => {
   describe("Attestations", () => {
     it("test attestations", () => {
       const data = [
+        { d: null, expected: false },
+        { d: [null], expected: false },
         { d: [], expected: false },
         { d: [false, false, false, false, false], expected: false },
         { d: ["asdf", false, false, false, false], expected: false },
@@ -157,6 +160,16 @@ describe("testing validator functions", () => {
         { d: ["asdf", "asdf", "asdf", "asdf", "asdf"], expected: true }
       ];
       data.forEach(el => expect(validAttestations(el.d)).toBe(el.expected));
+    });
+  });
+
+  describe("testing oneYearPassed function", () => {
+    it("validate", () => {
+      const now = new Date().getTime() / 1000; // in seconds
+
+      expect(oneYearPassed(1)).toBe(true);
+      expect(oneYearPassed(now - 364 * 24 * 60 * 60)).toBe(false);
+      expect(oneYearPassed(now - 365 * 24 * 60 * 60)).toBe(true);
     });
   });
 });

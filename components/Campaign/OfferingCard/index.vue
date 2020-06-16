@@ -5,25 +5,45 @@
     no-body
   >
     <b-card-body>
-      <b-card-title class="text-center text-md-left">
-        <span>
+      <div class="text-center text-md-left">
+        <b-card-title title-tag="h2">
           Raised:
           <strong class="text-success">{{ currentRaise | asCurrency }}</strong>
-          <small class="text-muted h6">
-            (Goal: {{ offering.offering_raise_min | currencyDisplayFormat }} -
-            {{ offering.offering_raise_max | currencyDisplayFormat }})
-          </small>
-        </span>
-        <br />
-        <span class="h5">
-          Investments: <strong>{{ investmentCount }}</strong>
-        </span>
-        <br />
-        <span class="h5">
-          Days Left:
-          <strong>{{ offering.offering_date_end | timeDistance }}</strong>
-        </span>
-      </b-card-title>
+        </b-card-title>
+
+        <b-card-title title-tag="h5">
+          # Investments:
+          <strong>{{ investmentCount }}</strong>
+        </b-card-title>
+
+        <b-card-sub-title class="my-2">
+          <template v-if="offering.security_type === 'Equity'">
+            Goal:
+            {{
+              (offering.securities_min_sell * offering.price_per_share)
+                | currencyDisplayFormat
+            }}
+            -
+            {{
+              (offering.securities_total * offering.price_per_share)
+                | currencyDisplayFormat
+            }}
+          </template>
+          <template v-else>
+            Goal: {{ offering.offering_raise_min | currencyDisplayFormat }} -
+            {{ offering.offering_raise_max | currencyDisplayFormat }}
+          </template>
+        </b-card-sub-title>
+
+        <template v-if="!offeringEnded && endingSoon">
+          <b-card-title class="h6">
+            Time Left:
+            <strong class="h3">
+              {{ offering.offering_date_end | timeDistance }}
+            </strong>
+          </b-card-title>
+        </template>
+      </div>
 
       <template v-if="offering.security_type === 'Promissory Note'">
         <b-card-text class="mb-0">
@@ -45,10 +65,12 @@
 
       <template v-if="offering.security_type === 'Revenue Share'">
         <b-card-text>
-          {{ companyName }} will pay {{ offering.percent_per_period }}% of
+          {{ companyName }} will pay
+          <strong>{{ offering.percent_per_period }}%</strong> of
           {{ offering.revenue_type.toLowerCase() }} revenues to its investors on
           a {{ offering.payment_interval.toLowerCase() }} basis until it pays
-          off {{ offering.return_multiplier }}x your investment amount.
+          off <strong>{{ `${offering.return_multiplier}x` }}</strong>
+          your investment amount.
         </b-card-text>
         <b-card-text class="mb-0">
           Minimum Amount to Invest:
@@ -68,18 +90,20 @@
           <strong>
             {{ offering.price_per_share | asCurrency }} per share,
           </strong>
-          which will be calculated as (amount invested /
-          <strong>
-            {{
-              (offering.price_per_share * offering.securities_total)
-                | currencyDisplayFormat
-            }}
-          </strong>
+          which will be calculated as (your amount invested /
+          <strong>{{ offering.valuation_cap | currencyDisplayFormat }}</strong>
           {{ offering.valuation_type }} valuation).
         </b-card-text>
         <b-card-text class="mb-0">
-          Minimum Shares to Invest:
+          Minimum Shares to Invest in:
           <strong>{{ offering.securities_min }}</strong>
+          <small class="text-muted">
+            (x {{ offering.price_per_share | asCurrency }}/share =
+            {{
+              (offering.price_per_share * offering.securities_min) | asCurrency
+            }}
+            minimum)
+          </small>
         </b-card-text>
       </template>
 
@@ -117,36 +141,31 @@
           offering.agreement_offering.url || offering.agreement_subscription.url
         "
       >
-        <div class="row pt-3">
-          <div class="col-12 col-md-6 text-center">
-            <small>
-              <prismic-link
-                v-if="offering.agreement_offering.url"
-                :field="offering.agreement_offering"
-                class="text-decoration-none"
-              >
-                <solid-icon i="file-pdf" />
-                Offering Agreement
-              </prismic-link>
-            </small>
-          </div>
-
-          <div class="col-12 col-md-6 text-center">
-            <small>
-              <prismic-link
-                v-if="offering.agreement_subscription.url"
-                :field="offering.agreement_subscription"
-                class="text-decoration-none"
-              >
-                <solid-icon i="file-pdf" />
-                Subscription Agreement
-              </prismic-link>
-            </small>
-          </div>
+        <div class="pt-3">
+          <small class="row d-flex justify-content-around">
+            <prismic-link
+              v-if="offering.agreement_offering.url"
+              :field="offering.agreement_offering"
+              class="text-decoration-none"
+              target="_blank"
+            >
+              <solid-icon i="file-pdf" />
+              Offering Agreement
+            </prismic-link>
+            <prismic-link
+              v-if="offering.agreement_subscription.url"
+              :field="offering.agreement_subscription"
+              class="text-decoration-none"
+              target="_blank"
+            >
+              <solid-icon i="file-pdf" />
+              Subscription Agreement
+            </prismic-link>
+          </small>
         </div>
       </template>
 
-      <div v-if="offering.accredited_investors_only" class="row">
+      <div v-if="offering.accredited_investors_only" class="row mb-md-3">
         <div class="col">
           <small class="text-muted">
             * This offering is for
@@ -160,15 +179,57 @@
           </small>
         </div>
       </div>
+
+      <b-navbar
+        v-if="!offeringEnded"
+        fixed="bottom"
+        variant="transparent"
+        class="d-block d-md-none"
+      >
+        <nuxt-link
+          :to="
+            signedIn
+              ? `/${$route.params.companyId}/verify`
+              : `/auth/login?return_to=/${$route.params.companyId}`
+          "
+          class="text-decoration-none w-100 d-md-none"
+        >
+          <main-button extra-classes="btn-block px-5 py-3">
+            {{ signedIn ? "Invest Now" : "Login to Invest" }}
+          </main-button>
+        </nuxt-link>
+      </b-navbar>
+
+      <nuxt-link
+        v-if="!offeringEnded"
+        :to="
+          signedIn
+            ? `/${$route.params.companyId}/verify`
+            : `/auth/login?return_to=/${$route.params.companyId}`
+        "
+        class="text-decoration-none d-none d-md-block mt-3"
+      >
+        <main-button class="mb-0 py-3 btn-block">
+          {{ signedIn ? "Invest Now" : "Login to Invest" }}
+        </main-button>
+      </nuxt-link>
+
+      <b-alert v-else show variant="warning" class="py-3 mt-3 mb-0 text-center">
+        This offering has ended.
+      </b-alert>
     </b-card-body>
   </b-tab>
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
+import differenceInDays from "date-fns/differenceInDays";
+import isAfter from "date-fns/isAfter";
+import MainButton from "@/components/Common/MainButton";
 import SolidIcon from "@/components/Common/SolidIcon";
 
 export default {
-  components: { SolidIcon },
+  components: { MainButton, SolidIcon },
   props: {
     companyName: {
       type: String,
@@ -186,21 +247,34 @@ export default {
       investmentCount: 0
     };
   },
-  created() {
-    this.investmentCount = this.offering.investments.length;
-
-    if (this.offering.investments.length > 0) {
-      const investmentData = this.offering.investments.map(el => {
-        return el.investment_amount;
-      });
-
-      const multiplier =
-        this.offering.security_type === "EQUITY"
-          ? this.offering.price_per_share
-          : 1;
-
-      this.currentRaise =
-        multiplier * investmentData.reduce((tot = 0, num) => tot + num);
+  computed: {
+    signedIn() {
+      return !!this.$store.state.auth.email;
+    },
+    endingSoon() {
+      return (
+        differenceInDays(
+          new Date(this.offering.offering_date_end),
+          new Date()
+        ) < 30
+      );
+    },
+    offeringEnded() {
+      return isAfter(new Date(), new Date(this.offering.offering_date_end));
+    }
+  },
+  async created() {
+    try {
+      const metricsRef = await db
+        .collection("metrics_per_offering")
+        .doc(this.offering.offering_data.id)
+        .get();
+      const metrics = metricsRef.data();
+      this.currentRaise = metrics.total_raise;
+      this.investmentCount = metrics.total_investments;
+    } catch (error) {
+      // eslint-disable-next-line
+      console.error(error);
     }
   }
 };

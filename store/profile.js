@@ -11,13 +11,15 @@ export const state = () => ({
   address_street_1: null,
   address_street_2: null,
   avatar: null,
+  dob: null,
   first_name: null,
   last_name: null,
   attestations: [],
   is_entity: false,
   entity_name: null,
   entity_type: null,
-  entity_ein: null
+  entity_ein: null,
+  transact_api_account_id: null
 });
 
 export const getters = {
@@ -49,6 +51,11 @@ export const getters = {
 
     const validFirstName = firstName && firstName.length > 0;
     const validLastName = lastName && lastName.length > 0;
+
+    const dob = state.dob;
+    const dobRegex = /(?:19|20)\d{2}-((?:0[1-9])|(?:1[0-2]))-((?:0[0-9])|(?:[1-2][0-9])|(?:3[0-1]))/;
+
+    const validDob = dobRegex.test(dob);
     const validStreet1 = street1 && street1.length > 0;
     const validCity = city && city.length > 2;
     const validState = addressState && addressState.length === 2;
@@ -57,7 +64,21 @@ export const getters = {
     const validName = validFirstName && validLastName;
     const validAddress = validStreet1 && validCity && validState && validPostal;
 
-    return validName && validAddress;
+    const entityName = state.entity_name;
+    const entityType = state.entity_type;
+    const entityEin = state.entity_ein;
+    const einRegex = /^[1-9]\d?-\d{7}$/;
+
+    const validEntityName = entityName && entityName.length > 0;
+    const validEntityType = entityType && entityType.length > 0;
+    const validEntityEin = einRegex.test(entityEin);
+    const validEntity = validEntityName && validEntityType && validEntityEin;
+
+    if (state.is_entity) {
+      return validName && validEntity && validAddress;
+    } else {
+      return validName && validDob && validAddress;
+    }
   }
 };
 
@@ -109,6 +130,10 @@ export const actions = {
         val: userData.avatar
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
+        prop: "dob",
+        val: userData.dob
+      });
+      await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "first_name",
         val: userData.first_name
       });
@@ -123,6 +148,10 @@ export const actions = {
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "attestations",
         val: userData.attestations
+      });
+      await commit("SET_PROFILE_ATTRIBUTE", {
+        prop: "transact_api_account_id",
+        val: userData.transact_api_account_id
       });
 
       if (userData.is_entity) {
@@ -140,7 +169,8 @@ export const actions = {
         });
       }
     } catch (error) {
-      throw Error(error);
+      // eslint-disable-next-line
+      console.error(error);
     }
   },
   async setAttribute({ commit }, { prop, val }) {
@@ -151,45 +181,58 @@ export const actions = {
     }
   },
   async update({ state }, { userId, flag }) {
-    let dto;
-
-    if (flag === "profile") {
-      dto = {
-        accreditation_ai: state.accreditation_ai,
-        accreditation_nw: state.accreditation_nw,
-        address_city: state.address_city,
-        address_postal: state.address_postal,
-        address_state: state.address_state,
-        address_street_1: state.address_street_1,
-        address_street_2: state.address_street_2,
-        avatar: state.avatar,
-        first_name: state.first_name,
-        last_name: state.last_name,
-        date_updated: timestamp
-      };
-
-      if (state.is_entity) {
-        dto.entity_name = state.entity_name;
-        dto.entity_type = state.entity_type;
-        dto.entity_ein = state.entity_ein;
-      }
-    } else {
-      /**
-       * using attestation form data (for now, extend the if statement if
-       * there's more forms to fill out)
-       */
-      dto = {
-        is_entity: state.is_entity,
-        attestations: state.attestations,
-        date_updated: timestamp
-      };
-    }
-
     try {
-      await db
-        .collection("users")
-        .doc(userId)
-        .update(dto);
+      let dto;
+
+      if (flag === "profile") {
+        dto = {
+          accreditation_ai: state.accreditation_ai,
+          accreditation_nw: state.accreditation_nw,
+          address_city: state.address_city,
+          address_postal: state.address_postal,
+          address_state: state.address_state,
+          address_street_1: state.address_street_1,
+          address_street_2: state.address_street_2,
+          avatar: state.avatar,
+          first_name: state.first_name,
+          last_name: state.last_name,
+          date_updated: timestamp
+        };
+
+        if (state.is_entity) {
+          dto.entity_name = state.entity_name;
+          dto.entity_type = state.entity_type;
+          dto.entity_ein = state.entity_ein;
+        } else {
+          dto.dob = state.dob;
+        }
+
+        await db
+          .collection("users")
+          .doc(userId)
+          .update({
+            ...dto,
+            flag: `update:${state.is_entity ? "entity" : "individual"}`
+          });
+      } else {
+        /**
+         * using attestation form data (for now, extend the if statement if
+         * there's more forms to fill out)
+         */
+        dto = {
+          is_entity: state.is_entity,
+          attestations: state.attestations,
+          date_updated: timestamp
+        };
+
+        await db
+          .collection("users")
+          .doc(userId)
+          .update({
+            ...dto,
+            flag: "update:attestation"
+          });
+      }
     } catch (error) {
       throw Error(error);
     }
@@ -201,7 +244,8 @@ export const actions = {
         .doc(userId)
         .update({
           ...payload,
-          date_updated: timestamp
+          date_updated: timestamp,
+          flag: "update:checkout"
         });
     } catch (error) {
       throw Error(error);

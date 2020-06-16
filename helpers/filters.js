@@ -1,6 +1,7 @@
 import Vue from "vue";
-import formatDistance from "date-fns/formatDistance";
 import numeral from "numeral";
+import format from "date-fns/format";
+import formatDistance from "date-fns/formatDistance";
 import fromUnixTime from "date-fns/fromUnixTime";
 
 /**
@@ -87,13 +88,23 @@ Vue.filter("einStrFormat", einNumToStr);
 /**
  * Function to calculate days left
  */
-export const timeDistance = val => formatDistance(new Date(val), new Date());
+export const timeDistance = val => {
+  return formatDistance(new Date(), new Date(`${val} 23:59:59`));
+};
 Vue.filter("timeDistance", timeDistance);
 
 /**
  * Format currency to its abbreviated form
  */
-export const currencyDisplayFormat = val => numeral(val).format("($0.0a)");
+export const currencyDisplayFormat = val => {
+  if (parseFloat(val.toString()) === parseFloat(val)) {
+    return numeral(val)
+      .format("($0.0a)")
+      .toUpperCase();
+  } else {
+    throw TypeError("not a number");
+  }
+};
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
 
 /**
@@ -123,3 +134,11 @@ Vue.filter("firstLetterOnly", firstLetterOnly);
  */
 const dateFromSeconds = val => fromUnixTime(val).toLocaleDateString();
 Vue.filter("dateFromSeconds", dateFromSeconds);
+
+/**
+ * Converts to Long form date (e.g. "May 01, 2020")
+ * @param {Date} val
+ * @returns date string
+ */
+const dateFormatLong = val => format(val, "PP");
+Vue.filter("dateFormatLong", dateFormatLong);

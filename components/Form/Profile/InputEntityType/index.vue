@@ -17,9 +17,7 @@ export default {
         "Limited Partnership",
         "Revocable Trust",
         "Irrevocable Trust",
-        "B-Corporation",
-        "C-Corporation",
-        "S-Corporation"
+        "Corporation"
       ]
     };
   },

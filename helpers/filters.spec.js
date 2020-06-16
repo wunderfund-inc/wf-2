@@ -6,7 +6,8 @@ import {
   regulationFormat,
   pluralFaq,
   paymentMethodFormat,
-  einNumToStr
+  einNumToStr,
+  currencyDisplayFormat
 } from "./filters";
 
 describe("testing filter functions", () => {
@@ -70,6 +71,21 @@ describe("testing filter functions", () => {
   describe("format EIN numbers to a string", () => {
     it("adds a hyphen between 2nd and 3rd digit", () => {
       expect(einNumToStr(121234567)).toBe("12-1234567");
+    });
+  });
+
+  describe("check currency display (reduced) is correct", () => {
+    it("reduces a number", () => {
+      expect(currencyDisplayFormat(10000)).toBe("$10.0K");
+      expect(currencyDisplayFormat("10000")).toBe("$10.0K");
+      expect(currencyDisplayFormat(10.01)).toBe("$10.0");
+      expect(currencyDisplayFormat("10.01")).toBe("$10.0");
+      expect(currencyDisplayFormat(2500000)).toBe("$2.5M");
+    });
+
+    it("gives back an error if not a number", () => {
+      expect(() => currencyDisplayFormat("asd")).toThrow(TypeError);
+      expect(() => currencyDisplayFormat("$2.0M")).toThrow(TypeError);
     });
   });
 });

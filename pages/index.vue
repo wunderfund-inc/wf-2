@@ -27,7 +27,16 @@ export default {
         $prismic.predicates.at("document.type", "campaign")
       )
     ).results;
-    return { companies };
+
+    const sorted = companies
+      .filter(company => !company.data.on_wfh)
+      .sort(function(a, b) {
+        return (
+          new Date(b.last_publication_date) - new Date(a.last_publication_date)
+        );
+      });
+
+    return { companies: sorted };
   }
 };
 </script>

@@ -34,6 +34,12 @@
 
 <script>
 export default {
+  props: {
+    companyId: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       formSubmitted: false,
@@ -58,7 +64,10 @@ export default {
   },
   methods: {
     submitComment() {
-      this.$store.dispatch("company/submitComment", this.form);
+      this.$store.dispatch("company/submitComment", {
+        ...this.form,
+        companyId: this.companyId
+      });
       this.formSubmitted = true;
     },
     checkRole(e) {

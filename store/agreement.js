@@ -38,7 +38,9 @@ export const getters = {
   validAmount(state) {
     if (!state.offering || !state.amount) return false;
 
-    if (state.offering.security_type === "Equity") {
+    if (state.method === "CC" && state.amount > 5000) return false;
+
+    if (["Equity", "Convertible Note"].includes(state.offering.security_type)) {
       return state.amount >= state.offering.securities_min;
     } else {
       return state.amount >= state.offering.minimum_investment_amount;
@@ -87,7 +89,10 @@ export const actions = {
   setAttribute({ commit }, { prop, val }) {
     commit("SET_AGREEMENT_ATTRIBUTE", { prop, val });
   },
-  async saveToDB({ state, commit }, { auth, user, companyId, companyName }) {
+  async saveToDB(
+    { state, commit },
+    { accredited, auth, user, companyId, companyName }
+  ) {
     const invRef = db.collection("investments").doc();
     const investmentData = {
       campaign_id: companyId, // `wunderfund` or `spikes-beer-ice`
@@ -109,12 +114,14 @@ export const actions = {
       offering_details: state.offering, // typeof {}
       offering_id: state.offering.offering_data.id,
       uid: invRef.id,
+      user_accredited: accredited,
       user_testimonial: state.testimonial, // typeof string[]
       user_id: auth.userId,
       user_email: auth.email,
       user_first_name: user.first_name,
       user_last_name: user.last_name,
-      user_avatar: user.avatar || null
+      user_avatar: user.avatar || null,
+      user_tapi_account_id: user.transact_api_account_id
     };
 
     if (state.method === "ACH") {

@@ -1,34 +1,52 @@
 <template>
   <main>
-    <campaign-content :content="company" :offerings="offerings" />
+    <campaign-content
+      :content="company"
+      :offerings="offerings"
+      :company-id="$route.params.companyId"
+    />
+    <section-investments-map
+      :company-location="companyLocation"
+      :locations="locations"
+    />
+    <terms-details
+      :company-name="company.company_name_short"
+      :offering="offerings[0]"
+    />
     <section-cancellation :company-name="company.company_name_short" />
-    <b-navbar fixed="bottom" variant="transparent">
-      <nuxt-link
-        :to="
-          signedIn
-            ? `/${$route.params.companyId}/verify`
-            : `/auth/login?return_to=/${$route.params.companyId}`
-        "
-        class="text-decoration-none w-100 d-md-none"
-      >
-        <main-button extra-classes="btn-block px-5 py-3">
-          {{ signedIn ? "Invest Now" : "Login to Invest" }}
-        </main-button>
-      </nuxt-link>
-    </b-navbar>
   </main>
 </template>
 
 <script>
 import { db } from "@/plugins/firebase";
-import MainButton from "@/components/Common/MainButton";
 import CampaignContent from "@/components/Campaign/Content";
+import SectionInvestmentsMap from "@/components/Campaign/SectionInvestmentsMap";
+import TermsDetails from "@/components/Campaign/TermsDetails";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
+
+async function getLocations(offeringId) {
+  const snapshot = await db
+    .collection("investment_locations")
+    .where("offering_id", "==", offeringId)
+    .get();
+
+  return snapshot.empty ? [] : snapshot.docs.map(location => location.data());
+}
+
+async function getCompanyLocation(zip) {
+  const response = await fetch(`http://api.zippopotam.us/us/${zip}`);
+  const location = await response.json();
+  return {
+    lat: Number(location.places[0].latitude),
+    lng: Number(location.places[0].longitude)
+  };
+}
 
 export default {
   components: {
-    MainButton,
     CampaignContent,
+    SectionInvestmentsMap,
+    TermsDetails,
     SectionCancellation
   },
   computed: {
@@ -38,9 +56,13 @@ export default {
   },
   async asyncData({ route, $prismic, store, error }) {
     try {
-      const company = (
-        await $prismic.api.getByUID("campaign", route.params.companyId)
-      ).data;
+      const userId = store.state.auth.userId;
+      await store.dispatch("profile/fetch", userId);
+
+      const companyId = route.params.companyId;
+      await store.dispatch("company/fetchComments", companyId);
+
+      const company = (await $prismic.api.getByUID("campaign", companyId)).data;
 
       const offerings = await Promise.all(
         company.company_offerings.map(async offering => {
@@ -61,7 +83,17 @@ export default {
         })
       );
 
-      return { company, offerings };
+      const zip = "45202";
+      const companyLocation = await getCompanyLocation(zip);
+
+      const locations = await getLocations(offerings[0].offering_data.id);
+
+      return {
+        company,
+        offerings,
+        companyLocation,
+        locations
+      };
     } catch (e) {
       error({ statusCode: 404, message: "Page not found" });
     }

@@ -1,5 +1,5 @@
 <template>
-  <section class="cancellation bg-success d-print-none">
+  <section class="cancellation bg-custom d-print-none">
     <div class="container py-5 text-light">
       <h2 class="text-center pb-3">Cancellation Policy</h2>
       <p class="mb-0">
@@ -27,3 +27,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.bg-custom {
+  background-color: lighten(#003b5a, 3%);
+}
+</style>

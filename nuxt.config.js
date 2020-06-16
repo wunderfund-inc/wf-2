@@ -98,7 +98,10 @@ export default {
               "faTwitterSquare",
               "faYoutube",
               "faYoutubeSquare",
-              "faGoogle"
+              "faGoogle",
+              "faCcVisa",
+              "faCcMastercard",
+              "faCcDiscover"
             ]
           }
         ]
@@ -106,7 +109,8 @@ export default {
     ]
   ],
   prismic: {
-    endpoint: "https://wunderfund.cdn.prismic.io/api/v2"
+    endpoint: "https://wunderfund.cdn.prismic.io/api/v2",
+    preview: false
   },
   /*
    ** Axios module configuration
@@ -124,7 +128,8 @@ export default {
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
     FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
     FIREBASE_MESSAGING_ID: process.env.FIREBASE_MESSAGING_ID,
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY
   },
   /*
    ** Build configuration

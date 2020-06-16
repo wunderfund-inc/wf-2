@@ -1,6 +1,8 @@
 <template>
-  <b-card>
-    <h2>Current Investment Limit: {{ spendPoolCurrent | asCurrency }}</h2>
+  <b-card bg-variant="light">
+    <h2>
+      Current Investment Limit: {{ (spendPoolCurrent - spent) | asCurrency }}
+    </h2>
     <h5 class="text-muted mb-0">
       Annual Maximum Limit: {{ spendPoolMax | asCurrency }}
     </h5>
@@ -14,7 +16,8 @@ export default {
   computed: {
     ...mapGetters({
       spendPoolCurrent: "profile/spendPoolCurrent",
-      spendPoolMax: "profile/spendPoolMax"
+      spendPoolMax: "profile/spendPoolMax",
+      spent: "investments/spent"
     })
   }
 };

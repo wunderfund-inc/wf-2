@@ -25,6 +25,11 @@
         <input-last-name />
       </div>
     </div>
+    <div v-if="!isEntity" class="form-row">
+      <div class="col-12 col-md-6">
+        <input-dob />
+      </div>
+    </div>
     <div class="form-row">
       <div class="col">
         <input-address-street-1 />
@@ -36,22 +41,20 @@
       </div>
     </div>
     <div class="form-row">
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-6">
         <input-address-city />
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-3">
         <input-address-state />
       </div>
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-3">
         <input-address-postal />
       </div>
     </div>
     <slot>
       <div class="form-row">
         <div class="col">
-          <b-button variant="success" type="submit">
-            Save Changes
-          </b-button>
+          <b-button variant="success" type="submit">Save Changes</b-button>
         </div>
       </div>
     </slot>
@@ -64,6 +67,7 @@ import InputEntityType from "@/components/Form/Profile/InputEntityType";
 import InputEntityEin from "@/components/Form/Profile/InputEntityEin";
 import InputFirstName from "@/components/Form/Profile/InputFirstName";
 import InputLastName from "@/components/Form/Profile/InputLastName";
+import InputDob from "@/components/Form/Profile/InputDob";
 import InputAddressStreet1 from "@/components/Form/Profile/InputAddressStreet1";
 import InputAddressStreet2 from "@/components/Form/Profile/InputAddressStreet2";
 import InputAddressCity from "@/components/Form/Profile/InputAddressCity";
@@ -77,6 +81,7 @@ export default {
     InputEntityEin,
     InputFirstName,
     InputLastName,
+    InputDob,
     InputAddressStreet1,
     InputAddressStreet2,
     InputAddressCity,
