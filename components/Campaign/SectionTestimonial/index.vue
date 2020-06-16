@@ -1,20 +1,14 @@
 <template>
   <section>
-    <h3 class="mb-2">See who's invested so far...</h3>
-    <div
-      v-for="(item, index) in testimonials.filter(
-        el => el.user_testimonial.length > 0
-      )"
-      :key="index"
-      class="form-row"
-    >
-      <b-card>
-        <b-media>
+    <h3 class="mb-4">See who invested:</h3>
+    <b-card-group columns>
+      <b-card v-for="(item, index) in testimonials" :key="index">
+        <b-media v-if="item.user_testimonial">
           <template #aside>
             <b-avatar :src="item.user_avatar" />
           </template>
           <p class="mb-0">
-            <span>
+            <span v-if="item.user_testimonial">
               <em>{{ item.user_testimonial }}</em>
               <br />
               -
@@ -25,9 +19,14 @@
             </small>
           </p>
         </b-media>
+        <div v-else class="text-center">
+          <b-avatar :src="item.user_avatar" />
+          <br />
+          <small class="text-muted">Justin C.</small>
+        </div>
       </b-card>
-    </div>
-    <div
+    </b-card-group>
+    <!-- <div
       v-for="(item, idx) in testimonials.filter(
         el => el.user_testimonial.length === 0
       )"
@@ -44,7 +43,7 @@
           <small class="text-muted">Justin C.</small>
         </div>
       </div>
-    </div>
+    </div> -->
   </section>
 </template>
 

@@ -1,17 +1,61 @@
 <template>
   <section>
-    <div v-if="content.slice_type === 'text'">
-      <prismic-rich-text
-        :field="content.primary.content_text"
-        class="text-justify"
+    <div v-if="content.slice_type === 'single_image'">
+      <prismic-image
+        :field="content.primary.image"
+        class="mw-100 mb-3 rounded"
       />
+    </div>
+
+    <div v-if="content.slice_type === 'double_image'">
+      <div class="row no-gutters">
+        <div class="col">
+          <prismic-image
+            :field="content.primary.left_image"
+            class="mw-100 mb-3"
+          />
+        </div>
+        <div class="col">
+          <prismic-image
+            :field="content.primary.right_image"
+            class="mw-100 mb-3"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div v-if="content.slice_type === 'triple_image'">
+      <div class="row no-gutters">
+        <div class="col">
+          <prismic-image
+            :field="content.primary.left_image"
+            class="mw-100 mb-3"
+          />
+        </div>
+        <div class="col">
+          <prismic-image
+            :field="content.primary.center_image"
+            class="mw-100 mb-3"
+          />
+        </div>
+        <div class="col">
+          <prismic-image
+            :field="content.primary.right_image"
+            class="mw-100 mb-3"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div v-if="content.slice_type === 'text'">
+      <prismic-rich-text :field="content.primary.content_text" />
     </div>
 
     <!-- TODO: Discuss with Marvin for this -->
     <div v-else-if="content.slice_type === 'image_gallery'"></div>
 
     <div v-else-if="content.slice_type === 'faqs'">
-      <h3 class="pb-4 pt-2 text-center text-md-left">FAQs</h3>
+      <h3 class="pb-2 pt-2 text-center text-md-left">FAQs</h3>
       <details
         v-for="(faq, index) in content.items"
         :key="index"

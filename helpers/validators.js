@@ -1,3 +1,5 @@
+import differenceInDays from "date-fns/differenceInDays";
+
 export const validPostal = val => {
   if (val === null) return null;
   const reg = /^[0-9]{5}(?:-[0-9]{4})?$/;
@@ -92,6 +94,39 @@ export const validEthereumAddress = address => {
 };
 
 export const validAttestations = (listOfAttestations = []) => {
-  if (listOfAttestations.length > 0) return !listOfAttestations.includes(false);
+  if (!listOfAttestations) return false;
+
+  if (listOfAttestations.length > 0) {
+    return (
+      !listOfAttestations.includes(false) && !listOfAttestations.includes(null)
+    );
+  }
+
   return false;
 };
+
+/**
+ * Check if within 30 days of closing a campaign
+ * @param {string} endDate formatted "YYYY-MM-DD"
+ */
+export const endingSoon = endDate => {
+  const thirtyDays = 2592000000; // in milliseconds
+  return new Date(`${endDate} 23:59:59`) - new Date() <= thirtyDays;
+};
+
+/**
+ * Check if past closing date
+ * @param {string} endDate formatted "YYYY-MM-DD"
+ */
+export const endedAlready = endDate => {
+  return new Date(`${endDate} 23:59:59`) - new Date() <= 0;
+};
+
+/**
+ * Check if one year passed since an investment was made.
+ * @param {int} seconds # of seconds since Epoch
+ * @returns boolean
+ */
+export function oneYearPassed(seconds) {
+  return differenceInDays(new Date(), new Date(Number(seconds) * 1000)) >= 365;
+}

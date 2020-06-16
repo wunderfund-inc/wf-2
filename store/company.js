@@ -96,30 +96,31 @@ export const actions = {
         .where("companyId", "==", companyId)
         .orderBy("createdAt", "desc")
         .get();
-      const comments = commentDocs.docs.map(comment => comment.data());
-      await commit("SET_COMMENTS", comments);
+      if (!commentDocs.empty) {
+        const comments = commentDocs.docs.map(comment => comment.data());
+        await commit("SET_COMMENTS", comments);
+      }
     } catch (error) {
       throw Error(error.message);
     }
   },
-  async submitComment({ state, rootState }, { message, role }) {
+  async submitComment({ state, rootState }, { message, role, companyId }) {
     try {
       const commentRef = await db.collection("comments").doc();
-      const uid = commentRef.id;
       const dto = {
         message,
         role,
         name: {
-          first: rootState.user.currentUser.name.first,
-          last: rootState.user.currentUser.name.last
+          first: rootState.profile.first_name,
+          last: rootState.profile.last_name
         },
-        userId: rootState.user.currentUser.uid,
-        avatar: rootState.user.currentUser.avatar || null,
-        companyId: state.company.uid,
+        userId: rootState.auth.userId,
+        avatar: rootState.profile.avatar || null,
+        companyId,
         approved: false,
         createdAt: timestamp,
         updatedAt: timestamp,
-        uid
+        uid: commentRef.id
       };
       await commentRef.set(dto);
     } catch (error) {

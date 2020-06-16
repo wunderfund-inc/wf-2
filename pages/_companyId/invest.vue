@@ -1,11 +1,11 @@
 <template>
   <main>
     <div class="container">
-      <div class="row justify-content-center">
-        <h1 class="text-center py-md-5">
-          Invest in: {{ company.company_name_short }}
-        </h1>
+      <h1 class="text-center py-md-5">
+        Invest in: {{ company.company_name_short }}
+      </h1>
 
+      <div class="row justify-content-center">
         <article class="col-md-8">
           <checkout-form :offerings="offerings" />
         </article>
@@ -15,11 +15,13 @@
         </aside>
       </div>
     </div>
+
     <section-cancellation :company-name="company.company_name_short" />
   </main>
 </template>
 
 <script>
+import { endedAlready } from "@/helpers/validators";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import CheckoutForm from "@/components/Form/Checkout";
 import CheckoutSummary from "@/components/Form/Checkout/Summary";
@@ -27,7 +29,7 @@ import CheckoutSummary from "@/components/Form/Checkout/Summary";
 export default {
   middleware: ["authenticated"],
   components: { SectionCancellation, CheckoutForm, CheckoutSummary },
-  async asyncData({ route, $prismic, store, error }) {
+  async asyncData({ redirect, route, $prismic, store, error }) {
     try {
       const userId = store.state.auth.userId;
       await store.dispatch("profile/fetch", userId);
@@ -44,6 +46,15 @@ export default {
           };
         })
       );
+
+      const ifAllOfferingsAreClosed = offerings.map(offering => {
+        if (offering.is_legacy) return true;
+        return endedAlready(offering.offering_date_end);
+      });
+
+      if (!ifAllOfferingsAreClosed.includes(false)) {
+        return redirect(`/${route.params.companyId}`);
+      }
 
       return { company, offerings };
     } catch (e) {

@@ -1,6 +1,6 @@
 <template lang="pug">
   b-form-group(
-    label="Name of the Entity"
+    label="Name of the Entity you represent:"
     label-for="entity-name"
   )
     b-form-input#entity-name(v-model="entityName" trim)

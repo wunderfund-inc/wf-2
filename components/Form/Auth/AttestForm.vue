@@ -68,11 +68,15 @@
           </b-form-checkbox>
         </b-form-group>
         <button
+          v-if="!submitting"
           :disabled="$v.validAttestations.$invalid"
           class="btn btn-block btn-primary"
           type="submit"
         >
           Attest
+        </button>
+        <button v-else class="btn btn-block btn-primary" type="submit" disabled>
+          Updating...
         </button>
       </form>
     </div>
@@ -87,6 +91,7 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      submitting: false,
       error: null,
       form: {
         attestations: []
@@ -121,6 +126,8 @@ export default {
       return $dirty ? !$error : null;
     },
     async submitAttestationForm() {
+      this.submitting = true;
+
       await this.$store.dispatch("profile/setAttribute", {
         prop: "attestations",
         val: this.form.attestations

@@ -58,6 +58,20 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="input-dob">Date of Birth</label>
+            <input
+              id="input-dob"
+              v-model="form.dob"
+              type="date"
+              class="form-control"
+            />
+          </div>
+        </div>
+      </div>
+
       <b-form-group label="Street 1:" label-for="input-street-1">
         <b-form-input id="input-street-1" v-model="form.street1" type="text" />
       </b-form-group>
@@ -108,13 +122,12 @@ export default {
         "Limited Partnership",
         "Revocable Trust",
         "Irrevocable Trust",
-        "B-Corporation",
-        "C-Corporation",
-        "S-Corporation"
+        "Corporation"
       ],
       form: {
         firstName: null,
         lastName: null,
+        dob: null,
         street1: null,
         street2: null,
         city: null,
@@ -140,6 +153,7 @@ export default {
       is_entity: isEntity,
       first_name: firstName,
       last_name: lastName,
+      dob,
       address_street_1: street1,
       address_street_2: street2,
       address_city: city,
@@ -152,6 +166,7 @@ export default {
 
     this.form.firstName = firstName;
     this.form.lastName = lastName;
+    this.form.dob = dob;
     this.form.street1 = street1;
     this.form.street2 = street2;
     this.form.city = city;
@@ -171,6 +186,7 @@ export default {
         const payload = {
           first_name: this.form.firstName,
           last_name: this.form.lastName,
+          dob: this.form.dob,
           address_street_1: this.form.street1,
           address_street_2: this.form.street2,
           address_city: this.form.city,
@@ -207,6 +223,7 @@ export default {
       this.form.entityEin = null;
       this.form.firstName = null;
       this.form.lastName = null;
+      this.form.dob = null;
       this.form.street1 = null;
       this.form.street2 = null;
       this.form.city = null;

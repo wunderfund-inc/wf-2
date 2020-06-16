@@ -68,20 +68,43 @@
             </p>
           </template>
 
-          <!-- TODO -->
-          <!-- <template v-if="offering.security_type === 'Convertible Note'">
-          </template> -->
+          <template v-if="offering.security_type === 'Convertible Note'">
+            <p>
+              <small>
+                Equity ownership calculated as (Amount Invested /
+                {{ offering.valuation_type.toLowerCase() }} valuation of
+                <strong>
+                  {{ offering.valuation_cap | currencyDisplayFormat }}
+                </strong>
+                ).
+              </small>
+            </p>
+
+            <p class="mb-0">
+              <small>
+                Price Per Share:
+                <strong>{{ offering.price_per_share | asCurrency }}</strong>
+              </small>
+              <br />
+              <small>
+                Minimum Shares to Invest in:
+                <strong>{{ offering.securities_min }}</strong>
+              </small>
+            </p>
+          </template>
 
           <template v-if="offering.security_type === 'Equity'">
             <p>
               <small>
                 Equity ownership calculated as (Amount Invested /
-                {{ offering.valuation_type }} valuation of
-                <strong>{{
-                  (offering.price_per_share * offering.securities_total)
-                    | currencyDisplayFormat
-                }}</strong
-                >).
+                {{ offering.valuation_type.toLowerCase() }} valuation of
+                <strong>
+                  {{
+                    (offering.price_per_share * offering.securities_total)
+                      | currencyDisplayFormat
+                  }}
+                </strong>
+                ).
               </small>
             </p>
 
@@ -161,6 +184,8 @@
 </template>
 
 <script>
+import { endedAlready } from "@/helpers/validators";
+
 export default {
   props: {
     offering: {
@@ -192,7 +217,9 @@ export default {
 
         this.$store.dispatch("agreement/setAttribute", {
           prop: "amountType",
-          val: val.security_type === "Equity" ? "SHARES" : "RAW"
+          val: ["Equity", "Convertible Note"].includes(val.security_type)
+            ? "SHARES"
+            : "RAW"
         });
       }
     },
@@ -204,7 +231,7 @@ export default {
         const raise = 4000; // TODO: this.$store.getters["offering/totalRaise"];
         return raise >= this.offering.early_bird_amount;
       } else if (this.offering.early_bird_date_end) {
-        return this.isAfter(this.offering.early_bird_date_end);
+        return endedAlready(this.offering.early_bird_date_end);
       } else {
         return false;
       }

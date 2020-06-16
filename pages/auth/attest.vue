@@ -16,13 +16,13 @@ import AttestForm from "@/components/Form/Auth/AttestForm";
 
 export default {
   components: { AttestForm },
-  async fetch() {
+  async asyncData({ store, redirect }) {
     try {
-      const { userId } = this.$store.state.auth;
-      await this.$store.dispatch("profile/fetch", userId);
+      const { userId } = store.state.auth;
+      await store.dispatch("profile/fetch", userId);
 
-      if (this.$store.getters["profile/validAttestations"]) {
-        return this.$nuxt.context.redirect("/account");
+      if (store.getters["profile/validAttestations"]) {
+        return redirect("/account");
       }
     } catch (error) {
       throw Error(error);

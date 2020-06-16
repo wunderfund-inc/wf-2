@@ -3,41 +3,45 @@
     <div class="container text-light">
       <div class="row">
         <div class="col-12 col-md-3 text-center text-md-left pb-5">
-          <nuxt-link to="/">
-            <b-img
-              :src="require(`@/assets/logo/logo.png`)"
-              class="d-inline-block align-middle"
-              width="200px"
-            />
-          </nuxt-link>
-          <p>Startup Investing at its finest.</p>
-          <b-link class="pr-2 text-light" href="mailto:taylor@wunderfund.co">
-            <solid-icon class="fa-2x" i="envelope-square" />
-          </b-link>
-          <b-link
-            class="px-2 text-light"
-            href="https://www.facebook.com/thewunderfund"
-          >
-            <brand-icon class="fa-2x" i="facebook-square" />
-          </b-link>
-          <b-link
-            class="px-2 text-light"
-            href="https://www.linkedin.com/company/wunderfund"
-          >
-            <brand-icon class="fa-2x" i="linkedin" />
-          </b-link>
-          <b-link
-            class="px-2 text-light"
-            href="https://twitter.com/thewunderfund"
-          >
-            <brand-icon class="fa-2x" i="twitter-square" />
-          </b-link>
-          <b-link
-            class="px-2 text-light"
-            href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
-          >
-            <brand-icon class="fa-2x" i="youtube-square" />
-          </b-link>
+          <div class="row d-flex justify-content-center mb-3">
+            <nuxt-link to="/">
+              <b-img :src="require(`@/assets/logo/logo.png`)" width="200px" />
+            </nuxt-link>
+          </div>
+
+          <div class="row d-flex justify-content-center">
+            <p>Startup Investing at its finest.</p>
+          </div>
+
+          <div class="row d-flex justify-content-around">
+            <b-link class="pr-2 text-light" href="mailto:taylor@wunderfund.co">
+              <solid-icon class="fa-2x" i="envelope-square" />
+            </b-link>
+            <b-link
+              class="px-2 text-light"
+              href="https://www.facebook.com/thewunderfund"
+            >
+              <brand-icon class="fa-2x" i="facebook-square" />
+            </b-link>
+            <b-link
+              class="px-2 text-light"
+              href="https://www.linkedin.com/company/wunderfund"
+            >
+              <brand-icon class="fa-2x" i="linkedin" />
+            </b-link>
+            <b-link
+              class="px-2 text-light"
+              href="https://twitter.com/thewunderfund"
+            >
+              <brand-icon class="fa-2x" i="twitter-square" />
+            </b-link>
+            <b-link
+              class="px-2 text-light"
+              href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
+            >
+              <brand-icon class="fa-2x" i="youtube-square" />
+            </b-link>
+          </div>
         </div>
         <div class="col-12 col-md-9 pb-5">
           <p>
@@ -112,8 +116,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .footer {
-  background-color: #003b5a;
+  background-color: lighten(#003b5a, 1%);
 }
 </style>

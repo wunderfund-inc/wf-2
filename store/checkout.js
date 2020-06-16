@@ -100,10 +100,11 @@ export const actions = {
     { companyId, offeringId, userId, entityId }
   ) {
     try {
-      const selectedShares =
-        state.selectedOffering.securityType === "EQUITY"
-          ? state.selectedOffering.equity.pricePerShare * state.selectedShares
-          : null;
+      const selectedShares = ["Equity", "Convertible Note"].includes(
+        state.selectedOffering.securityType
+      )
+        ? state.selectedOffering.equity.pricePerShare * state.selectedShares
+        : null;
       const investmentRef = await db.collection("investments").doc();
       const dto = {
         createdAt: timestamp,

@@ -20,36 +20,35 @@
               </div>
             </div>
 
-            <b-card class="mt-3" no-body>
-              <b-tabs pills card fill>
-                <offering-card
-                  v-for="(offering, index) in offerings"
-                  :key="index"
-                  :company-name="content.company_name_short"
-                  :offering="offering"
-                />
-              </b-tabs>
-            </b-card>
+            <section-offering-details
+              :company-name="content.company_name_short"
+              :offering="offerings[0]"
+            />
           </aside>
         </div>
         <div class="col-12 col-md-7">
           <article>
-            <div class="pb-4">
+            <div v-if="content.campaign_video.embed_url" class="pb-3">
               <b-embed
                 :src="convertLink(content.campaign_video)"
                 type="iframe"
                 allowfullscreen
               />
               <div class="pt-3">
-                <small v-if="content.company_website_url.url" class="px-2">
-                  <a
-                    :href="content.company_website_url.url"
-                    target="_blank"
-                    class="text-muted"
-                  >
-                    <font-awesome-icon :icon="['fas', 'link']" class="fa-lg" />
-                  </a>
-                </small>
+                <template v-if="content.company_website_url.url">
+                  <small class="px-2">
+                    <a
+                      :href="content.company_website_url.url"
+                      target="_blank"
+                      class="text-muted"
+                    >
+                      <font-awesome-icon
+                        :icon="['fas', 'link']"
+                        class="fa-lg"
+                      />
+                    </a>
+                  </small>
+                </template>
                 <small
                   v-for="(link, index) in content.company_social_media"
                   :key="index"
@@ -62,15 +61,17 @@
                     />
                   </a>
                 </small>
-                <small class="px-2">
-                  <b-link
-                    :href="content.company_edgar_url.url"
-                    target="_blank"
-                    class="text-dark"
-                  >
-                    EDGAR Filing
-                  </b-link>
-                </small>
+                <template v-if="content.company_edgar_url.url">
+                  <small class="px-2">
+                    <b-link
+                      :href="content.company_edgar_url.url"
+                      target="_blank"
+                      class="text-dark"
+                    >
+                      EDGAR Filing
+                    </b-link>
+                  </small>
+                </template>
                 <small>
                   Share with your friends!
                   <a
@@ -134,7 +135,7 @@
                 />
               </div>
               <div class="mb-4">
-                <comment-form v-if="signedIn" />
+                <comment-form v-if="signedIn" :company-id="companyId" />
                 <p v-else>
                   <nuxt-link to="/auth/login">Login</nuxt-link> or
                   <nuxt-link to="/auth/register">Sign Up</nuxt-link> to comment!
@@ -158,30 +159,87 @@
                 {{ content.company_location_state }}
               </small>
             </div>
+            <div v-if="!content.campaign_video.embed_url" class="py-3">
+              <template v-if="content.company_website_url.url">
+                <small class="px-2">
+                  <a
+                    :href="content.company_website_url.url"
+                    target="_blank"
+                    class="text-muted"
+                  >
+                    <font-awesome-icon :icon="['fas', 'link']" class="fa-lg" />
+                  </a>
+                </small>
+              </template>
+              <small
+                v-for="(link, index) in content.company_social_media"
+                :key="index"
+                class="px-2"
+              >
+                <a :href="link.social_media_url.url" class="text-muted">
+                  <font-awesome-icon
+                    :icon="['fab', iconIt(link.social_media_brand)]"
+                    class="fa-lg"
+                  />
+                </a>
+              </small>
+              <template v-if="content.company_edgar_url.url">
+                <small class="px-2">
+                  <b-link
+                    :href="content.company_edgar_url.url"
+                    target="_blank"
+                    class="text-dark"
+                  >
+                    EDGAR Filing
+                  </b-link>
+                </small>
+              </template>
+              <small>
+                Share with your friends!
+                <a
+                  :href="
+                    `https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`
+                  "
+                  target="_blank"
+                  class="pl-3 pr-2 text-muted"
+                >
+                  <font-awesome-icon
+                    :icon="['fab', 'facebook-square']"
+                    class="fa-lg"
+                  />
+                </a>
+                <a
+                  :href="
+                    `https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`
+                  "
+                  target="_blank"
+                  class="pl-3 pr-2 text-muted"
+                >
+                  <font-awesome-icon
+                    :icon="['fab', 'linkedin']"
+                    class="fa-lg"
+                  />
+                </a>
+                <a
+                  :href="
+                    `https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`
+                  "
+                  target="_blank"
+                  class="pl-3 pr-2 text-muted"
+                >
+                  <font-awesome-icon
+                    :icon="['fab', 'twitter-square']"
+                    class="fa-lg"
+                  />
+                </a>
+              </small>
+            </div>
           </div>
-          <aside style="position: sticky; top: 20px;">
-            <b-card class="mt-3" no-body style="position: sticky; top: 20px;">
-              <b-tabs pills card fill>
-                <offering-card
-                  v-for="(offering, index) in offerings"
-                  :key="index"
-                  :company-name="content.company_name_short"
-                  :offering="offering"
-                />
-              </b-tabs>
-            </b-card>
-            <nuxt-link
-              :to="
-                signedIn
-                  ? `/${$route.params.companyId}/verify`
-                  : `/auth/login?return_to=/${$route.params.companyId}`
-              "
-              class="text-decoration-none"
-            >
-              <main-button class="mt-2 py-3 btn-block d-none d-md-block">
-                {{ signedIn ? "Invest Now" : "Login to Invest" }}
-              </main-button>
-            </nuxt-link>
+          <aside style="position: sticky; top: 12px;">
+            <section-offering-details
+              :company-name="content.company_name_short"
+              :offering="offerings[0]"
+            />
           </aside>
         </div>
       </div>
@@ -191,8 +249,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import MainButton from "@/components/Common/MainButton";
-import OfferingCard from "@/components/Campaign/OfferingCard";
+import SectionOfferingDetails from "@/components/Campaign/SectionOfferingDetails";
 import CommentItem from "@/components/Campaign/CommentItem";
 import CommentForm from "@/components/Campaign/CommentForm";
 import SectionTestimonial from "@/components/Campaign/SectionTestimonial";
@@ -200,14 +257,17 @@ import SectionSlice from "@/components/Campaign/SectionSlice";
 
 export default {
   components: {
-    MainButton,
-    OfferingCard,
+    SectionOfferingDetails,
     CommentItem,
     CommentForm,
     SectionTestimonial,
     SectionSlice
   },
   props: {
+    companyId: {
+      type: String,
+      required: true
+    },
     content: {
       type: Object,
       default() {},
@@ -244,15 +304,31 @@ export default {
   methods: {
     iconIt(platform) {
       const formatted = platform.toLowerCase();
-      return formatted === "facebook" ? "facebook-square" : formatted;
+      switch (formatted) {
+        case "facebook":
+          return "facebook-square";
+
+        case "twitter":
+          return "twitter-square";
+
+        default:
+          return formatted;
+      }
     },
     convertLink(url) {
-      if (url.provider_url === "https://www.youtube.com/") {
-        const videoId = url.embed_url.replace(
-          `${url.provider_url}watch?v=`,
-          ""
-        );
-        return `https://www.youtube.com/embed/${videoId}?feature=oembed`;
+      const provider = url.provider_url;
+
+      switch (provider) {
+        case "https://www.youtube.com/": {
+          const videoId = url.embed_url.replace(`${provider}watch?v=`, "");
+          return `${provider}embed/${videoId}?feature=oembed`;
+        }
+        case "https://vimeo.com/": {
+          return `https://player.vimeo.com/video/${url.video_id}`;
+        }
+        default: {
+          return url;
+        }
       }
     }
   }

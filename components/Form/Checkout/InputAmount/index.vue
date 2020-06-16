@@ -1,6 +1,8 @@
 <template>
   <div class="form-group mt-3">
-    <template v-if="offering.security_type === 'Equity'">
+    <template
+      v-if="['Equity', 'Convertible Note'].includes(offering.security_type)"
+    >
       <b-form-group
         label-cols-lg="6"
         label="Number of shares you wish to buy:"
@@ -23,7 +25,7 @@
 
         <div class="row d-flex justify-content-between px-3">
           <h6>Price Per Share:</h6>
-          <h6>x {{ offering.minimum_investment_amount | asCurrency }}</h6>
+          <h6>x {{ offering.price_per_share | asCurrency }}</h6>
         </div>
 
         <hr class="mt-0 mb-1" />
@@ -73,12 +75,17 @@
         </div>
 
         <b-form-text>
-          <span
-            :class="validInput ? 'text-muted' : 'text-danger font-weight-bold'"
-          >
-            *Your commitment to invest needs to be at least
-            {{ offering.minimum_investment_amount | asCurrency }}
-          </span>
+          *Your commitment to invest needs to be at least
+          {{ offering.minimum_investment_amount | asCurrency }}
+        </b-form-text>
+
+        <b-form-text>
+          *You may only invest up to
+          {{ currentSpendPool | asCurrency }} maximum.
+        </b-form-text>
+
+        <b-form-text v-if="ccMethodChosen" class="font-weight-bold">
+          *You may only invest up to $5,000 using the credit card method.
         </b-form-text>
       </b-form-group>
     </template>
@@ -94,7 +101,8 @@ export default {
   components: { VueNumeric, TheMask },
   computed: {
     ...mapState({
-      offering: state => state.agreement.offering
+      offering: state => state.agreement.offering,
+      method: state => state.agreement.method
     }),
     ...mapGetters({
       currentSpendPool: "profile/spendPoolCurrent"
@@ -111,7 +119,9 @@ export default {
       }
     },
     validInput() {
-      if (this.offering.security_type === "Equity") {
+      if (
+        ["Equity", "Convertible Note"].includes(this.offering.security_type)
+      ) {
         return (
           this.amount * this.offering.price_per_share >=
           this.offering.securities_min
@@ -119,6 +129,9 @@ export default {
       } else {
         return this.amount >= this.offering.minimum_investment_amount;
       }
+    },
+    ccMethodChosen() {
+      return this.method === "CC" && this.amount > 5000;
     }
   }
 };
