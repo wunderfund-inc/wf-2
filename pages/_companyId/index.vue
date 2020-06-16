@@ -6,6 +6,7 @@
       :company-id="$route.params.companyId"
     />
     <section-investments-map
+      v-if="locations.length > 0"
       :company-location="companyLocation"
       :locations="locations"
     />
@@ -57,7 +58,9 @@ export default {
   async asyncData({ route, $prismic, store, error }) {
     try {
       const userId = store.state.auth.userId;
-      await store.dispatch("profile/fetch", userId);
+      if (userId) {
+        await store.dispatch("profile/fetch", userId);
+      }
 
       const companyId = route.params.companyId;
       await store.dispatch("company/fetchComments", companyId);
