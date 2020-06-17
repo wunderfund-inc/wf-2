@@ -1,20 +1,13 @@
 <template>
   <div>
-    <div class="form-group">
-      <form-ach v-if="method === 'ACH'" />
-      <form-credit-card v-if="method === 'CC'" />
-      <form-check v-if="method === 'CHECK'" />
-      <form-wire v-if="method === 'WIRE'" />
-      <form-crypto v-if="method === 'CRYPTO'" />
-    </div>
     <b-form-group
-      label-cols-lg="4"
+      label-cols-lg="6"
       label="Investment processing brought to you by:"
       label-size="lg"
-      label-class="font-weight-bold"
+      label-class="font-weight-bold small"
     >
       <div class="row">
-        <div class="col">
+        <div class="col justify-content-center">
           <b-link
             href="https://www.northcapital.com/"
             target="_blank"
@@ -25,6 +18,13 @@
         </div>
       </div>
     </b-form-group>
+    <div class="form-group">
+      <form-ach v-if="method === 'ACH'" />
+      <form-credit-card v-if="method === 'CC'" />
+      <form-check v-if="method === 'CHECK'" />
+      <form-wire v-if="method === 'WIRE'" />
+      <form-crypto v-if="method === 'CRYPTO'" />
+    </div>
   </div>
 </template>
 

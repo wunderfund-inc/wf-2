@@ -1,8 +1,6 @@
 <template>
   <div class="form-group mt-3">
-    <template
-      v-if="['Equity', 'Convertible Note'].includes(offering.security_type)"
-    >
+    <template v-if="usingShares">
       <b-form-group
         label-cols-lg="6"
         label="Number of shares you wish to buy:"
@@ -45,6 +43,14 @@
           {{ offering.securities_min }}
           {{ offering.securities_min === 1 ? "share" : "shares" }}
         </b-form-text>
+
+        <b-form-text
+          v-if="invalidCCAmount"
+          text-variant="danger"
+          class="font-weight-bold"
+        >
+          *You may only invest up to $5,000 using a credit card.
+        </b-form-text>
       </b-form-group>
     </template>
 
@@ -84,8 +90,12 @@
           {{ currentSpendPool | asCurrency }} maximum.
         </b-form-text>
 
-        <b-form-text v-if="ccMethodChosen" class="font-weight-bold">
-          *You may only invest up to $5,000 using the credit card method.
+        <b-form-text
+          v-if="invalidCCAmount"
+          text-variant="danger"
+          class="font-weight-bold"
+        >
+          *You may only invest up to $5,000 using a credit card.
         </b-form-text>
       </b-form-group>
     </template>
@@ -130,8 +140,19 @@ export default {
         return this.amount >= this.offering.minimum_investment_amount;
       }
     },
-    ccMethodChosen() {
+    invalidCCAmount() {
+      if (this.usingShares) {
+        return (
+          this.method === "CC" &&
+          this.amount * this.offering.price_per_share > 5000
+        );
+      }
       return this.method === "CC" && this.amount > 5000;
+    },
+    usingShares() {
+      return ["Equity", "Convertible Note"].includes(
+        this.offering.security_type
+      );
     }
   }
 };

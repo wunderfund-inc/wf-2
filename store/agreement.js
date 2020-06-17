@@ -41,6 +41,12 @@ export const getters = {
     if (state.method === "CC" && state.amount > 5000) return false;
 
     if (["Equity", "Convertible Note"].includes(state.offering.security_type)) {
+      const { method, amount, offering } = state;
+
+      if (method === "CC" && amount * offering.price_per_share > 5000) {
+        return false;
+      }
+
       return state.amount >= state.offering.securities_min;
     } else {
       return state.amount >= state.offering.minimum_investment_amount;
