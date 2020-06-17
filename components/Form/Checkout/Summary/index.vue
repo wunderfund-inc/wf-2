@@ -26,10 +26,14 @@
                     </small>
                   </b-card-text>
                   <address class="mb-0 font-weight-bold">
-                    {{
-                      `${firstName} ${lastName}` +
-                        (isEntity ? `, on behalf of ${entityName}` : ``)
-                    }}
+                    {{ firstName }} {{ lastName }}
+
+                    <template v-if="isEntity">
+                      <small class="text-muted">, on behalf of</small>
+                      <br />
+                      {{ entityName }}
+                    </template>
+
                     <br />
                     {{ street1 }}
                     <br v-if="street2 && street2.length > 0" />
