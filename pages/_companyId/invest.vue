@@ -7,7 +7,7 @@
 
       <div class="row justify-content-center">
         <article class="col-md-8">
-          <checkout-form :offerings="offerings" />
+          <checkout-layout :offerings="offerings" />
         </article>
 
         <aside class="col-md-4 mb-3">
@@ -23,12 +23,12 @@
 <script>
 import { endedAlready } from "@/helpers/validators";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
-import CheckoutForm from "@/components/Form/Checkout";
+import CheckoutLayout from "@/components/Form/Checkout/Layout";
 import CheckoutSummary from "@/components/Form/Checkout/Summary";
 
 export default {
   middleware: ["authenticated"],
-  components: { SectionCancellation, CheckoutForm, CheckoutSummary },
+  components: { SectionCancellation, CheckoutLayout, CheckoutSummary },
   async asyncData({ redirect, route, $prismic, store, error }) {
     try {
       const userId = store.state.auth.userId;
