@@ -70,6 +70,7 @@ export default {
       if (toCancel) {
         // eslint-disable-next-line
         console.log("cancelling investment...");
+        window.location.assign("mailto:taylor@wunderfund.co");
       }
     }
   }
