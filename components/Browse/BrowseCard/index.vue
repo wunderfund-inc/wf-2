@@ -23,10 +23,7 @@
       </b-media>
 
       <b-list-group v-for="(offering, index) in offerings" :key="index" flush>
-        <b-list-group-item class="text-md-center">
-          <!-- <b-badge size="lg" class="card-badge">
-            Reg {{ offering.offering_type }}
-          </b-badge> -->
+        <b-list-group-item class="text-center">
 
           <template v-if="offering.security_type === 'Promissory Note'">
             <small class="mb-0 text-muted">
