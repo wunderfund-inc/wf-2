@@ -11,8 +11,8 @@
           <b-img
             :src="company.data.company_logo.url"
             :alt="company.data.company_name_short"
+            style="max-height: 64px"
             width="64"
-            fluid
             rounded
             center
             thumbnail
