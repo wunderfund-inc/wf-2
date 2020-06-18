@@ -47,10 +47,7 @@ export default {
       });
 
       // eslint-disable-next-line no-unused-vars
-      const mc = new MarkerClustererPlus(map, markers, {
-        imagePath:
-          "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
-      });
+      const mc = new MarkerClustererPlus(map, markers, { imagePath: "m" });
     } catch (error) {
       // eslint-disable-next-line
       console.error(error);
