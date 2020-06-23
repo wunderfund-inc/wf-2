@@ -45,56 +45,68 @@
         </div>
         <div class="col-12 col-md-9 pb-5">
           <p>
-            <nuxt-link to="/" class="text-light font-weight-bold"
-              >Wunderfund.co</nuxt-link
-            >
+            <nuxt-link to="/" class="text-light font-weight-bold">
+              Wunderfund.co
+            </nuxt-link>
             is run by Wunderfund, Inc. By using
-            <nuxt-link to="/" class="text-light font-weight-bold"
-              >Wunderfund.co</nuxt-link
-            >, you accept our
+            <nuxt-link to="/" class="text-light font-weight-bold">
+              Wunderfund.co,
+            </nuxt-link>
+            you accept our
             <nuxt-link
               to="/legal/terms-of-use"
               class="text-light font-weight-bold"
-              >Terms of Use</nuxt-link
             >
+              Terms of Use
+            </nuxt-link>
             and
             <nuxt-link
               to="/legal/privacy-policy"
               class="text-light font-weight-bold"
-              >Privacy Policy</nuxt-link
-            >. By choosing to invest using
-            <nuxt-link to="/" class="text-light font-weight-bold"
-              >Wunderfund.co</nuxt-link
-            >, you accept our
+            >
+              Privacy Policy.
+            </nuxt-link>
+            By choosing to invest using
+            <nuxt-link to="/" class="text-light font-weight-bold">
+              Wunderfund.co,
+            </nuxt-link>
+            you accept our
             <nuxt-link
               to="/legal/investor-agreement"
               class="text-light font-weight-bold"
-              >Investor Agreement</nuxt-link
-            >. By choosing to post your offering using
-            <nuxt-link to="/" class="text-light font-weight-bold"
-              >Wunderfund.co</nuxt-link
-            >'s technologies, you accept our
+            >
+              Investor Agreement.
+            </nuxt-link>
+            By choosing to post your offering using
+            <nuxt-link to="/" class="text-light font-weight-bold">
+              Wunderfund.co's
+            </nuxt-link>
+            technologies, you accept our
             <nuxt-link
               to="/legal/startup-agreement"
               class="text-light font-weight-bold"
-              >Startup Agreement</nuxt-link
-            >.
-            <nuxt-link to="/" class="text-light font-weight-bold"
-              >Wunderfund.co</nuxt-link
-            >, along with
+            >
+              Startup Agreement.
+            </nuxt-link>
+            <nuxt-link to="/" class="text-light font-weight-bold">
+              Wunderfund.co,
+            </nuxt-link>
+            along with
             <b-link
               href="https://www.northcapital.com"
               target="_blank"
               class="text-light font-weight-bold"
-              >North Capital Private Securities</b-link
             >
+              North Capital Private Securities
+            </b-link>
             and
             <b-link
               href="https://www.transferonline.com"
               target="_blank"
               class="text-light font-weight-bold"
-              >Transfer Online</b-link
             >
+              Transfer Online
+            </b-link>
             as partners, are all registered with the SEC and are members of
             FINRA.
           </p>
