@@ -1,4 +1,4 @@
-# wunderfund-2
+# Wunderfund 2.0 Platform
 
 > The next iteration of Wunderfund
 
