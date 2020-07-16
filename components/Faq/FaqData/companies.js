@@ -1,5 +1,8 @@
 export default [
   {
+    question: ""
+  },
+  {
     question: "Why should I consider crowdfunding to raise capital?",
     answer:
       "A crowd of investors can validate your product in a way that institutional investors cannot. They understand your product from a customer standpoint and can give you feedback from the platform. With crowdfunding, if they're already customers, now you're enabling them to become owners, and with that you'll have brand ambassadors."
@@ -40,7 +43,7 @@ export default [
   {
     question: "How much equity can be raised for a single campaign?",
     answer:
-      "The maximum amount to raised it up to $1 million. (it's more than this now, right??) Although we have no set minimum, we encourage companies to raise no less than $50,000 on this portal."
+      "***COVID-19 UPDATE: If you launch a campaign on our platform before August 31, 2020, you're eligible to raise up to $250K without needing a CPA Review, and the maximum limit has been raised to $5M.*** The maximum amount you can normally invest on our platform is $1.07M. Although we have no set minimum, we encourage companies to raise no less than $10,000 on this portal."
   },
   {
     question:
