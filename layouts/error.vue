@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <b-img src="~assets/bg/404.jpg" class="fill-page" />
+    <div class="container py-5">
+      <img
+        src="~assets/bg/404.jpg"
+        alt="404 Error Image"
+        class="img-thumbnail"
+      />
+    </div>
   </div>
 </template>
 
