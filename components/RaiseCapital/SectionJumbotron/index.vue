@@ -9,14 +9,14 @@
             Fact: Women & Minorities make up less than 2% of venture backed
             capital. Crowdfunding is here to change that.
           </p>
-          <b-link href="mailto:taylor@wunderfund.co">
+          <a href="https://forms.gle/4qhePa15ft1YYvkS7" target="_blank">
             <main-button extra-classes="px-5">Apply to Campaign</main-button>
-          </b-link>
+          </a>
         </div>
         <div class="col-md-6 col-sm-8">
           <img
             :src="require(`@/assets/bg/rc.png`)"
-            alt="RC Hero"
+            alt="Raise Capital Hero Image"
             class="img__bg"
           />
         </div>
