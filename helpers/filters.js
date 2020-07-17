@@ -124,7 +124,12 @@ Vue.filter("reduceToTotal", reduceToTotal);
  * @param {string} val
  * @returns string
  */
-const firstLetterOnly = val => val.charAt(0);
+const firstLetterOnly = val => {
+  if (val) {
+    return val.charAt(0);
+  }
+  return "";
+};
 Vue.filter("firstLetterOnly", firstLetterOnly);
 
 /**
