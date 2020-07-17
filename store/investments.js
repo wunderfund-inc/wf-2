@@ -43,11 +43,11 @@ export const actions = {
           uid,
           company_name: cn,
           date_created: dc,
-          document_url: du,
           investment_amount: ia,
           investment_amount_type: iat,
           investment_method: im,
-          investment_agreement_id: iai
+          investment_agreement_id: iai,
+          tapi_trade_id: ttId
         } = data;
 
         return {
@@ -58,7 +58,7 @@ export const actions = {
           type: iat,
           method: im,
           agreementId: iai,
-          documentUrl: du
+          tradeId: ttId
         };
       });
 

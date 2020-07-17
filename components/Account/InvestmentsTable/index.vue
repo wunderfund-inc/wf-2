@@ -53,9 +53,24 @@ export default {
   methods: {
     async view(investment) {
       try {
-        const url =
-          investment.item.documentUrl ||
-          (await downloadURL("agreements"`${investment.item.agreementId}.pdf`));
+        let url;
+        const tradeId = investment.item.tradeId;
+        if (tradeId) {
+          const endpoint =
+            "https://api.norcapsecurities.com/tapiv3/index.php/v3/getTradeDocument";
+          const response = await this.$axios.$post(endpoint, {
+            clientID: process.env.TAPI_CLIENT_ID,
+            developerAPIKey: process.env.TAPI_API_KEY,
+            tradeId
+          });
+          const responseData = response.data;
+          url = responseData.document_details[0].documentUrl;
+        } else {
+          url = await downloadURL(
+            "agreements",
+            `${investment.item.agreementId}.pdf`
+          );
+        }
         window.open(url);
       } catch (error) {
         throw Error(error);
