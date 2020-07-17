@@ -43,6 +43,7 @@ export const actions = {
           uid,
           company_name: cn,
           date_created: dc,
+          document_url: du,
           investment_amount: ia,
           investment_amount_type: iat,
           investment_method: im,
@@ -56,7 +57,8 @@ export const actions = {
           amount: ia,
           type: iat,
           method: im,
-          agreementId: iai
+          agreementId: iai,
+          documentUrl: du
         };
       });
 

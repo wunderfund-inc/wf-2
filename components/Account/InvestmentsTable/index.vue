@@ -53,10 +53,9 @@ export default {
   methods: {
     async view(investment) {
       try {
-        const url = await downloadURL(
-          "agreements",
-          `${investment.item.agreementId}.pdf`
-        );
+        const url =
+          investment.item.documentUrl ||
+          (await downloadURL("agreements"`${investment.item.agreementId}.pdf`));
         window.open(url);
       } catch (error) {
         throw Error(error);
