@@ -21,7 +21,9 @@
 
     <template v-slot:cell(actions)="data">
       <b-dropdown size="sm" text="Choose">
-        <b-dropdown-item @click="view(data)">View Agreement</b-dropdown-item>
+        <b-dropdown-item @click="view(data)">
+          Download Agreement
+        </b-dropdown-item>
         <b-dropdown-item @click="cancel(data)">
           Cancel Investment
         </b-dropdown-item>
@@ -57,14 +59,9 @@ export default {
         const tradeId = investment.item.tradeId;
         if (tradeId) {
           const endpoint =
-            "https://api.norcapsecurities.com/tapiv3/index.php/v3/getTradeDocument";
-          const response = await this.$axios.$post(endpoint, {
-            clientID: process.env.TAPI_CLIENT_ID,
-            developerAPIKey: process.env.TAPI_API_KEY,
-            tradeId
-          });
-          const responseData = response.data;
-          url = responseData.document_details[0].documentUrl;
+            "https://us-central1-wunderfund-server.cloudfunctions.net/documentOnRequest";
+          const response = await this.$axios.$post(endpoint, { tradeId });
+          url = response;
         } else {
           url = await downloadURL(
             "agreements",
