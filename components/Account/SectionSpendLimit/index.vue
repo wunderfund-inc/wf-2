@@ -1,7 +1,7 @@
 <template>
   <b-card bg-variant="light">
     <h2>
-      Current Investment Limit: {{ (spendPoolCurrent - spent) | asCurrency }}
+      Current Investment Limit: {{ currentSpendPool | asCurrency }}
     </h2>
     <h5 class="text-muted mb-0">
       Annual Maximum Limit: {{ spendPoolMax | asCurrency }}
@@ -18,7 +18,12 @@ export default {
       spendPoolCurrent: "profile/spendPoolCurrent",
       spendPoolMax: "profile/spendPoolMax",
       spent: "investments/spent"
-    })
+    }),
+    currentSpendPool() {
+      const diff = this.spendPoolCurrent - this.spent;
+      if (diff < 0) return 0;
+      return diff;
+    }
   }
 };
 </script>
