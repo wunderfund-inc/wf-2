@@ -74,10 +74,13 @@ export const getters = {
     const validEntityEin = einRegex.test(entityEin);
     const validEntity = validEntityName && validEntityType && validEntityEin;
 
+    const validId =
+      state.transact_api_account_id && state.transact_api_account_id.length > 0;
+
     if (state.is_entity) {
-      return validName && validEntity && validAddress;
+      return validName && validEntity && validAddress && validId;
     } else {
-      return validName && validDob && validAddress;
+      return validName && validDob && validAddress && validId;
     }
   }
 };
