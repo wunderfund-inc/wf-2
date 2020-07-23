@@ -12,7 +12,12 @@
     </template>
 
     <template v-slot:cell(amount)="data">
-      {{ data.item.amount | asCurrency }}
+      <span v-if="date.item.type === 'SHARES'">
+        {{ (data.item.amount * data.item.pricePerShare) | asCurrency }}
+      </span>
+      <span v-else>
+        {{ data.item.amount | asCurrency }}
+      </span>
     </template>
 
     <template v-slot:cell(method)="data">

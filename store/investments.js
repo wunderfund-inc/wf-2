@@ -47,8 +47,14 @@ export const actions = {
           investment_amount_type: iat,
           investment_method: im,
           investment_agreement_id: iai,
-          tapi_trade_id: ttId
+          tapi_trade_id: ttId,
+          offering_details: offeringDetails
         } = data;
+
+        const pricePerShare =
+          offeringDetails.security_type === "Equity"
+            ? offeringDetails.price_per_share
+            : 0;
 
         return {
           uid,
@@ -58,7 +64,8 @@ export const actions = {
           type: iat,
           method: im,
           agreementId: iai,
-          tradeId: ttId
+          tradeId: ttId,
+          pricePerShare
         };
       });
 
