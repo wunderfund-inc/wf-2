@@ -11,7 +11,7 @@ export const firebaseConfig = {
 export const actionCodeSettings = {
   // URL you want to redirect back to. The domain (www.example.com) for this
   // URL must be whitelisted in the Firebase Console.
-  url: `${process.env.BASE_URL}/auth/login`,
+  url: process.env.BASE_URL,
   // This must be true.
   handleCodeInApp: true
 };
