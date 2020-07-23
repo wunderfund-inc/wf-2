@@ -1,8 +1,6 @@
 <template>
   <b-card bg-variant="light">
-    <h2>
-      Current Investment Limit: {{ currentSpendPool | asCurrency }}
-    </h2>
+    <h2>Current Investment Limit: {{ currentSpendPool | asCurrency }}</h2>
     <h5 class="text-muted mb-0">
       Annual Maximum Limit: {{ spendPoolMax | asCurrency }}
     </h5>
