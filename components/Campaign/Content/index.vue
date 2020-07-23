@@ -296,7 +296,9 @@ export default {
     const investorList = [];
     this.offerings.forEach(offering => {
       offering.investments.forEach(investment => {
-        investorList.push(investment);
+        if (investment.investment_agreement_id || investment.document_url) {
+          investorList.push(investment);
+        }
       });
     });
     this.testimonials = investorList;

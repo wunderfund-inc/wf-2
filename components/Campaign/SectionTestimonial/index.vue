@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3 class="mb-4">See who invested:</h3>
+    <h3 v-if="testimonials.length > 0" class="mb-4">See who invested:</h3>
     <b-card-group columns>
       <b-card v-for="(item, index) in testimonials" :key="index">
         <b-media v-if="item.user_testimonial">
