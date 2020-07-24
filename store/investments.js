@@ -41,39 +41,41 @@ export const actions = {
     if (docRefs.empty) {
       await commit("SET_INVESTMENTS", []);
     } else {
-      const investments = docRefs.docs.map(investments => {
-        const data = investments.data();
+      const investments = docRefs.docs
+        .map(investment => {
+          const data = investment.data();
+          if (investment.investment_agreement_id) {
+            const {
+              uid,
+              company_name: cn,
+              date_created: dc,
+              investment_amount: ia,
+              investment_amount_type: iat,
+              investment_method: im,
+              investment_agreement_id: iai,
+              tapi_trade_id: ttId,
+              offering_details: offeringDetails
+            } = data;
 
-        const {
-          uid,
-          company_name: cn,
-          date_created: dc,
-          investment_amount: ia,
-          investment_amount_type: iat,
-          investment_method: im,
-          investment_agreement_id: iai,
-          tapi_trade_id: ttId,
-          offering_details: offeringDetails
-        } = data;
+            const pricePerShare =
+              offeringDetails.security_type === "Equity"
+                ? offeringDetails.price_per_share
+                : 0;
 
-        const pricePerShare =
-          offeringDetails.security_type === "Equity"
-            ? offeringDetails.price_per_share
-            : 0;
-
-        return {
-          uid,
-          companyName: cn,
-          purchaseDate: dc,
-          amount: ia,
-          type: iat,
-          method: im,
-          agreementId: iai,
-          tradeId: ttId,
-          pricePerShare
-        };
-      });
-
+            return {
+              uid,
+              companyName: cn,
+              purchaseDate: dc,
+              amount: ia,
+              type: iat,
+              method: im,
+              agreementId: iai,
+              tradeId: ttId,
+              pricePerShare
+            };
+          }
+        })
+        .filter(n => n);
       await commit("SET_INVESTMENTS", investments);
     }
   }
