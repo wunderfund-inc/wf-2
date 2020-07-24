@@ -95,7 +95,7 @@ export const actions = {
   setAttribute({ commit }, { prop, val }) {
     commit("SET_AGREEMENT_ATTRIBUTE", { prop, val });
   },
-  async saveToDB(
+  async saveToFirebase(
     { state, commit },
     { accredited, auth, user, companyId, companyName }
   ) {
@@ -150,22 +150,24 @@ export const actions = {
     }
 
     try {
-      await invRef.set(investmentData);
+      const investmentId = invRef.id;
 
       await commit("SET_AGREEMENT_ATTRIBUTE", {
         prop: "investmentId",
-        val: invRef.id
+        val: investmentId
       });
+
+      await invRef.set(investmentData);
     } catch (error) {
       throw Error(error);
     }
   },
-  async fetchURL({ state, commit }, { offering, auth }) {
+  async fetchURL({ state, commit }, { auth }) {
     const domain = "https://us-central1-wunderfund-server.cloudfunctions.net";
     const endpoint = "agreementOnRequest";
 
     const payload = {
-      offering_details: offering,
+      offering_details: state.offering,
       user_id: auth.userId,
       investment_amount: state.amount,
       investment_id: state.investmentId

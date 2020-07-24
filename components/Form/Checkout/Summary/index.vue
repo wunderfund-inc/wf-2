@@ -170,7 +170,7 @@ export default {
       try {
         this.submitting = true;
 
-        await this.$store.dispatch("agreement/saveToDB", {
+        await this.$store.dispatch("agreement/saveToFirebase", {
           accredited: this.accredited,
           auth: this.auth,
           user: this.user,
@@ -178,10 +178,7 @@ export default {
           companyName: this.companyName
         });
 
-        await this.$store.dispatch("agreement/fetchURL", {
-          offering: this.offering,
-          auth: this.auth
-        });
+        await this.$store.dispatch("agreement/fetchURL", { auth: this.auth });
 
         this.submitting = false;
 
