@@ -14,7 +14,12 @@ export const getters = {
 
       if (investments.length > 0) {
         return investments
-          .map(investment => investment.amount)
+          .map(investment => {
+            if (investment.type === "SHARES") {
+              return investment.amount * investment.pricePerShare;
+            }
+            return investment.amount;
+          })
           .reduce((a, b) => a + b);
       }
     }
