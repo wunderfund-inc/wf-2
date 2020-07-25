@@ -44,7 +44,7 @@ export const actions = {
       const investments = docRefs.docs
         .map(investment => {
           const data = investment.data();
-          if (investment.investment_agreement_id) {
+          if (data.investment_agreement_id) {
             const {
               uid,
               company_name: cn,
