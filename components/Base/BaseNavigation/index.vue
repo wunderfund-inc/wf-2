@@ -69,8 +69,8 @@ export default {
   methods: {
     async logout() {
       try {
-        await this.$router.replace("/");
         await this.$store.dispatch("auth/logout");
+        // await this.$router.replace("/");
       } catch (error) {
         // eslint-disable-next-line
         console.error(error);
