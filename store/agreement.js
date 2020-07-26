@@ -97,15 +97,19 @@ export const actions = {
   },
   async saveToFirebase(
     { state, commit },
-    { accredited, auth, user, companyId, companyName }
+    { accredited, auth, companyId, companyName }
   ) {
+    const userRef = db.collection("users").doc(auth.userId);
+    const userDoc = await userRef.get();
+    const userData = userDoc.data();
+
     const invRef = db.collection("investments").doc();
     const investmentData = {
       campaign_id: companyId, // `wunderfund` or `spikes-beer-ice`
       company_name: companyName.toUpperCase(), // `WUNDERFUND`
       date_created: timestamp,
       date_updated: timestamp,
-      investment_type: user.is_entity ? "ENTITY" : "PERSONAL",
+      investment_type: userData.is_entity ? "ENTITY" : "PERSONAL",
       investment_agreement_id: null,
       investment_amount_type: state.amountType, // `RAW` or `SHARES`
       investment_amount: state.amount,
@@ -124,10 +128,10 @@ export const actions = {
       user_testimonial: state.testimonial, // typeof string[]
       user_id: auth.userId,
       user_email: auth.email,
-      user_first_name: user.first_name,
-      user_last_name: user.last_name,
-      user_avatar: user.avatar || null,
-      user_tapi_account_id: user.transact_api_account_id
+      user_first_name: userData.first_name,
+      user_last_name: userData.last_name,
+      user_avatar: userData.avatar || null,
+      user_tapi_account_id: userData.transact_api_account_id
     };
 
     if (state.method === "ACH") {

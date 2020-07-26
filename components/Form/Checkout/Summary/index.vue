@@ -173,7 +173,6 @@ export default {
         await this.$store.dispatch("agreement/saveToFirebase", {
           accredited: this.accredited,
           auth: this.auth,
-          user: this.user,
           companyId: this.$route.params.companyId,
           companyName: this.companyName
         });
