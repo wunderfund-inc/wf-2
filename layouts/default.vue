@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <base-navigation />
-    <nuxt class="min-height" />
+    <nuxt />
     <base-footer />
   </div>
 </template>
@@ -24,9 +24,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-}
-
-.min-height {
-  min-height: 70vh;
 }
 </style>
