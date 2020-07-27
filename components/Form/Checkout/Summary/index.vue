@@ -181,9 +181,7 @@ export default {
 
         this.submitting = false;
 
-        // eslint-disable-next-line
-        console.log(this.url);
-        // await window.location.replace(this.url);
+        await window.location.replace(this.url);
       } catch (error) {
         this.error = error;
       }
