@@ -1,8 +1,5 @@
 export default [
   {
-    question: ""
-  },
-  {
     question: "Why should I consider crowdfunding to raise capital?",
     answer:
       "A crowd of investors can validate your product in a way that institutional investors cannot. They understand your product from a customer standpoint and can give you feedback from the platform. With crowdfunding, if they're already customers, now you're enabling them to become owners, and with that you'll have brand ambassadors."
