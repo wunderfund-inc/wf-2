@@ -9,7 +9,11 @@
             Fact: Women & Minorities make up less than 2% of venture backed
             capital. Crowdfunding is here to change that.
           </p>
-          <a href="https://forms.gle/4qhePa15ft1YYvkS7" target="_blank">
+          <a
+            href="https://airtable.com/shrNZSPsjsBCtk1yv"
+            target="_blank"
+            rel="noreferrer"
+          >
             <main-button extra-classes="px-5">Apply to Campaign</main-button>
           </a>
         </div>

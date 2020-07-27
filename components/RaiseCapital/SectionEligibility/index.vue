@@ -2,9 +2,13 @@
   <section class="img__bg py-5">
     <div class="container text-center text-light">
       <h3 class="pb-4">Not sure if crowdfunding is for you?</h3>
-      <nuxt-link to="/faq/company">
+      <a
+        href="https://airtable.com/shrNZSPsjsBCtk1yv"
+        target="_blank"
+        rel="noreferrer"
+      >
         <main-button extra-classes="px-4">See if you qualify!</main-button>
-      </nuxt-link>
+      </a>
     </div>
   </section>
 </template>
