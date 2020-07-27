@@ -123,6 +123,8 @@ export const actions = {
       ],
       offering_details: state.offering, // typeof {}
       offering_id: state.offering.offering_data.id,
+      tapi_offering_id: state.offering.transact_api_offering_id,
+      tapi_trade_id: null,
       uid: invRef.id,
       user_accredited: accredited,
       user_testimonial: state.testimonial, // typeof string[]
