@@ -4,21 +4,11 @@ const endpoint = "https://wunderfund.cdn.prismic.io/api/v2";
 
 const dynamicRoutes = async () => {
   try {
-    // Get dynamic routes from Prismic-based campaigns
     const api = await Prismic.getApi(endpoint);
     const campaigns = await api.query(
       Prismic.Predicates.at("document.type", "campaign")
     );
-    const campaignRoutes = campaigns.results.map(
-      campaign => `/${campaign.uid}`
-    );
-
-    return campaignRoutes;
-    // Get dynamic routes from FAQ data
-    // const FaqList = Object.keys(FaqData.faqs);
-    // const faqRoutes = FaqList.map(faq => `/faq/${faq}`);
-
-    // return campaignRoutes.concat(faqRoutes);
+    return campaigns.results.map(campaign => `/${campaign.uid}`);
   } catch (error) {
     throw Error(error);
   }
@@ -51,7 +41,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: "#fff" },
+  loading: { color: "#c89f5c" },
   /*
    ** Global CSS
    */
