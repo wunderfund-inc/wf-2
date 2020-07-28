@@ -22,7 +22,7 @@
         <p class="text-muted">{{ company.data.company_motto }}</p>
       </b-media>
 
-      <b-list-group v-for="(offering, index) in offerings" :key="index" flush>
+      <b-list-group flush>
         <b-list-group-item class="text-center">
           <template v-if="offering.security_type === 'Promissory Note'">
             <small class="mb-0 text-muted">
@@ -96,13 +96,13 @@
                 {{ offering.offering_date_end | timeDistance }} left -
               </template>
             </template>
-            <template v-if="offering.metrics">
+            <template v-if="metrics">
               <template v-if="offering.security_type === 'Equity'">
                 <template v-if="offering.securities_min_sell">
                   {{
                     `${100 *
                       (
-                        offering.metrics.total_raise /
+                        metrics.total_raise /
                         (offering.price_per_share *
                           offering.securities_min_sell)
                       ).toFixed(2)}%`
@@ -113,7 +113,7 @@
                   {{
                     `${100 *
                       (
-                        offering.metrics.total_raise /
+                        metrics.total_raise /
                         (offering.price_per_share * offering.securities_total)
                       ).toFixed(2)}%`
                   }}
@@ -123,9 +123,9 @@
               <template v-else>
                 {{
                   `${100 *
-                    (
-                      offering.metrics.total_raise / offering.offering_raise_min
-                    ).toFixed(2)}%`
+                    (metrics.total_raise / offering.offering_raise_min).toFixed(
+                      2
+                    )}%`
                 }}
                 Funded
               </template>
@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { db } from "@/plugins/firebase";
+// import { db } from "@/plugins/firebase";
 import { endingSoon, endedAlready } from "@/helpers/validators";
 
 export default {
@@ -151,33 +151,41 @@ export default {
       default() {}
     }
   },
-  data() {
-    return {
-      offerings: []
-    };
+  computed: {
+    offering() {
+      return this.company.offering;
+    },
+    metrics() {
+      return this.company.metrics;
+    }
   },
-  async created() {
-    const offeringRefs = this.company.data.company_offerings;
+  // data() {
+  //   return {
+  //     offerings: []
+  //   };
+  // },
+  // async created() {
+  //   const offeringRefs = this.company.data.company_offerings;
 
-    const offerings = await Promise.all(
-      offeringRefs.map(async offering => {
-        const offeringId = offering.offering_data.id;
+  //   const offerings = await Promise.all(
+  //     offeringRefs.map(async offering => {
+  //       const offeringId = offering.offering_data.id;
 
-        const offeringRef = await db
-          .collection("metrics_per_offering")
-          .doc(offeringId)
-          .get();
+  //       const offeringRef = await db
+  //         .collection("metrics_per_offering")
+  //         .doc(offeringId)
+  //         .get();
 
-        return {
-          ...(await this.$prismic.api.getByID(offering.offering_data.id)).data,
-          ...offering,
-          metrics: offeringRef.data()
-        };
-      })
-    );
+  //       return {
+  //         ...(await this.$prismic.api.getByID(offering.offering_data.id)).data,
+  //         ...offering,
+  //         metrics: offeringRef.data()
+  //       };
+  //     })
+  //   );
 
-    this.offerings = offerings;
-  },
+  //   this.offerings = offerings;
+  // },
   methods: {
     endingSoon(date) {
       return endingSoon(date);

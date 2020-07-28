@@ -279,29 +279,18 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      testimonials: []
-    };
-  },
   computed: {
     ...mapGetters({
       comments: "company/comments"
     }),
     signedIn() {
       return !!this.$store.state.auth.email;
+    },
+    testimonials() {
+      const offering = this.offerings[0];
+      const investments = offering.investments;
+      return investments;
     }
-  },
-  created() {
-    const investorList = [];
-    this.offerings.forEach(offering => {
-      offering.investments.forEach(investment => {
-        if (investment.investment_agreement_id || investment.document_url) {
-          investorList.push(investment);
-        }
-      });
-    });
-    this.testimonials = investorList;
   },
   methods: {
     iconIt(platform) {

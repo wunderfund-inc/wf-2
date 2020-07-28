@@ -66,34 +66,40 @@ export default {
       await store.dispatch("company/fetchComments", companyId);
 
       const company = (await $prismic.api.getByUID("campaign", companyId)).data;
+      const offeringRef = company.company_offerings[0];
+      const offeringId = offeringRef.offering_data.id;
+      const offeringData = (await $prismic.api.getByID(offeringId)).data;
 
-      const offerings = await Promise.all(
-        company.company_offerings.map(async offering => {
-          const investmentDocuments = await db
-            .collection("investments")
-            .where("offering_id", "==", offering.offering_data.id)
-            .get();
+      const offeringDoc = await db
+        .collection("metrics_per_offering")
+        .doc(offeringId)
+        .get();
+      const offeringMetrics = offeringDoc.data();
 
-          const investmentData = investmentDocuments.empty
-            ? []
-            : investmentDocuments.docs.map(doc => doc.data());
+      const investmentDocs = await db
+        .collection("investments")
+        .where("offering_id", "==", offeringId)
+        .get();
 
-          return {
-            ...(await $prismic.api.getByID(offering.offering_data.id)).data,
-            ...offering,
-            investments: investmentData
-          };
-        })
-      );
+      const investmentData = investmentDocs.empty
+        ? []
+        : investmentDocs.docs.map(doc => doc.data());
 
       const zip = "45202";
       const companyLocation = await getCompanyLocation(zip);
 
-      const locations = await getLocations(offerings[0].offering_data.id);
+      const locations = await getLocations(offeringId);
 
       return {
         company,
-        offerings,
+        offerings: [
+          {
+            ...offeringData,
+            ...offeringRef,
+            investments: investmentData,
+            metrics: offeringMetrics
+          }
+        ],
         companyLocation,
         locations
       };

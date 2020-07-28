@@ -3,12 +3,14 @@
     <div class="text-center text-md-left">
       <h2>
         Raised:
-        <strong class="text-success">{{ currentRaise | asCurrency }}</strong>
+        <strong class="text-success">
+          {{ investmentsTotal | asCurrency }}
+        </strong>
       </h2>
 
       <h5>
         # Investments:
-        <strong>{{ investmentCount }}</strong>
+        <strong>{{ investmentsCount }}</strong>
       </h5>
 
       <h6 class="text-muted pt-2">
@@ -231,7 +233,6 @@
 </template>
 
 <script>
-import { db } from "@/plugins/firebase";
 import { endingSoon, endedAlready } from "@/helpers/validators";
 import MainButton from "@/components/Common/MainButton";
 import SolidIcon from "@/components/Common/SolidIcon";
@@ -249,12 +250,6 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      currentRaise: 0,
-      investmentCount: 0
-    };
-  },
   computed: {
     signedIn() {
       return !!this.$store.state.auth.email;
@@ -266,23 +261,15 @@ export default {
     offeringEnded() {
       const endDate = this.offering.offering_date_end;
       return endedAlready(endDate);
-    }
-  },
-  async created() {
-    try {
-      const metricsRef = await db
-        .collection("metrics_per_offering")
-        .doc(this.offering.offering_data.id)
-        .get();
-
-      if (metricsRef.exists) {
-        const metrics = metricsRef.data();
-        this.currentRaise = metrics.total_raise;
-        this.investmentCount = metrics.total_investments;
-      }
-    } catch (error) {
-      // eslint-disable-next-line
-      console.error(error);
+    },
+    metrics() {
+      return this.offering.metrics;
+    },
+    investmentsTotal() {
+      return this.metrics.total_raise;
+    },
+    investmentsCount() {
+      return this.metrics.total_investments;
     }
   }
 };

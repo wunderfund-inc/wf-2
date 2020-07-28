@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { db } from "@/plugins/firebase";
+
 import HeroSection from "@/components/Home/HeroSection";
 import EmailCapture from "@/components/Home/EmailCapture";
 import SectionBrowse from "@/components/Browse/SectionBrowse";
@@ -34,9 +36,22 @@ export default {
         return (
           new Date(b.last_publication_date) - new Date(a.last_publication_date)
         );
+      })
+      .map(async company => {
+        const offering = company.data.company_offerings[0];
+        const offeringId = offering.offering_data.id;
+        const offeringDoc = await db
+          .collection("metrics_per_offering")
+          .doc(offeringId)
+          .get();
+        const offeringMetrics = offeringDoc.data();
+        const offeringData = (await $prismic.api.getByID(offeringId)).data;
+        return { ...company, metrics: offeringMetrics, offering: offeringData };
       });
 
-    return { companies: sorted };
+    const asyncSorted = await Promise.all(sorted);
+
+    return { companies: asyncSorted };
   }
 };
 </script>
