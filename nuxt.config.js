@@ -100,7 +100,7 @@ export default {
   ],
   prismic: {
     endpoint: "https://wunderfund.cdn.prismic.io/api/v2",
-    preview: true
+    preview: false
   },
   /*
    ** Axios module configuration
