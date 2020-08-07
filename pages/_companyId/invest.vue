@@ -1,21 +1,30 @@
 <template>
   <main>
-    <div class="container">
-      <h1 class="text-center py-md-5">
-        Invest in: {{ company.company_name_short }}
-      </h1>
+    <b-overlay :show="submittingCheckoutForm" variant="light">
+      <template #overlay>
+        <div class="text-center">
+          <b-spinner large variant="dark" />
+          <p class="pt-3 text-dark">
+            Please hold as we create your agreement to sign...
+          </p>
+        </div>
+      </template>
+      <div class="container">
+        <h1 class="text-center py-md-5">
+          Invest in: {{ company.company_name_short }}
+        </h1>
 
-      <div class="row justify-content-center">
-        <article class="col-md-8">
-          <checkout-layout :offerings="offerings" />
-        </article>
+        <div class="row justify-content-center">
+          <article class="col-md-8">
+            <checkout-layout :offerings="offerings" />
+          </article>
 
-        <aside class="col-md-4 mb-3">
-          <checkout-summary :company-name="company.company_name_short" />
-        </aside>
+          <aside class="col-md-4 mb-3">
+            <checkout-summary :company-name="company.company_name_short" />
+          </aside>
+        </div>
       </div>
-    </div>
-
+    </b-overlay>
     <section-cancellation :company-name="company.company_name_short" />
   </main>
 </template>
@@ -29,6 +38,11 @@ import CheckoutSummary from "@/components/Form/Checkout/Summary";
 export default {
   middleware: ["authenticated"],
   components: { SectionCancellation, CheckoutLayout, CheckoutSummary },
+  computed: {
+    submittingCheckoutForm() {
+      return this.$store.state.agreement.submitting;
+    }
+  },
   async asyncData({ redirect, route, $prismic, store, error }) {
     try {
       const userId = store.state.auth.userId;

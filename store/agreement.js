@@ -31,7 +31,8 @@ export const state = () => ({
   entityName: null,
   entityType: null,
   entityEin: null,
-  investmentId: null
+  investmentId: null,
+  submitting: false
 });
 
 export const getters = {
@@ -190,5 +191,8 @@ export const actions = {
       // eslint-disable-next-line no-console
       console.error(error);
     }
+  },
+  showOverlay({ commit }, payload) {
+    commit("SET_AGREEMENT_ATTRIBUTE", { prop: "submitting", val: payload });
   }
 };
