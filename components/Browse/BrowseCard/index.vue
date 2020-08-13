@@ -99,18 +99,13 @@
             <template v-if="metrics">
               <template v-if="offering.security_type === 'Equity'">
                 <template v-if="offering.securities_min_sell">
-                  {{ equityPercentMinSecurities }}
-                  Funded
+                  {{ equityPercentMinSecurities }}% Funded
                 </template>
                 <template v-else>
-                  {{ equityPercentNoMinimum }}
-                  Funded
+                  {{ equityPercentNoMinimum }}% Funded
                 </template>
               </template>
-              <template v-else>
-                {{ dollarPercent }}
-                Funded
-              </template>
+              <template v-else>{{ nonEquityPercent }}% Funded</template>
             </template>
             <template v-else>
               0% Funded
@@ -151,7 +146,7 @@ export default {
         (this.offering.price_per_share * this.offering.securities_total);
       return Number.parseInt(100 * percent);
     },
-    dollarPercent() {
+    nonEquityPercent() {
       const percent =
         this.metrics.total_raise / this.offering.offering_raise_min;
       return Number.parseInt(100 * percent);
