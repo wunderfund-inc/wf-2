@@ -88,7 +88,7 @@
             >
               Startup Agreement.
             </nuxt-link>
-            <nuxt-link to="/" class="text-light font-weight-bold">
+            <!-- <nuxt-link to="/" class="text-light font-weight-bold">
               Wunderfund.co,
             </nuxt-link>
             along with
@@ -108,7 +108,7 @@
               Transfer Online
             </b-link>
             as partners, are all registered with the SEC and are members of
-            FINRA.
+            FINRA. -->
           </p>
         </div>
       </div>
