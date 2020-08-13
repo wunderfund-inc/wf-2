@@ -99,34 +99,16 @@
             <template v-if="metrics">
               <template v-if="offering.security_type === 'Equity'">
                 <template v-if="offering.securities_min_sell">
-                  {{
-                    `${100 *
-                      (
-                        metrics.total_raise /
-                        (offering.price_per_share *
-                          offering.securities_min_sell)
-                      ).toFixed(2)}%`
-                  }}
+                  {{ equityPercentMinSecurities }}
                   Funded
                 </template>
                 <template v-else>
-                  {{
-                    `${100 *
-                      (
-                        metrics.total_raise /
-                        (offering.price_per_share * offering.securities_total)
-                      ).toFixed(2)}%`
-                  }}
+                  {{ equityPercentNoMinimum }}
                   Funded
                 </template>
               </template>
               <template v-else>
-                {{
-                  `${100 *
-                    (metrics.total_raise / offering.offering_raise_min).toFixed(
-                      2
-                    )}%`
-                }}
+                {{ dollarPercent }}
                 Funded
               </template>
             </template>
@@ -141,7 +123,6 @@
 </template>
 
 <script>
-// import { db } from "@/plugins/firebase";
 import { endingSoon, endedAlready } from "@/helpers/validators";
 
 export default {
@@ -157,48 +138,40 @@ export default {
     },
     metrics() {
       return this.company.metrics;
+    },
+    equityPercentMinSecurities() {
+      const percent =
+        this.metrics.total_raise /
+        (this.offering.price_per_share * this.offering.securities_min_sell);
+      return Number.parseInt(100 * percent);
+    },
+    equityPercentNoMinimum() {
+      const percent =
+        this.metrics.total_raise /
+        (this.offering.price_per_share * this.offering.securities_total);
+      return Number.parseInt(100 * percent);
+    },
+    dollarPercent() {
+      const percent =
+        this.metrics.total_raise / this.offering.offering_raise_min;
+      return Number.parseInt(100 * percent);
     }
   },
-  // data() {
-  //   return {
-  //     offerings: []
-  //   };
-  // },
-  // async created() {
-  //   const offeringRefs = this.company.data.company_offerings;
-
-  //   const offerings = await Promise.all(
-  //     offeringRefs.map(async offering => {
-  //       const offeringId = offering.offering_data.id;
-
-  //       const offeringRef = await db
-  //         .collection("metrics_per_offering")
-  //         .doc(offeringId)
-  //         .get();
-
-  //       return {
-  //         ...(await this.$prismic.api.getByID(offering.offering_data.id)).data,
-  //         ...offering,
-  //         metrics: offeringRef.data()
-  //       };
-  //     })
-  //   );
-
-  //   this.offerings = offerings;
-  // },
   methods: {
     endingSoon(date) {
       return endingSoon(date);
     },
     offeringEnded(date) {
       return endedAlready(date);
+    },
+    percent(num) {
+      return Number.parseInt(num);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-$primary: #0091ea;
 $font: "Montserrat", sans-serif;
 
 a {
