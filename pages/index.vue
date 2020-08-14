@@ -31,7 +31,7 @@ export default {
     ).results;
 
     const sorted = companies
-      .filter(company => !company.data.on_wfh)
+      .filter(company => ["WFP", "BOTH", "ALL"].includes(company.data.platform))
       .sort(function(a, b) {
         return (
           new Date(b.last_publication_date) - new Date(a.last_publication_date)
