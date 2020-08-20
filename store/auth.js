@@ -81,11 +81,18 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async resetPassword(context, password) {
+  async updatePassword(context, password) {
     try {
       await auth.currentUser.updatePassword(password);
     } catch (error) {
       throw Error(error.message);
+    }
+  },
+  async sendPasswordResetEmail(context, email) {
+    try {
+      await auth.sendPasswordResetEmail(email);
+    } catch (error) {
+      throw new Error(error);
     }
   },
   set({ commit }, { email, emailVerified, userId }) {

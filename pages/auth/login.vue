@@ -17,6 +17,11 @@
             Don't have an account?
             <nuxt-link to="/auth/register">Make one!</nuxt-link>
           </small>
+          <br />
+          <small class="text-muted">
+            Forget your password?
+            <nuxt-link to="/auth/password-reset">Reset it!</nuxt-link>
+          </small>
         </div>
       </div>
     </div>

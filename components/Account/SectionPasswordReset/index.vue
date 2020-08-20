@@ -86,7 +86,7 @@ export default {
       try {
         this.submitting = true;
         const error = await this.$store.dispatch(
-          "auth/resetPassword",
+          "auth/updatePassword",
           this.password.new
         );
         if (error) {
