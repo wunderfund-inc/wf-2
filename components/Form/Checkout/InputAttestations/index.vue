@@ -2,7 +2,7 @@
   <b-form-group
     label="Finally, the following must be agreed upon:"
     label-size="lg"
-    label-class="font-weight-bold mt-3"
+    label-class="font-weight-bold pt-3"
   >
     <b-form-checkbox
       v-model="attestation1"

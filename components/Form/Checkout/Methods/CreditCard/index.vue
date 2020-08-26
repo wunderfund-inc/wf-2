@@ -30,6 +30,17 @@
             placeholder="4242 4242 4242 4242"
             type="tel"
           />
+
+          <small class="form-text text-muted">
+            Valid credit cards we accept: Visa, Mastercard, Discover
+          </small>
+
+          <small
+            v-if="determineCreditCard === 'AE'"
+            class="form-text text-danger"
+          >
+            Unfortunately, we don't accept American Express.
+          </small>
         </div>
       </div>
     </div>
@@ -87,10 +98,12 @@ export default {
       const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
       const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
       const diRegex = /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
+      const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
 
       if (viRegex.test(this.number)) return "VI";
       else if (mcRegex.test(this.number)) return "MC";
       else if (diRegex.test(this.number)) return "DI";
+      else if (aeRegex.test(this.number)) return "AE";
       else return "";
     },
     name: {
@@ -179,7 +192,7 @@ export default {
   methods: {
     creditCardClasses(cc) {
       const reg = this.determineCreditCard === cc;
-      const extra = reg ? "" : "text-muted";
+      const extra = reg ? "text-success" : "text-muted";
       return `mx-1 fa-lg ${extra}`;
     }
   }
