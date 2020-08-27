@@ -89,25 +89,9 @@
               Startup Agreement.
             </nuxt-link>
             <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co,
+              Wunderfund.co
             </nuxt-link>
-            along with
-            <a
-              href="https://www.northcapital.com"
-              target="_blank"
-              class="text-light font-weight-bold"
-            >
-              North Capital Private Securities
-            </a>
-            as their escrow agent and
-            <a
-              href="https://www.transferonline.com"
-              target="_blank"
-              class="text-light font-weight-bold"
-            >
-              Transfer Online,
-            </a>
-            are all registered with the SEC and are members of FINRA.
+            is registered with the SEC and is a member of FINRA.
           </p>
         </div>
       </div>
