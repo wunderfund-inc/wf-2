@@ -40,6 +40,12 @@
           {{ offering.offering_raise_max | currencyDisplayFormat }}
         </template>
       </h6>
+      <h6 class="text-muted">
+        Regulation Type:
+        <strong>
+          {{ offering.offering_type }}
+        </strong>
+      </h6>
     </div>
 
     <template v-if="offering.security_type === 'Promissory Note'">

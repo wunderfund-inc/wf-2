@@ -6,7 +6,7 @@
       no-body
       class="my-2"
     >
-      <b-media class="container mt-3">
+      <b-media class="container my-3">
         <template v-slot:aside>
           <b-img
             :src="company.data.company_logo.url"
@@ -19,7 +19,7 @@
           />
         </template>
         <h5 class="mt-0">{{ company.data.company_name_short }}</h5>
-        <p class="text-muted">{{ company.data.company_motto }}</p>
+        <p class="text-muted mb-0">{{ company.data.company_motto }}</p>
       </b-media>
 
       <b-list-group flush>
