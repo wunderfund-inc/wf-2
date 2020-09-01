@@ -64,7 +64,7 @@ export const actions = {
   async login({ dispatch }, user) {
     try {
       const token = await auth.currentUser.getIdToken(true);
-      Cookies.set("access_token", token);
+      Cookies.set("access_token", token, { expires: 1 });
       await dispatch("set", {
         email: user.email,
         emailVerified: user.emailVerified,
