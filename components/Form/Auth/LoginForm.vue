@@ -10,6 +10,25 @@
           <p>Logging In...</p>
         </div>
       </template>
+
+      <b-alert :show="showEmailNeedsVerificationAlert" variant="info">
+        <div class="p-3">
+          <h4 class="alert-heading">Oops!</h4>
+          <hr />
+          <p>
+            Your email address hasn't been verified. Please check the inbox of
+            <strong>{{ form.email }}</strong> to verify your email before
+            logging in.
+          </p>
+          <button @click="resendLink" v-if="!linkResent" class="btn btn-info">
+            Resend Link
+          </button>
+          <p v-else>
+            Link sent!
+          </p>
+        </div>
+      </b-alert>
+
       <div class="card bg-light mb-3">
         <div class="container my-3">
           <form @submit.prevent="submitLoginForm">
@@ -44,10 +63,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { auth, verifyEmail } from "@/plugins/firebase";
 
 export default {
   data() {
     return {
+      linkResent: false,
+      showEmailNeedsVerificationAlert: false,
       form: {
         email: null,
         password: null
@@ -59,6 +81,17 @@ export default {
     ...mapGetters(["showOverlay"])
   },
   methods: {
+    async resendLink() {
+      try {
+        const { email, password } = this.form;
+        await auth.signInWithEmailAndPassword(email, password);
+        await verifyEmail();
+        await auth.signOut();
+        this.linkResent = true;
+      } catch (error) {
+        this.error = error.message;
+      }
+    },
     async submitLoginForm() {
       try {
         await this.$store.dispatch("toggleOverlay", true);
@@ -72,8 +105,12 @@ export default {
           await this.$router.go("/auth/attest");
         }
       } catch (error) {
+        if (error.message === "Error: Email not verified") {
+          this.showEmailNeedsVerificationAlert = true;
+        } else {
+          this.error = error.message;
+        }
         await this.$store.dispatch("toggleOverlay", false);
-        this.error = error.message;
       }
     }
   }

@@ -47,14 +47,18 @@ export const actions = {
       throw Error(error.message);
     }
   },
-  async loginUser({ dispatch }, form) {
+  async loginUser({ dispatch }, { email, password }) {
     try {
-      const { email, password } = form;
       const user = await auth.signInWithEmailAndPassword(email, password);
-      const userData = user.user.toJSON();
-      await dispatch("login", userData);
+      if (user.user.emailVerified) {
+        const userData = user.user.toJSON();
+        await dispatch("login", userData);
+      } else {
+        await dispatch("logout");
+        throw new Error("Email not verified");
+      }
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error);
     }
   },
   async login({ dispatch }, user) {
