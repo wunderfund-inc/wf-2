@@ -18,13 +18,11 @@ export const mutations = {
 };
 
 export const actions = {
-  async createUser({ dispatch }, form) {
+  async createUser({ dispatch }, { email, password }) {
     try {
-      const { email, password } = form;
-      const user = await auth.createUserWithEmailAndPassword(email, password);
+      await auth.createUserWithEmailAndPassword(email, password);
       await verifyEmail();
-      const userData = user.user.toJSON();
-      await dispatch("login", userData);
+      await dispatch("logout");
     } catch (error) {
       throw Error(error);
     }

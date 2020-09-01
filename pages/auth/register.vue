@@ -15,7 +15,7 @@
 
           <small class="text-muted">
             Already registered?
-            <nuxt-link to="/auth/register">Log In</nuxt-link>
+            <nuxt-link to="/auth/login">Log In</nuxt-link>
           </small>
         </div>
       </div>

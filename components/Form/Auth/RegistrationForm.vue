@@ -10,6 +10,18 @@
           <p>Creating User...</p>
         </span>
       </template>
+
+      <b-alert :show="showAlert" variant="info">
+        <div class="p-3">
+          <h4 class="alert-heading">Please verify your email</h4>
+          <hr />
+          <p class="mb-0">
+            Please check the inbox of <strong>{{ form.email }}</strong> to
+            verify your email.
+          </p>
+        </div>
+      </b-alert>
+
       <div class="card bg-light mb-3">
         <div class="container my-3">
           <form @submit.prevent="submitRegistrationForm">
@@ -80,6 +92,7 @@ export default {
   mixins: [validationMixin],
   data() {
     return {
+      showAlert: false,
       error: null,
       form: {
         email: null,
@@ -114,10 +127,14 @@ export default {
     },
     async submitRegistrationForm() {
       try {
+        this.error = null;
         await this.$store.dispatch("toggleOverlay", true);
-        await this.$store.dispatch("auth/createUser", this.form);
+        await this.$store.dispatch("auth/createUser", {
+          email: this.form.email,
+          password: this.form.password
+        });
         await this.$store.dispatch("toggleOverlay", false);
-        await this.$router.go("/auth/attest");
+        this.showAlert = true;
       } catch (error) {
         await this.$store.dispatch("toggleOverlay", false);
         this.error = error.message;
