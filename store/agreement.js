@@ -39,12 +39,12 @@ export const getters = {
   validAmount(state) {
     if (!state.offering || !state.amount) return false;
 
-    if (state.method === "CC" && state.amount > 5000) return false;
+    if (state.method === "CC" && state.amount > 4999) return false;
 
     if (["Equity", "Convertible Note"].includes(state.offering.security_type)) {
       const { method, amount, offering } = state;
 
-      if (method === "CC" && amount * offering.price_per_share > 5000) {
+      if (method === "CC" && amount * offering.price_per_share > 4999) {
         return false;
       }
 

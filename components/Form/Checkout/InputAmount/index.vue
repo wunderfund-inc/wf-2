@@ -49,7 +49,7 @@
           text-variant="danger"
           class="font-weight-bold"
         >
-          *You may only invest up to $5,000 using a credit card.
+          *You may only invest up to $4999 using a credit card.
         </b-form-text>
       </b-form-group>
     </template>
@@ -95,7 +95,7 @@
           text-variant="danger"
           class="font-weight-bold"
         >
-          *You may only invest up to $5,000 using a credit card.
+          *You may only invest up to $4,999 using a credit card.
         </b-form-text>
       </b-form-group>
     </template>
@@ -144,10 +144,10 @@ export default {
       if (this.usingShares) {
         return (
           this.method === "CC" &&
-          this.amount * this.offering.price_per_share > 5000
+          this.amount * this.offering.price_per_share > 4999
         );
       }
-      return this.method === "CC" && this.amount > 5000;
+      return this.method === "CC" && this.amount > 4999;
     },
     usingShares() {
       return ["Equity", "Convertible Note"].includes(
