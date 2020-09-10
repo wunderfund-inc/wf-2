@@ -1,12 +1,15 @@
-<template lang="pug">
-  b-button(
-    block
-    size="lg"
-    :style="`background-color: ${color}; border: 1px solid ${color}`"
+<template>
+  <button
     @click="signIn"
-  )
-    brand-icon.d-none.d-md-inline(:i="name === 'facebook' ? 'facebook-f' : name")
-    span.d-inline.d-md-none {{ name | properCase }}
+    :style="`background-color: ${color}; border: 1px solid ${color}`"
+    class="btn btn-block btn-lg"
+  >
+    <BrandIcon
+      :i="name === 'facebook' ? 'facebook-f' : name"
+      class="d-none d-md-inline"
+    />
+    <span class="d-inline d-md-none">{{ name | properCase }}</span>
+  </button>
 </template>
 
 <script>
