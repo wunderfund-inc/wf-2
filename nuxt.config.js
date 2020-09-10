@@ -119,8 +119,7 @@ export default {
     FIREBASE_MESSAGING_ID: process.env.FIREBASE_MESSAGING_ID,
     FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-    TAPI_CLIENT_ID: process.env.TAPI_CLIENT_ID,
-    TAPI_API_KEY: process.env.TAPI_API_KEY
+    PLATFORM: process.env.PLATFORM
   },
   /*
    ** Build configuration
