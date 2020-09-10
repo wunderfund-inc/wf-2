@@ -4,9 +4,7 @@
       <div class="row">
         <div class="col-12 col-md-3 text-center text-md-left pb-5">
           <div class="row d-flex justify-content-center mb-3">
-            <nuxt-link to="/">
-              <b-img :src="require(`@/assets/logo/logo.png`)" width="200px" />
-            </nuxt-link>
+            <PlatformLogo />
           </div>
 
           <div class="row d-flex justify-content-center">
@@ -14,44 +12,37 @@
           </div>
 
           <div class="row d-flex justify-content-around">
-            <b-link class="pr-2 text-light" href="mailto:taylor@wunderfund.co">
+            <a href="mailto:taylor@wunderfund.co" class="pr-2 text-light">
               <solid-icon class="fa-2x" i="envelope-square" />
-            </b-link>
-            <b-link
-              class="px-2 text-light"
+            </a>
+            <a
               href="https://www.facebook.com/thewunderfund"
+              class="px-2 text-light"
             >
               <brand-icon class="fa-2x" i="facebook-square" />
-            </b-link>
-            <b-link
-              class="px-2 text-light"
+            </a>
+            <a
               href="https://www.linkedin.com/company/wunderfund"
+              class="px-2 text-light"
             >
               <brand-icon class="fa-2x" i="linkedin" />
-            </b-link>
-            <b-link
-              class="px-2 text-light"
-              href="https://twitter.com/thewunderfund"
-            >
+            </a>
+            <a href="https://twitter.com/thewunderfund" class="px-2 text-light">
               <brand-icon class="fa-2x" i="twitter-square" />
-            </b-link>
-            <b-link
-              class="px-2 text-light"
+            </a>
+            <a
               href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
+              class="px-2 text-light"
             >
               <brand-icon class="fa-2x" i="youtube-square" />
-            </b-link>
+            </a>
           </div>
         </div>
         <div class="col-12 col-md-9 pb-5">
           <p>
-            <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co
-            </nuxt-link>
+            <PlatformLink class="text-light font-weight-bold" />
             is run by Wunderfund, Inc. By using
-            <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co,
-            </nuxt-link>
+            <PlatformLink class="text-light font-weight-bold" />
             you accept our
             <nuxt-link
               to="/legal/terms-of-use"
@@ -67,9 +58,7 @@
               Privacy Policy.
             </nuxt-link>
             By choosing to invest using
-            <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co,
-            </nuxt-link>
+            <PlatformLink class="text-light font-weight-bold" />
             you accept our
             <nuxt-link
               to="/legal/investor-agreement"
@@ -78,9 +67,7 @@
               Investor Agreement.
             </nuxt-link>
             By choosing to post your offering using
-            <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co's
-            </nuxt-link>
+            <PlatformLink class="text-light font-weight-bold" />
             technologies, you accept our
             <nuxt-link
               to="/legal/startup-agreement"
@@ -88,9 +75,7 @@
             >
               Startup Agreement.
             </nuxt-link>
-            <nuxt-link to="/" class="text-light font-weight-bold">
-              Wunderfund.co
-            </nuxt-link>
+            <PlatformLink class="text-light font-weight-bold" />
             is registered with the SEC and is a member of FINRA.
           </p>
         </div>
@@ -100,13 +85,28 @@
 </template>
 
 <script>
+import PlatformLink from "@/components/Platform/Link";
+import PlatformLogo from "@/components/Platform/Logo";
 import SolidIcon from "@/components/Common/SolidIcon";
 import BrandIcon from "@/components/Common/BrandIcon";
 
 export default {
   components: {
+    PlatformLink,
+    PlatformLogo,
     SolidIcon,
     BrandIcon
+  },
+  computed: {
+    platform() {
+      return process.env.PLATFORM;
+    },
+    platformImgSrc() {
+      if (this.platform) {
+        return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
+      }
+      return null;
+    }
   }
 };
 </script>

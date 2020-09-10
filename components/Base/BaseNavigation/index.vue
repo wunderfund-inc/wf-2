@@ -2,14 +2,8 @@
   <header>
     <b-navbar toggleable="md" type="light" variant="transparent">
       <b-container class="py-3">
-        <b-navbar-brand href="/">
-          <img
-            :src="platformImgSrc"
-            :alt="platform"
-            width="200"
-            style="margin-bottom: 6px"
-            class="d-inline-block align-top"
-          />
+        <b-navbar-brand>
+          <PlatformLogo />
         </b-navbar-brand>
         <b-navbar-toggle target="collapse"></b-navbar-toggle>
         <b-collapse id="collapse" is-nav>
@@ -110,17 +104,13 @@
 </template>
 
 <script>
+import PlatformLogo from "@/components/Platform/Logo";
+
 export default {
+  components: {
+    PlatformLogo
+  },
   computed: {
-    platform() {
-      return process.env.PLATFORM;
-    },
-    platformImgSrc() {
-      if (this.platform) {
-        return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
-      }
-      return null;
-    },
     loggedIn() {
       return !!this.$store.state.auth.email;
     }
