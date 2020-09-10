@@ -47,7 +47,7 @@
 
       <template v-if="offering.security_type === 'Promissory Note'">
         <b-card-text class="mb-0">
-          {{ companyName }} will pay your <strong>loan</strong> back in
+          {{ companyName }} will pay your <strong>debt</strong> back in
           <strong>{{ offering.payment_interval.toLowerCase() }}</strong>
           installments made over
           <strong>

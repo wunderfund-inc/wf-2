@@ -39,7 +39,7 @@ export default [
   {
     question: "How long is the investment period?",
     answer:
-      "The timeframe depends on the investment type. Equity based investments can range as long as 5-10 years. Revenue sharing models and loan based investments can pay back in shorter time frames. You'll be able to see what the expected period of investment is before you commit to an investment."
+      "The timeframe depends on the investment type. Equity based investments can range as long as 5-10 years. Revenue sharing models and debt-based investments can pay back in shorter time frames. You'll be able to see what the expected period of investment is before you commit to an investment."
   },
   {
     question: "Is this free to join?",
@@ -59,7 +59,7 @@ export default [
   {
     question: "What are debt investments?",
     answer:
-      "Debt loans are less risky and also carry less of a potential return compared to equity investments.  Importanlty, there's a still a risk that a loan may not get paid back, so as with any investment on the Wunderfund platform, you should only invest what you can afford to lose."
+      "Debt is less risky and also carry less of a potential return compared to equity investments.  Importanlty, there's a still a risk that debt may not get paid back, so as with any investment on the Wunderfund platform, you should only invest what you can afford to lose."
   },
   {
     question: "Am I able to resell my investment?",

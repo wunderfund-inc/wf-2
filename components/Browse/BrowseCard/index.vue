@@ -26,13 +26,13 @@
         <b-list-group-item class="text-center">
           <template v-if="offering.security_type === 'Promissory Note'">
             <small class="mb-0 text-muted">
-              Loan repaid at a {{ offering.interest_rate }}% interest rate
+              Debt repaid at a {{ offering.interest_rate }}% interest rate
             </small>
           </template>
 
           <template v-if="offering.security_type === 'Revenue Share'">
             <small class="mb-0 text-muted">
-              Revenue-based loan at a {{ offering.return_multiplier }}x return
+              Revenue-based debt at a {{ offering.return_multiplier }}x return
             </small>
           </template>
 

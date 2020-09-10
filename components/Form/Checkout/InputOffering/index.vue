@@ -24,9 +24,9 @@
           <template v-if="offering.security_type === 'Promissory Note'">
             <p>
               <small>
-                This loan will accrue interest at
+                The debt will accrue interest at
                 <strong>{{ offering.interest_rate }}%</strong>
-                per year. The loan schedule pays back the investor in equal
+                per year. The debt schedule pays back the investor in equal
                 {{ offering.payment_interval.toLowerCase() }} installments made
                 over
                 <strong>
@@ -48,7 +48,7 @@
           <template v-if="offering.security_type === 'Revenue Share'">
             <p>
               <small>
-                This loan will pay
+                This debt will pay
                 <strong>{{ offering.percent_per_period }}%</strong> of
                 {{ offering.revenue_type.toLowerCase() }} revenues on
                 {{ offering.payment_interval === "Annual" ? "an" : "a" }}
