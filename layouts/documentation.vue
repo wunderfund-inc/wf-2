@@ -50,15 +50,15 @@ const legalLinks = [
 
 const faqLinks = [
   {
-    name: "General",
+    name: "General FAQs",
     url: "/faq/general"
   },
   {
-    name: "Investors",
+    name: "FAQs for Investors",
     url: "/faq/investors"
   },
   {
-    name: "Companies",
+    name: "FAQs for Companies",
     url: "/faq/companies"
   }
 ];
