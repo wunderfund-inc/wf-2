@@ -24,6 +24,8 @@ export default {
     SectionBrowse
   },
   async asyncData({ $prismic }) {
+    const platform = process.env.PLATFORM;
+
     const companies = (
       await $prismic.api.query(
         $prismic.predicates.at("document.type", "campaign")
@@ -31,7 +33,9 @@ export default {
     ).results;
 
     const sorted = companies
-      .filter(company => ["WFP", "BOTH", "ALL"].includes(company.data.platform))
+      .filter(company => {
+        return [platform, "BOTH", "ALL"].includes(company.data.platform);
+      })
       .sort(function(a, b) {
         return (
           new Date(b.last_publication_date) - new Date(a.last_publication_date)
