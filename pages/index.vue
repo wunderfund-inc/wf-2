@@ -27,11 +27,11 @@ export default {
   },
   computed: {
     platform() {
-      return process.env.PLATFORM;
+      return process.env.PLATFORM || "TEST";
     }
   },
   async asyncData({ $prismic }) {
-    const platform = process.env.PLATFORM;
+    const platform = process.env.PLATFORM || "TEST";
 
     const companies = (
       await $prismic.api.query(
