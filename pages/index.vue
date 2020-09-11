@@ -1,7 +1,9 @@
 <template>
   <main>
-    <hero-section />
-    <email-capture />
+    <div v-if="platform === 'WFP'">
+      <hero-section />
+      <email-capture />
+    </div>
     <section-browse v-if="companies.length > 0" :companies="companies">
       <template #header>
         <h5 class="text-center pb-4">Live Campaigns:</h5>
@@ -22,6 +24,11 @@ export default {
     HeroSection,
     EmailCapture,
     SectionBrowse
+  },
+  computed: {
+    platform() {
+      return process.env.PLATFORM;
+    }
   },
   async asyncData({ $prismic }) {
     const platform = process.env.PLATFORM;
