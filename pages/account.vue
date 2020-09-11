@@ -9,7 +9,7 @@
             :key="index"
             @click="render(item)"
             :active="section === item"
-            :class="section === item ? 'bg-success border-success' : ''"
+            :class="section === item ? `bg-${color} border-${color}` : ''"
             button
           >
             {{ item | properCase }}
@@ -131,7 +131,17 @@ export default {
       emailVerified: state => state.auth.emailVerified,
       isEntity: state => state.profile.is_entity,
       investments: state => state.investments.investments
-    })
+    }),
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
+    }
   },
   async asyncData({ store, redirect }) {
     try {

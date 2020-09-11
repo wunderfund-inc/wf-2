@@ -26,7 +26,7 @@
                   <button
                     @click="subscribeUser"
                     :disabled="$v.form.$anyError || submitting"
-                    class="btn btn-secondary btn-sm color__gold"
+                    :class="`btn btn-sm btn-${color}`"
                   >
                     <span
                       v-if="submitting"
@@ -72,6 +72,18 @@ export default {
     form: {
       email: {
         email
+      }
+    }
+  },
+  computed: {
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
       }
     }
   },

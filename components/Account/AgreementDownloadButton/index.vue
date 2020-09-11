@@ -1,5 +1,5 @@
 <template>
-  <b-button :href="url" target="_blank" variant="success" size="sm">
+  <b-button :href="url" :variant="color" target="_blank" size="sm">
     Download
   </b-button>
 </template>
@@ -18,6 +18,18 @@ export default {
     return {
       url: null
     };
+  },
+  computed: {
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
+    }
   },
   async mounted() {
     try {

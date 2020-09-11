@@ -7,17 +7,26 @@
         target="_blank"
         rel="noreferrer"
       >
-        <main-button extra-classes="px-4">See if you qualify!</main-button>
+        <button :class="`btn btn-${color} px-4`">See if you qualify!</button>
       </a>
     </div>
   </section>
 </template>
 
 <script>
-import MainButton from "@/components/Common/MainButton";
-
 export default {
-  components: { MainButton }
+  computed: {
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
+    }
+  }
 };
 </script>
 

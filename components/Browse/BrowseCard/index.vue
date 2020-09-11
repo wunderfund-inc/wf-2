@@ -77,7 +77,7 @@
         <b-list-group-item
           :class="
             `text-center ${
-              offeringEnded(offering.offering_date_end) ? 'bg-success' : ' '
+              offeringEnded(offering.offering_date_end) ? `bg-${color}` : ' '
             }`
           "
         >
@@ -150,6 +150,16 @@ export default {
       const percent =
         this.metrics.total_raise / this.offering.offering_raise_min;
       return Number.parseInt(100 * percent);
+    },
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
     }
   },
   methods: {

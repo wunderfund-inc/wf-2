@@ -5,7 +5,7 @@
       :key="index"
       :to="link.url"
       :active="$route.path === link.url"
-      active-class="bg-success border-success"
+      :active-class="`bg-${color} border-${color}`"
     >
       {{ link.name }}
     </b-list-group-item>
@@ -19,6 +19,18 @@ export default {
       type: Array,
       default() {},
       required: true
+    }
+  },
+  computed: {
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
     }
   }
 };

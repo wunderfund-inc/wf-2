@@ -97,7 +97,7 @@
           <button
             @click="submitInvestment"
             :disabled="!validMethod || !validAmount || !validAttestations"
-            class="btn btn-success btn-block"
+            :class="`btn btn-block btn-${color}`"
           >
             Sign Agreement
           </button>
@@ -154,7 +154,17 @@ export default {
       validAmount: "agreement/validAmount",
       validMethod: "agreement/validMethod",
       validAttestations: "agreement/validAttestations"
-    })
+    }),
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
+    }
   },
   methods: {
     async submitInvestment() {
