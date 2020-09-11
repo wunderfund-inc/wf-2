@@ -6,9 +6,9 @@
   >
     <BrandIcon
       :i="name === 'facebook' ? 'facebook-f' : name"
-      class="d-none d-md-inline"
+      class="d-none d-md-inline text-light"
     />
-    <span class="d-inline d-md-none">{{ name | properCase }}</span>
+    <span class="d-inline d-md-none text-light">{{ name | properCase }}</span>
   </button>
 </template>
 
