@@ -8,10 +8,10 @@
 export default {
   computed: {
     platform() {
-      return process.env.PLATFORM;
+      return process.env.PLATFORM || "TEST SITE";
     },
     platformImgSrc() {
-      if (this.platform) {
+      if (this.platform && this.platform !== "TEST SITE") {
         return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
       }
       return null;
