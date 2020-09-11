@@ -1,5 +1,10 @@
 <template>
   <section class="terms-details bg-custom d-print-none">
+    <style>
+      :root {
+        --bg-color: {{ bgColor }};
+      }
+    </style>
     <div class="container py-5 text-light">
       <h2 class="text-center pb-3">Terms of the Offering</h2>
 
@@ -157,12 +162,25 @@ export default {
       default() {},
       required: true
     }
+  },
+  computed: {
+    bgColor() {
+      switch (this.platform) {
+        case "WFP":
+          return "#003b5a";
+        case "WFH":
+          return "#007bff";
+        default:
+          return "#6c757d";
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .bg-custom {
-  background-color: lighten(#003b5a, 5%);
+  background-color: var(--bg-color);
+  filter: brightness(1.3);
 }
 </style>

@@ -1,5 +1,10 @@
 <template>
   <footer class="footer pt-5 d-print-none">
+    <style>
+      :root {
+        --bg-color: {{ bgColor }};
+      }
+    </style>
     <div class="container text-light">
       <div class="row">
         <div class="col-12 col-md-3 text-center text-md-left pb-5">
@@ -11,7 +16,10 @@
             <p>Startup Investing at its finest.</p>
           </div>
 
-          <div class="row d-flex justify-content-around">
+          <div
+            v-if="platform === 'WFP'"
+            class="row d-flex justify-content-around"
+          >
             <a href="mailto:taylor@wunderfund.co" class="pr-2 text-light">
               <solid-icon class="fa-2x" i="envelope-square" />
             </a>
@@ -36,6 +44,9 @@
             >
               <brand-icon class="fa-2x" i="youtube-square" />
             </a>
+          </div>
+          <div v-else class="row d-flex justify-content-around">
+            <p>Insert Social Media</p>
           </div>
         </div>
         <div class="col-12 col-md-9 pb-5">
@@ -106,13 +117,24 @@ export default {
         return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
       }
       return null;
+    },
+    bgColor() {
+      switch (this.platform) {
+        case "WFP":
+          return "#003b5a";
+        case "WFH":
+          return "#007bff";
+        default:
+          return "#6c757d";
+      }
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .footer {
-  background-color: lighten(#003b5a, 1%);
+  background-color: var(--bg-color);
+  filter: brightness(1.1);
 }
 </style>

@@ -1,5 +1,10 @@
 <template>
   <section class="cancellation bg-custom d-print-none">
+    <style>
+      :root {
+        --bg-color: {{ bgColor }};
+      }
+    </style>
     <div class="container py-5 text-light">
       <h2 class="text-center pb-3">Cancellation Policy</h2>
       <p class="mb-0">
@@ -24,12 +29,25 @@ export default {
       type: String,
       required: true
     }
+  },
+  computed: {
+    bgColor() {
+      switch (this.platform) {
+        case "WFP":
+          return "#003b5a";
+        case "WFH":
+          return "#007bff";
+        default:
+          return "#6c757d";
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .bg-custom {
-  background-color: lighten(#003b5a, 3%);
+  background-color: var(--bg-color);
+  filter: brightness(1.2);
 }
 </style>
