@@ -1,8 +1,11 @@
-<template lang="pug">
-  b-form-group(label="State")
-    b-form-select(v-model="state" :options="states")
-      template(v-slot:first)
-        option(:value="null" disabled) -- Please Select --
+<template>
+  <b-form-group label="State">
+    <b-form-select v-model="state" :options="states">
+      <template v-slot:first>
+        <option :value="null" disabled>-- Please Select --</option>
+      </template>
+    </b-form-select>
+  </b-form-group>
 </template>
 
 <script>
