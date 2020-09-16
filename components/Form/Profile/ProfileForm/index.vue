@@ -54,7 +54,7 @@
     <slot>
       <div class="form-row">
         <div class="col">
-          <b-button variant="success" type="submit">Save Changes</b-button>
+          <b-button :variant="color" type="submit">Save Changes</b-button>
         </div>
       </div>
     </slot>
@@ -91,6 +91,16 @@ export default {
   computed: {
     isEntity() {
       return this.$store.state.profile.is_entity;
+    },
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
     }
   },
   methods: {
