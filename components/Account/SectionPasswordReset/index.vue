@@ -1,50 +1,67 @@
-<template lang="pug">
-  section
-    h4.pb-3 Password Reset
-    b-alert(
-      v-model="errorDisplay"
-      variant="danger"
-      dismissible
-    ) {{ errorMessage }}
-    form(@submit.prevent="submitPasswordChange")
-      .form-row
-        .col-12.col-md-6
-          b-form-group.text-left(
-            label="Type your old password below:"
-            label-for="password-old"
+<template>
+  <section>
+    <h4 class="pb-3">Password Reset</h4>
+    <b-alert v-model="errorDisplay" variant="danger" dismissible>
+      {{ errorMessage }}
+    </b-alert>
+    <form @submit.prevent="submitPasswordChange">
+      <div class="form-row">
+        <div class="col-12 col-md-6">
+          <b-form-group
             :state="validateState('old')"
-          )
-            b-form-input#password-old(
+            class="text-left"
+            label="Type your old password below"
+            label-for="password-old"
+          >
+            <b-form-input
+              id="password-old"
               v-model="$v.password.old.$model"
               :state="validateState('old')"
               type="password"
               trim
-            )
-        .col-12.col-md-6
-          b-form-group.text-left(
+            />
+          </b-form-group>
+        </div>
+        <div class="col-12 col-md-6">
+          <b-form-group
+            :state="validateState('new')"
+            class="text-left"
             label="New Password"
             label-for="password-new"
-            :state="validateState('new')"
-          )
-            b-form-input#password-new(
+          >
+            <b-form-input
+              id="password-new"
               v-model="$v.password.new.$model"
               :state="validateState('new')"
               type="password"
-            )
-            b-form-invalid-feedback(:state="validateState('new')")
-              ul(v-if="$v.password.$anyError")
-                li(v-if="!$v.password.new.minLength")
-                  span Must be at least 8 characters.
-                li(v-if="!$v.password.new.differentFromOld")
-                  span Cannot be the same as your old password.
-      .form-row
-        .col
-          b-button(
-            variant="success"
-            type="submit"
+              trim
+            />
+            <b-form-invalid-feedback :state="validateState('new')">
+              <ul v-if="$v.password.$anyError">
+                <li v-if="!$v.password.new.minLength">
+                  <span>Must be at least 8 characters</span>
+                </li>
+                <li v-if="!$v.password.new.differentFromOld">
+                  <span>Cannot be the same as your old password.</span>
+                </li>
+              </ul>
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <button
+            :class="`btn btn-${color} px-3`"
             :disabled="$v.password.$invalid || submitting"
-          )
-            span Reset Password
+            type="submit"
+          >
+            <span>Reset Password</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>
@@ -74,6 +91,18 @@ export default {
         required,
         minLength: minLength(8),
         differentFromOld: not(sameAs("old"))
+      }
+    }
+  },
+  computed: {
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
       }
     }
   },
