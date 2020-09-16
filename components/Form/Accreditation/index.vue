@@ -36,7 +36,7 @@
     </div>
     <div class="form-row">
       <div class="col">
-        <b-button variant="success" type="submit">Update</b-button>
+        <b-button :variant="color" type="submit">Update</b-button>
       </div>
     </div>
   </form>
@@ -66,6 +66,16 @@ export default {
     },
     isEntity() {
       return this.$store.state.profile.is_entity;
+    },
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
     }
   },
   created() {
