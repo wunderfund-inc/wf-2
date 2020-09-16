@@ -11,7 +11,7 @@
       accept="image/jpg, image/jpeg, image/png"
       class="mb-3"
     />
-    <b-button variant="success" type="submit" block>Upload Photo</b-button>
+    <b-button :variant="color" type="submit" block>Upload Photo</b-button>
   </form>
 </template>
 
@@ -31,6 +31,16 @@ export default {
     }),
     avatar() {
       return this.$store.state.profile.avatar;
+    },
+    color() {
+      switch (process.env.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
     }
   },
   methods: {
