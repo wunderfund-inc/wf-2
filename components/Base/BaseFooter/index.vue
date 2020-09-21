@@ -1,10 +1,8 @@
 <template>
-  <footer class="footer pt-5 d-print-none">
-    <style>
-      :root {
-        --bg-color: {{ bgColor }};
-      }
-    </style>
+  <footer
+    :style="`background-color: ${bgColor}`"
+    class="footer pt-5 d-print-none"
+  >
     <div class="container text-light">
       <div class="row">
         <div class="col-12 col-md-3 text-center text-md-left pb-5">
@@ -134,7 +132,6 @@ export default {
 
 <style scoped>
 .footer {
-  background-color: var(--bg-color);
   filter: brightness(1.1);
 }
 </style>

@@ -1,10 +1,8 @@
 <template>
-  <section class="cancellation bg-custom d-print-none">
-    <style>
-      :root {
-        --bg-color: {{ bgColor }};
-      }
-    </style>
+  <section
+    :style="`background-color: ${bgColor}`"
+    class="cancellation bg-custom d-print-none"
+  >
     <div class="container py-5 text-light">
       <h2 class="text-center pb-3">Cancellation Policy</h2>
       <p class="mb-0">
@@ -47,7 +45,6 @@ export default {
 
 <style lang="scss" scoped>
 .bg-custom {
-  background-color: var(--bg-color);
   filter: brightness(1.2);
 }
 </style>
