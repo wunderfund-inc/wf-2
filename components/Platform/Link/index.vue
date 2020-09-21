@@ -1,24 +1,13 @@
 <template>
   <nuxt-link to="/">
-    {{ title }}
+    <PlatformTitle />
   </nuxt-link>
 </template>
 
 <script>
-const platform = process.env.PLATFORM;
+import PlatformTitle from "@/components/Platform/Title";
 
 export default {
-  computed: {
-    title() {
-      switch (platform) {
-        case "WFP":
-          return "Wunderfund";
-        case "WFH":
-          return "Wunderfund Health";
-        default:
-          return "TEST";
-      }
-    }
-  }
+  components: { PlatformTitle }
 };
 </script>
