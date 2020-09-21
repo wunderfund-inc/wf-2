@@ -1,7 +1,7 @@
 <template>
   <section class="py-5">
     <div class="container">
-      <h2 class="text-center pb-5">What makes Wunderfund different?</h2>
+      <h2 class="text-center pb-5">What makes <PlatformTitle /> different?</h2>
       <div class="row">
         <div
           v-for="(item, index) in items"
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import PlatformTitle from "@/components/Platform/Title";
+
 const items = [
   {
     icon: "branding",
@@ -72,6 +74,9 @@ const items = [
   }
 ];
 export default {
+  components: {
+    PlatformTitle
+  },
   computed: {
     items: () => items
   }

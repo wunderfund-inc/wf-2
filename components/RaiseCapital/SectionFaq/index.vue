@@ -1,4 +1,4 @@
-<template functional>
+<template>
   <section class="container py-5">
     <h2 class="pb-5 text-center">Frequently Asked Questions</h2>
     <details open>
@@ -43,13 +43,13 @@
         </strong>
       </summary>
       <p>
-        Before you can issue an offering on Wunderfund.co, you have to apply and
-        tell us about your team and your company. All Issuers must also meet the
-        minimum requirements set forth by the rules of Regulation Crowdfunding.
-        If you have questions about your eligibility based on these rules, then
-        please contact Wunderfund and we will let you know. Passing this process
-        is not meant to be construed as investment advice or endorsement by
-        Wunderfund.co.
+        Before you can issue an offering on <PlatformTitle />, you have to apply
+        and tell us about your team and your company. All Issuers must also meet
+        the minimum requirements set forth by the rules of Regulation
+        Crowdfunding. If you have questions about your eligibility based on
+        these rules, then please contact <PlatformTitle /> and we will let you
+        know. Passing this process is not meant to be construed as investment
+        advice or endorsement by <PlatformTitle />.
       </p>
     </details>
     <details open>
@@ -73,7 +73,11 @@
 </template>
 
 <script>
+import PlatformTitle from "@/components/Platform/Title";
+
 export default {
-  functional: true
+  components: {
+    PlatformTitle
+  }
 };
 </script>
