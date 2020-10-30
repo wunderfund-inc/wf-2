@@ -38,11 +38,6 @@ import CheckoutSummary from "@/components/Form/Checkout/Summary";
 export default {
   middleware: ["authenticated"],
   components: { SectionCancellation, CheckoutLayout, CheckoutSummary },
-  computed: {
-    submittingCheckoutForm() {
-      return this.$store.state.agreement.submitting;
-    }
-  },
   async asyncData({ redirect, route, $prismic, store, error }) {
     try {
       const userId = store.state.auth.userId;
@@ -53,15 +48,15 @@ export default {
       ).data;
 
       const offerings = await Promise.all(
-        company.company_offerings.map(async offering => {
+        company.company_offerings.map(async (offering) => {
           return {
             ...(await $prismic.api.getByID(offering.offering_data.id)).data,
-            ...offering
+            ...offering,
           };
         })
       );
 
-      const ifAllOfferingsAreClosed = offerings.map(offering => {
+      const ifAllOfferingsAreClosed = offerings.map((offering) => {
         if (offering.is_legacy) return true;
         return endedAlready(offering.offering_date_end);
       });
@@ -74,6 +69,11 @@ export default {
     } catch (e) {
       error({ statusCode: 404, message: "Page not found" });
     }
-  }
+  },
+  computed: {
+    submittingCheckoutForm() {
+      return this.$store.state.agreement.submitting;
+    },
+  },
 };
 </script>

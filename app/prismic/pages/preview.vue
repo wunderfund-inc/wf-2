@@ -23,7 +23,7 @@ export default {
   components: {
     CampaignContent,
     TermsDetails,
-    SectionCancellation
+    SectionCancellation,
   },
   async asyncData({ $prismic, route }) {
     const { documentId } = route.query;
@@ -44,7 +44,7 @@ export default {
 
     const investmentData = investmentDocs.empty
       ? []
-      : investmentDocs.docs.map(doc => doc.data());
+      : investmentDocs.docs.map((doc) => doc.data());
 
     return {
       company: company.data,
@@ -53,10 +53,10 @@ export default {
           ...offeringData.data,
           ...offeringRef,
           investments: investmentData,
-          metrics: offeringMetrics
-        }
-      ]
+          metrics: offeringMetrics,
+        },
+      ],
     };
-  }
+  },
 };
 </script>

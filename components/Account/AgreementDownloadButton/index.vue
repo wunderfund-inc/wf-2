@@ -11,12 +11,12 @@ export default {
   props: {
     documentId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      url: null
+      url: null,
     };
   },
   computed: {
@@ -29,14 +29,14 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   async mounted() {
     try {
       this.url = await downloadURL("agreements", `${this.documentId}.pdf`);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
-  }
+  },
 };
 </script>

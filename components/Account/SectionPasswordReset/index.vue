@@ -77,22 +77,22 @@ export default {
       submitting: false,
       password: {
         old: null,
-        new: null
-      }
+        new: null,
+      },
     };
   },
   validations: {
     password: {
       old: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(8),
       },
       new: {
         required,
         minLength: minLength(8),
-        differentFromOld: not(sameAs("old"))
-      }
-    }
+        differentFromOld: not(sameAs("old")),
+      },
+    },
   },
   computed: {
     color() {
@@ -104,7 +104,7 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     validateState(name) {
@@ -137,7 +137,7 @@ export default {
         this.errorMessage = error;
         this.submitting = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -21,7 +21,7 @@ export default {
     SectionUnique,
     SectionOps,
     SectionEligibility,
-    SectionFaq
-  }
+    SectionFaq,
+  },
 };
 </script>

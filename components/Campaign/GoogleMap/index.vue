@@ -3,19 +3,19 @@
 </template>
 
 <script>
-import MarkerClustererPlus from "@google/markerclustererplus";
+import MarkerClustererPlus from "@googlemaps/markerclustererplus";
 
 export default {
   props: {
     companyLocation: {
       type: Object,
       default() {},
-      required: true
+      required: true,
     },
     locations: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   async mounted() {
     try {
@@ -23,24 +23,27 @@ export default {
       const google = await gmapsInit.init();
       const map = new google.maps.Map(this.$el, {
         zoom: 5,
-        center: { lat: this.companyLocation.lat, lng: this.companyLocation.lng }
+        center: {
+          lat: this.companyLocation.lat,
+          lng: this.companyLocation.lng,
+        },
       });
 
-      const markerClickHandler = marker => {
+      const markerClickHandler = (marker) => {
         map.setZoom(13);
         map.setCenter(marker.getPosition());
       };
 
-      const coord = this.locations.map(x => {
+      const coord = this.locations.map((x) => {
         return {
           position: {
             lat: x.lat,
-            lng: x.lng
-          }
+            lng: x.lng,
+          },
         };
       });
 
-      const markers = coord.map(x => {
+      const markers = coord.map((x) => {
         const marker = new google.maps.Marker({ ...x, map });
         marker.addListener("click", () => markerClickHandler(marker));
         return marker;
@@ -52,6 +55,6 @@ export default {
       // eslint-disable-next-line
       console.error(error);
     }
-  }
+  },
 };
 </script>

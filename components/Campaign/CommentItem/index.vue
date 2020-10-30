@@ -32,18 +32,18 @@ export default {
   props: {
     comment: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      toggleForm: false
+      toggleForm: false,
     };
   },
   computed: {
     hasAvatar() {
       return this.comment.avatar;
-    }
+    },
   },
   methods: {
     displayForm() {
@@ -65,8 +65,8 @@ export default {
         default:
           return "info";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

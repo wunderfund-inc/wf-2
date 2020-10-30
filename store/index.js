@@ -3,13 +3,13 @@ import { getUserFromCookie } from "@/helpers";
 export const state = () => ({
   showOverlay: false,
   error: null,
-  socialMediaError: null
+  socialMediaError: null,
 });
 
 export const getters = {
-  showOverlay: state => state.showOverlay,
-  error: state => state.error,
-  socialMediaError: state => state.socialMediaError
+  showOverlay: (state) => state.showOverlay,
+  error: (state) => state.error,
+  socialMediaError: (state) => state.socialMediaError,
 };
 
 export const mutations = {
@@ -17,7 +17,7 @@ export const mutations = {
   DISPLAY_ERROR: (state, payload) => (state.error = payload),
   DISPLAY_SOCIAL_MEDIA_ERROR: (state, payload) => {
     state.socialMediaError = payload;
-  }
+  },
 };
 
 export const actions = {
@@ -27,7 +27,7 @@ export const actions = {
       await dispatch("auth/set", {
         email: user.email,
         emailVerified: user.email_verified,
-        userId: user.user_id
+        userId: user.user_id,
       });
     }
   },
@@ -39,5 +39,5 @@ export const actions = {
   },
   displaySocialMediaError({ commit }, error) {
     commit("DISPLAY_SOCIAL_MEDIA_ERROR", error);
-  }
+  },
 };

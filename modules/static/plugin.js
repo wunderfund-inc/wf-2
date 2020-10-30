@@ -1,7 +1,7 @@
 import { getMatchedComponents } from "./utils.js";
 import Middleware from "./middleware";
 
-const hasStaticAsyncData = Component =>
+const hasStaticAsyncData = (Component) =>
   Boolean(Component.options.asyncData) && Component.options.static !== false;
 
 Middleware.nuxt_static = async ({ route, error }) => {
@@ -11,7 +11,7 @@ Middleware.nuxt_static = async ({ route, error }) => {
   if (!process.static) return;
 
   const Components = getMatchedComponents(route);
-  Components.forEach(Component => {
+  Components.forEach((Component) => {
     Component._payloads = Component._payloads || {};
     if (hasStaticAsyncData(Component)) {
       Component.options.asyncData = ({ route }) =>
@@ -20,13 +20,13 @@ Middleware.nuxt_static = async ({ route, error }) => {
   });
   const path = route.path.replace(/\/$/, "");
   const needFetch = Components.some(
-    Component => hasStaticAsyncData(Component) && !Component._payloads[path]
+    (Component) => hasStaticAsyncData(Component) && !Component._payloads[path]
   );
   if (!needFetch) {
     return;
   }
   const payloadPath = (path + "/payload.json").replace(/\/+/, "/");
-  const pageDatas = await fetch(payloadPath).then(res => {
+  const pageDatas = await fetch(payloadPath).then((res) => {
     if (!res.ok) return null;
     return res.json();
   });

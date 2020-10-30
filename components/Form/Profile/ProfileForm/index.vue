@@ -86,7 +86,7 @@ export default {
     InputAddressStreet2,
     InputAddressCity,
     InputAddressState,
-    InputAddressPostal
+    InputAddressPostal,
   },
   computed: {
     isEntity() {
@@ -101,16 +101,16 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     async saveProfile() {
       await this.$store.dispatch("profile/update", {
         userId: this.$store.state.auth.userId,
-        flag: "profile"
+        flag: "profile",
       });
       await window.location.replace("/account");
-    }
-  }
+    },
+  },
 };
 </script>

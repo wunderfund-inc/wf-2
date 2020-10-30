@@ -3,9 +3,7 @@
     <h2 class="pb-5 text-center">Frequently Asked Questions</h2>
     <details open>
       <summary class="pb-3">
-        <strong>
-          How do I get started?
-        </strong>
+        <strong> How do I get started? </strong>
       </summary>
       <p>
         <nuxt-link to="/auth/register">Sign Up</nuxt-link> to become involved in
@@ -54,9 +52,7 @@
     </details>
     <details open>
       <summary class="pb-3">
-        <strong>
-          How much fundraising can be raised for each campaign?
-        </strong>
+        <strong> How much fundraising can be raised for each campaign? </strong>
       </summary>
       <p>
         The range at which any company can raise on our website is anywhere from
@@ -77,7 +73,7 @@ import PlatformTitle from "@/components/Platform/Title";
 
 export default {
   components: {
-    PlatformTitle
-  }
+    PlatformTitle,
+  },
 };
 </script>

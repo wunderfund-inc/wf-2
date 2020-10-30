@@ -75,11 +75,9 @@
           </template>
         </b-list-group-item>
         <b-list-group-item
-          :class="
-            `text-center ${
-              offeringEnded(offering.offering_date_end) ? `bg-${color}` : ' '
-            }`
-          "
+          :class="`text-center ${
+            offeringEnded(offering.offering_date_end) ? `bg-${color}` : ' '
+          }`"
         >
           <small
             :class="
@@ -107,9 +105,7 @@
               </template>
               <template v-else>{{ nonEquityPercent }}% Funded</template>
             </template>
-            <template v-else>
-              0% Funded
-            </template>
+            <template v-else> 0% Funded </template>
           </small>
         </b-list-group-item>
       </b-list-group>
@@ -124,8 +120,8 @@ export default {
   props: {
     company: {
       type: Object,
-      default() {}
-    }
+      default() {},
+    },
   },
   computed: {
     offering() {
@@ -160,7 +156,7 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     endingSoon(date) {
@@ -171,8 +167,8 @@ export default {
     },
     percent(num) {
       return Number.parseInt(num);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -193,9 +189,9 @@ a {
   .card:hover {
     cursor: pointer;
     text-decoration: none;
-    -webkit-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
-    -moz-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
-    box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
+    -webkit-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+    -moz-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+    box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
   }
 }
 </style>

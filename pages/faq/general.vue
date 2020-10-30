@@ -31,28 +31,28 @@ import faqData from "@/components/Faq/FaqData/general";
 const faqLinks = [
   {
     name: "General FAQs",
-    url: "/faq/general"
+    url: "/faq/general",
   },
   {
     name: "FAQs for Investors",
-    url: "/faq/investors"
+    url: "/faq/investors",
   },
   {
     name: "FAQs for Companies",
-    url: "/faq/companies"
-  }
+    url: "/faq/companies",
+  },
 ];
 
 export default {
   components: {
     BaseSubNav,
-    FaqItem
+    FaqItem,
   },
   data() {
     return {
       links: faqLinks,
-      faqData
+      faqData,
     };
-  }
+  },
 };
 </script>

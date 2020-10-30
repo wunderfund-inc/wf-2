@@ -32,23 +32,23 @@ const items = [
   {
     title: "1. Apply",
     details:
-      "Provide us information about your company along with any documents to convince investors"
+      "Provide us information about your company along with any documents to convince investors",
   },
   {
     title: "2. Due Diligence",
     details:
-      "Customize your company profile and complete any other due diligence needed."
+      "Customize your company profile and complete any other due diligence needed.",
   },
   {
     title: "3. Launch",
     details:
-      "Get your company launched. Let us streamline the investment and closing process."
-  }
+      "Get your company launched. Let us streamline the investment and closing process.",
+  },
 ];
 
 export default {
   created() {
     this.$options.items = items;
-  }
+  },
 };
 </script>

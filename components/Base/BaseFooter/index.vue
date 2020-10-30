@@ -104,7 +104,7 @@ export default {
     PlatformLink,
     PlatformLogo,
     SolidIcon,
-    BrandIcon
+    BrandIcon,
   },
   computed: {
     platform() {
@@ -125,8 +125,8 @@ export default {
         default:
           return "#6c757d";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

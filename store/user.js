@@ -17,7 +17,7 @@ export const state = () => ({
       accredited: false,
       accreditation: {
         ai: 0,
-        nw: 0
+        nw: 0,
       },
       nonSpecific: false,
       address: {
@@ -25,12 +25,12 @@ export const state = () => ({
         street2: null,
         city: null,
         state: null,
-        postal: null
-      }
+        postal: null,
+      },
     },
     password: {
       old: null,
-      new: null
+      new: null,
     },
     profile: {
       address: {
@@ -38,30 +38,30 @@ export const state = () => ({
         street2: null,
         city: null,
         state: null,
-        postal: null
+        postal: null,
       },
       name: {
         first: null,
-        last: null
+        last: null,
       },
-      avatar: null
-    }
-  }
+      avatar: null,
+    },
+  },
 });
 
 export const getters = {
-  accreditation: state => state.currentUser.accreditation,
+  accreditation: (state) => state.currentUser.accreditation,
   accredited: (state, getters) => {
     const { ai, nw } = getters.accreditation;
     return ai >= 200000 && nw >= 1000000;
   },
-  entityForm: state => state.form.entity,
-  entityAddress: state => state.form.entity.address,
-  password: state => state.form.password,
-  address: state => state.form.profile.address,
-  avatar: state => state.form.profile.avatar,
-  name: state => state.form.profile.name,
-  validProfileForm: state => {
+  entityForm: (state) => state.form.entity,
+  entityAddress: (state) => state.form.entity.address,
+  password: (state) => state.form.password,
+  address: (state) => state.form.profile.address,
+  avatar: (state) => state.form.profile.avatar,
+  name: (state) => state.form.profile.name,
+  validProfileForm: (state) => {
     const name = state.form.profile.name;
     const address = state.form.profile.address;
     return (
@@ -73,33 +73,33 @@ export const getters = {
       address.postal
     );
   },
-  passwordsMatch: state => {
+  passwordsMatch: (state) => {
     const password = state.form.password;
     return password.old === password.new;
   },
-  entities: state => state.entities,
-  hasEntities: state => state.entities.length > 0,
-  investments: state => state.investments,
-  currentUser: state => state.currentUser,
-  userId: state => state.currentUser.uid,
+  entities: (state) => state.entities,
+  hasEntities: (state) => state.entities.length > 0,
+  investments: (state) => state.investments,
+  currentUser: (state) => state.currentUser,
+  userId: (state) => state.currentUser.uid,
   spendPool: (state, getters) => {
     const spent = reduceToTotal(getters.investments);
     const { ai, nw } = getters.accreditation;
     return {
       current: calculatePersonalLimit(ai, nw) - spent,
-      max: calculatePersonalLimit(ai, nw)
+      max: calculatePersonalLimit(ai, nw),
     };
   },
-  entitySelection: state => {
+  entitySelection: (state) => {
     const entityList = state.entities;
-    return entityList.map(el => {
+    return entityList.map((el) => {
       return { value: el, text: el.name };
     });
   },
-  getEntityById: state => uid => {
-    if (uid) return state.entities.find(entity => entity.uid === uid);
+  getEntityById: (state) => (uid) => {
+    if (uid) return state.entities.find((entity) => entity.uid === uid);
     return null;
-  }
+  },
 };
 
 export const mutations = {
@@ -149,7 +149,7 @@ export const mutations = {
   },
   SET_INVESTMENTS(state, payload) {
     state.investments = payload;
-  }
+  },
 };
 
 export const actions = {
@@ -159,10 +159,7 @@ export const actions = {
   async setAccountData({ dispatch }, userId) {
     try {
       if (userId) {
-        const user = await db
-          .collection("users")
-          .doc(userId)
-          .get();
+        const user = await db.collection("users").doc(userId).get();
         const userData = user.data();
         await dispatch("setCurrentUser", userData);
         await dispatch("setProfileNameAttribute", { ...userData.name });
@@ -173,7 +170,7 @@ export const actions = {
           .collection("entities")
           .where("userId", "==", userId)
           .get();
-        const entities = entitiesList.docs.map(entity => entity.data());
+        const entities = entitiesList.docs.map((entity) => entity.data());
         await dispatch("setEntities", entities);
 
         // TODO: add this back in, somehow
@@ -187,7 +184,7 @@ export const actions = {
         // await dispatch("setInvestments", investments);
       }
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async createEntity(context, { entityData, currentUserAuth }) {
@@ -200,12 +197,12 @@ export const actions = {
         userId,
         ...entityData,
         createdAt: timestamp,
-        updatedAt: timestamp
+        updatedAt: timestamp,
       };
 
       await entityRef.set({ ...dto, userId });
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   setPasswordAttribute({ commit }, payload) {
@@ -233,21 +230,18 @@ export const actions = {
     try {
       const userId = state.currentUser.uid || state.currentUser.user_id;
       const profile = state.form.profile;
-      await db
-        .collection("users")
-        .doc(userId)
-        .update({
-          name: profile.name,
-          address: profile.address,
-          updatedAt: timestamp
-        });
+      await db.collection("users").doc(userId).update({
+        name: profile.name,
+        address: profile.address,
+        updatedAt: timestamp,
+      });
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async setInvestments({ commit }, investments) {
     const d = await Promise.all(
-      investments.map(async investment => {
+      investments.map(async (investment) => {
         const companyRef = await db
           .collection("companies")
           .doc(investment.companyId)
@@ -259,7 +253,7 @@ export const actions = {
         return {
           ...investment,
           company: companyRef.data(),
-          offering: offeringRef.data()
+          offering: offeringRef.data(),
         };
       })
     );
@@ -281,21 +275,18 @@ export const actions = {
         street2: null,
         city: null,
         state: null,
-        postal: null
-      }
+        postal: null,
+      },
     };
     commit("SET_ENTITY_FORM_ATTRIBUTE", entity);
   },
   async uploadAvatar({ dispatch }, { userId, file }) {
     try {
       const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
-      await db
-        .collection("users")
-        .doc(userId)
-        .update({ avatar: url });
+      await db.collection("users").doc(userId).update({ avatar: url });
       await dispatch("setProfileAvatar", url);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
-  }
+  },
 };

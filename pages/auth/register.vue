@@ -31,7 +31,7 @@ export default {
   middleware: ["simple-redirect"],
   components: {
     SectionSocialMediaLogin,
-    RegistrationForm
-  }
+    RegistrationForm,
+  },
 };
 </script>

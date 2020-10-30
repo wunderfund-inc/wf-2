@@ -1,5 +1,5 @@
 <template>
-  <div style="position: sticky; top: 20px;">
+  <div style="position: sticky; top: 20px">
     <b-card no-body>
       <template v-slot:header>
         <h6 class="text-center mb-0">Investment Summary</h6>
@@ -52,9 +52,7 @@
             <template
               v-if="
                 offering &&
-                  ['Equity', 'Convertible Note'].includes(
-                    offering.security_type
-                  )
+                ['Equity', 'Convertible Note'].includes(offering.security_type)
               "
             >
               <div v-if="validAmount">
@@ -95,9 +93,9 @@
             </template>
           </div>
           <button
-            @click="submitInvestment"
             :disabled="!validMethod || !validAmount || !validAttestations"
             :class="`btn btn-block btn-${color}`"
+            @click="submitInvestment"
           >
             Sign Agreement
           </button>
@@ -122,38 +120,38 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      error: null
+      error: null,
     };
   },
   computed: {
     ...mapState({
-      firstName: state => state.profile.first_name,
-      lastName: state => state.profile.last_name,
-      street1: state => state.profile.address_street_1,
-      street2: state => state.profile.address_street_2,
-      city: state => state.profile.address_city,
-      state: state => state.profile.address_state,
-      postal: state => state.profile.address_postal,
-      editingProfile: state => state.agreement.editingProfile,
-      offering: state => state.agreement.offering,
-      amount: state => state.agreement.amount,
-      method: state => state.agreement.method,
-      isEntity: state => state.profile.is_entity,
-      entityName: state => state.profile.entity_name,
-      user: state => state.profile,
-      auth: state => state.auth,
-      url: state => state.agreement.url
+      firstName: (state) => state.profile.first_name,
+      lastName: (state) => state.profile.last_name,
+      street1: (state) => state.profile.address_street_1,
+      street2: (state) => state.profile.address_street_2,
+      city: (state) => state.profile.address_city,
+      state: (state) => state.profile.address_state,
+      postal: (state) => state.profile.address_postal,
+      editingProfile: (state) => state.agreement.editingProfile,
+      offering: (state) => state.agreement.offering,
+      amount: (state) => state.agreement.amount,
+      method: (state) => state.agreement.method,
+      isEntity: (state) => state.profile.is_entity,
+      entityName: (state) => state.profile.entity_name,
+      user: (state) => state.profile,
+      auth: (state) => state.auth,
+      url: (state) => state.agreement.url,
     }),
     ...mapGetters({
       accredited: "profile/accredited",
       validAmount: "agreement/validAmount",
       validMethod: "agreement/validMethod",
-      validAttestations: "agreement/validAttestations"
+      validAttestations: "agreement/validAttestations",
     }),
     color() {
       switch (process.env.PLATFORM) {
@@ -164,7 +162,7 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     async submitInvestment() {
@@ -174,7 +172,7 @@ export default {
           accredited: this.accredited,
           auth: this.auth,
           companyId: this.$route.params.companyId,
-          companyName: this.companyName
+          companyName: this.companyName,
         });
         await this.$store.dispatch("agreement/fetchURL", { auth: this.auth });
         await window.location.replace(this.url);
@@ -185,9 +183,9 @@ export default {
     editProfile() {
       this.$store.dispatch("agreement/setAttribute", {
         prop: "editingProfile",
-        val: true
+        val: true,
       });
-    }
-  }
+    },
+  },
 };
 </script>

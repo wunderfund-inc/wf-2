@@ -395,34 +395,34 @@ import BaseSubNav from "@/components/Base/BaseSubNav";
 const legalLinks = [
   {
     name: "Terms of Use",
-    url: "/legal/terms-of-use"
+    url: "/legal/terms-of-use",
   },
   {
     name: "Privacy Policy",
-    url: "/legal/privacy-policy"
+    url: "/legal/privacy-policy",
   },
   {
     name: "Investor Agreement",
-    url: "/legal/investor-agreement"
+    url: "/legal/investor-agreement",
   },
   {
     name: "Startup Agreement",
-    url: "/legal/startup-agreement"
+    url: "/legal/startup-agreement",
   },
   {
     name: "Electronic Consent",
-    url: "/legal/electronic-consent"
-  }
+    url: "/legal/electronic-consent",
+  },
 ];
 
 export default {
   components: {
-    BaseSubNav
+    BaseSubNav,
   },
   data() {
     return {
-      links: legalLinks
+      links: legalLinks,
     };
-  }
+  },
 };
 </script>

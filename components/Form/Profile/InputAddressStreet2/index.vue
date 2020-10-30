@@ -20,10 +20,10 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "address_street_2",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
   <transition name="fade" mode="out-in">
-    <b-form @submit.prevent="submitComment" v-if="!formSubmitted" class="form">
+    <b-form v-if="!formSubmitted" class="form" @submit.prevent="submitComment">
       <b-form-group>
-        <b-form-checkbox v-model="isPromoting" @change="checkRole" switch>
+        <b-form-checkbox v-model="isPromoting" switch @change="checkRole">
           I work for this company and/or am promoting on behalf of them.
         </b-form-checkbox>
       </b-form-group>
@@ -37,8 +37,8 @@ export default {
   props: {
     companyId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -46,13 +46,13 @@ export default {
       isPromoting: false,
       form: {
         message: "",
-        role: "INVESTOR"
+        role: "INVESTOR",
       },
       roleOptions: [
         { text: "as a Promoter", value: "PROMOTER" },
         { text: "as a Founder", value: "FOUNDER" },
-        { text: "as an Employee", value: "EMPLOYEE" }
-      ]
+        { text: "as an Employee", value: "EMPLOYEE" },
+      ],
     };
   },
   computed: {
@@ -60,20 +60,20 @@ export default {
       const validLength = this.form.message.length > 0;
       const validOtherRole = this.form.role !== "INVESTOR";
       return (this.isPromoting === true ? validOtherRole : true) && validLength;
-    }
+    },
   },
   methods: {
     submitComment() {
       this.$store.dispatch("company/submitComment", {
         ...this.form,
-        companyId: this.companyId
+        companyId: this.companyId,
       });
       this.formSubmitted = true;
     },
     checkRole(e) {
       if (!e) this.form.role = "INVESTOR";
-    }
-  }
+    },
+  },
 };
 </script>
 

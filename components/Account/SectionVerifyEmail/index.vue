@@ -6,12 +6,10 @@
         You're almost ready to invest! Please check the inbox of
         <strong>{{ email }}</strong> to verify your email.
       </p>
-      <button @click="resendLink" v-if="showLink" class="btn btn-info">
+      <button v-if="showLink" class="btn btn-info" @click="resendLink">
         Resend Link
       </button>
-      <p v-else>
-        Link sent!
-      </p>
+      <p v-else>Link sent!</p>
     </div>
   </b-alert>
 </template>
@@ -22,19 +20,19 @@ import { verifyEmail } from "@/plugins/firebase";
 export default {
   data() {
     return {
-      showLink: true
+      showLink: true,
     };
   },
   computed: {
     email() {
       return this.$store.state.auth.email;
-    }
+    },
   },
   methods: {
     resendLink() {
       verifyEmail();
       this.showLink = false;
-    }
-  }
+    },
+  },
 };
 </script>

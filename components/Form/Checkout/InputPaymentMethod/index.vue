@@ -63,8 +63,8 @@ export default {
       },
       set(val) {
         this.$store.dispatch("agreement/setAttribute", { prop: "method", val });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

@@ -24,13 +24,13 @@ export default {
     companyLocation: {
       type: Object,
       default() {},
-      required: true
+      required: true,
     },
     locations: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

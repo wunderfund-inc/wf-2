@@ -43,8 +43,8 @@ export default {
         default:
           return "secondary";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

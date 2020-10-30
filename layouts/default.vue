@@ -1,22 +1,10 @@
 <template>
   <div id="app">
-    <base-navigation />
-    <nuxt />
-    <base-footer />
+    <LazyBaseNavigation />
+    <Nuxt />
+    <!-- <LazyBaseFooter /> -->
   </div>
 </template>
-
-<script>
-import BaseNavigation from "@/components/Base/BaseNavigation/index";
-import BaseFooter from "@/components/Base/BaseFooter/index";
-
-export default {
-  components: {
-    BaseNavigation,
-    BaseFooter
-  }
-};
-</script>
 
 <style lang="scss">
 #app {

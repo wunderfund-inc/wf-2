@@ -1,15 +1,15 @@
 <template>
-  <form @submit.prevent="submitPhoto" class="row justify-content-center">
+  <form class="row justify-content-center" @submit.prevent="submitPhoto">
     <b-avatar :src="blob ? blob : avatar" class="mb-3" size="10rem" />
     <b-form-file
       id="avatar"
       v-model="file"
-      @change="previewAvatar"
       :state="Boolean(file)"
       placeholder="Choose a file"
       drop-placeholder="Drop file here"
       accept="image/jpg, image/jpeg, image/png"
       class="mb-3"
+      @change="previewAvatar"
     />
     <b-button :variant="color" type="submit" block>Upload Photo</b-button>
   </form>
@@ -22,12 +22,12 @@ export default {
   data() {
     return {
       file: null,
-      blob: null
+      blob: null,
     };
   },
   computed: {
     ...mapGetters({
-      userId: "auth/userId"
+      userId: "auth/userId",
     }),
     avatar() {
       return this.$store.state.profile.avatar;
@@ -41,7 +41,7 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     previewAvatar() {
@@ -52,10 +52,10 @@ export default {
       e.preventDefault();
       await this.$store.dispatch("avatar/upload", {
         userId: this.userId,
-        file: this.file
+        file: this.file,
       });
       await window.location.reload();
-    }
-  }
+    },
+  },
 };
 </script>

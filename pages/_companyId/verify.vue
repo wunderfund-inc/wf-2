@@ -17,10 +17,10 @@
               <div class="form-row">
                 <div class="col">
                   <b-button
-                    @click.prevent="submit"
                     :disabled="submitting"
                     variant="success"
                     class="px-4"
+                    @click.prevent="submit"
                   >
                     {{ submitting ? "Updating..." : "Continue" }}
                   </b-button>
@@ -40,16 +40,6 @@ import ProfileForm from "@/components/Form/Profile/ProfileForm";
 export default {
   middleware: ["authenticated"],
   components: { ProfileForm },
-  data() {
-    return {
-      submitting: false
-    };
-  },
-  computed: {
-    validProfile() {
-      return this.$store.getters["profile/valid"];
-    }
-  },
   async asyncData({ store, redirect, route }) {
     const emailVerified = store.state.auth.emailVerified;
     if (!emailVerified) return redirect(`/account`);
@@ -65,17 +55,27 @@ export default {
       return redirect(`/${route.params.companyId}/invest`);
     }
   },
+  data() {
+    return {
+      submitting: false,
+    };
+  },
+  computed: {
+    validProfile() {
+      return this.$store.getters["profile/valid"];
+    },
+  },
   methods: {
     async submit() {
       this.submitting = true;
 
       await this.$store.dispatch("profile/update", {
         userId: this.$store.state.auth.userId,
-        flag: "profile"
+        flag: "profile",
       });
 
       await this.$router.push(`/${this.$route.params.companyId}/invest`);
-    }
-  }
+    },
+  },
 };
 </script>

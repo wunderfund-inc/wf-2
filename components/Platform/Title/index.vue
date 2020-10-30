@@ -16,7 +16,7 @@ export default {
         default:
           return "TEST";
       }
-    }
-  }
+    },
+  },
 };
 </script>

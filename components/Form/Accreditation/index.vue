@@ -3,9 +3,9 @@
     <div class="form-row">
       <div class="col-md-6">
         <b-form-group
-          :label="
-            `Estimated ${isEntity ? 'Combined Revenues' : 'Annual Income'}`
-          "
+          :label="`Estimated ${
+            isEntity ? 'Combined Revenues' : 'Annual Income'
+          }`"
           label-for="annual-income"
         >
           <vue-numeric
@@ -54,7 +54,7 @@ export default {
       },
       set(val) {
         this.$store.dispatch("accreditation/setAttribute", { prop: "ai", val });
-      }
+      },
     },
     nw: {
       get() {
@@ -62,7 +62,7 @@ export default {
       },
       set(val) {
         this.$store.dispatch("accreditation/setAttribute", { prop: "nw", val });
-      }
+      },
     },
     isEntity() {
       return this.$store.state.profile.is_entity;
@@ -76,12 +76,12 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   created() {
     const {
       accreditation_ai: ai,
-      accreditation_nw: nw
+      accreditation_nw: nw,
     } = this.$store.state.profile;
     this.$store.dispatch("accreditation/setAttribute", { prop: "ai", val: ai });
     this.$store.dispatch("accreditation/setAttribute", { prop: "nw", val: nw });
@@ -91,7 +91,7 @@ export default {
       const userId = this.$store.state.auth.userId;
       await this.$store.dispatch("accreditation/update", userId);
       await window.location.reload();
-    }
-  }
+    },
+  },
 };
 </script>

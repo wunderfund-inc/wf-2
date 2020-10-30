@@ -3,23 +3,20 @@
 const path = require("path");
 const { writeFile, ensureDir } = require("fs-extra");
 
-const extractPayload = function({ html, route }, windowNamespace) {
+const extractPayload = function ({ html, route }, windowNamespace) {
   const chunks = html.split(`<script>window.${windowNamespace}=`);
   const pre = chunks[0];
   const payload = chunks[1].split("</script>").shift();
-  const post = chunks[1]
-    .split("</script>")
-    .slice(1)
-    .join("</script>");
+  const post = chunks[1].split("</script>").slice(1).join("</script>");
   const path = route === "/" ? "" : route;
 
   return {
     html: `${pre}<script defer src="${path}/payload.js"></script>${post}`,
-    payload
+    payload,
   };
 };
 
-const writePayload = async function(payload, dir, windowNamespace) {
+const writePayload = async function (payload, dir, windowNamespace) {
   // Make sure the directory exists
   await ensureDir(dir);
 
@@ -43,14 +40,14 @@ const writePayload = async function(payload, dir, windowNamespace) {
   );
 };
 
-module.exports = function(moduleOptions) {
+module.exports = function (moduleOptions) {
   const options = {
     blacklist: [],
     ...this.options.static,
-    ...moduleOptions
+    ...moduleOptions,
   };
 
-  this.nuxt.hook("generate:page", async page => {
+  this.nuxt.hook("generate:page", async (page) => {
     if (!this.nuxt.options.generate.subFolders) {
       throw new Error("generate.subFolders should be true for @nuxt/static");
     }
@@ -75,7 +72,7 @@ module.exports = function(moduleOptions) {
 
   // Add nuxt_static middleware
   this.addPlugin({
-    src: path.resolve(__dirname, "plugin.js")
+    src: path.resolve(__dirname, "plugin.js"),
   });
   this.nuxt.options.router.middleware.push("nuxt_static");
 };

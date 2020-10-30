@@ -25,8 +25,8 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     platform() {
@@ -41,8 +41,8 @@ export default {
         default:
           return "#6c757d";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

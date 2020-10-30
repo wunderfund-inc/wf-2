@@ -10,9 +10,9 @@ export default {
     extraClasses: {
       type: String,
       default: "",
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 };
 </script>
 

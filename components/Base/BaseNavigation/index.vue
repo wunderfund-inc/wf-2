@@ -48,7 +48,7 @@
               >
                 Account
               </b-nav-item>
-              <b-nav-item @click="logout" to="/" class="px-md-3">
+              <b-nav-item to="/" class="px-md-3" @click="logout">
                 Logout
               </b-nav-item>
             </div>
@@ -77,7 +77,7 @@
             >
               Account
             </b-nav-item>
-            <b-nav-item @click="logout" to="/" class="px-md-3">
+            <b-nav-item to="/" class="px-md-3" @click="logout">
               Logout
             </b-nav-item>
           </b-navbar-nav>
@@ -108,12 +108,12 @@ import PlatformLogo from "@/components/Platform/Logo";
 
 export default {
   components: {
-    PlatformLogo
+    PlatformLogo,
   },
   computed: {
     loggedIn() {
       return !!this.$store.state.auth.email;
-    }
+    },
   },
   methods: {
     async logout() {
@@ -124,7 +124,7 @@ export default {
         // eslint-disable-next-line
         console.error(error);
       }
-    }
-  }
+    },
+  },
 };
 </script>

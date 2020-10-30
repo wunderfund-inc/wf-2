@@ -13,12 +13,12 @@ export default {
   props: {
     question: {
       type: String,
-      required: true
+      required: true,
     },
     answer: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>

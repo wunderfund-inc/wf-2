@@ -20,12 +20,10 @@
             <strong>{{ form.email }}</strong> to verify your email before
             logging in.
           </p>
-          <button @click="resendLink" v-if="!linkResent" class="btn btn-info">
+          <button v-if="!linkResent" class="btn btn-info" @click="resendLink">
             Resend Link
           </button>
-          <p v-else>
-            Link sent!
-          </p>
+          <p v-else>Link sent!</p>
         </div>
       </b-alert>
 
@@ -72,13 +70,13 @@ export default {
       showEmailNeedsVerificationAlert: false,
       form: {
         email: null,
-        password: null
+        password: null,
       },
-      error: null
+      error: null,
     };
   },
   computed: {
-    ...mapGetters(["showOverlay"])
+    ...mapGetters(["showOverlay"]),
   },
   methods: {
     async resendLink() {
@@ -112,7 +110,7 @@ export default {
         }
         await this.$store.dispatch("toggleOverlay", false);
       }
-    }
-  }
+    },
+  },
 };
 </script>

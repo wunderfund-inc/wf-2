@@ -15,13 +15,13 @@ export default {
     ...mapGetters({
       spendPoolCurrent: "profile/spendPoolCurrent",
       spendPoolMax: "profile/spendPoolMax",
-      spent: "investments/spent"
+      spent: "investments/spent",
     }),
     currentSpendPool() {
       const diff = this.spendPoolCurrent - this.spent;
       if (diff < 0) return 0;
       return diff;
-    }
-  }
+    },
+  },
 };
 </script>

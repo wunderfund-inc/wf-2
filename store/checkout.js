@@ -15,7 +15,7 @@ export const state = () => ({
   selectedEntity: null,
   ach: {
     account: null,
-    routing: null
+    routing: null,
   },
   cc: {
     name: null,
@@ -23,38 +23,38 @@ export const state = () => ({
     cvv: null,
     expiry: {
       month: null,
-      year: null
-    }
+      year: null,
+    },
   },
   crypto: {
-    address: null
-  }
+    address: null,
+  },
 });
 
 export const getters = {
-  showAgreementModal: state => state.showAgreementModal,
-  agreementUrl: state => state.agreementUrl,
-  testimonial: state => state.testimonial,
-  validAgreementList: state => state.agreedTo.length === 5,
-  agreedTo: state => state.agreedTo,
-  selectedOffering: state => state.selectedOffering,
-  selectedAmount: state => state.selectedAmount,
-  selectedShares: state => state.selectedShares,
-  selectedMethod: state => state.selectedMethod,
-  selectedType: state => state.selectedType,
-  selectedEntity: state => state.selectedEntity,
-  ach: state => state.ach,
-  cc: state => state.cc,
-  ccExpiry: state => state.cc.expiry,
-  ccExpiration: state => state.cc.expiry.month + "/" + state.cc.expiry.year,
-  cryptoAddress: state => state.crypto.address,
-  validMethod: state => {
+  showAgreementModal: (state) => state.showAgreementModal,
+  agreementUrl: (state) => state.agreementUrl,
+  testimonial: (state) => state.testimonial,
+  validAgreementList: (state) => state.agreedTo.length === 5,
+  agreedTo: (state) => state.agreedTo,
+  selectedOffering: (state) => state.selectedOffering,
+  selectedAmount: (state) => state.selectedAmount,
+  selectedShares: (state) => state.selectedShares,
+  selectedMethod: (state) => state.selectedMethod,
+  selectedType: (state) => state.selectedType,
+  selectedEntity: (state) => state.selectedEntity,
+  ach: (state) => state.ach,
+  cc: (state) => state.cc,
+  ccExpiry: (state) => state.cc.expiry,
+  ccExpiration: (state) => state.cc.expiry.month + "/" + state.cc.expiry.year,
+  cryptoAddress: (state) => state.crypto.address,
+  validMethod: (state) => {
     const validTransactionMethod =
       state.selectedMethod && state.selectedMethod.length > 0;
     const validExtras = validMethodExtras(state);
 
     return validTransactionMethod && validExtras;
-  }
+  },
 };
 
 export const mutations = {
@@ -79,7 +79,7 @@ export const mutations = {
   SET_CC_EXPIRY_ATTRIBUTE: (state, payload) => {
     state.cc.expiry = Object.assign(cloneDeep(state.cc.expiry), payload);
   },
-  SET_CRYPTO_ADDRESS: (state, payload) => (state.crypto.address = payload)
+  SET_CRYPTO_ADDRESS: (state, payload) => (state.crypto.address = payload),
 };
 
 export const actions = {
@@ -119,14 +119,14 @@ export const actions = {
         companyId,
         offeringId,
         userId,
-        entityId
+        entityId,
       };
       const key = state.selectedMethod.toLowerCase();
       dto.extras = Object.assign(cloneDeep({ [key]: state[key] }));
       await investmentRef.set(dto);
       await dispatch("getSigningLink", dto);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async getSigningLink({ dispatch }, dto) {
@@ -137,7 +137,7 @@ export const actions = {
       await dispatch("setAgreementUrl", url);
       // await dispatch("showAgreementModal", true);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async submitTestimonialForReview(
@@ -154,11 +154,11 @@ export const actions = {
         testimonial: state.testimonial,
         approved: false,
         createdAt: timestamp,
-        updatedAt: timestamp
+        updatedAt: timestamp,
       };
       await testimonialRef.set(payload);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
-  }
+  },
 };

@@ -38,8 +38,8 @@ export default {
     testimonials: {
       type: Array,
       default() {},
-      required: false
-    }
-  }
+      required: false,
+    },
+  },
 };
 </script>

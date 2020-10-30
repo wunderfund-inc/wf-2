@@ -19,7 +19,7 @@ export const state = () => ({
   entity_name: null,
   entity_type: null,
   entity_ein: null,
-  transact_api_account_id: null
+  transact_api_account_id: null,
 });
 
 export const getters = {
@@ -82,93 +82,90 @@ export const getters = {
     } else {
       return validName && validDob && validAddress && validId;
     }
-  }
+  },
 };
 
 export const mutations = {
   SET_PROFILE_ATTRIBUTE(state, { prop, val }) {
     state[prop] = val;
-  }
+  },
 };
 
 export const actions = {
   async fetch({ commit }, userId) {
     try {
-      const userRef = await db
-        .collection("users")
-        .doc(userId)
-        .get();
+      const userRef = await db.collection("users").doc(userId).get();
       const userData = userRef.data();
 
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "accreditation_ai",
-        val: userData.accreditation_ai
+        val: userData.accreditation_ai,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "accreditation_nw",
-        val: userData.accreditation_nw
+        val: userData.accreditation_nw,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "address_city",
-        val: userData.address_city
+        val: userData.address_city,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "address_postal",
-        val: userData.address_postal
+        val: userData.address_postal,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "address_state",
-        val: userData.address_state
+        val: userData.address_state,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "address_street_1",
-        val: userData.address_street_1
+        val: userData.address_street_1,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "address_street_2",
-        val: userData.address_street_2
+        val: userData.address_street_2,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "avatar",
-        val: userData.avatar
+        val: userData.avatar,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "dob",
-        val: userData.dob
+        val: userData.dob,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "first_name",
-        val: userData.first_name
+        val: userData.first_name,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "last_name",
-        val: userData.last_name
+        val: userData.last_name,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "is_entity",
-        val: userData.is_entity
+        val: userData.is_entity,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "attestations",
-        val: userData.attestations
+        val: userData.attestations,
       });
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "transact_api_account_id",
-        val: userData.transact_api_account_id
+        val: userData.transact_api_account_id,
       });
 
       if (userData.is_entity) {
         await commit("SET_PROFILE_ATTRIBUTE", {
           prop: "entity_name",
-          val: userData.entity_name
+          val: userData.entity_name,
         });
         await commit("SET_PROFILE_ATTRIBUTE", {
           prop: "entity_type",
-          val: userData.entity_type
+          val: userData.entity_type,
         });
         await commit("SET_PROFILE_ATTRIBUTE", {
           prop: "entity_ein",
-          val: userData.entity_ein
+          val: userData.entity_ein,
         });
       }
     } catch (error) {
@@ -180,7 +177,7 @@ export const actions = {
     try {
       await commit("SET_PROFILE_ATTRIBUTE", { prop, val });
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
   },
   async update({ state }, { userId, flag }) {
@@ -199,7 +196,7 @@ export const actions = {
           avatar: state.avatar,
           first_name: state.first_name,
           last_name: state.last_name,
-          date_updated: timestamp
+          date_updated: timestamp,
         };
 
         if (state.is_entity) {
@@ -215,7 +212,7 @@ export const actions = {
           .doc(userId)
           .update({
             ...dto,
-            flag: `update:${state.is_entity ? "entity" : "individual"}`
+            flag: `update:${state.is_entity ? "entity" : "individual"}`,
           });
       } else {
         /**
@@ -225,7 +222,7 @@ export const actions = {
         dto = {
           is_entity: state.is_entity,
           attestations: state.attestations,
-          date_updated: timestamp
+          date_updated: timestamp,
         };
 
         await db
@@ -233,11 +230,11 @@ export const actions = {
           .doc(userId)
           .update({
             ...dto,
-            flag: "update:attestation"
+            flag: "update:attestation",
           });
       }
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
   },
   async updateAtCheckout(context, { userId, payload }) {
@@ -248,10 +245,10 @@ export const actions = {
         .update({
           ...payload,
           date_updated: timestamp,
-          flag: "update:checkout"
+          flag: "update:checkout",
         });
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
-  }
+  },
 };

@@ -15,7 +15,7 @@ export default {
         return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
       }
       return null;
-    }
-  }
+    },
+  },
 };
 </script>

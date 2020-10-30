@@ -153,13 +153,13 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
+      required: true,
     },
     offering: {
       type: Object,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     platform: () => process.env.PLATFORM,
@@ -172,8 +172,8 @@ export default {
         default:
           return "#6c757d";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

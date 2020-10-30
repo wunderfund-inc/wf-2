@@ -97,28 +97,28 @@ export default {
       form: {
         email: null,
         password: null,
-        confirmPassword: null
-      }
+        confirmPassword: null,
+      },
     };
   },
   validations: {
     form: {
       email: {
         required,
-        email
+        email,
       },
       password: {
         required,
-        minLength: minLength(8)
+        minLength: minLength(8),
       },
       confirmPassword: {
-        matchPassword: sameAs("password")
-      }
+        matchPassword: sameAs("password"),
+      },
     },
-    validRegistration: ["form.email", "form.password", "form.confirmPassword"]
+    validRegistration: ["form.email", "form.password", "form.confirmPassword"],
   },
   computed: {
-    ...mapGetters(["showOverlay"])
+    ...mapGetters(["showOverlay"]),
   },
   methods: {
     validateState(name) {
@@ -131,7 +131,7 @@ export default {
         await this.$store.dispatch("toggleOverlay", true);
         await this.$store.dispatch("auth/createUser", {
           email: this.form.email,
-          password: this.form.password
+          password: this.form.password,
         });
         await this.$store.dispatch("toggleOverlay", false);
         this.showAlert = true;
@@ -139,7 +139,7 @@ export default {
         await this.$store.dispatch("toggleOverlay", false);
         this.error = error.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>

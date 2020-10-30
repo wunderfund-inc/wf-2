@@ -2,19 +2,19 @@ import { db } from "@/plugins/firebase";
 import { oneYearPassed } from "@/helpers/validators";
 
 export const state = () => ({
-  investments: []
+  investments: [],
 });
 
 export const getters = {
   spent(state) {
     if (state.investments.length > 0) {
-      const investments = state.investments.filter(investment => {
+      const investments = state.investments.filter((investment) => {
         return !oneYearPassed(investment.purchaseDate.seconds);
       });
 
       if (investments.length > 0) {
         return investments
-          .map(investment => {
+          .map((investment) => {
             if (investment.type === "SHARES") {
               return investment.amount * investment.pricePerShare;
             }
@@ -24,11 +24,11 @@ export const getters = {
       }
     }
     return 0;
-  }
+  },
 };
 
 export const mutations = {
-  SET_INVESTMENTS: (state, payload) => (state.investments = payload)
+  SET_INVESTMENTS: (state, payload) => (state.investments = payload),
 };
 
 export const actions = {
@@ -42,7 +42,7 @@ export const actions = {
       await commit("SET_INVESTMENTS", []);
     } else {
       const investments = docRefs.docs
-        .map(investment => {
+        .map((investment) => {
           const data = investment.data();
           if (data.investment_agreement_id) {
             const {
@@ -54,7 +54,7 @@ export const actions = {
               investment_method: im,
               investment_agreement_id: iai,
               tapi_trade_id: ttId,
-              offering_details: offeringDetails
+              offering_details: offeringDetails,
             } = data;
 
             const pricePerShare =
@@ -71,12 +71,12 @@ export const actions = {
               method: im,
               agreementId: iai,
               tradeId: ttId,
-              pricePerShare
+              pricePerShare,
             };
           }
         })
-        .filter(n => n);
+        .filter((n) => n);
       await commit("SET_INVESTMENTS", investments);
     }
-  }
+  },
 };

@@ -1,12 +1,12 @@
 <template>
-  <main class="d-flex align-items-center" style="min-height: 70vh;">
+  <main class="d-flex align-items-center" style="min-height: 70vh">
     <div class="container py-5 text-center">
       <div class="row justify-content-center">
         <div class="col-md-5">
           <h1 class="pb-4">Reset your password</h1>
           <div class="card bg-light">
             <div class="container py-4">
-              <form @submit.prevent="sendPasswordResetEmail" class="mb-3">
+              <form class="mb-3" @submit.prevent="sendPasswordResetEmail">
                 <div class="form-group">
                   <label for="input-email">Email Address</label>
                   <input
@@ -45,7 +45,7 @@ export default {
     return {
       email: null,
       submitted: false,
-      error: null
+      error: null,
     };
   },
   methods: {
@@ -59,7 +59,7 @@ export default {
         this.submitted = false;
         this.error = error;
       }
-    }
-  }
+    },
+  },
 };
 </script>

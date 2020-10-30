@@ -26,8 +26,8 @@ export default {
       required,
       validRegex(ein) {
         return einRegex.test(ein);
-      }
-    }
+      },
+    },
   },
   computed: {
     entityEIN: {
@@ -37,17 +37,17 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "entity_ein",
-          val
+          val,
         });
         this.$v.entityEIN.$touch();
-      }
-    }
+      },
+    },
   },
   methods: {
     validEIN() {
       const { $dirty, $error } = this.$v.entityEIN;
       return $dirty ? !$error : null;
-    }
-  }
+    },
+  },
 };
 </script>

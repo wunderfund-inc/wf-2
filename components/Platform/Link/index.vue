@@ -8,6 +8,6 @@
 import PlatformTitle from "@/components/Platform/Title";
 
 export default {
-  components: { PlatformTitle }
+  components: { PlatformTitle },
 };
 </script>

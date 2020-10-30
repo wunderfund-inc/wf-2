@@ -18,10 +18,7 @@ export function verifyEmail() {
 
 export async function uploadImage(refStr, file) {
   try {
-    const ref = firebase
-      .storage()
-      .ref()
-      .child(refStr);
+    const ref = firebase.storage().ref().child(refStr);
     const filer = await ref.put(file);
     const url = await filer.ref.getDownloadURL();
 
@@ -41,7 +38,7 @@ export async function downloadURL(reference, filename) {
     const url = await storageRef.child(filename).getDownloadURL();
     return url;
   } catch (error) {
-    throw Error(error.message);
+    throw new Error(error.message);
   }
 }
 

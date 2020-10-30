@@ -70,9 +70,9 @@
           <vue-numeric
             v-model="amount"
             :empty-value="offering.minimum_investment_amount"
-            v-bind:min="offering.minimum_investment_amount"
-            v-bind:max="currentSpendPool"
-            v-bind:precision="2"
+            :min="offering.minimum_investment_amount"
+            :max="currentSpendPool"
+            :precision="2"
             currency="$"
             separator=","
             class="form-control"
@@ -111,11 +111,11 @@ export default {
   components: { VueNumeric, TheMask },
   computed: {
     ...mapState({
-      offering: state => state.agreement.offering,
-      method: state => state.agreement.method
+      offering: (state) => state.agreement.offering,
+      method: (state) => state.agreement.method,
     }),
     ...mapGetters({
-      currentSpendPool: "profile/spendPoolCurrent"
+      currentSpendPool: "profile/spendPoolCurrent",
     }),
     amount: {
       get() {
@@ -124,9 +124,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "amount",
-          val
+          val,
         });
-      }
+      },
     },
     validInput() {
       if (
@@ -153,7 +153,7 @@ export default {
       return ["Equity", "Convertible Note"].includes(
         this.offering.security_type
       );
-    }
-  }
+    },
+  },
 };
 </script>

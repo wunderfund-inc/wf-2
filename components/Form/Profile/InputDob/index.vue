@@ -15,10 +15,10 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "dob",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
