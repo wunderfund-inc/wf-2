@@ -162,6 +162,7 @@ export default {
     }
   },
   computed: {
+    platform: () => process.env.PLATFORM,
     bgColor() {
       switch (this.platform) {
         case "WFP":
