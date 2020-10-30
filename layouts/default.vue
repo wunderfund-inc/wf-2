@@ -2,7 +2,7 @@
   <div id="app">
     <LazyBaseNavigation />
     <Nuxt />
-    <!-- <LazyBaseFooter /> -->
+    <LazyBaseFooter />
   </div>
 </template>
 

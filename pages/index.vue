@@ -17,8 +17,6 @@ import { db } from "@/plugins/firebase";
 
 export default {
   async asyncData({ $prismic, $config: { PLATFORM } }) {
-    const platform = PLATFORM || "TEST";
-
     const companies = (
       await $prismic.api.query(
         $prismic.predicates.at("document.type", "campaign")
@@ -27,7 +25,7 @@ export default {
 
     const sorted = companies
       .filter((company) => {
-        return [platform, "BOTH", "ALL"].includes(company.data.platform);
+        return [PLATFORM, "BOTH", "ALL"].includes(company.data.platform);
       })
       .sort(function (a, b) {
         return (
@@ -48,7 +46,7 @@ export default {
 
     const asyncSorted = await Promise.all(sorted);
 
-    return { platform, companies: asyncSorted };
+    return { platform: PLATFORM, companies: asyncSorted };
   },
 };
 </script>
