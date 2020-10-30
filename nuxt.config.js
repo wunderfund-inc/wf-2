@@ -42,7 +42,15 @@ export default {
   plugins: ["~helpers/filters", "~plugins/firebase"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
+  components: {
+    dirs: [
+      "~/components",
+      {
+        path: "~/components/Platform/",
+        prefix: "Platform",
+      },
+    ],
+  },
 
   pageTransition: "page",
 
@@ -103,7 +111,7 @@ export default {
   publicRuntimeConfig: {
     BASE_URL: process.env.BASE_URL || "http://localhost:3000",
     GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-    PLATFORM: process.env.PLATFORM,
+    PLATFORM: process.env.PLATFORM || "TEST",
   },
   privateRuntimeConfig: {},
   /*

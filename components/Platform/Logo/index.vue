@@ -6,12 +6,13 @@
 
 <script>
 export default {
+  name: "PlatformLogo",
   computed: {
     platform() {
-      return process.env.PLATFORM || "TEST SITE";
+      return this.$config.PLATFORM;
     },
     platformImgSrc() {
-      if (this.platform && this.platform !== "TEST SITE") {
+      if (this.platform && this.platform !== "TEST") {
         return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
       }
       return null;
