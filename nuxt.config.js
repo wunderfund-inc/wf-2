@@ -110,7 +110,6 @@ export default {
   // Environment Variables
   publicRuntimeConfig: {
     BASE_URL: process.env.BASE_URL || "http://localhost:3000",
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
     PLATFORM: process.env.PLATFORM || "TEST",
   },
   privateRuntimeConfig: {},
