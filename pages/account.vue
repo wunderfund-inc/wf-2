@@ -147,7 +147,7 @@ export default {
       investments: (state) => state.investments.investments,
     }),
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":

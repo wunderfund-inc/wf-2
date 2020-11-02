@@ -68,7 +68,7 @@ export default {
       return this.$store.state.profile.is_entity;
     },
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":

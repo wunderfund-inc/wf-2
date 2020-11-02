@@ -29,11 +29,8 @@ export default {
     },
   },
   computed: {
-    platform() {
-      return process.env.PLATFORM;
-    },
     bgColor() {
-      switch (this.platform) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "#003b5a";
         case "WFH":

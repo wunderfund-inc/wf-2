@@ -154,7 +154,7 @@ export default {
       validAttestations: "agreement/validAttestations",
     }),
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":

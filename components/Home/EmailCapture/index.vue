@@ -77,7 +77,7 @@ export default {
   },
   computed: {
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":
