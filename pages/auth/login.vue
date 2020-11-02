@@ -33,10 +33,15 @@ import SectionSocialMediaLogin from "@/components/Form/Auth/SectionSocialMediaLo
 import LoginForm from "@/components/Form/Auth/LoginForm";
 
 export default {
-  middleware: ["simple-redirect"],
   components: {
     SectionSocialMediaLogin,
     LoginForm,
+  },
+  asyncData({ store, redirect }) {
+    const loggedIn = store.state.auth.email;
+    if (loggedIn) {
+      return redirect("/account");
+    }
   },
 };
 </script>

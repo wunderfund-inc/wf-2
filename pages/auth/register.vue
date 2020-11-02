@@ -28,10 +28,15 @@ import SectionSocialMediaLogin from "@/components/Form/Auth/SectionSocialMediaLo
 import RegistrationForm from "@/components/Form/Auth/RegistrationForm";
 
 export default {
-  middleware: ["simple-redirect"],
   components: {
     SectionSocialMediaLogin,
     RegistrationForm,
+  },
+  asyncData({ store, redirect }) {
+    const loggedIn = store.state.auth.email;
+    if (loggedIn) {
+      return redirect("/account");
+    }
   },
 };
 </script>
