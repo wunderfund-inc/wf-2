@@ -19,30 +19,30 @@ import SocialMediaButton from "./SocialMediaButton";
 
 export default {
   components: {
-    SocialMediaButton
+    SocialMediaButton,
   },
   data() {
     return {
       links: [
         {
           name: "facebook",
-          color: "#4267b2"
+          color: "#4267b2",
         },
         {
           name: "google",
-          color: "#dd4b39"
-        }
+          color: "#dd4b39",
+        },
         // {
         //   name: "twitter",
         //   color: "#38A1F3"
         // }
-      ]
+      ],
     };
   },
   computed: {
     ...mapGetters({
-      error: "socialMediaError"
-    })
-  }
+      error: "socialMediaError",
+    }),
+  },
 };
 </script>

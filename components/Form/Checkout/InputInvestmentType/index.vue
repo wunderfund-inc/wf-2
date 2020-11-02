@@ -27,12 +27,12 @@ export default {
   props: {
     value: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapGetters({
-      hasEntities: "user/hasEntities"
+      hasEntities: "user/hasEntities",
     }),
     localState: {
       get() {
@@ -40,8 +40,8 @@ export default {
       },
       set(val) {
         this.$emit("input", val);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

@@ -25,15 +25,12 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    platform() {
-      return process.env.PLATFORM;
-    },
     bgColor() {
-      switch (this.platform) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "#003b5a";
         case "WFH":
@@ -41,8 +38,8 @@ export default {
         default:
           return "#6c757d";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

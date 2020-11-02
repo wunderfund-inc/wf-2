@@ -7,8 +7,8 @@
       <div class="container">
         <div class="form-row form-check-inline">
           <b-form-radio
-            :value="offering"
             v-model="selectedOffering"
+            :value="offering"
             :disabled="needsAccreditation && !isAccredited"
             class="form-check-input"
             size="lg"
@@ -191,8 +191,8 @@ export default {
     offering: {
       type: Object,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     selectedOffering: {
@@ -202,26 +202,26 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "method",
-          val: null
+          val: null,
         });
 
         this.$store.dispatch("agreement/setAttribute", {
           prop: "amount",
-          val: null
+          val: null,
         });
 
         this.$store.dispatch("agreement/setAttribute", {
           prop: "offering",
-          val
+          val,
         });
 
         this.$store.dispatch("agreement/setAttribute", {
           prop: "amountType",
           val: ["Equity", "Convertible Note"].includes(val.security_type)
             ? "SHARES"
-            : "RAW"
+            : "RAW",
         });
-      }
+      },
     },
     isSelected() {
       return this.selectedOffering === this.offering;
@@ -239,14 +239,14 @@ export default {
     needsAccreditation() {
       const {
         accredited_investors_only: accInvOnly,
-        offering_type: offeringType
+        offering_type: offeringType,
       } = this.offering;
 
       return offeringType === "CF" ? false : accInvOnly;
     },
     isAccredited() {
       return this.$store.getters["profile/accredited"];
-    }
-  }
+    },
+  },
 };
 </script>

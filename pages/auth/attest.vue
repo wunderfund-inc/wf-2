@@ -25,8 +25,8 @@ export default {
         return redirect("/account");
       }
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
-  }
+  },
 };
 </script>

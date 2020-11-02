@@ -25,10 +25,10 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "testimonial",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

@@ -72,9 +72,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "attestation1",
-          val
+          val,
         });
-      }
+      },
     },
     attestation2: {
       get() {
@@ -83,9 +83,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "attestation2",
-          val
+          val,
         });
-      }
+      },
     },
     attestation3: {
       get() {
@@ -94,9 +94,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "attestation3",
-          val
+          val,
         });
-      }
+      },
     },
     attestation4: {
       get() {
@@ -105,9 +105,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "attestation4",
-          val
+          val,
         });
-      }
+      },
     },
     attestation5: {
       get() {
@@ -116,13 +116,13 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "attestation5",
-          val
+          val,
         });
-      }
+      },
     },
     isEntity() {
       return this.$store.state.profile.is_entity;
-    }
-  }
+    },
+  },
 };
 </script>

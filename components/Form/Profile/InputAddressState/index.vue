@@ -14,7 +14,7 @@ import states from "@/components/Form/states";
 export default {
   data() {
     return {
-      states: states
+      states,
     };
   },
   computed: {
@@ -25,10 +25,10 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "address_state",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

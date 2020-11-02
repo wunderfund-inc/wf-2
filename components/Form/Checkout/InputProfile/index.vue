@@ -103,7 +103,7 @@
       </div>
       <div class="form-inline">
         <b-button type="submit" variant="success">Update</b-button>
-        <b-link @click.prevent="clearForm" class="ml-3">Cancel</b-link>
+        <b-link class="ml-3" @click.prevent="clearForm">Cancel</b-link>
       </div>
     </form>
   </b-overlay>
@@ -122,7 +122,7 @@ export default {
         "Limited Partnership",
         "Revocable Trust",
         "Irrevocable Trust",
-        "Corporation"
+        "Corporation",
       ],
       form: {
         firstName: null,
@@ -136,8 +136,8 @@ export default {
         isEntity: false,
         entityName: null,
         entityType: null,
-        entityEin: null
-      }
+        entityEin: null,
+      },
     };
   },
   computed: {
@@ -146,7 +146,7 @@ export default {
     },
     isEntity() {
       return this.$store.state.profile.is_entity;
-    }
+    },
   },
   created() {
     const {
@@ -161,7 +161,7 @@ export default {
       address_postal: postal,
       entity_name: entityName,
       entity_type: entityType,
-      entity_ein: entityEin
+      entity_ein: entityEin,
     } = this.$store.state.profile;
 
     this.form.firstName = firstName;
@@ -191,7 +191,7 @@ export default {
           address_street_2: this.form.street2,
           address_city: this.form.city,
           address_state: this.form.state,
-          address_postal: this.form.postal
+          address_postal: this.form.postal,
         };
 
         if (this.form.isEntity) {
@@ -202,7 +202,7 @@ export default {
 
         await this.$store.dispatch("profile/updateAtCheckout", {
           userId: this.userId,
-          payload
+          payload,
         });
 
         await this.$store.dispatch("profile/fetch", this.userId);
@@ -211,10 +211,10 @@ export default {
 
         this.$store.dispatch("agreement/setAttribute", {
           prop: "editingProfile",
-          val: false
+          val: false,
         });
       } catch (error) {
-        throw Error(error);
+        throw new Error(error);
       }
     },
     clearForm() {
@@ -232,9 +232,9 @@ export default {
 
       this.$store.dispatch("agreement/setAttribute", {
         prop: "editingProfile",
-        val: false
+        val: false,
       });
-    }
-  }
+    },
+  },
 };
 </script>

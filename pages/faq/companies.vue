@@ -10,12 +10,17 @@
         </div>
         <div class="col-12 col-md-9 mb-3 d-print-block">
           <article>
-            <FaqItem
-              v-for="(item, index) in faqData"
+            <details
+              v-for="(faq, index) in faqs"
               :key="index"
-              :question="item.question"
-              :answer="item.answer"
-            />
+              class="mb-3"
+              open
+            >
+              <summary class="mb-3">
+                <strong>{{ faq.question }}</strong>
+              </summary>
+              <p>{{ faq.answer }}</p>
+            </details>
           </article>
         </div>
       </div>
@@ -24,35 +29,13 @@
 </template>
 
 <script>
-import BaseSubNav from "@/components/Base/BaseSubNav";
-import FaqItem from "@/components/Faq/FaqItem";
-import faqData from "@/components/Faq/FaqData/companies";
-
-const faqLinks = [
-  {
-    name: "General FAQs",
-    url: "/faq/general"
-  },
-  {
-    name: "FAQs for Investors",
-    url: "/faq/investors"
-  },
-  {
-    name: "FAQs for Companies",
-    url: "/faq/companies"
-  }
-];
+import faqLinks from "@/content/faq/links";
+import faqItems from "@/content/faq/companies";
 
 export default {
-  components: {
-    BaseSubNav,
-    FaqItem
+  computed: {
+    links: () => faqLinks,
+    faqs: () => faqItems,
   },
-  data() {
-    return {
-      links: faqLinks,
-      faqData
-    };
-  }
 };
 </script>

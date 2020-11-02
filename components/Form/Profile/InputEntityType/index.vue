@@ -17,8 +17,8 @@ export default {
         "Limited Partnership",
         "Revocable Trust",
         "Irrevocable Trust",
-        "Corporation"
-      ]
+        "Corporation",
+      ],
     };
   },
   computed: {
@@ -29,10 +29,10 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "entity_type",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

@@ -7,7 +7,7 @@ import {
   pluralFaq,
   paymentMethodFormat,
   einNumToStr,
-  currencyDisplayFormat
+  currencyDisplayFormat,
 } from "./filters";
 
 describe("testing filter functions", () => {

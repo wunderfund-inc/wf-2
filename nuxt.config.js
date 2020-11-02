@@ -1,67 +1,71 @@
-import Prismic from "prismic-javascript";
+// import Prismic from "prismic-javascript";
 
-const endpoint = "https://wunderfund.cdn.prismic.io/api/v2";
+// const endpoint = "https://wunderfund.cdn.prismic.io/api/v2";
 
-const dynamicRoutes = async () => {
-  try {
-    const api = await Prismic.getApi(endpoint);
-    const campaigns = await api.query(
-      Prismic.Predicates.at("document.type", "campaign")
-    );
-    return campaigns.results.map(campaign => `/${campaign.uid}`);
-  } catch (error) {
-    throw Error(error);
-  }
-};
+// const dynamicRoutes = async () => {
+//   try {
+//     const api = await Prismic.getApi(endpoint);
+//     const campaigns = await api.query(
+//       Prismic.Predicates.at("document.type", "campaign")
+//     );
+//     return campaigns.results.map((campaign) => `/${campaign.uid}`);
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// };
 
 export default {
-  mode: "universal",
-  /*
-   ** Headers of the page
-   */
+  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: "Wunderfund",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      {
-        hid: "description",
-        name: "description",
-        content: process.env.npm_package_description || ""
-      }
+      { hid: "description", name: "description", content: "" },
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css?family=Montserrat:200,300,400"
-      }
-    ]
+        href: "https://fonts.googleapis.com/css?family=Montserrat:200,300,400",
+      },
+    ],
   },
-  /*
-   ** Customize the progress-bar color
-   */
+
+  // Customize the progress-bar color
   loading: { color: "#c89f5c" },
-  /*
-   ** Global CSS
-   */
+
+  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ["~/assets/main.css"],
-  /*
-   ** Plugins to load before mounting the App
-   */
+
+  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: ["~helpers/filters", "~plugins/firebase"],
+
+  // Auto import components (https://go.nuxtjs.dev/config-components)
+  components: {
+    dirs: [
+      "~/components",
+      {
+        path: "~/components/Platform/",
+        prefix: "Platform",
+      },
+    ],
+  },
+
   pageTransition: "page",
-  /*
-   ** Nuxt.js modules
-   */
+
+  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   modules: [
-    // "@/modules/static",
-    // "@/modules/crawler",
-    "@nuxtjs/prismic",
-    "bootstrap-vue/nuxt",
+    // https://axios.nuxtjs.org/
     "@nuxtjs/axios",
-    "@nuxtjs/dotenv",
+    // https://go.nuxtjs.dev/eslint
     "@nuxtjs/eslint-module",
+    // https://prismic.nuxtjs.org/
+    "@nuxtjs/prismic",
+    // https://go.nuxtjs.dev/stylelint
+    "@nuxtjs/stylelint-module",
+    // https://go.nuxtjs.dev/bootstrap
+    "bootstrap-vue/nuxt",
     [
       "nuxt-fontawesome",
       {
@@ -73,8 +77,8 @@ export default {
               "faLink",
               "faFilePdf",
               "faMinusCircle",
-              "faEnvelopeSquare"
-            ]
+              "faEnvelopeSquare",
+            ],
           },
           {
             set: "@fortawesome/free-brands-svg-icons",
@@ -91,50 +95,45 @@ export default {
               "faGoogle",
               "faCcVisa",
               "faCcMastercard",
-              "faCcDiscover"
-            ]
-          }
-        ]
-      }
-    ]
+              "faCcDiscover",
+            ],
+          },
+        ],
+      },
+    ],
   ],
   prismic: {
-    endpoint: "https://wunderfund.cdn.prismic.io/api/v2"
+    endpoint: "https://wunderfund.cdn.prismic.io/api/v2",
   },
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
+  // https://go.nuxtjs.dev/axios
   axios: {},
-  /*
-   ** Environment variables
-   */
-  env: {
+  // Environment Variables
+  publicRuntimeConfig: {
     BASE_URL: process.env.BASE_URL || "http://localhost:3000",
-    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-    FIREBASE_DB_URL: process.env.FIREBASE_DB_URL,
-    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
-    FIREBASE_MESSAGING_ID: process.env.FIREBASE_MESSAGING_ID,
-    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY,
-    PLATFORM: process.env.PLATFORM
+    PLATFORM: process.env.PLATFORM || "TEST",
   },
+  privateRuntimeConfig: {},
   /*
    ** Build configuration
    */
-  buildModules: [["@nuxtjs/google-analytics", { id: "UA-140072604-1" }]],
+  buildModules: [
+    // https://go.nuxtjs.dev/eslint
+    "@nuxtjs/eslint-module",
+    // https://go.nuxtjs.dev/stylelint
+    "@nuxtjs/stylelint-module",
+    ["@nuxtjs/google-analytics", { id: "UA-140072604-1" }],
+  ],
+  // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     /*
      ** You can extend webpack config here
      */
     extend(config, ctx) {
       config.resolve.alias.vue = "vue/dist/vue.common";
-    }
+    },
   },
-  generate: {
-    routes: dynamicRoutes,
-    fallback: "404.html"
-  }
+  // generate: {
+  //   routes: dynamicRoutes,
+  //   fallback: "404.html",
+  // },
 };

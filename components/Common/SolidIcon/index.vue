@@ -7,8 +7,8 @@ export default {
   props: {
     i: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>

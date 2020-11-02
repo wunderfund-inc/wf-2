@@ -20,12 +20,12 @@ export default {
     value: {
       type: Object,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapGetters({
-      entities: "user/entities"
+      entities: "user/entities",
     }),
     localState: {
       get() {
@@ -33,8 +33,8 @@ export default {
       },
       set(val) {
         this.$emit("input", val);
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

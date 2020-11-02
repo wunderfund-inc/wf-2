@@ -94,8 +94,8 @@ export default {
       submitting: false,
       error: null,
       form: {
-        attestations: []
-      }
+        attestations: [],
+      },
     };
   },
   computed: {
@@ -106,19 +106,19 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "is_entity",
-          val
+          val,
         });
-      }
-    }
+      },
+    },
   },
   validations: {
     form: {
       attestations: {
         required,
-        minLength: minLength(4)
-      }
+        minLength: minLength(4),
+      },
     },
-    validAttestations: ["form.attestations"]
+    validAttestations: ["form.attestations"],
   },
   methods: {
     validateState(name) {
@@ -130,16 +130,16 @@ export default {
 
       await this.$store.dispatch("profile/setAttribute", {
         prop: "attestations",
-        val: this.form.attestations
+        val: this.form.attestations,
       });
 
       await this.$store.dispatch("profile/update", {
         userId: this.$store.state.auth.userId,
-        flag: "attestations"
+        flag: "attestations",
       });
 
       await this.$router.push("/account");
-    }
-  }
+    },
+  },
 };
 </script>

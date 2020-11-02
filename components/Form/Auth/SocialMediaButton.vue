@@ -1,8 +1,8 @@
 <template>
   <button
-    @click="signIn"
     :style="`background-color: ${color}; border: 1px solid ${color}`"
     class="btn btn-block btn-lg"
+    @click="signIn"
   >
     <BrandIcon
       :i="name === 'facebook' ? 'facebook-f' : name"
@@ -17,17 +17,17 @@ import BrandIcon from "@/components/Common/BrandIcon";
 
 export default {
   components: {
-    BrandIcon
+    BrandIcon,
   },
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     color: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   methods: {
     async signIn() {
@@ -43,7 +43,7 @@ export default {
       } catch (error) {
         await this.$store.dispatch("displaySocialMediaError", error.message);
       }
-    }
-  }
+    },
+  },
 };
 </script>

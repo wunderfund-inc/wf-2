@@ -3,18 +3,18 @@ import {
   auth,
   verifyEmail,
   FacebookAuthProvider,
-  GoogleAuthProvider
+  GoogleAuthProvider,
   // TwitterAuthProvider
 } from "@/plugins/firebase";
 
 export const state = () => ({
   email: null,
   emailVerified: false,
-  userId: null
+  userId: null,
 });
 
 export const mutations = {
-  MUTATE: (state, payload) => (state[payload.prop] = payload.val)
+  MUTATE: (state, payload) => (state[payload.prop] = payload.val),
 };
 
 export const actions = {
@@ -24,7 +24,7 @@ export const actions = {
       await verifyEmail();
       await dispatch("logout");
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
   },
   async signInWithSocialMedia({ dispatch }, brand) {
@@ -44,7 +44,7 @@ export const actions = {
       const userData = user.user.toJSON();
       await dispatch("login", userData);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async loginUser({ dispatch }, { email, password }) {
@@ -68,10 +68,10 @@ export const actions = {
       await dispatch("set", {
         email: user.email,
         emailVerified: user.emailVerified,
-        userId: user.uid
+        userId: user.uid,
       });
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async logout({ dispatch }) {
@@ -80,14 +80,14 @@ export const actions = {
       Cookies.remove("access_token");
       await dispatch("unset");
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async updatePassword(context, password) {
     try {
       await auth.currentUser.updatePassword(password);
     } catch (error) {
-      throw Error(error.message);
+      throw new Error(error.message);
     }
   },
   async sendPasswordResetEmail(context, email) {
@@ -106,5 +106,5 @@ export const actions = {
     commit("MUTATE", { prop: "email", val: null });
     commit("MUTATE", { prop: "emailVerified", val: null });
     commit("MUTATE", { prop: "userId", val: null });
-  }
+  },
 };

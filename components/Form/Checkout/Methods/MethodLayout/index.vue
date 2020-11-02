@@ -41,12 +41,12 @@ export default {
     FormCreditCard,
     FormCheck,
     FormWire,
-    FormCrypto
+    FormCrypto,
   },
   computed: {
     method() {
       return this.$store.state.agreement.method;
-    }
-  }
+    },
+  },
 };
 </script>

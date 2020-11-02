@@ -7,7 +7,7 @@ import BaseSubNav from "@/components/Base/BaseSubNav";
 
 export default {
   components: {
-    BaseSubNav
+    BaseSubNav,
   },
   data() {
     return {
@@ -15,9 +15,9 @@ export default {
         { name: "Profile", url: "/u/" },
         { name: "Accreditation", url: "/u/accreditation" },
         { name: "Investments", url: "/u/investments" },
-        { name: "Settings", url: "/u/settings" }
-      ]
+        { name: "Settings", url: "/u/settings" },
+      ],
     };
-  }
+  },
 };
 </script>

@@ -34,7 +34,7 @@ import { TheMask } from "vue-the-mask";
 
 export default {
   components: {
-    TheMask
+    TheMask,
   },
   computed: {
     account: {
@@ -44,9 +44,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "account",
-          val
+          val,
         });
-      }
+      },
     },
     routing: {
       get() {
@@ -55,10 +55,10 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "routing",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

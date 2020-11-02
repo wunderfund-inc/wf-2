@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent novalidate class="form">
+  <form novalidate class="form" @submit.prevent>
     <section class="card bg-light mb-3">
       <div class="container">
         <h5 class="card-title my-4 font-weight-bold">
@@ -65,21 +65,21 @@ export default {
     InputPaymentMethod,
     InputMethodExtras,
     InputAttestations,
-    InputTestimonial
+    InputTestimonial,
   },
   props: {
     offerings: {
       type: Array,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapGetters({
       validAmount: "agreement/validAmount",
       validMethod: "agreement/validMethod",
-      validAttestations: "agreement/validAttestations"
-    })
-  }
+      validAttestations: "agreement/validAttestations",
+    }),
+  },
 };
 </script>

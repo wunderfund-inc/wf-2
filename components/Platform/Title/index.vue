@@ -3,12 +3,11 @@
 </template>
 
 <script>
-const platform = process.env.PLATFORM;
-
 export default {
+  name: "PlatformTitle",
   computed: {
     title() {
-      switch (platform) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "Wunderfund.co";
         case "WFH":
@@ -16,7 +15,7 @@ export default {
         default:
           return "TEST";
       }
-    }
-  }
+    },
+  },
 };
 </script>

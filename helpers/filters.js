@@ -7,13 +7,13 @@ import fromUnixTime from "date-fns/fromUnixTime";
 /**
  * Capitalize all letters of a string
  */
-export const capitalize = val => val.toUpperCase();
+export const capitalize = (val) => val.toUpperCase();
 Vue.filter("capitalize", capitalize);
 
 /**
  * Proper case a string (capitalize the first letter only)
  */
-export const properCase = val => {
+export const properCase = (val) => {
   if (val === "iot") {
     return "IoT";
   } else {
@@ -25,10 +25,10 @@ Vue.filter("properCase", properCase);
 /**
  * Return a string, displayed in USD currency, from a raw number
  */
-export const asCurrency = val => {
+export const asCurrency = (val) => {
   return Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD"
+    currency: "USD",
   }).format(val);
 };
 Vue.filter("asCurrency", asCurrency);
@@ -36,19 +36,19 @@ Vue.filter("asCurrency", asCurrency);
 /**
  * Add percentage to raw number
  */
-export const asPercentage = val => `${val}%`;
+export const asPercentage = (val) => `${val}%`;
 Vue.filter("asPercentage", asPercentage);
 
 /**
  * Add "Reg" to regulation type - if it's A, it's actually "A+"
  */
-export const regulationFormat = val => (val === "A" ? "A+" : val);
+export const regulationFormat = (val) => (val === "A" ? "A+" : val);
 Vue.filter("regulationFormat", regulationFormat);
 
 /**
  * Pluralize words on the FAQ menus, depending on the word
  */
-export const pluralFaq = val => {
+export const pluralFaq = (val) => {
   if (val === "investor") return `${val}s`;
   if (val === "company") return "companies";
   return val;
@@ -58,7 +58,7 @@ Vue.filter("pluralFaq", pluralFaq);
 /**
  * Payment method string formatting
  */
-export const paymentMethodFormat = val => {
+export const paymentMethodFormat = (val) => {
   switch (val) {
     case "ACH":
       return "Bank Account (ACH)";
@@ -79,7 +79,7 @@ Vue.filter("paymentMethodFormat", paymentMethodFormat);
 /**
  * EIN formatter (int to str)
  */
-export const einNumToStr = val => {
+export const einNumToStr = (val) => {
   const word = String(val).split("");
   return word.slice(0, 2).join("") + "-" + word.slice(2).join("");
 };
@@ -88,7 +88,7 @@ Vue.filter("einStrFormat", einNumToStr);
 /**
  * Function to calculate days left
  */
-export const timeDistance = val => {
+export const timeDistance = (val) => {
   return formatDistance(new Date(), new Date(`${val} 23:59:59`));
 };
 Vue.filter("timeDistance", timeDistance);
@@ -96,13 +96,11 @@ Vue.filter("timeDistance", timeDistance);
 /**
  * Format currency to its abbreviated form
  */
-export const currencyDisplayFormat = val => {
+export const currencyDisplayFormat = (val) => {
   if (parseFloat(val.toString()) === parseFloat(val)) {
-    return numeral(val)
-      .format("($0.0a)")
-      .toUpperCase();
+    return numeral(val).format("($0.0a)").toUpperCase();
   } else {
-    throw TypeError("not a number");
+    throw new TypeError("not a number");
   }
 };
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
@@ -112,8 +110,8 @@ Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
  * raw amount total that's been raised
  * @param {array[object]}
  */
-export const reduceToTotal = items => {
-  const listOfAmounts = items.map(item => item.amount);
+export const reduceToTotal = (items) => {
+  const listOfAmounts = items.map((item) => item.amount);
   return listOfAmounts.reduce((tot, num) => tot + num, 0);
 };
 Vue.filter("reduceToTotal", reduceToTotal);
@@ -124,7 +122,7 @@ Vue.filter("reduceToTotal", reduceToTotal);
  * @param {string} val
  * @returns string
  */
-const firstLetterOnly = val => {
+const firstLetterOnly = (val) => {
   if (val) {
     return val.charAt(0);
   }
@@ -137,7 +135,7 @@ Vue.filter("firstLetterOnly", firstLetterOnly);
  * @param {Date} val
  * @returns date string
  */
-const dateFromSeconds = val => fromUnixTime(val).toLocaleDateString();
+const dateFromSeconds = (val) => fromUnixTime(val).toLocaleDateString();
 Vue.filter("dateFromSeconds", dateFromSeconds);
 
 /**
@@ -145,5 +143,5 @@ Vue.filter("dateFromSeconds", dateFromSeconds);
  * @param {Date} val
  * @returns date string
  */
-const dateFormatLong = val => format(val, "PP");
+const dateFormatLong = (val) => format(val, "PP");
 Vue.filter("dateFormatLong", dateFormatLong);

@@ -4,7 +4,7 @@ import {
   validAchRoutingNumber,
   validCreditCard,
   validEthereumAddress,
-  validAttestations
+  validAttestations,
 } from "../helpers/validators";
 
 export const state = () => ({
@@ -32,7 +32,7 @@ export const state = () => ({
   entityType: null,
   entityEin: null,
   investmentId: null,
-  submitting: false
+  submitting: false,
 });
 
 export const getters = {
@@ -66,7 +66,7 @@ export const getters = {
           number: state.number,
           month: state.expiryMonth,
           year: state.expiryYear,
-          cvv: state.cvv
+          cvv: state.cvv,
         });
       case "CRYPTO":
         return validEthereumAddress(state.address);
@@ -83,13 +83,13 @@ export const getters = {
       state.attestation2,
       state.attestation3,
       state.attestation4,
-      state.attestation5
+      state.attestation5,
     ]);
-  }
+  },
 };
 
 export const mutations = {
-  SET_AGREEMENT_ATTRIBUTE: (state, { prop, val }) => (state[prop] = val)
+  SET_AGREEMENT_ATTRIBUTE: (state, { prop, val }) => (state[prop] = val),
 };
 
 export const actions = {
@@ -120,7 +120,7 @@ export const actions = {
         state.attestation2,
         state.attestation3,
         state.attestation4,
-        state.attestation5
+        state.attestation5,
       ],
       offering_details: state.offering, // typeof {}
       offering_id: state.offering.offering_data.id,
@@ -134,13 +134,13 @@ export const actions = {
       user_first_name: userData.first_name,
       user_last_name: userData.last_name,
       user_avatar: userData.avatar || null,
-      user_tapi_account_id: userData.transact_api_account_id
+      user_tapi_account_id: userData.transact_api_account_id,
     };
 
     if (state.method === "ACH") {
       investmentData.method_details = {
         ach_account: state.account,
-        ach_routing: state.routing
+        ach_routing: state.routing,
       };
     } else if (state.method === "CC") {
       investmentData.method_details = {
@@ -148,11 +148,11 @@ export const actions = {
         cc_number: state.number,
         cc_expiry_month: state.expiryMonth,
         cc_expiry_year: state.expiryYear,
-        cc_cvv: state.cvv
+        cc_cvv: state.cvv,
       };
     } else if (state.method === "CRYPTO") {
       investmentData.method_details = {
-        crypto_address: state.address
+        crypto_address: state.address,
       };
     }
 
@@ -161,12 +161,12 @@ export const actions = {
 
       await commit("SET_AGREEMENT_ATTRIBUTE", {
         prop: "investmentId",
-        val: investmentId
+        val: investmentId,
       });
 
       await invRef.set(investmentData);
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
   },
   async fetchURL({ state, commit }, { auth }) {
@@ -177,7 +177,7 @@ export const actions = {
       offering_details: state.offering,
       user_id: auth.userId,
       investment_amount: state.amount,
-      investment_id: state.investmentId
+      investment_id: state.investmentId,
     };
 
     try {
@@ -185,7 +185,7 @@ export const actions = {
 
       await commit("SET_AGREEMENT_ATTRIBUTE", {
         prop: "url",
-        val: url
+        val: url,
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -194,5 +194,5 @@ export const actions = {
   },
   showOverlay({ commit }, payload) {
     commit("SET_AGREEMENT_ATTRIBUTE", { prop: "submitting", val: payload });
-  }
+  },
 };

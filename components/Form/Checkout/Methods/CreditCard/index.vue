@@ -61,7 +61,7 @@
       </div>
       <div class="col-12 col-md-4">
         <b-form-group label="Expiration Year">
-          <b-form-select :options="years" v-model="expiryYear">
+          <b-form-select v-model="expiryYear" :options="years">
             <template v-slot:first>
               <option :value="null" disabled>-- Please Select --</option>
             </template>
@@ -91,7 +91,7 @@ import BrandIcon from "@/components/Common/BrandIcon";
 export default {
   components: {
     TheMask,
-    BrandIcon
+    BrandIcon,
   },
   computed: {
     determineCreditCard() {
@@ -113,9 +113,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "name",
-          val
+          val,
         });
-      }
+      },
     },
     number: {
       get() {
@@ -124,9 +124,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "number",
-          val
+          val,
         });
-      }
+      },
     },
     expiryMonth: {
       get() {
@@ -135,9 +135,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "expiryMonth",
-          val
+          val,
         });
-      }
+      },
     },
     expiryYear: {
       get() {
@@ -146,9 +146,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "expiryYear",
-          val
+          val,
         });
-      }
+      },
     },
     cvv: {
       get() {
@@ -157,9 +157,9 @@ export default {
       set(val) {
         this.$store.dispatch("agreement/setAttribute", {
           prop: "cvv",
-          val
+          val,
         });
-      }
+      },
     },
     months() {
       return [
@@ -175,7 +175,7 @@ export default {
         { value: "09", text: "September" },
         { value: "10", text: "October" },
         { value: "11", text: "November" },
-        { value: "12", text: "December" }
+        { value: "12", text: "December" },
       ];
     },
     years() {
@@ -187,14 +187,14 @@ export default {
       }
 
       return yearList;
-    }
+    },
   },
   methods: {
     creditCardClasses(cc) {
       const reg = this.determineCreditCard === cc;
       const extra = reg ? "text-success" : "text-muted";
       return `mx-1 fa-lg ${extra}`;
-    }
-  }
+    },
+  },
 };
 </script>

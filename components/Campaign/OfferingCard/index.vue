@@ -233,18 +233,18 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
+      required: true,
     },
     offering: {
       type: Object,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       currentRaise: 0,
-      investmentCount: 0
+      investmentCount: 0,
     };
   },
   computed: {
@@ -261,7 +261,7 @@ export default {
     },
     offeringEnded() {
       return isAfter(new Date(), new Date(this.offering.offering_date_end));
-    }
+    },
   },
   async created() {
     try {
@@ -276,14 +276,14 @@ export default {
       // eslint-disable-next-line
       console.error(error);
     }
-  }
+  },
 };
 </script>
 
 <style scoped>
 .card {
-  -webkit-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
-  -moz-box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
-  box-shadow: 0px 4px 12px 1px rgba(89, 89, 89, 0.1);
+  -webkit-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+  -moz-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+  box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
 }
 </style>

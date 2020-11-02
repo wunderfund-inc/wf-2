@@ -14,10 +14,10 @@ export default {
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
           prop: "entity_name",
-          val
+          val,
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>

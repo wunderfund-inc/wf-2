@@ -7,10 +7,10 @@
           <b-list-group-item
             v-for="(item, index) in sections"
             :key="index"
-            @click="render(item)"
             :active="section === item"
             :class="section === item ? `bg-${color} border-${color}` : ''"
             button
+            @click="render(item)"
           >
             {{ item | properCase }}
           </b-list-group-item>
@@ -118,30 +118,7 @@ export default {
     FormAvatar,
     AccreditationForm,
     InvestmentsTable,
-    SectionPasswordReset
-  },
-  data() {
-    return {
-      section: "profile",
-      sections: ["profile", "accreditation", "investments", "settings"]
-    };
-  },
-  computed: {
-    ...mapState({
-      emailVerified: state => state.auth.emailVerified,
-      isEntity: state => state.profile.is_entity,
-      investments: state => state.investments.investments
-    }),
-    color() {
-      switch (process.env.PLATFORM) {
-        case "WFP":
-          return "success";
-        case "WFH":
-          return "primary";
-        default:
-          return "secondary";
-      }
-    }
+    SectionPasswordReset,
   },
   async asyncData({ store, redirect }) {
     try {
@@ -154,13 +131,36 @@ export default {
 
       await store.dispatch("investments/fetch", userId);
     } catch (error) {
-      throw Error(error);
+      throw new Error(error);
     }
+  },
+  data() {
+    return {
+      section: "profile",
+      sections: ["profile", "accreditation", "investments", "settings"],
+    };
+  },
+  computed: {
+    ...mapState({
+      emailVerified: (state) => state.auth.emailVerified,
+      isEntity: (state) => state.profile.is_entity,
+      investments: (state) => state.investments.investments,
+    }),
+    color() {
+      switch (this.$config.PLATFORM) {
+        case "WFP":
+          return "success";
+        case "WFH":
+          return "primary";
+        default:
+          return "secondary";
+      }
+    },
   },
   methods: {
     render(section) {
       this.section = section;
-    }
-  }
+    },
+  },
 };
 </script>

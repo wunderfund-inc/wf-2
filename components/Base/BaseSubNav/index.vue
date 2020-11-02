@@ -18,12 +18,12 @@ export default {
     links: {
       type: Array,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":
@@ -31,7 +31,7 @@ export default {
         default:
           return "secondary";
       }
-    }
-  }
+    },
+  },
 };
 </script>

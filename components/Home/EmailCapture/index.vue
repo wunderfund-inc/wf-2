@@ -24,9 +24,9 @@
                 />
                 <div class="input-group-append">
                   <button
-                    @click="subscribeUser"
                     :disabled="$v.form.$anyError || submitting"
                     :class="`btn btn-sm btn-${color}`"
+                    @click="subscribeUser"
                   >
                     <span
                       v-if="submitting"
@@ -62,22 +62,22 @@ export default {
   data() {
     return {
       form: {
-        email: ""
+        email: "",
       },
       submitting: false,
-      show: true
+      show: true,
     };
   },
   validations: {
     form: {
       email: {
-        email
-      }
-    }
+        email,
+      },
+    },
   },
   computed: {
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":
@@ -85,7 +85,7 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     validateState(name) {
@@ -105,20 +105,14 @@ export default {
         console.error(error);
         this.error = error;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 $font: "Montserrat", sans-serif;
 $color: #c89f5c;
-
-@mixin button__interaction {
-  background-color: transparent;
-  border: 1px solid #ced4da;
-  color: $color;
-}
 
 .fade-enter-active,
 .fade-leave-active {
@@ -136,7 +130,9 @@ $color: #c89f5c;
 
     &:hover,
     &:focus {
-      @include button__interaction();
+      background-color: transparent;
+      border: 1px solid #ced4da;
+      color: $color;
     }
   }
 }

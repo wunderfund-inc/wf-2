@@ -48,14 +48,14 @@ export default {
         { key: "companyName", label: "Company" },
         { key: "amount", label: "Amount" },
         "method",
-        "actions"
-      ]
+        "actions",
+      ],
     };
   },
   computed: {
     investments() {
       return this.$store.state.investments.investments;
-    }
+    },
   },
   methods: {
     async view(investment) {
@@ -75,7 +75,7 @@ export default {
         }
         window.open(url);
       } catch (error) {
-        throw Error(error);
+        throw new Error(error);
       }
     },
     cancel(investment) {
@@ -88,7 +88,7 @@ export default {
         console.log("cancelling investment...");
         window.location.assign("mailto:taylor@wunderfund.co");
       }
-    }
-  }
+    },
+  },
 };
 </script>

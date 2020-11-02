@@ -31,7 +31,7 @@ async function getLocations(offeringId) {
     .where("offering_id", "==", offeringId)
     .get();
 
-  return snapshot.empty ? [] : snapshot.docs.map(location => location.data());
+  return snapshot.empty ? [] : snapshot.docs.map((location) => location.data());
 }
 
 async function getCompanyLocation(zip) {
@@ -39,7 +39,7 @@ async function getCompanyLocation(zip) {
   const location = await response.json();
   return {
     lat: Number(location.places[0].latitude),
-    lng: Number(location.places[0].longitude)
+    lng: Number(location.places[0].longitude),
   };
 }
 
@@ -48,12 +48,7 @@ export default {
     CampaignContent,
     SectionInvestmentsMap,
     TermsDetails,
-    SectionCancellation
-  },
-  computed: {
-    signedIn() {
-      return !!this.$store.state.auth.email;
-    }
+    SectionCancellation,
   },
   async asyncData({ route, $prismic, store, error }) {
     try {
@@ -83,7 +78,7 @@ export default {
 
       const investmentData = investmentDocs.empty
         ? []
-        : investmentDocs.docs.map(doc => doc.data());
+        : investmentDocs.docs.map((doc) => doc.data());
 
       const zip = "45202";
       const companyLocation = await getCompanyLocation(zip);
@@ -97,16 +92,21 @@ export default {
             ...offeringData,
             ...offeringRef,
             investments: investmentData,
-            metrics: offeringMetrics
-          }
+            metrics: offeringMetrics,
+          },
         ],
         companyLocation,
-        locations
+        locations,
       };
     } catch (e) {
       error({ statusCode: 404, message: "Page not found" });
     }
-  }
+  },
+  computed: {
+    signedIn() {
+      return !!this.$store.state.auth.email;
+    },
+  },
 };
 </script>
 

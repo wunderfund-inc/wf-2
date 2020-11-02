@@ -16,9 +16,9 @@ export default {
     error: {
       type: Object,
       default() {},
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 

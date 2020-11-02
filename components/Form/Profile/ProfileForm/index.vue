@@ -86,14 +86,14 @@ export default {
     InputAddressStreet2,
     InputAddressCity,
     InputAddressState,
-    InputAddressPostal
+    InputAddressPostal,
   },
   computed: {
     isEntity() {
       return this.$store.state.profile.is_entity;
     },
     color() {
-      switch (process.env.PLATFORM) {
+      switch (this.$config.PLATFORM) {
         case "WFP":
           return "success";
         case "WFH":
@@ -101,16 +101,16 @@ export default {
         default:
           return "secondary";
       }
-    }
+    },
   },
   methods: {
     async saveProfile() {
       await this.$store.dispatch("profile/update", {
         userId: this.$store.state.auth.userId,
-        flag: "profile"
+        flag: "profile",
       });
       await window.location.replace("/account");
-    }
-  }
+    },
+  },
 };
 </script>

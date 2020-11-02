@@ -2,27 +2,27 @@ const { join } = require("path");
 const logger = require("consola").withScope("docs/crawler");
 
 // eslint-disable-next-line require-await
-module.exports = async function() {
+module.exports = async function () {
   const isBuild = this.options._build;
 
   if (isBuild) {
     // Add runtime plugin
     this.addPlugin({
-      src: join(__dirname, "plugin.js")
+      src: join(__dirname, "plugin.js"),
     });
   }
 
   // Hook generator to extract routes
   // eslint-disable-next-line require-await
-  this.nuxt.hook("generate:before", async generator => {
+  this.nuxt.hook("generate:before", async (generator) => {
     const routes = {};
 
     // Add hook when a page is generated
-    this.nuxt.hook("vue-renderer:ssr:context", async context => {
+    this.nuxt.hook("vue-renderer:ssr:context", async (context) => {
       routes[context.url] = true;
       context.links = context.links || [];
 
-      const promises = context.links.map(async link => {
+      const promises = context.links.map(async (link) => {
         const route = link
           .replace(/\/+/, "/")
           .replace(/\?.+/, "")

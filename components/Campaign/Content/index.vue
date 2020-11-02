@@ -75,9 +75,7 @@
                 <small>
                   Share with your friends!
                   <a
-                    :href="
-                      `https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`
-                    "
+                    :href="`https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`"
                     target="_blank"
                     class="pl-3 pr-2 text-muted"
                   >
@@ -87,9 +85,7 @@
                     />
                   </a>
                   <a
-                    :href="
-                      `https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`
-                    "
+                    :href="`https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`"
                     target="_blank"
                     class="pl-3 pr-2 text-muted"
                   >
@@ -99,9 +95,7 @@
                     />
                   </a>
                   <a
-                    :href="
-                      `https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`
-                    "
+                    :href="`https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`"
                     target="_blank"
                     class="pl-3 pr-2 text-muted"
                   >
@@ -197,9 +191,7 @@
               <small>
                 Share with your friends!
                 <a
-                  :href="
-                    `https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`
-                  "
+                  :href="`https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
@@ -209,9 +201,7 @@
                   />
                 </a>
                 <a
-                  :href="
-                    `https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`
-                  "
+                  :href="`https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
@@ -221,9 +211,7 @@
                   />
                 </a>
                 <a
-                  :href="
-                    `https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`
-                  "
+                  :href="`https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
@@ -235,7 +223,7 @@
               </small>
             </div>
           </div>
-          <aside style="position: sticky; top: 12px;">
+          <aside style="position: sticky; top: 12px">
             <section-offering-details
               :company-name="content.company_name_short"
               :offering="offerings[0]"
@@ -261,39 +249,39 @@ export default {
     CommentItem,
     CommentForm,
     SectionTestimonial,
-    SectionSlice
+    SectionSlice,
   },
   props: {
     companyId: {
       type: String,
-      required: true
+      required: true,
     },
     content: {
       type: Object,
       default() {},
-      required: true
+      required: true,
     },
     offerings: {
       type: Array,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     ...mapGetters({
-      comments: "company/comments"
+      comments: "company/comments",
     }),
     signedIn() {
       return !!this.$store.state.auth.email;
     },
     testimonials() {
       const offering = this.offerings[0];
-      const investments = offering.investments.filter(i => {
+      const investments = offering.investments.filter((i) => {
         const id = i.investment_agreement_id;
         return id && id.length > 0;
       });
       return investments;
-    }
+    },
   },
   methods: {
     iconIt(platform) {
@@ -324,8 +312,8 @@ export default {
           return url;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

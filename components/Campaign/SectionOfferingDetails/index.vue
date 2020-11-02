@@ -248,13 +248,13 @@ export default {
   props: {
     companyName: {
       type: String,
-      required: true
+      required: true,
     },
     offering: {
       type: Object,
       default() {},
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
     signedIn() {
@@ -276,7 +276,7 @@ export default {
     },
     investmentsCount() {
       return this.metrics.total_investments;
-    }
-  }
+    },
+  },
 };
 </script>

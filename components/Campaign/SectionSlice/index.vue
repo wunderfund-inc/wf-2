@@ -114,8 +114,8 @@ export default {
     content: {
       type: Object,
       default() {},
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>

@@ -19,28 +19,28 @@
             class="row d-flex justify-content-around"
           >
             <a href="mailto:taylor@wunderfund.co" class="pr-2 text-light">
-              <solid-icon class="fa-2x" i="envelope-square" />
+              <SolidIcon class="fa-2x" i="envelope-square" />
             </a>
             <a
               href="https://www.facebook.com/thewunderfund"
               class="px-2 text-light"
             >
-              <brand-icon class="fa-2x" i="facebook-square" />
+              <BrandIcon class="fa-2x" i="facebook-square" />
             </a>
             <a
               href="https://www.linkedin.com/company/wunderfund"
               class="px-2 text-light"
             >
-              <brand-icon class="fa-2x" i="linkedin" />
+              <BrandIcon class="fa-2x" i="linkedin" />
             </a>
             <a href="https://twitter.com/thewunderfund" class="px-2 text-light">
-              <brand-icon class="fa-2x" i="twitter-square" />
+              <BrandIcon class="fa-2x" i="twitter-square" />
             </a>
             <a
               href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
               class="px-2 text-light"
             >
-              <brand-icon class="fa-2x" i="youtube-square" />
+              <BrandIcon class="fa-2x" i="youtube-square" />
             </a>
           </div>
           <div v-else class="row d-flex justify-content-around">
@@ -94,21 +94,10 @@
 </template>
 
 <script>
-import PlatformLink from "@/components/Platform/Link";
-import PlatformLogo from "@/components/Platform/Logo";
-import SolidIcon from "@/components/Common/SolidIcon";
-import BrandIcon from "@/components/Common/BrandIcon";
-
 export default {
-  components: {
-    PlatformLink,
-    PlatformLogo,
-    SolidIcon,
-    BrandIcon
-  },
   computed: {
     platform() {
-      return process.env.PLATFORM;
+      return this.$config.PLATFORM;
     },
     platformImgSrc() {
       if (this.platform) {
@@ -125,8 +114,8 @@ export default {
         default:
           return "#6c757d";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
