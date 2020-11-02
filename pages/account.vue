@@ -18,6 +18,15 @@
       </aside>
 
       <article class="col-12 col-md-9 mb-3">
+        <div class="row mb-2">
+          <div class="col">
+            <b-alert show dismissible fade>
+              Thank you for investing! You can find a copy of your investment
+              agreement in your inbox. You can also find a copy in your account
+              under the Investments menu.
+            </b-alert>
+          </div>
+        </div>
         <template v-if="section === 'profile'">
           <div class="row mb-4">
             <div class="col">
@@ -120,7 +129,7 @@ export default {
     InvestmentsTable,
     SectionPasswordReset,
   },
-  async asyncData({ store, redirect }) {
+  async asyncData({ store, redirect, route }) {
     try {
       const { userId } = store.state.auth;
       await store.dispatch("profile/fetch", userId);
@@ -130,6 +139,11 @@ export default {
       }
 
       await store.dispatch("investments/fetch", userId);
+
+      if (route.params.event) {
+        return { investmentMade: true };
+      }
+      return;
     } catch (error) {
       throw new Error(error);
     }
