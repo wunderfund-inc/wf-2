@@ -18,7 +18,7 @@
       </aside>
 
       <article class="col-12 col-md-9 mb-3">
-        <div class="row mb-2">
+        <div v-if="investmentMade" class="row mb-2">
           <div class="col">
             <b-alert show dismissible fade>
               Thank you for investing! You can find a copy of your investment
@@ -140,10 +140,7 @@ export default {
 
       await store.dispatch("investments/fetch", userId);
 
-      if (route.params.event) {
-        return { investmentMade: true };
-      }
-      return;
+      return { investmentMade: !!route.params.event };
     } catch (error) {
       throw new Error(error);
     }
