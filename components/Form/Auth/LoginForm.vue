@@ -61,7 +61,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { auth, verifyEmail } from "@/plugins/firebase";
+import { auth } from "@/plugins/firebase";
 
 export default {
   data() {
@@ -82,8 +82,11 @@ export default {
     async resendLink() {
       try {
         const { email, password } = this.form;
-        await auth.signInWithEmailAndPassword(email, password);
-        await verifyEmail();
+        const { user } = await auth.signInWithEmailAndPassword(email, password);
+        await user.sendEmailVerification({
+          url: this.$config.BASE_URL,
+          handleCodeInApp: true,
+        });
         await auth.signOut();
         this.linkResent = true;
       } catch (error) {

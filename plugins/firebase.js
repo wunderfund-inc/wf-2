@@ -2,19 +2,23 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
-import { firebaseConfig, actionCodeSettings } from "../config/firebase.config";
 
 if (!firebase.apps.length) {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBOYoxaEM-K8MLGuzPQ68z3rR2d7Hb1v6U",
+    authDomain: "wunderfund-server.firebaseapp.com",
+    databaseURL: "https://wunderfund-server.firebaseio.com",
+    projectId: "wunderfund-server",
+    storageBucket: "wunderfund-server.appspot.com",
+    messagingSenderId: "222886391134",
+    appId: "1:222886391134:web:82469ba2bcaf85037f33cf",
+  };
   firebase.initializeApp(firebaseConfig);
 }
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-
-export function verifyEmail() {
-  auth.currentUser.sendEmailVerification(actionCodeSettings);
-}
 
 export async function uploadImage(refStr, file) {
   try {

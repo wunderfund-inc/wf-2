@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 import {
   auth,
-  verifyEmail,
   FacebookAuthProvider,
   GoogleAuthProvider,
   // TwitterAuthProvider
@@ -18,15 +17,6 @@ export const mutations = {
 };
 
 export const actions = {
-  async createUser({ dispatch }, { email, password }) {
-    try {
-      await auth.createUserWithEmailAndPassword(email, password);
-      await verifyEmail();
-      await dispatch("logout");
-    } catch (error) {
-      throw new Error(error);
-    }
-  },
   async signInWithSocialMedia({ dispatch }, brand) {
     try {
       let provider;

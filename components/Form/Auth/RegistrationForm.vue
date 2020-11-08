@@ -88,6 +88,8 @@ import { mapGetters } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
+import { auth } from "@/plugins/firebase";
+
 export default {
   mixins: [validationMixin],
   data() {
@@ -129,10 +131,16 @@ export default {
       try {
         this.error = null;
         await this.$store.dispatch("toggleOverlay", true);
-        await this.$store.dispatch("auth/createUser", {
-          email: this.form.email,
-          password: this.form.password,
+        const { email, password } = this.form;
+        const { user } = await auth.createUserWithEmailAndPassword(
+          email,
+          password
+        );
+        await user.sendEmailVerification({
+          url: this.$config.BASE_URL,
+          handleCodeInApp: true,
         });
+        await auth.signOut();
         await this.$store.dispatch("toggleOverlay", false);
         this.showAlert = true;
       } catch (error) {
