@@ -129,7 +129,7 @@ export default {
     InvestmentsTable,
     SectionPasswordReset,
   },
-  async asyncData({ store, redirect, route }) {
+  async asyncData({ store, redirect, query }) {
     try {
       const { userId } = store.state.auth;
       await store.dispatch("profile/fetch", userId);
@@ -140,7 +140,7 @@ export default {
 
       await store.dispatch("investments/fetch", userId);
 
-      return { investmentMade: !!route.params.event };
+      return { investmentMade: !!query.event };
     } catch (error) {
       throw new Error(error);
     }
