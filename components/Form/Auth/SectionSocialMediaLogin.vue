@@ -24,10 +24,10 @@ export default {
   data() {
     return {
       links: [
-        {
-          name: "facebook",
-          color: "#4267b2",
-        },
+        // {
+        //   name: "facebook",
+        //   color: "#4267b2",
+        // },
         {
           name: "google",
           color: "#dd4b39",

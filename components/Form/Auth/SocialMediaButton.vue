@@ -4,21 +4,14 @@
     class="btn btn-block btn-lg"
     @click="signIn"
   >
-    <BrandIcon
-      :i="name === 'facebook' ? 'facebook-f' : name"
-      class="d-none d-md-inline text-light"
-    />
-    <span class="d-inline d-md-none text-light">{{ name | properCase }}</span>
+    <span class="d-inline text-light">
+      Sign in with {{ name | properCase }}
+    </span>
   </button>
 </template>
 
 <script>
-import BrandIcon from "@/components/Common/BrandIcon";
-
 export default {
-  components: {
-    BrandIcon,
-  },
   props: {
     name: {
       type: String,
