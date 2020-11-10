@@ -23,6 +23,9 @@ export const state = () => ({
 });
 
 export const getters = {
+  isEntity(state) {
+    return state.is_entity;
+  },
   spendPoolCurrent(state) {
     const ai = state.accreditation_ai;
     const nw = state.accreditation_nw;

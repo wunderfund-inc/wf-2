@@ -2,17 +2,52 @@
   <div class="card bg-light mb-3">
     <div class="container my-3">
       <form @submit.prevent="submitAttestationForm">
-        <b-form-checkbox v-model="isEntity" switch class="py-2">
-          I'm using this account to invest on behalf an entity.
-        </b-form-checkbox>
-
-        <template v-if="isEntity">
-          <small class="text-muted">
-            Keep in mind, we'll ask for some more information (EIN,
-            accreditation documents, etc.) about your entity before you can
-            invest.
-          </small>
-        </template>
+        <b-form-group label="What kind of account is this?">
+          <b-form-radio-group v-model="isEntity" name="account-type">
+            <div class="form-row">
+              <div class="col-12 col-md-6">
+                <label
+                  :class="!isEntity ? 'border border-primary' : ''"
+                  class="card py-2 pl-1 mb-md-0"
+                >
+                  <div class="container">
+                    <div class="form-row form-check-inline">
+                      <b-form-radio :value="false" class="form-check-input">
+                        <span class="form-check-label">Individual</span>
+                        <br />
+                        <small class="text-muted"
+                          >Requires:
+                          <br />
+                          - Date of Birth</small
+                        >
+                      </b-form-radio>
+                    </div>
+                  </div>
+                </label>
+              </div>
+              <div class="col-12 col-md-6">
+                <label
+                  :class="isEntity ? 'border border-primary' : ''"
+                  class="card py-2 pl-1 mb-md-0"
+                >
+                  <div class="container">
+                    <div class="form-row form-check-inline">
+                      <b-form-radio :value="true" class="form-check-input">
+                        <span class="form-check-label">Entity</span>
+                        <br />
+                        <small class="text-muted m-0">
+                          Requires:
+                          <br />
+                          - Employer ID Number
+                        </small>
+                      </b-form-radio>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </b-form-radio-group>
+        </b-form-group>
 
         <b-form-group
           label="Also, you must acknowledge the following:"
@@ -101,7 +136,7 @@ export default {
   computed: {
     isEntity: {
       get() {
-        return this.$store.state.profile.isEntity;
+        return this.$store.getters["profile/isEntity"];
       },
       set(val) {
         this.$store.dispatch("profile/setAttribute", {
