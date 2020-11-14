@@ -24,15 +24,13 @@
       {{ data.item.method | paymentMethodFormat }}
     </template>
 
-    <template v-slot:cell(actions)="data">
-      <b-dropdown size="sm" text="Choose">
-        <b-dropdown-item @click="view(data)">
-          Download Agreement
-        </b-dropdown-item>
-        <b-dropdown-item @click="cancel(data)">
-          Cancel Investment
-        </b-dropdown-item>
-      </b-dropdown>
+    <template v-slot:cell(download)="data">
+      <div class="text-center">
+        <b-button size="sm" :disabled="data.item.loading" @click="view(data)">
+          <b-spinner v-if="data.item.loading" small />
+          <span v-else>Download</span>
+        </b-button>
+      </div>
     </template>
   </b-table>
 </template>
@@ -48,20 +46,25 @@ export default {
         { key: "companyName", label: "Company" },
         { key: "amount", label: "Amount" },
         "method",
-        "actions",
+        { key: "download", label: "Download Agreement" },
       ],
+      error: null,
     };
   },
   computed: {
     investments() {
-      return this.$store.state.investments.investments;
+      return this.$store.state.investments.investments.map((el) => {
+        return { ...el, loading: false };
+      });
     },
   },
   methods: {
     async view(investment) {
       try {
+        investment.item.loading = true;
         let url;
         const tradeId = investment.item.tradeId;
+
         if (tradeId) {
           const endpoint =
             "https://us-central1-wunderfund-server.cloudfunctions.net/documentOnRequest";
@@ -75,7 +78,9 @@ export default {
         }
         window.open(url);
       } catch (error) {
-        throw new Error(error);
+        this.error = error;
+      } finally {
+        investment.item.loading = false;
       }
     },
     cancel(investment) {

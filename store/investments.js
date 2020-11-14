@@ -44,36 +44,25 @@ export const actions = {
       const investments = docRefs.docs
         .map((investment) => {
           const data = investment.data();
-          if (data.investment_agreement_id) {
-            const {
-              uid,
-              company_name: cn,
-              date_created: dc,
-              investment_amount: ia,
-              investment_amount_type: iat,
-              investment_method: im,
-              investment_agreement_id: iai,
-              tapi_trade_id: ttId,
-              offering_details: offeringDetails,
-            } = data;
+          const {
+            uid,
+            company_name: cn,
+            date_created: dc,
+            investment_amount: ia,
+            investment_amount_type: iat,
+            investment_method: im,
+            tapi_trade_id: ttId,
+          } = data;
 
-            const pricePerShare =
-              offeringDetails.security_type === "Equity"
-                ? offeringDetails.price_per_share
-                : 0;
-
-            return {
-              uid,
-              companyName: cn,
-              purchaseDate: dc,
-              amount: ia,
-              type: iat,
-              method: im,
-              agreementId: iai,
-              tradeId: ttId,
-              pricePerShare,
-            };
-          }
+          return {
+            uid,
+            companyName: cn,
+            purchaseDate: dc,
+            amount: ia,
+            type: iat,
+            method: im,
+            tradeId: ttId,
+          };
         })
         .filter((n) => n);
       await commit("SET_INVESTMENTS", investments);
