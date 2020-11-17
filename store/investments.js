@@ -52,6 +52,7 @@ export const actions = {
             investment_amount_type: iat,
             investment_method: im,
             tapi_trade_id: ttId,
+            offering_details: od,
           } = data;
 
           return {
@@ -62,6 +63,7 @@ export const actions = {
             type: iat,
             method: im,
             tradeId: ttId,
+            pricePerShare: od.price_per_share || 1,
           };
         })
         .filter((n) => n);
