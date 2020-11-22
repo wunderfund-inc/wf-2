@@ -54,7 +54,6 @@ export const actions = {
             tapi_trade_id: ttId,
             offering_details: od,
           } = data;
-
           return {
             uid,
             companyName: cn,
@@ -63,7 +62,11 @@ export const actions = {
             type: iat,
             method: im,
             tradeId: ttId,
-            pricePerShare: od.price_per_share || 1,
+            pricePerShare: od
+              ? od.price_per_share
+                ? od.price_per_share
+                : 1
+              : 1,
           };
         })
         .filter((n) => n);
