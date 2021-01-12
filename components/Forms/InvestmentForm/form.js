@@ -19,7 +19,7 @@ export function canSpend(toSpend, spendCapacity) {
     : success;
 }
 
-export function validateSelection(
+export function validateAmount(
   shares,
   minShares,
   pricePerShare,
@@ -38,6 +38,18 @@ export function validateSelection(
   return canSpend(shares * pricePerShare, spendCapacity);
 }
 
+export function validateMethodDetails(method, methodDetails) {
+  if (["CHECK", "WIRE"].includes(method)) {
+    return { valid: true };
+  } else if (method === "ACH") {
+    return validateACH(methodDetails);
+  } else if (method === "CC") {
+    return validateCreditCard(methodDetails);
+  } else {
+    return { valid: false, message: "Invalid payment method." };
+  }
+}
+
 function calculateSpendPool(ai, nw) {
   return 2200;
 }
@@ -51,12 +63,15 @@ export function isFormValid(form) {
 }
 
 export function investmentForm(user, offering, form) {
-  const { annualIncome, netWorth } = user;
+  const { annualIncome, netWorth, isEntity } = user;
   const { pricePerShare, minShares } = offering;
-  const { amount } = form;
+  const { amount, method, methodDetails, attestations } = form;
   const spendPool = calculateSpendPool(annualIncome, netWorth);
   return {
-    amount: validateSelection(amount, minShares, pricePerShare, spendPool),
+    amount: validateAmount(amount, minShares, pricePerShare, spendPool),
+    method: amongst(method),
+    methodDetails: validateMethodDetails(method, methodDetails),
+    attestations: allAgreed(attestations, isEntity),
   };
 }
 
@@ -184,4 +199,34 @@ export function validateCardNumber(number) {
   else if (mcRegex.test(number)) return success;
   else if (diRegex.test(number)) return success;
   return error;
+}
+
+export function validateACH(methodDetails) {
+  const { account, routing } = methodDetails;
+  const validAccountNumber = validateAchAccount(account);
+  const validRoutingNumber = validateAchRouting(routing);
+  if (!validAccountNumber.valid || !validRoutingNumber.valid) {
+    return { valid: false, message: "Invalid ACH credentials." };
+  }
+  return { valid: true };
+}
+
+export function validateCreditCard(methodDetails) {
+  const { name, number, month, year, cvv } = methodDetails;
+  const validName = validateCardName(name);
+  const validNumber = validateCardNumber(number);
+  const validMonth = validateExpiryMonth(month);
+  const validYear = validateExpiryYear(year);
+  const validCVV = validateCVV(cvv);
+
+  if (
+    !validName.valid ||
+    !validNumber.valid ||
+    !validMonth.valid ||
+    !validYear.valid ||
+    !validCVV.valid
+  ) {
+    return { valid: false, message: "Invalid Credit Card credentials." };
+  }
+  return { valid: true };
 }
