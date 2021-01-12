@@ -3,10 +3,12 @@ import {
   success,
   required,
   minimum,
+  minimumNonEquity,
   canSpend,
-  validateAmount,
+  validateEquityAmount,
+  validateNonEquityAmount,
   isFormValid,
-  // investmentForm,
+  investmentForm,
   amongst,
   allAgreed,
   validateAchAccount,
@@ -59,6 +61,23 @@ describe("Investment Form", () => {
 
     it("is valid when more than minimum shares", () => {
       expect(minimum(2, 1)).toEqual(success);
+    });
+  });
+
+  describe("Minimum raw dollar amount", () => {
+    it("is invalid if less than minimum amount necessary", () => {
+      expect(minimumNonEquity(99, 100)).toEqual({
+        valid: false,
+        message: `Must be at least $100 minimum.`,
+      });
+    });
+
+    it("is valid when amount and minimum amount is equal", () => {
+      expect(minimumNonEquity(100, 100)).toEqual(success);
+    });
+
+    it("is valid when greater than minimum amount", () => {
+      expect(minimumNonEquity(101, 100)).toEqual(success);
     });
   });
 
@@ -268,48 +287,77 @@ describe("Investment Form", () => {
   });
 
   describe("Validate combined parameters", () => {
-    it("invalid amounts", () => {
-      expect(validateAmount(null, 1, 100, 2200)).toEqual({
+    it("invalid equity investments", () => {
+      expect(validateEquityAmount(null, 1, 100, 2200)).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateAmount(undefined, 1, 100, 2200)).toEqual({
+      expect(validateEquityAmount(undefined, 1, 100, 2200)).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateAmount(0, 0, 100, 2200)).toEqual({
+      expect(validateEquityAmount(0, 0, 100, 2200)).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateAmount(100, 400, 100, 2200)).toEqual({
+      expect(validateEquityAmount(100, 400, 100, 2200)).toEqual({
         valid: false,
         message: "Must be at least 400 shares.",
       });
 
-      expect(validateAmount(1, 1, 1, 0)).toEqual({
+      expect(validateEquityAmount(1, 1, 1, 0)).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
 
-      expect(validateAmount(23, 1, 100, 2200)).toEqual({
+      expect(validateEquityAmount(23, 1, 100, 2200)).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
 
-      expect(validateAmount(1, 1, 100, 0)).toEqual({
+      expect(validateEquityAmount(1, 1, 100, 0)).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
     });
 
-    it("valid amounts", () => {
-      expect(validateAmount(1, 1, 100, 2200)).toEqual({ valid: true });
-      expect(validateAmount(1, 1, 100, 100)).toEqual({ valid: true });
-      expect(validateAmount(22, 1, 100, 2200)).toEqual({ valid: true });
-      expect(validateAmount(21, 1, 100, 2200)).toEqual({ valid: true });
+    it("valid equity investments", () => {
+      expect(validateEquityAmount(1, 1, 100, 2200)).toEqual({ valid: true });
+      expect(validateEquityAmount(1, 1, 100, 100)).toEqual({ valid: true });
+      expect(validateEquityAmount(22, 1, 100, 2200)).toEqual({ valid: true });
+      expect(validateEquityAmount(21, 1, 100, 2200)).toEqual({ valid: true });
+    });
+
+    it("invalid non-equity investments", () => {
+      expect(validateNonEquityAmount(null, 100, 2200)).toEqual({
+        valid: false,
+        message: "Required.",
+      });
+      expect(validateNonEquityAmount(undefined, 100, 2200)).toEqual({
+        valid: false,
+        message: "Required.",
+      });
+      expect(validateNonEquityAmount(0, 100, 2200)).toEqual({
+        valid: false,
+        message: "Required.",
+      });
+      expect(validateNonEquityAmount(99, 100, 2200)).toEqual({
+        valid: false,
+        message: "Must be at least $100 minimum.",
+      });
+      expect(validateNonEquityAmount(2201, 100, 2200)).toEqual({
+        valid: false,
+        message: "Cannot invest more than allowed.",
+      });
+    });
+
+    it("valid non-equity investments", () => {
+      expect(validateNonEquityAmount(100, 100, 2200)).toEqual({ valid: true });
+      expect(validateNonEquityAmount(101, 100, 2200)).toEqual({ valid: true });
+      expect(validateNonEquityAmount(2200, 100, 2200)).toEqual({ valid: true });
     });
 
     describe("method details (combined inputs)", () => {
@@ -412,92 +460,185 @@ describe("Investment Form", () => {
     });
   });
 
-  describe("Validate form", () => {
-    it("returns true when all parameters are valid", () => {
-      const formState = {
-        amount: { valid: true },
-        method: { valid: true },
-        methodDetails: { valid: true },
-        attestations: { valid: true },
-      };
-      expect(isFormValid(formState)).toBe(true);
+  describe("Validate form state", () => {
+    const formState = {
+      amount: { valid: true },
+      method: { valid: true },
+      methodDetails: { valid: true },
+      attestations: { valid: true },
+    };
+
+    it("invalid form state", () => {
+      expect(
+        isFormValid({
+          ...formState,
+          amount: { valid: false },
+        })
+      ).toBe(false);
+      expect(
+        isFormValid({
+          ...formState,
+          method: { valid: false },
+        })
+      ).toBe(false);
+      expect(
+        isFormValid({
+          ...formState,
+          methodDetails: { valid: false },
+        })
+      ).toBe(false);
+      expect(
+        isFormValid({
+          ...formState,
+          attestations: { valid: false },
+        })
+      ).toBe(false);
     });
 
-    it("returns false when some/all parameters are invalid", () => {
-      const formState1 = {
-        amount: { valid: false },
-        method: { valid: true },
-        methodDetails: { valid: true },
-        attestations: { valid: true },
-      };
-      const formState2 = {
-        amount: { valid: true },
-        method: { valid: false },
-        methodDetails: { valid: true },
-        attestations: { valid: true },
-      };
-      const formState3 = {
-        amount: { valid: true },
-        method: { valid: true },
-        methodDetails: { valid: false },
-        attestations: { valid: true },
-      };
-      const formState4 = {
-        amount: { valid: true },
-        method: { valid: true },
-        methodDetails: { valid: true },
-        attestations: { valid: false },
-      };
-      expect(isFormValid(formState1)).toBe(false);
-      expect(isFormValid(formState2)).toBe(false);
-      expect(isFormValid(formState3)).toBe(false);
-      expect(isFormValid(formState4)).toBe(false);
+    it("valid form state", () => {
+      expect(isFormValid(formState)).toBe(true);
     });
   });
 
-  // describe("Form Logic", () => {
-  //   const user = {
-  //     annualIncome: 0,
-  //     netWorth: 0,
-  //   };
-  //   const offering = {
-  //     pricePerShare: 100,
-  //     minShares: 1,
-  //   };
-  //   const investment = {
-  //     amount: 1,
-  //   };
+  describe("Form Logic", () => {
+    const user = {
+      annualIncome: 0,
+      netWorth: 0,
+      isEntity: false,
+    };
 
-  //   it("is valid when using valid investment amount", () => {
-  //     const form = investmentForm(user, offering, investment);
-  //     expect(form).toEqual({ amount: { valid: true } });
-  //   });
+    const offering = {
+      securityType: "Equity",
+      pricePerShare: 100,
+      minShares: 1,
+    };
 
-  //   it("is invalid when overcommitting", () => {
-  //     const form = investmentForm(user, offering, {
-  //       ...investment,
-  //       amount: 23,
-  //     });
-  //     expect(form).toEqual({
-  //       amount: {
-  //         valid: false,
-  //         message: "Cannot invest more than allowed.",
-  //       },
-  //     });
-  //   });
+    const investment = {
+      amount: 1,
+      method: "CHECK",
+      methodDetails: null,
+      attestations: ["asdf", "asdf", "asdf", "asdf"],
+    };
 
-  //   it("is invalid when amount is invalid", () => {
-  //     const form = investmentForm(
-  //       user,
-  //       { pricePerShare: 100, minShares: 10 },
-  //       { ...investment, amount: 1 }
-  //     );
-  //     expect(form).toEqual({
-  //       amount: {
-  //         valid: false,
-  //         message: "Must be at least 10 shares.",
-  //       },
-  //     });
-  //   });
-  // });
+    const formState = {
+      amount: { valid: true },
+      method: { valid: true },
+      methodDetails: { valid: true },
+      attestations: { valid: true },
+    };
+
+    it("valid investment form (non-entity)", () => {
+      const form = investmentForm(user, offering, investment);
+      expect(form).toEqual(formState);
+    });
+
+    it("valid investment form (entity-based)", () => {
+      const form = investmentForm({ ...user, isEntity: true }, offering, {
+        ...investment,
+        attestations: ["asdf", "asdf", "asdf", "asdf", "asdf"],
+      });
+      expect(form).toEqual(formState);
+    });
+
+    it("invalid number of attestations (entity-based)", () => {
+      const form = investmentForm(
+        { ...user, isEntity: true },
+        offering,
+        investment
+      );
+      expect(form).toEqual({
+        ...formState,
+        attestations: {
+          valid: false,
+          message: "You must agree to all attestations before investing.",
+        },
+      });
+    });
+
+    it("invalid investment amount (equity-based)", () => {
+      const form = investmentForm(
+        user,
+        {
+          ...offering,
+          minShares: 10,
+        },
+        investment
+      );
+      expect(form).toEqual({
+        ...formState,
+        amount: {
+          valid: false,
+          message: "Must be at least 10 shares.",
+        },
+      });
+    });
+
+    it("invalid Payment Method", () => {
+      const form = investmentForm(user, offering, {
+        ...investment,
+        method: "asdf",
+      });
+      expect(form).toEqual({
+        ...formState,
+        method: {
+          valid: false,
+          message: "Not one of the choices.",
+        },
+        methodDetails: {
+          valid: false,
+          message: "Invalid payment method.",
+        },
+      });
+    });
+
+    it("invalid ACH credentials", () => {
+      const form = investmentForm(user, offering, {
+        ...investment,
+        method: "ACH",
+      });
+      expect(form).toEqual({
+        ...formState,
+        methodDetails: {
+          valid: false,
+          message: "Invalid ACH credentials.",
+        },
+      });
+    });
+
+    it("valid investment form (non-equity-based)", () => {
+      const form = investmentForm(
+        user,
+        {
+          securityType: "SAFE Note", // or SAFT Note or Promissory Note or etc.
+          minimumInvestmentAmount: 100,
+        },
+        {
+          ...investment,
+          amount: 100,
+        }
+      );
+      expect(form).toEqual(formState);
+    });
+
+    it("invalid investment form (non-equity-based)", () => {
+      const form = investmentForm(
+        user,
+        {
+          securityType: "SAFE Note", // or SAFT Note or Promissory Note or etc.
+          minimumInvestmentAmount: 100,
+        },
+        {
+          ...investment,
+          amount: 99,
+        }
+      );
+      expect(form).toEqual({
+        ...formState,
+        amount: {
+          valid: false,
+          message: "Must be at least $100 minimum.",
+        },
+      });
+    });
+  });
 });

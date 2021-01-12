@@ -13,13 +13,19 @@ export function minimum(shares, minShares) {
     : success;
 }
 
+export function minimumNonEquity(amount, minAmount) {
+  return amount < minAmount
+    ? validationError(`Must be at least $${minAmount} minimum.`)
+    : success;
+}
+
 export function canSpend(toSpend, spendCapacity) {
   return spendCapacity - toSpend < 0
     ? validationError("Cannot invest more than allowed.")
     : success;
 }
 
-export function validateAmount(
+export function validateEquityAmount(
   shares,
   minShares,
   pricePerShare,
@@ -36,6 +42,20 @@ export function validateAmount(
   }
 
   return canSpend(shares * pricePerShare, spendCapacity);
+}
+
+export function validateNonEquityAmount(amount, minAmount, spendCapacity) {
+  const result = required(amount);
+  if (!result.valid) {
+    return result;
+  }
+
+  const result2 = minimumNonEquity(amount, minAmount);
+  if (!result2.valid) {
+    return result2;
+  }
+
+  return canSpend(amount, spendCapacity);
 }
 
 export function validateMethodDetails(method, methodDetails) {
@@ -64,15 +84,34 @@ export function isFormValid(form) {
 
 export function investmentForm(user, offering, form) {
   const { annualIncome, netWorth, isEntity } = user;
-  const { pricePerShare, minShares } = offering;
+  const { securityType } = offering;
   const { amount, method, methodDetails, attestations } = form;
   const spendPool = calculateSpendPool(annualIncome, netWorth);
-  return {
-    amount: validateAmount(amount, minShares, pricePerShare, spendPool),
-    method: amongst(method),
-    methodDetails: validateMethodDetails(method, methodDetails),
-    attestations: allAgreed(attestations, isEntity),
-  };
+
+  if (securityType === "Equity") {
+    return {
+      amount: validateEquityAmount(
+        amount,
+        offering.minShares,
+        offering.pricePerShare,
+        spendPool
+      ),
+      method: amongst(method),
+      methodDetails: validateMethodDetails(method, methodDetails),
+      attestations: allAgreed(attestations, isEntity),
+    };
+  } else {
+    return {
+      amount: validateNonEquityAmount(
+        amount,
+        offering.minimumInvestmentAmount,
+        spendPool
+      ),
+      method: amongst(method),
+      methodDetails: validateMethodDetails(method, methodDetails),
+      attestations: allAgreed(attestations, isEntity),
+    };
+  }
 }
 
 export function amongst(method) {
@@ -99,7 +138,7 @@ export function allAgreed(attestations = [], isEntity = false) {
 }
 
 export function validateAchAccount(account) {
-  if (account.length < 3 || account.length > 17) {
+  if (!account || account.length < 3 || account.length > 17) {
     return validationError("Invalid account number.");
   }
 
@@ -123,7 +162,7 @@ export function validateAchRouting(routing) {
 
   const checksumMod = checksumTotal % 10;
 
-  if (checksumMod !== 0 || routing.length !== 9) {
+  if (!routing || checksumMod !== 0 || routing.length !== 9) {
     return validationError("Invalid routing number.");
   }
 
@@ -202,6 +241,9 @@ export function validateCardNumber(number) {
 }
 
 export function validateACH(methodDetails) {
+  if (!methodDetails) {
+    return { valid: false, message: "Invalid ACH credentials." };
+  }
   const { account, routing } = methodDetails;
   const validAccountNumber = validateAchAccount(account);
   const validRoutingNumber = validateAchRouting(routing);
