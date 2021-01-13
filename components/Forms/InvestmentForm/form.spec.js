@@ -18,6 +18,7 @@ import {
   validateExpiryMonth,
   validateExpiryYear,
   validateCVV,
+  validateExpiry,
   validateMethodDetails,
   validateCreditCard,
 } from "./form";
@@ -118,7 +119,8 @@ describe("Investment Form", () => {
     describe("ACH", () => {
       it("invalid routing numbers", () => {
         const error = validationError("Invalid routing number.");
-        expect(validateAchRouting("")).toEqual(error);
+        expect(validateAchRouting(null)).toEqual({ valid: false });
+        expect(validateAchRouting("")).toEqual({ valid: false });
         expect(validateAchRouting("110000009")).toEqual(error);
       });
 
@@ -259,6 +261,17 @@ describe("Investment Form", () => {
       it("valid CVV", () => {
         expect(validateCVV("123")).toEqual(success);
       });
+
+      it("invalid expiry combination (month and year)", () => {
+        expect(validateExpiry(12, 20)).toEqual({
+          valid: false,
+          message: "Expired card.",
+        });
+      });
+
+      it("valid expiry combination (month and year)", () => {
+        expect(validateExpiry(12, 99)).toEqual({ valid: true });
+      });
     });
   });
 
@@ -271,7 +284,7 @@ describe("Investment Form", () => {
       const attestations = ["attestation 1", "attestation 2", "attestation 3"];
       expect(allAgreed(attestations)).toEqual(error);
       attestations.push("attestation 4");
-      expect(allAgreed(attestations, true)).toEqual(error);
+      expect(allAgreed(attestations)).toEqual(error);
       const attestations2 = [null, "asdf", "asdf", "asdf"];
       expect(allAgreed(attestations2)).toEqual(error);
       const attestations3 = [undefined, "asdf", "asdf", "asdf"];
@@ -279,76 +292,103 @@ describe("Investment Form", () => {
     });
 
     it("is valid if every checkbox is checked", () => {
-      const attestations = ["att 1", "att 2", "att 3", "att 4"];
+      const attestations = ["att 1", "att 2", "att 3", "att 4", "att 5"];
       expect(allAgreed(attestations)).toEqual(success);
-      attestations.push("att 5");
-      expect(allAgreed(attestations, true)).toEqual(success);
     });
   });
 
   describe("Validate combined parameters", () => {
     it("invalid equity investments", () => {
-      expect(validateEquityAmount(null, 1, 100, 2200)).toEqual({
+      expect(validateEquityAmount(null, 1, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateEquityAmount(undefined, 1, 100, 2200)).toEqual({
+      expect(validateEquityAmount(undefined, 1, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateEquityAmount(0, 0, 100, 2200)).toEqual({
+      expect(validateEquityAmount(0, 0, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
 
-      expect(validateEquityAmount(100, 400, 100, 2200)).toEqual({
+      expect(validateEquityAmount(100, 400, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Must be at least 400 shares.",
       });
 
-      expect(validateEquityAmount(1, 1, 1, 0)).toEqual({
+      expect(validateEquityAmount(1, 1, 1, 0, "WIRE")).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
 
-      expect(validateEquityAmount(23, 1, 100, 2200)).toEqual({
+      expect(validateEquityAmount(23, 1, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
 
-      expect(validateEquityAmount(1, 1, 100, 0)).toEqual({
+      expect(validateEquityAmount(1, 1, 100, 0, "WIRE")).toEqual({
+        valid: false,
+        message: "Cannot invest more than allowed.",
+      });
+
+      expect(validateEquityAmount(51, 1, 100, 2200, "CC")).toEqual({
+        valid: false,
+        message: "Cannot invest any amount over $5,000.00 using a credit card.",
+      });
+
+      expect(validateEquityAmount(50, 1, 100, 2200, "CC")).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
     });
 
     it("valid equity investments", () => {
-      expect(validateEquityAmount(1, 1, 100, 2200)).toEqual({ valid: true });
-      expect(validateEquityAmount(1, 1, 100, 100)).toEqual({ valid: true });
-      expect(validateEquityAmount(22, 1, 100, 2200)).toEqual({ valid: true });
-      expect(validateEquityAmount(21, 1, 100, 2200)).toEqual({ valid: true });
+      expect(validateEquityAmount(1, 1, 100, 2200, "CC")).toEqual({
+        valid: true,
+      });
+      expect(validateEquityAmount(1, 1, 100, 100, "CC")).toEqual({
+        valid: true,
+      });
+      expect(validateEquityAmount(22, 1, 100, 2200, "CC")).toEqual({
+        valid: true,
+      });
+      expect(validateEquityAmount(21, 1, 100, 2200, "CC")).toEqual({
+        valid: true,
+      });
+      expect(validateEquityAmount(50, 1, 100, 10000, "CC")).toEqual({
+        valid: true,
+      });
     });
 
     it("invalid non-equity investments", () => {
-      expect(validateNonEquityAmount(null, 100, 2200)).toEqual({
+      expect(validateNonEquityAmount(null, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
-      expect(validateNonEquityAmount(undefined, 100, 2200)).toEqual({
+      expect(validateNonEquityAmount(undefined, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
-      expect(validateNonEquityAmount(0, 100, 2200)).toEqual({
+      expect(validateNonEquityAmount(0, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Required.",
       });
-      expect(validateNonEquityAmount(99, 100, 2200)).toEqual({
+      expect(validateNonEquityAmount(99, 100, 2200, "WIRE")).toEqual({
         valid: false,
         message: "Must be at least $100 minimum.",
       });
-      expect(validateNonEquityAmount(2201, 100, 2200)).toEqual({
+      expect(validateNonEquityAmount(2201, 100, 2200, "WIRE")).toEqual({
+        valid: false,
+        message: "Cannot invest more than allowed.",
+      });
+      expect(validateNonEquityAmount(5000.01, 100, 10000, "CC")).toEqual({
+        valid: false,
+        message: "Cannot invest any amount over $5,000.00 using a credit card.",
+      });
+      expect(validateNonEquityAmount(5000, 100, 2200, "CC")).toEqual({
         valid: false,
         message: "Cannot invest more than allowed.",
       });
@@ -598,10 +638,7 @@ describe("Investment Form", () => {
       });
       expect(form).toEqual({
         ...formState,
-        methodDetails: {
-          valid: false,
-          message: "Invalid ACH credentials.",
-        },
+        methodDetails: { valid: false },
       });
     });
 
@@ -637,6 +674,29 @@ describe("Investment Form", () => {
         amount: {
           valid: false,
           message: "Must be at least $100 minimum.",
+        },
+      });
+    });
+
+    it("invalid form if amount is >$5k using a credit card.", () => {
+      const form = investmentForm(user, offering, {
+        ...investment,
+        amount: 51,
+        method: "CC",
+        methodDetails: {
+          name: "Justin Chiou",
+          number: "4242424242424242",
+          month: "12",
+          year: String(new Date().getFullYear % 100),
+          cvv: "123",
+        },
+      });
+      expect(form).toEqual({
+        ...formState,
+        amount: {
+          valid: false,
+          message:
+            "Cannot invest any amount over $5,000.00 using a credit card.",
         },
       });
     });
