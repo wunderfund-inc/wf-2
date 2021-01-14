@@ -35,7 +35,7 @@
                 <template v-if="offering.security_type === 'Equity'">
                   <strong>Equity</strong> - You will own a percentage of this
                   company, calculated as (# of Shares Invested /
-                  {{ offering.securities_total }}).
+                  {{ offering.securities_total | properIntegerFormat }} shares).
                 </template>
                 <template v-if="offering.security_type === 'SAFE Note'">
                   <strong>A SAFE Note</strong> - At the moment, your investment
@@ -662,6 +662,8 @@
                 <small class="text-muted">
                   *You will be redirected to sign your agreement.
                 </small>
+                <br />
+                <small class="text-danger">{{ submissionError }}</small>
               </b-list-group-item>
             </b-list-group>
           </b-card>
@@ -861,10 +863,10 @@ export default {
           user_testimonial: this.form.testimonial, // typeof string
           user_id: this.$store.state.auth.userId,
           user_email: this.$store.state.auth.email,
-          user_first_name: this.user.first_name,
-          user_last_name: this.user.last_name,
+          user_first_name: this.user.firstName,
+          user_last_name: this.user.lastName,
           user_avatar: this.user.avatar || null,
-          user_tapi_account_id: this.user.transact_api_account_id,
+          user_tapi_account_id: this.user.accountId,
         };
 
         if (this.form.method === "ACH") {
@@ -888,12 +890,7 @@ export default {
 
         await newInvestment.set(investmentPayload);
         this.investmentId = newInvestmentId;
-      } catch (error) {
-        this.submissionError = error.message;
-        await this.$store.dispatch("agreement/showOverlay", false);
-      }
 
-      try {
         const domain =
           "https://us-central1-wunderfund-server.cloudfunctions.net";
         const endpoint = "agreementOnRequest";
