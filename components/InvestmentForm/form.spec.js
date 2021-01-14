@@ -5,6 +5,7 @@ import {
   minimum,
   minimumNonEquity,
   canSpend,
+  canInvest,
   validateEquityAmount,
   validateNonEquityAmount,
   isFormValid,
@@ -684,6 +685,30 @@ describe("Investment Form", () => {
             "Cannot invest any amount over $5,000.00 using a credit card.",
         },
       });
+    });
+  });
+
+  describe("Validate relationship of user/offering to amount invested", () => {
+    const user = {
+      annualIncome: 0,
+      netWorth: 0,
+    };
+
+    const offering = {
+      investment_minimum: 1,
+      pps: 100,
+    };
+
+    it("can invest", () => {
+      expect(canInvest(user, offering)).toEqual(true);
+    });
+    it("cannot invest", () => {
+      expect(
+        canInvest(user, {
+          ...offering,
+          investment_minimum: 23,
+        })
+      ).toEqual(false);
     });
   });
 });

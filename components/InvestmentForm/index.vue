@@ -66,7 +66,7 @@
                 Select which class of security you want to invest in:
               </h5>
 
-              <div class="form-row pb-4">
+              <div class="form-row pb-2">
                 <div
                   v-for="(
                     tier, index
@@ -75,15 +75,15 @@
                   class="col-12 col-md-6"
                 >
                   <label
-                    :class="!canInvest && index !== 0 ? 'bg-light' : ''"
-                    class="card py-2 pl-1 mb-md-0"
+                    :class="!canInvest(tier) && index !== 0 ? 'bg-light' : ''"
+                    class="card py-2 pl-1"
                   >
                     <div class="container">
                       <div class="form-row form-check-inline">
                         <b-form-radio
                           v-model="securityClass"
                           :value="tier"
-                          :disabled="!canInvest && index !== 0"
+                          :disabled="!canInvest(tier) && index !== 0"
                           class="form-check-input"
                           size="lg"
                           name="offerings"
@@ -93,12 +93,12 @@
                           </span>
                         </b-form-radio>
                         <small
-                          v-if="!canInvest && index !== 0"
+                          v-if="!canInvest(tier) && index !== 0"
                           class="text-small"
                         >
-                          <a href="https://google.com" target="_blank">
+                          <nuxt-link to="/faq/investors">
                             Why can't I select this one?
-                          </a>
+                          </nuxt-link>
                         </small>
                       </div>
 
@@ -681,6 +681,7 @@ import { accredited } from "@/helpers/validators";
 import { db, timestamp } from "@/plugins/firebase";
 import { months } from "./choices";
 import {
+  canInvest,
   investmentForm,
   isFormValid,
   validateAchAccount,
@@ -738,7 +739,6 @@ export default {
 
       return yearList;
     },
-    canInvest: () => false,
     validatedForm() {
       if (this.offering.security_type === "Equity") {
         if (!this.securityClass) {
@@ -832,6 +832,9 @@ export default {
       const reg = this.determineCreditCard === cc;
       const extra = reg ? "text-success" : "text-muted";
       return `mx-1 fa-lg ${extra}`;
+    },
+    canInvest(offering) {
+      return canInvest(this.user, offering);
     },
     async commitInvestment() {
       try {

@@ -33,6 +33,7 @@ export function validateEquityAmount(
   method
 ) {
   const result = required(shares);
+
   if (!result.valid) {
     return result;
   }
@@ -335,4 +336,10 @@ export function validateCreditCard(methodDetails) {
   }
 
   return { valid: true };
+}
+
+export function canInvest(user, offering) {
+  const spendPool = calculateSpendPool(user.annualIncome, user.netWorth);
+  const min = offering.investment_minimum * offering.pps;
+  return spendPool >= min;
 }
