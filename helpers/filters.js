@@ -106,6 +106,21 @@ export const currencyDisplayFormat = (val) => {
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
 
 /**
+ * Format number to a shorthand version.
+ * @example 1000000 => "1M"
+ * @param {int} val
+ * @returns string
+ */
+export const properIntegerFormat = (val) => {
+  if (parseFloat(val.toString()) === parseFloat(val)) {
+    return numeral(val).format("(0.0a)").toUpperCase();
+  } else {
+    throw new TypeError("not a number");
+  }
+};
+Vue.filter("properIntegerFormat", properIntegerFormat);
+
+/**
  * Given an array of money amounts, reduce array and sum total to return to the
  * raw amount total that's been raised
  * @param {array[object]}
