@@ -261,7 +261,7 @@ export function validateExpiry(month, year) {
   if (!validateExpiryYear(year).valid) return validateExpiryYear(year);
 
   const today = new Date();
-  const expiry = new Date(`${year}-${month}`);
+  const expiry = new Date(`${2000 + Number(year)}-${month}`);
   if (today > expiry) {
     return { valid: false, message: "Card expired." };
   }
@@ -333,5 +333,6 @@ export function validateCreditCard(methodDetails) {
   ) {
     return { valid: false, message: "Invalid Credit Card credentials." };
   }
+
   return { valid: true };
 }

@@ -151,19 +151,14 @@ describe("Investment Form", () => {
 
     describe("Credit Card", () => {
       it("invalid Cardholder Name", () => {
-        const requiredError = {
-          valid: false,
-          message: "Required.",
-        };
-
         const regexError = {
           valid: false,
           message: "Invalid cardholder name.",
         };
 
-        expect(validateCardName(undefined)).toEqual(requiredError);
-        expect(validateCardName(null)).toEqual(requiredError);
-        expect(validateCardName("")).toEqual(requiredError);
+        expect(validateCardName(undefined)).toEqual({ valid: false });
+        expect(validateCardName(null)).toEqual({ valid: false });
+        expect(validateCardName("")).toEqual({ valid: false });
         expect(validateCardName(";!@#$%")).toEqual(regexError);
         expect(validateCardName("R2-D2")).toEqual(regexError);
         expect(validateCardName("J")).toEqual(regexError);
@@ -210,13 +205,12 @@ describe("Investment Form", () => {
       });
 
       it("invalid Expiry Month", () => {
-        const requiredError = validationError("Required.");
         const typeError = validationError("Must be of type String.");
         const isBetweenError = validationError("Must be between 01 and 12.");
 
-        expect(validateExpiryMonth(null)).toEqual(requiredError);
-        expect(validateExpiryMonth(undefined)).toEqual(requiredError);
-        expect(validateExpiryMonth(0)).toEqual(requiredError);
+        expect(validateExpiryMonth(null)).toEqual({ valid: false });
+        expect(validateExpiryMonth(undefined)).toEqual({ valid: false });
+        expect(validateExpiryMonth(0)).toEqual({ valid: false });
         expect(validateExpiryMonth(1)).toEqual(typeError);
         expect(validateExpiryMonth(10)).toEqual(typeError);
         expect(validateExpiryMonth("0")).toEqual(isBetweenError);
@@ -265,12 +259,16 @@ describe("Investment Form", () => {
       it("invalid expiry combination (month and year)", () => {
         expect(validateExpiry(12, 20)).toEqual({
           valid: false,
-          message: "Expired card.",
+          message: "Must be of type String.",
+        });
+        expect(validateExpiry("12", "20")).toEqual({
+          valid: false,
+          message: "Invalid expiry year.",
         });
       });
 
       it("valid expiry combination (month and year)", () => {
-        expect(validateExpiry(12, 99)).toEqual({ valid: true });
+        expect(validateExpiry("12", "99")).toEqual({ valid: true });
       });
     });
   });
@@ -366,15 +364,12 @@ describe("Investment Form", () => {
     it("invalid non-equity investments", () => {
       expect(validateNonEquityAmount(null, 100, 2200, "WIRE")).toEqual({
         valid: false,
-        message: "Required.",
       });
       expect(validateNonEquityAmount(undefined, 100, 2200, "WIRE")).toEqual({
         valid: false,
-        message: "Required.",
       });
       expect(validateNonEquityAmount(0, 100, 2200, "WIRE")).toEqual({
         valid: false,
-        message: "Required.",
       });
       expect(validateNonEquityAmount(99, 100, 2200, "WIRE")).toEqual({
         valid: false,
@@ -401,82 +396,73 @@ describe("Investment Form", () => {
     });
 
     describe("method details (combined inputs)", () => {
-      it("invalid ACH", () => {
-        const error = {
-          valid: false,
-          message: "Invalid ACH credentials.",
-        };
-        const ach = {
-          account: "12345678",
-          routing: "123456789",
-        };
-        expect(validateMethodDetails("ACH", ach)).toEqual(error);
-      });
-
-      it("valid ACH", () => {
+      describe("ACH", () => {
         const ach = {
           account: "000123456789",
           routing: "110000000",
         };
-        expect(validateMethodDetails("ACH", ach)).toEqual({ valid: true });
+
+        it("valid combination", () => {
+          expect(validateMethodDetails("ACH", ach)).toEqual({ valid: true });
+        });
+
+        it("invalid combination", () => {
+          expect(
+            validateMethodDetails("ACH", { ...ach, account: "12" })
+          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          expect(
+            validateMethodDetails("ACH", {
+              ...ach,
+              account: "123456781234567890",
+            })
+          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          expect(
+            validateMethodDetails("ACH", { ...ach, routing: "12345678" })
+          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          expect(
+            validateMethodDetails("ACH", { ...ach, routing: "1234567890" })
+          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+        });
       });
 
-      it("invalid Credit Card", () => {
-        const year = String(new Date().getFullYear() % 100);
-        const error = {
-          valid: false,
-          message: "Invalid Credit Card credentials.",
-        };
-
-        const cc1 = {
-          name: "",
-          number: "4242424242424242",
-          month: "09",
-          year,
-          cvv: "222",
-        };
-        expect(validateCreditCard(cc1)).toEqual(error);
-
-        const cc2 = {
-          ...cc1,
-          name: "Justin Chiou",
-          number: "424242424242424",
-        };
-        expect(validateCreditCard(cc2)).toEqual(error);
-
-        const cc3 = {
-          ...cc2,
-          number: "4242424242424242",
-          month: "00",
-        };
-        expect(validateCreditCard(cc3)).toEqual(error);
-
-        const cc4 = {
-          ...cc3,
-          month: "08",
-          year: "20",
-        };
-        expect(validateCreditCard(cc4)).toEqual(error);
-
-        const cc5 = {
-          ...cc4,
-          year,
-          cvv: "1234",
-        };
-        expect(validateCreditCard(cc5)).toEqual(error);
-      });
-
-      it("valid Credit Card", () => {
-        const year = String(new Date().getFullYear() % 100);
+      describe("Credit Card", () => {
         const cc = {
           name: "Justin Chiou",
           number: "4242424242424242",
-          month: "09",
-          year,
-          cvv: "222",
+          month: "11",
+          year: String(new Date().getFullYear() % 100),
+          cvv: "123",
         };
 
-        expect(validateCreditCard(cc)).toEqual({ valid: true });
+        it("valid combination", () => {
+          expect(validateCreditCard(cc)).toEqual({ valid: true });
+          expect(validateMethodDetails("CC", cc)).toEqual({ valid: true });
+        });
+
+        it("invalid combination", () => {
+          expect(validateCreditCard({ ...cc, name: "" })).toEqual({
+            valid: false,
+            message: "Invalid Credit Card credentials.",
+          });
+          expect(
+            validateCreditCard({ ...cc, number: "424242424242424" })
+          ).toEqual({
+            valid: false,
+            message: "Invalid Credit Card credentials.",
+          });
+          expect(validateCreditCard({ ...cc, month: "13" })).toEqual({
+            valid: false,
+            message: "Invalid Credit Card credentials.",
+          });
+          expect(validateCreditCard({ ...cc, year: "20" })).toEqual({
+            valid: false,
+            message: "Invalid Credit Card credentials.",
+          });
+          expect(validateCreditCard({ ...cc, cvv: "12" })).toEqual({
+            valid: false,
+            message: "Invalid Credit Card credentials.",
+          });
+        });
       });
 
       it("invalid if not amongst choices of payment methods", () => {
@@ -557,7 +543,7 @@ describe("Investment Form", () => {
       amount: 1,
       method: "CHECK",
       methodDetails: null,
-      attestations: ["asdf", "asdf", "asdf", "asdf"],
+      attestations: ["asdf", "asdf", "asdf", "asdf", "asdf"],
     };
 
     const formState = {
@@ -581,11 +567,10 @@ describe("Investment Form", () => {
     });
 
     it("invalid number of attestations (entity-based)", () => {
-      const form = investmentForm(
-        { ...user, isEntity: true },
-        offering,
-        investment
-      );
+      const form = investmentForm({ ...user, isEntity: true }, offering, {
+        ...investment,
+        attestations: ["asdf"],
+      });
       expect(form).toEqual({
         ...formState,
         attestations: {
@@ -687,7 +672,7 @@ describe("Investment Form", () => {
           name: "Justin Chiou",
           number: "4242424242424242",
           month: "12",
-          year: String(new Date().getFullYear % 100),
+          year: String(new Date().getFullYear() % 100),
           cvv: "123",
         },
       });
