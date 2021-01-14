@@ -94,26 +94,58 @@
     </template>
 
     <template v-if="offering.security_type === 'Equity'">
-      <p>
-        {{ companyName }} is offering you <strong>equity</strong> ownership at
-        <strong>
-          {{ offering.price_per_share | asCurrency }} per share,
-        </strong>
-        which will be calculated as (your amount invested /
-        <strong>{{ offering.valuation_cap | currencyDisplayFormat }}</strong>
-        {{ offering.valuation_type.toLowerCase() }} valuation).
-      </p>
-      <p class="mb-0">
-        Minimum Shares to Invest in:
-        <strong>{{ offering.securities_min }}</strong>
-        <small class="text-muted">
-          (x {{ offering.price_per_share | asCurrency }}/share =
-          {{
-            (offering.price_per_share * offering.securities_min) | asCurrency
-          }}
-          minimum)
-        </small>
-      </p>
+      <div v-if="offering.minimum_investment_amount_tiers.length > 1">
+        <p>
+          {{ companyName }} is offering you <strong>equity</strong> ownership,
+          calculated as (# shares to buy /
+          <strong>{{ offering.securities_total | properIntegerFormat }}</strong>
+          shares).
+        </p>
+        <p>Share Classes Offered:</p>
+        <ul>
+          <li
+            v-for="(tier, index) in offering.minimum_investment_amount_tiers"
+            :key="index"
+          >
+            <strong>{{ tier.security_tier }}</strong>
+            <small>
+              ({{ tier.investment_minimum }} at
+              {{ tier.pps | asCurrency }}/share =
+              {{ (tier.pps * tier.investment_minimum) | asCurrency }} minimum)
+            </small>
+          </li>
+        </ul>
+      </div>
+      <div v-else>
+        <p>
+          {{ companyName }} is offering you <strong>equity</strong> ownership at
+          <strong>
+            {{ offering.minimum_investment_amount_tiers[0].pps | asCurrency }}
+            per share,
+          </strong>
+          which will be calculated as (your amount invested /
+          <strong>{{ offering.valuation_cap | currencyDisplayFormat }}</strong>
+          {{ offering.valuation_type.toLowerCase() }} valuation).
+        </p>
+        <p class="mb-0">
+          Minimum Shares to Invest in:
+          <strong>{{
+            offering.minimum_investment_amount_tiers[0].investment_minimum
+          }}</strong>
+          <small class="text-muted">
+            (x
+            {{
+              offering.minimum_investment_amount_tiers[0].pps | asCurrency
+            }}/share =
+            {{
+              (offering.minimum_investment_amount_tiers[0].pps *
+                offering.minimum_investment_amount_tiers[0].investment_minimum)
+                | asCurrency
+            }}
+            minimum)
+          </small>
+        </p>
+      </div>
     </template>
 
     <template v-if="offering.security_type === 'SAFE Note'">
@@ -150,7 +182,8 @@
         offering.agreement_offering.url || offering.agreement_subscription.url
       "
     >
-      <div class="py-3">
+      <p>See the following below for more details about the offering:</p>
+      <div class="pb-3">
         <small class="row d-flex justify-content-around">
           <prismic-link
             v-if="offering.agreement_offering.url"
