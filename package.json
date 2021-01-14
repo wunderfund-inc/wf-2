@@ -25,7 +25,7 @@
     }
   },
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^5.15.1",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@googlemaps/markerclustererplus": "^1.0.3",
     "@nuxtjs/axios": "^5.12.0",
