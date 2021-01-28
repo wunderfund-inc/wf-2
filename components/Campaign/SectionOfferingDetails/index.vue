@@ -268,6 +268,10 @@
     <b-alert v-else show variant="success" class="py-3 mt-3 mb-0 text-center">
       This offering has ended.
     </b-alert>
+
+    <EmailCapture :tags="['newsletter', 'campaign', slug]" width="col">
+      Just want to stay in the loop on {{ companyName }}?
+    </EmailCapture>
   </section>
 </template>
 
@@ -309,6 +313,9 @@ export default {
     },
     investmentsCount() {
       return this.metrics.total_investments;
+    },
+    slug() {
+      return this.$route.params.companyId;
     },
   },
 };

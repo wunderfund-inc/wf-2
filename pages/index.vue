@@ -2,8 +2,10 @@
   <main>
     <div v-if="platform === 'WFP'">
       <HeroSection />
-      <EmailCapture />
     </div>
+    <EmailCapture width="col-md-5">
+      Be the first to hear about investment opportunities!
+    </EmailCapture>
     <SectionBrowse v-if="companies.length > 0" :companies="companies">
       <template #header>
         <h5 class="text-center pb-4">Live Campaigns:</h5>

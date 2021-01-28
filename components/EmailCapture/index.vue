@@ -3,14 +3,12 @@
     <div class="container">
       <div class="row pb-3">
         <div class="col">
-          <h6 class="text-center">
-            Be the first to hear about investment opportunities!
-          </h6>
+          <h6 class="text-center"><slot></slot></h6>
         </div>
       </div>
 
       <div class="row d-flex justify-content-center">
-        <div class="col-md-5">
+        <div :class="width">
           <transition name="fade" mode="out-in">
             <form v-if="show" @submit.prevent="subscribeUser">
               <div class="input-group">
@@ -59,6 +57,17 @@ import { email } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
+  props: {
+    tags: {
+      type: Array,
+      default: () => ["newsletter"],
+      required: false,
+    },
+    width: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       form: {
@@ -97,7 +106,10 @@ export default {
         this.submitting = true;
         const url =
           "https://us-central1-wunderfund-server.cloudfunctions.net/newsletterOnSubscribe";
-        await this.$axios.$post(url, { email: this.form.email });
+        await this.$axios.$post(url, {
+          email: this.form.email,
+          tags: this.tags,
+        });
         await setTimeout(() => (this.show = !this.show), 2000);
       } catch (error) {
         this.submitting = false;
