@@ -75,7 +75,7 @@
                   class="col-12 col-md-6"
                 >
                   <label
-                    :class="!canInvest(tier) && index !== 0 ? 'bg-light' : ''"
+                    :class="!canInvest(tier) ? 'bg-light' : ''"
                     class="card py-2 pl-1"
                   >
                     <div class="container">
@@ -83,7 +83,7 @@
                         <b-form-radio
                           v-model="securityClass"
                           :value="tier"
-                          :disabled="!canInvest(tier) && index !== 0"
+                          :disabled="!canInvest(tier)"
                           class="form-check-input"
                           size="lg"
                           name="offerings"
@@ -92,10 +92,7 @@
                             {{ tier.security_tier }}
                           </span>
                         </b-form-radio>
-                        <small
-                          v-if="!canInvest(tier) && index !== 0"
-                          class="text-small"
-                        >
+                        <small v-if="!canInvest(tier)" class="text-small">
                           <nuxt-link to="/faq/investors">
                             Why can't I select this one?
                           </nuxt-link>
