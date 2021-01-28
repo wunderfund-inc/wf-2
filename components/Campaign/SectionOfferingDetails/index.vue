@@ -269,7 +269,11 @@
       This offering has ended.
     </b-alert>
 
-    <EmailCapture :tags="['newsletter', 'campaign', slug]" width="col">
+    <EmailCapture
+      v-if="!offeringEnded"
+      :tags="['newsletter', 'campaign', slug]"
+      width="col"
+    >
       Just want to stay in the loop on {{ companyName }}?
     </EmailCapture>
   </section>
