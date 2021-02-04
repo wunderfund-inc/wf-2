@@ -602,12 +602,7 @@
               <b-list-group-item>
                 <div class="container">
                   <template
-                    v-if="
-                      offering &&
-                      ['Equity', 'Convertible Note'].includes(
-                        offering.security_type
-                      )
-                    "
+                    v-if="offering && offering.security_type === 'Equity'"
                   >
                     <div v-if="validatedForm.amount.valid">
                       <div class="row justify-content-between">
