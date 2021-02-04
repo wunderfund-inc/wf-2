@@ -27,10 +27,11 @@
                   amount.
                 </template>
                 <template v-if="offering.security_type === 'Convertible Note'">
-                  <strong>A Convertible Note</strong> - You will own a
-                  percentage of this company, calculated as (Amount Invested /
-                  {{ offering.valuation_type.toLowerCase() }} valuation of
-                  {{ offering.valuation_cap | currencyDisplayFormat }}).
+                  <strong>A Convertible Note</strong> - The company will pay you
+                  back (at a {{ offering.interest_rate }}% interest rate) unless
+                  it meets its minimum goal. If the company reaches their
+                  minimum goal, you will instead own a percentage of this
+                  company.
                 </template>
                 <template v-if="offering.security_type === 'Equity'">
                   <strong>Equity</strong> - You will own a percentage of this
