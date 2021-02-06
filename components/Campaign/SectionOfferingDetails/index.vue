@@ -86,10 +86,11 @@
         {{ companyName }} is offering to pay you back the amount you invested in
         them (at a <strong>{{ offering.interest_rate }}%</strong> interest
         rate), but should it reach its minimum goal, your investment amount
-        converts to shares (at
+        instead converts to shares (at
         <strong>{{ offering.price_per_share | asCurrency }}</strong
-        >/share). {{ companyName }} will then offer you
-        <strong>equity</strong> ownership instead.
+        >/share) with a <strong>{{ offering.discount_rate }}%</strong> discount.
+        {{ companyName }} will then offer you <strong>equity</strong> ownership
+        instead.
       </p>
     </template>
 

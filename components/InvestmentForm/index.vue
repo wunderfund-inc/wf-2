@@ -30,8 +30,11 @@
                   <strong>A Convertible Note</strong> - The company will pay you
                   back (at a {{ offering.interest_rate }}% interest rate) unless
                   it meets its minimum goal. If the company reaches their
-                  minimum goal, you will instead own a percentage of this
-                  company.
+                  minimum goal, your investment will instead be converted to
+                  shares (at
+                  {{ offering.price_per_share | asCurrency }}/share)(at a
+                  {{ offering.discount_rate }}% discount) and you will own a
+                  percentage of this company.
                 </template>
                 <template v-if="offering.security_type === 'Equity'">
                   <strong>Equity</strong> - You will own a percentage of this
