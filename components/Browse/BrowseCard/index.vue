@@ -38,8 +38,10 @@
 
           <template v-if="offering.security_type === 'Convertible Note'">
             <small class="mb-0 text-muted">
-              Convertible Note, repaying at a {{ offering.interest_rate }}%
-              interest rate
+              Convertible Note for a {{ offering.discount_rate }}% discount, ${{
+                offering.valuation_cap | properIntegerFormat
+              }}
+              valuation
             </small>
           </template>
 
