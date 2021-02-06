@@ -83,13 +83,14 @@
 
     <template v-if="offering.security_type === 'Convertible Note'">
       <p>
-        {{ companyName }} is offering you equity ownership at
-        <strong>
-          {{ offering.price_per_share | asCurrency }} per share,
-        </strong>
-        which will be calculated as (your amount invested /
-        <strong>{{ offering.valuation_cap | currencyDisplayFormat }}</strong>
-        {{ offering.valuation_type.toLowerCase() }} valuation).
+        {{ companyName }} is offering to pay you back the amount you invested in
+        them (at a <strong>{{ offering.interest_rate }}%</strong> interest
+        rate), but should it reach its minimum goal, your investment amount
+        instead converts to shares (at
+        <strong>{{ offering.price_per_share | asCurrency }}</strong
+        >/share) with a <strong>{{ offering.discount_rate }}%</strong> discount.
+        {{ companyName }} will then offer you <strong>equity</strong> ownership
+        instead.
       </p>
     </template>
 

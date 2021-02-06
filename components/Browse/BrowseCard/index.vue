@@ -38,9 +38,10 @@
 
           <template v-if="offering.security_type === 'Convertible Note'">
             <small class="mb-0 text-muted">
-              Equity at a
-              {{ offering.valuation_cap | currencyDisplayFormat }}
-              {{ offering.valuation_type.toLowerCase() }} valuation
+              Convertible Note for a {{ offering.discount_rate }}% discount, ${{
+                offering.valuation_cap | properIntegerFormat
+              }}
+              valuation
             </small>
           </template>
 

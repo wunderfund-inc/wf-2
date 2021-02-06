@@ -27,10 +27,14 @@
                   amount.
                 </template>
                 <template v-if="offering.security_type === 'Convertible Note'">
-                  <strong>A Convertible Note</strong> - You will own a
-                  percentage of this company, calculated as (Amount Invested /
-                  {{ offering.valuation_type.toLowerCase() }} valuation of
-                  {{ offering.valuation_cap | currencyDisplayFormat }}).
+                  <strong>A Convertible Note</strong> - The company will pay you
+                  back (at a {{ offering.interest_rate }}% interest rate) unless
+                  it meets its minimum goal. If the company reaches their
+                  minimum goal, your investment will instead be converted to
+                  shares (at
+                  {{ offering.price_per_share | asCurrency }}/share)(at a
+                  {{ offering.discount_rate }}% discount) and you will own a
+                  percentage of this company.
                 </template>
                 <template v-if="offering.security_type === 'Equity'">
                   <strong>Equity</strong> - You will own a percentage of this
@@ -601,12 +605,7 @@
               <b-list-group-item>
                 <div class="container">
                   <template
-                    v-if="
-                      offering &&
-                      ['Equity', 'Convertible Note'].includes(
-                        offering.security_type
-                      )
-                    "
+                    v-if="offering && offering.security_type === 'Equity'"
                   >
                     <div v-if="validatedForm.amount.valid">
                       <div class="row justify-content-between">
