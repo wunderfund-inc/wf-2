@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="form-group">
             <label for="entity-type">Entity Classification</label>
             <select
@@ -52,9 +52,7 @@
             </small>
           </div>
         </div>
-      </div>
-      <div class="form-row">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <div class="form-group">
             <label for="entity-ein">Employer Identification Number (EIN)</label>
             <input
@@ -66,10 +64,10 @@
               required
             />
             <small
-              v-if="!validatedForm.entityEin.valid"
+              v-if="!validatedForm.ein.valid"
               class="form-text text-danger pt-1"
             >
-              {{ validatedForm.entityEin.message }}
+              {{ validatedForm.ein.message }}
             </small>
           </div>
         </div>
@@ -120,7 +118,7 @@
       </div>
     </div>
     <div class="form-row">
-      <div class="col-12 col-md-6">
+      <div v-if="!user.is_entity" class="col-12 col-md-6">
         <div class="form-group">
           <label for="dob">Date of Birth</label>
           <input
@@ -356,16 +354,19 @@ export default {
   },
   computed: {
     validatedForm() {
-      return profileFormState(this.form);
+      return profileFormState(this.form, this.user.is_entity);
     },
     validForm() {
-      return isProfileFormValid(profileFormState(this.form));
+      const isEntity = this.user.is_entity;
+      return isProfileFormValid(
+        profileFormState(this.form, isEntity),
+        isEntity
+      );
     },
   },
   created() {
     this.form.firstName = this.user.first_name || "";
     this.form.lastName = this.user.last_name || "";
-    this.form.dob = this.user.dob || "";
     this.form.phone = this.user.phone || "";
     this.form.street1 = this.user.address_street_1 || "";
     this.form.street2 = this.user.address_street_2 || null;
@@ -373,6 +374,14 @@ export default {
     this.form.state = this.user.address_state || "";
     this.form.country = this.user.address_country || "";
     this.form.postal = this.user.address_postal || "";
+
+    if (this.user.is_entity) {
+      this.form.entityName = this.user.entity_name || "";
+      this.form.entityType = this.user.entity_type || "";
+      this.form.ein = this.user.entity_ein || "";
+    } else {
+      this.form.dob = this.user.dob || "";
+    }
   },
   methods: {
     async updateProfile() {
