@@ -237,21 +237,26 @@
         </button>
       </div>
     </div>
-    <div class="form-row mt-4">
+    <div v-if="error" class="form-row mt-2">
       <div class="col">
-        <div class="card">
-          <pre>{{ validatedForm }}</pre>
-        </div>
+        <small class="text-danger">{{ error }}</small>
       </div>
     </div>
   </form>
 </template>
 
 <script>
+import { db, timestamp } from "../../plugins/firebase";
 import { countries, states } from "./choices";
 import { profileFormState, isProfileFormValid } from "./form";
 
 export default {
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       countries,
@@ -268,6 +273,7 @@ export default {
         country: "",
         postal: "",
       },
+      error: null,
     };
   },
   computed: {
@@ -276,6 +282,50 @@ export default {
     },
     validForm() {
       return isProfileFormValid(profileFormState(this.form));
+    },
+  },
+  created() {
+    this.form.firstName = this.user.first_name || "";
+    this.form.lastName = this.user.last_name || "";
+    this.form.dob = this.user.dob || "";
+    this.form.phone = this.user.phone || "";
+    this.form.street1 = this.user.address_street_1 || "";
+    this.form.street2 = this.user.address_street_2 || null;
+    this.form.city = this.user.address_city || "";
+    this.form.state = this.user.address_state || "";
+    this.form.country = this.user.address_country || "";
+    this.form.postal = this.user.address_postal || "";
+  },
+  methods: {
+    async updateProfile() {
+      try {
+        const dto = {
+          first_name: this.form.firstName,
+          last_name: this.form.lastName,
+          phone: this.form.phone,
+          address_street_1: this.form.street1,
+          address_street_2: this.form.street2,
+          address_city: this.form.city,
+          address_state: this.form.state,
+          address_country: this.form.country,
+          address_postal: this.form.postal,
+          date_updated: timestamp,
+          flag: `update:${this.user.is_entity ? "entity" : "individual"}`,
+        };
+
+        if (this.user.is_entity) {
+          dto.entity_name = this.form.entity_name;
+          dto.entity_type = this.form.entity_type;
+          dto.entity_ein = this.form.entity_ein;
+        } else {
+          dto.dob = this.form.dob;
+        }
+
+        await db.collection("users").doc(this.user.uid).update(dto);
+        window.location.replace("/account");
+      } catch (error) {
+        this.error = error.message;
+      }
     },
   },
 };
