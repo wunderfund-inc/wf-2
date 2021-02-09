@@ -1203,3 +1203,11 @@ export const countries = [
     name: "Zimbabwe",
   },
 ];
+
+export const entityTypes = [
+  "Limited Liability Company",
+  "Limited Partnership",
+  "Revocable Trust",
+  "Irrevocable Trust",
+  "Corporation",
+];

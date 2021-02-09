@@ -1,5 +1,80 @@
 <template>
   <form method="post" @submit.prevent="updateProfile">
+    <template v-if="user.is_entity">
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="entity-name">Name of the Entity</label>
+            <input
+              id="entity-name"
+              v-model.trim="form.entityName"
+              type="text"
+              class="form-control"
+              data-form-entityname
+              placeholder="Wunderfund, LLC."
+              aria-placeholder="Wunderfund, LLC."
+              required
+            />
+            <small
+              v-if="!validatedForm.entityName.valid"
+              class="form-text text-danger pt-1"
+            >
+              {{ validatedForm.entityName.message }}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="entity-type">Entity Classification</label>
+            <select
+              id="entity-type"
+              v-model="form.entityType"
+              class="form-control"
+              aria-label="State"
+              data-form-state
+              required
+            >
+              <option value="Limited Liability Company">
+                Limited Liability Company
+              </option>
+              <option value="Limited Partnership">Limited Partnership</option>
+              <option value="Revocable Trust">Revocable Trust</option>
+              <option value="Irrevocable Trust">Irrevocable Trust</option>
+              <option value="Corporation">Corporation</option>
+            </select>
+            <small
+              v-if="!validatedForm.entityType.valid"
+              class="form-text text-danger pt-1"
+            >
+              {{ validatedForm.entityType.message }}
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group">
+            <label for="entity-ein">Employer Identification Number (EIN)</label>
+            <input
+              id="entity-ein"
+              v-model.trim="form.ein"
+              type="text"
+              class="form-control"
+              data-form-entityein
+              required
+            />
+            <small
+              v-if="!validatedForm.entityEin.valid"
+              class="form-text text-danger pt-1"
+            >
+              {{ validatedForm.entityEin.message }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </template>
     <div class="form-row">
       <div class="col-12 col-md-6">
         <div class="form-group">
@@ -262,6 +337,9 @@ export default {
       countries,
       states,
       form: {
+        entityName: "",
+        entityType: "",
+        ein: "",
         firstName: "",
         lastName: "",
         dob: "",

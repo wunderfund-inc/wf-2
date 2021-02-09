@@ -1,4 +1,4 @@
-import { states, countries } from "./choices";
+import { states, countries, entityTypes } from "./choices";
 
 describe("Choice data file", () => {
   it("there are 51 states (including 'Non-US') to choose from", () => {
@@ -18,5 +18,9 @@ describe("Choice data file", () => {
   it("the United States MUST exist", () => {
     const countryCodes = countries.map((country) => country.code);
     expect(countryCodes.includes("USA")).toBeTruthy();
+  });
+
+  it("there are 5 types of entities to choose from", () => {
+    expect(entityTypes.length).toEqual(5);
   });
 });

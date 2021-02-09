@@ -1,12 +1,13 @@
-import { states, countries } from "./choices";
+import { states, countries, entityTypes } from "./choices";
 
 export function required(val) {
-  if (!val) return { valid: false };
-  return { valid: true };
+  return { valid: !!val };
+  // if (!val) return { valid: false };
+  // return { valid: true };
 }
 
 export function alpha(val) {
-  const regex = /^[a-zA-Z '-]{2,}$/;
+  const regex = /^[a-zA-Z '-.]{2,}$/;
   if (regex.test(String(val))) return { valid: true };
   return { valid: false, message: "Must be greater than 1 letter." };
 }
@@ -27,8 +28,105 @@ export function isPhoneNumber(val) {
   return { valid: true };
 }
 
+export function isEIN(val) {
+  const campus = {
+    andover: ["10", "12"],
+    atlanta: ["60", "67"],
+    austin: ["50", "53"],
+    brookhaven: [
+      "01",
+      "02",
+      "03",
+      "04",
+      "05",
+      "06",
+      "11",
+      "13",
+      "14",
+      "16",
+      "21",
+      "22",
+      "23",
+      "25",
+      "34",
+      "51",
+      "52",
+      "54",
+      "55",
+      "56",
+      "57",
+      "58",
+      "59",
+      "65",
+    ],
+    cincinnati: ["30", "32", "35", "36", "37", "38", "61"],
+    fresno: ["15", "24"],
+    internet: [
+      "20",
+      "26",
+      "27",
+      "45",
+      "46",
+      "47",
+      "81",
+      "82",
+      "83",
+      "84",
+      "85",
+    ],
+    kansas: ["40", "44"],
+    memphis: ["94", "95"],
+    ogden: ["80", "90"],
+    philadelphia: [
+      "33",
+      "39",
+      "41",
+      "42",
+      "43",
+      "46",
+      "48",
+      "62",
+      "63",
+      "64",
+      "66",
+      "68",
+      "71",
+      "72",
+      "73",
+      "74",
+      "75",
+      "76",
+      "77",
+      "86",
+      "87",
+      "88",
+      "91",
+      "92",
+      "93",
+      "98",
+      "99",
+    ],
+    sba: ["31"],
+  };
+
+  const prefixes = [];
+
+  for (const location in campus) {
+    prefixes.push(...campus[location]);
+  }
+
+  prefixes.sort();
+
+  const regex = /^\d{2}[- ]{0,1}\d{7}$/;
+
+  if (regex.test(val) && prefixes.includes(val.substr(0, 2))) {
+    return { valid: true };
+  }
+  return { valid: false, message: "Invalid EIN." };
+}
+
 export function alphanumeric(val) {
-  const regex = /^[a-zA-Z0-9 '-]{1,}$/;
+  const regex = /^[a-zA-Z0-9 '-.]{1,}$/;
   if (regex.test(String(val))) return { valid: true };
   return { valid: false, message: "Invalid input." };
 }
@@ -120,11 +218,24 @@ function validatePostal(postal) {
   return alphanumeric(postal);
 }
 
-export function profileFormState(form) {
-  return {
+function validateEntityName(name) {
+  return !name ? { valid: false } : alphanumeric(name);
+}
+
+function validateEntityType(entityType) {
+  if (!entityType) return { valid: false };
+  if (entityTypes.includes(entityType)) return { valid: true };
+  return { valid: false, message: "Invalid Entity type." };
+}
+
+function validateEIN(ein) {
+  return !ein ? { valid: false } : isEIN(ein);
+}
+
+export function profileFormState(form, isEntity = false) {
+  const dto = {
     firstName: validateFirstName(form.firstName),
     lastName: validateLastName(form.lastName),
-    dob: validateDob(form.dob),
     phone: validatePhone(form.phone),
     street1: validateStreet1(form.street1),
     street2: validateStreet2(form.street2),
@@ -133,19 +244,35 @@ export function profileFormState(form) {
     country: validateCountry(form.state, form.country),
     postal: validatePostal(form.postal),
   };
+
+  if (isEntity) {
+    dto.entityName = validateEntityName(form.entityName);
+    dto.entityType = validateEntityType(form.entityType);
+    dto.ein = validateEIN(form.ein);
+  } else {
+    dto.dob = validateDob(form.dob);
+  }
+
+  return dto;
 }
 
-export function isProfileFormValid(formState) {
-  return (
+export function isProfileFormValid(formState, isEntity = false) {
+  const baseValidity =
     formState.firstName.valid &&
     formState.lastName.valid &&
-    formState.dob.valid &&
     formState.phone.valid &&
     formState.street1.valid &&
     formState.street2.valid &&
     formState.city.valid &&
     formState.state.valid &&
     formState.country.valid &&
-    formState.postal.valid
-  );
+    formState.postal.valid;
+
+  const otherValidity = isEntity
+    ? formState.entityName.valid &&
+      formState.entityType.valid &&
+      formState.ein.valid
+    : formState.dob.valid;
+
+  return baseValidity && otherValidity;
 }
