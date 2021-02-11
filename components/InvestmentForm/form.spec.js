@@ -546,6 +546,7 @@ describe("Investment Form", () => {
       securityType: "Equity",
       pricePerShare: 100,
       minShares: 1,
+      ssnRequired: false,
     };
 
     const investment = {
@@ -563,6 +564,25 @@ describe("Investment Form", () => {
       attestations: { valid: true },
       ssn: { valid: true },
     };
+
+    it("valid investment form (checking SSN requirements)", () => {
+      expect(
+        investmentForm(user, { ...offering, ssnRequired: true }, investment)
+      ).toEqual(formState);
+    });
+
+    it("invalid investment form (checking SSN requirements)", () => {
+      expect(
+        investmentForm(
+          user,
+          { ...offering, ssnRequired: true },
+          { ...investment, ssn: "000-00-0000" }
+        )
+      ).toEqual({
+        ...formState,
+        ssn: { valid: false, message: "Invalid SSN." },
+      });
+    });
 
     it("valid investment form (non-entity)", () => {
       const form = investmentForm(user, offering, investment);
@@ -822,6 +842,8 @@ describe("Investment Form", () => {
     });
 
     it("invalid when user is Individual and country is USA", () => {
+      expect(validateSSN(null).valid).toBeFalsy();
+      expect(validateSSN(undefined).valid).toBeFalsy();
       expect(validateSSN("000-00-0000").valid).toBeFalsy();
       expect(validateSSN("000-00-0000", "USA", false).valid).toBeFalsy();
       expect(validateSSN("666-66-6666").valid).toBeFalsy();
