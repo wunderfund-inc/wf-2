@@ -22,6 +22,7 @@ import {
   validateExpiry,
   validateMethodDetails,
   validateCreditCard,
+  validateSSN,
 } from "./form";
 
 describe("Investment Form", () => {
@@ -492,6 +493,7 @@ describe("Investment Form", () => {
       method: { valid: true },
       methodDetails: { valid: true },
       attestations: { valid: true },
+      ssn: { valid: true },
     };
 
     it("invalid form state", () => {
@@ -519,6 +521,12 @@ describe("Investment Form", () => {
           attestations: { valid: false },
         })
       ).toBe(false);
+      expect(
+        isFormValid({
+          ...formState,
+          ssn: { valid: false },
+        })
+      ).toBe(false);
     });
 
     it("valid form state", () => {
@@ -531,6 +539,7 @@ describe("Investment Form", () => {
       annualIncome: 0,
       netWorth: 0,
       isEntity: false,
+      country: "USA",
     };
 
     const offering = {
@@ -544,6 +553,7 @@ describe("Investment Form", () => {
       method: "CHECK",
       methodDetails: null,
       attestations: ["asdf", "asdf", "asdf", "asdf", "asdf"],
+      ssn: "856-88-4512",
     };
 
     const formState = {
@@ -551,6 +561,7 @@ describe("Investment Form", () => {
       method: { valid: true },
       methodDetails: { valid: true },
       attestations: { valid: true },
+      ssn: { valid: true },
     };
 
     it("valid investment form (non-entity)", () => {
@@ -566,10 +577,12 @@ describe("Investment Form", () => {
       };
       const form = investmentForm(accreditedUser, offering, investment);
       expect(form).toEqual(formState);
+    });
 
+    it("valid investment form (mega-rich person)", () => {
       const accreditedUser2 = {
         annualIncome: 10000000,
-        netWorth: 6000000,
+        netWorth: 60000000,
         isEntity: false,
       };
       const form2 = investmentForm(accreditedUser2, offering, investment);
@@ -703,6 +716,58 @@ describe("Investment Form", () => {
         },
       });
     });
+
+    it("valid form if not from USA", () => {
+      expect(
+        investmentForm(
+          { ...user, country: "UKR", isEntity: false },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "", country: "UKR", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "", country: "UKR", isEntity: false },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm({ ...user, country: "UKR" }, offering, investment)
+      ).toEqual(formState);
+    });
+
+    it("valid form if Entity", () => {
+      expect(
+        investmentForm({ ...user, isEntity: true }, offering, investment)
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, country: "UKR", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "000-00-0000", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+    });
   });
 
   describe("Validate relationship of user/offering to amount invested", () => {
@@ -726,6 +791,41 @@ describe("Investment Form", () => {
           investment_minimum: 23,
         })
       ).toEqual(false);
+    });
+  });
+
+  describe("Validate SSN from input", () => {
+    it("valid when user is Individual and country is USA", () => {
+      expect(validateSSN("856-45-6789").valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "USA").valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "USA", false).valid).toBeTruthy();
+    });
+
+    it("valid when user is Individual and country is not USA", () => {
+      expect(validateSSN("856-45-6789", "UKR", false).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity, regardless of country", () => {
+      expect(validateSSN("856-45-6789", "AAA", true).valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "000", true).valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "***", true).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity and country is USA", () => {
+      expect(validateSSN("856-45-6789", "USA", true).valid).toBeTruthy();
+      expect(validateSSN("000-00-0000", "USA", true).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity and country is not USA", () => {
+      expect(validateSSN("856-45-6789", "AAA", true).valid).toBeTruthy();
+      expect(validateSSN("000-00-0000", "AAA", true).valid).toBeTruthy();
+    });
+
+    it("invalid when user is Individual and country is USA", () => {
+      expect(validateSSN("000-00-0000").valid).toBeFalsy();
+      expect(validateSSN("000-00-0000", "USA", false).valid).toBeFalsy();
+      expect(validateSSN("666-66-6666").valid).toBeFalsy();
+      expect(validateSSN("666-66-6666", "USA", false).valid).toBeFalsy();
     });
   });
 });

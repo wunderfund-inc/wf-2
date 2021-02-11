@@ -103,41 +103,43 @@ export function isFormValid(form) {
   const validMethod = form.method.valid;
   const validMethodDetails = form.methodDetails.valid;
   const validAttestations = form.attestations.valid;
-  return validAmount && validMethod && validMethodDetails && validAttestations;
+  const validSSN = form.ssn.valid;
+  return (
+    validAmount &&
+    validMethod &&
+    validMethodDetails &&
+    validAttestations &&
+    validSSN
+  );
 }
 
 export function investmentForm(user, offering, form) {
-  const { annualIncome, netWorth } = user;
+  const { annualIncome, netWorth, country, isEntity } = user;
   const { securityType } = offering;
-  const { amount, method, methodDetails, attestations } = form;
+  const { amount, method, methodDetails, attestations, ssn } = form;
   const spendPool = calculateSpendPool(annualIncome, netWorth);
 
-  if (securityType === "Equity") {
-    return {
-      amount: validateEquityAmount(
-        amount,
-        offering.minShares,
-        offering.pricePerShare,
-        spendPool,
-        method
-      ),
-      method: amongst(method),
-      methodDetails: validateMethodDetails(method, methodDetails),
-      attestations: allAgreed(attestations),
-    };
-  } else {
-    return {
-      amount: validateNonEquityAmount(
-        amount,
-        offering.minimumInvestmentAmount,
-        spendPool,
-        method
-      ),
-      method: amongst(method),
-      methodDetails: validateMethodDetails(method, methodDetails),
-      attestations: allAgreed(attestations),
-    };
-  }
+  return {
+    amount:
+      securityType === "Equity"
+        ? validateEquityAmount(
+            amount,
+            offering.minShares,
+            offering.pricePerShare,
+            spendPool,
+            method
+          )
+        : validateNonEquityAmount(
+            amount,
+            offering.minimumInvestmentAmount,
+            spendPool,
+            method
+          ),
+    method: amongst(method),
+    methodDetails: validateMethodDetails(method, methodDetails),
+    attestations: allAgreed(attestations),
+    ssn: validateSSN(ssn, country, isEntity),
+  };
 }
 
 export function amongst(method) {
@@ -296,4 +298,10 @@ export function canInvest(user, offering) {
   const spendPool = calculateSpendPool(user.annualIncome, user.netWorth);
   const min = offering.investment_minimum * offering.pps;
   return spendPool >= min;
+}
+
+export function validateSSN(val, country = "USA", isEntity = false) {
+  const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
+  if (isEntity || country !== "USA" || regex.test(val)) return { valid: true };
+  return { valid: false, message: "Invalid SSN." };
 }
