@@ -298,6 +298,43 @@
                 </div>
               </b-form-group>
 
+              <div v-if="form.method === 'CC'">
+                <hr />
+                <h4 class="alert-heading pt-1">A note about credit cards:</h4>
+                <p>
+                  Federal Regulations limit the extent to which you can make
+                  investments with borrowed money. Additionally, investing with
+                  a Credit Card comes with inherent
+                  <a
+                    href="https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-19"
+                    target="_blank"
+                    >risks</a
+                  >
+                  you should be aware of before making this investment. Because
+                  of these limits, most banks have blocked the ability to use a
+                  Credit Card on an Investment Crowdfunding portal, such as
+                  <a href="/" target="_blank">ours</a>.
+                </p>
+                <p>
+                  If you have issues with your Credit Card, please consider
+                  another option for your investment or contact us at
+                  <a href="mailto:taylor@wunderfund.co" target="_blank"
+                    >taylor@wunderfund.co</a
+                  >
+                  so we can answer your questions.
+                </p>
+
+                <h4 class="alert-heading pt-1">Also note:</h4>
+                <p>
+                  When investing with a credit card, please note in your bank
+                  statements that it will be under the title
+                  <b>"NORTHSTAR"</b> (via our transfer agent) so you don't
+                  cancel it by mistake.
+                </p>
+              </div>
+
+              <hr class="py-2" />
+
               <div v-if="form.method === 'ACH'" class="form-group mb-0">
                 <div class="form-row">
                   <div class="col-12 col-md-6">
