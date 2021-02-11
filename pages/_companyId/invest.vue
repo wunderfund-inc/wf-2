@@ -29,6 +29,10 @@ import InvestmentForm from "@/components/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
 import { db } from "../../plugins/firebase";
+import {
+  isProfileFormValid,
+  profileFormState,
+} from "~/components/ProfileForm/form";
 
 export default {
   middleware: ["authenticated"],
@@ -65,6 +69,10 @@ export default {
         firstName: userData.first_name,
         lastName: userData.last_name,
         entityName: userData.entity_name,
+        entityType: userData.entity_type,
+        ein: userData.entity_ein,
+        dob: userData.dob,
+        phone: userData.phone,
         street1: userData.address_street_1,
         street2: userData.address_street_2,
         city: userData.address_city,
@@ -74,6 +82,10 @@ export default {
         avatar: userData.avatar,
         accountId: userData.transact_api_account_id,
       };
+
+      if (!isProfileFormValid(profileFormState(user))) {
+        return redirect(`/${companyId}/verify`);
+      }
 
       return { user, company, offering };
     } catch (e) {

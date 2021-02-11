@@ -412,7 +412,12 @@ export default {
         }
 
         await db.collection("users").doc(this.user.uid).update(dto);
-        window.location.replace("/account?action=profileupdated");
+
+        const urlString = this.$route.params.companyId
+          ? `/${this.$route.params.companyId}/invest`
+          : "/account?action=profile-updated";
+
+        return window.location.replace(urlString);
       } catch (error) {
         this.error = error.message;
       }

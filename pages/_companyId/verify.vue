@@ -6,27 +6,14 @@
           <h1 class="text-center pb-5">Before you start investing...</h1>
           <b-jumbotron class="p-4">
             <template #lead>
-              <span v-if="!validProfile">
-                We need this form filled out to sign the agreement.
-              </span>
-              <span v-else>
-                Check/update the information below before continuing:
-              </span>
+              <span>You will need this information to sign an agreement.</span>
+              <small>
+                Please make sure you fill in this form as if you're filing your
+                taxes.
+              </small>
             </template>
-            <profile-form>
-              <div class="form-row">
-                <div class="col">
-                  <b-button
-                    :disabled="submitting"
-                    variant="success"
-                    class="px-4"
-                    @click.prevent="submit"
-                  >
-                    {{ submitting ? "Updating..." : "Continue" }}
-                  </b-button>
-                </div>
-              </div>
-            </profile-form>
+            <hr />
+            <ProfileForm :user="user" />
           </b-jumbotron>
         </div>
       </div>
@@ -35,47 +22,17 @@
 </template>
 
 <script>
-import ProfileForm from "@/components/Form/Profile/ProfileForm";
+import { db } from "@/plugins/firebase";
+import ProfileForm from "@/components/ProfileForm";
 
 export default {
   middleware: ["authenticated"],
   components: { ProfileForm },
-  async asyncData({ store, redirect, route }) {
-    const emailVerified = store.state.auth.emailVerified;
-    if (!emailVerified) return redirect(`/account`);
-
+  async asyncData({ store }) {
     const userId = store.state.auth.userId;
-    await store.dispatch("profile/fetch", userId);
-
-    if (!store.getters["profile/validAttestations"]) {
-      return redirect("/auth/attest");
-    }
-
-    if (store.getters["profile/valid"]) {
-      return redirect(`/${route.params.companyId}/invest`);
-    }
-  },
-  data() {
-    return {
-      submitting: false,
-    };
-  },
-  computed: {
-    validProfile() {
-      return this.$store.getters["profile/valid"];
-    },
-  },
-  methods: {
-    async submit() {
-      this.submitting = true;
-
-      await this.$store.dispatch("profile/update", {
-        userId: this.$store.state.auth.userId,
-        flag: "profile",
-      });
-
-      await this.$router.push(`/${this.$route.params.companyId}/invest`);
-    },
+    const userRef = await db.collection("users").doc(userId).get();
+    const userData = userRef.data();
+    return { user: userData };
   },
 };
 </script>
