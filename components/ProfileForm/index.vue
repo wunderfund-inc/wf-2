@@ -129,6 +129,9 @@
             data-form-dob
             required
           />
+          <small class="form-text text-muted">
+            Must be 18 or older to invest on this platform.
+          </small>
           <small
             v-if="!validatedForm.dob.valid"
             class="form-text text-danger pt-1"
@@ -409,7 +412,7 @@ export default {
         }
 
         await db.collection("users").doc(this.user.uid).update(dto);
-        window.location.replace("/account");
+        window.location.replace("/account?action=profileupdated");
       } catch (error) {
         this.error = error.message;
       }
