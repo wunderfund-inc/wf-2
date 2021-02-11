@@ -115,7 +115,7 @@ export function isFormValid(form) {
 
 export function investmentForm(user, offering, form) {
   const { annualIncome, netWorth, country, isEntity } = user;
-  const { securityType } = offering;
+  const { securityType, ssnRequired } = offering;
   const { amount, method, methodDetails, attestations, ssn } = form;
   const spendPool = calculateSpendPool(annualIncome, netWorth);
 
@@ -138,7 +138,7 @@ export function investmentForm(user, offering, form) {
     method: amongst(method),
     methodDetails: validateMethodDetails(method, methodDetails),
     attestations: allAgreed(attestations),
-    ssn: validateSSN(ssn, country, isEntity),
+    ssn: ssnRequired ? validateSSN(ssn, country, isEntity) : { valid: true },
   };
 }
 
