@@ -75,7 +75,6 @@
               class="font-weight-bolder"
             >
               <b-dropdown-item to="/account">Dashboard</b-dropdown-item>
-              <b-dropdown-item to="/account/profile">Profile</b-dropdown-item>
               <b-dropdown-item to="/account/accreditation">
                 Accreditation
               </b-dropdown-item>
