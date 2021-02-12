@@ -317,10 +317,10 @@
                 </p>
                 <p>
                   If you have issues with your Credit Card, please consider
-                  another option for your investment or contact us at
-                  <a href="mailto:taylor@wunderfund.co" target="_blank"
-                    >taylor@wunderfund.co</a
-                  >
+                  another option for your investment or
+                  <a href="mailto:taylor@wunderfund.co" target="_blank">
+                    contact us
+                  </a>
                   so we can answer your questions.
                 </p>
 
@@ -328,8 +328,11 @@
                 <p>
                   When investing with a credit card, please note in your bank
                   statements that it will be under the title
-                  <b>"NORTHSTAR"</b> (via our transfer agent) so you don't
-                  cancel it by mistake.
+                  <b>"NORTHSTAR"</b> (via our
+                  <a href="https://www.northcapital.com" target="_blank">
+                    transfer agent
+                  </a>
+                  ) so you don't cancel it by mistake.
                 </p>
               </div>
 
