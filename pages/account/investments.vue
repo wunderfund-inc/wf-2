@@ -11,12 +11,6 @@
             Dashboard
           </NuxtLink>
           <NuxtLink
-            to="/account/profile"
-            class="list-group-item list-group-item-action"
-          >
-            Profile
-          </NuxtLink>
-          <NuxtLink
             to="/account/accreditation"
             class="list-group-item list-group-item-action"
           >

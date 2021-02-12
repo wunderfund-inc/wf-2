@@ -11,12 +11,6 @@
             Dashboard
           </NuxtLink>
           <NuxtLink
-            to="/account/profile"
-            class="list-group-item list-group-item-action"
-          >
-            Profile
-          </NuxtLink>
-          <NuxtLink
             to="/account/accreditation"
             :class="`list-group-item list-group-item-action list-group-item-${color}`"
           >
@@ -50,18 +44,19 @@
                 >
                   SEC standards
                 </b-link>
-                if you want to invest more than $2,200 annually on our platform,
-                you're required to let us know that you qualify. Fill out the
-                information below to update how much you're allowed to spend on
-                our platform.
+                if you want to invest more than $2,200 annually, you're required
+                to let us know that you qualify. Fill out the information below
+                to update how much you're allowed to spend on our platform.
               </p>
               <p v-if="isEntity" class="small text-muted">
-                *Your Entity is considered "accredited" if its Combined Revenue
-                exceeds $1M <b>and</b> its Net Assets exceeds $5M.
+                *Your Entity is considered "<strong>accredited</strong>" if its
+                Combined Revenue exceeds $1M <b>and</b> its Net Assets exceeds
+                $5M.
               </p>
               <p v-else class="small text-muted">
-                *You are considered an "accredited investor" if your Annual
-                Income exceeds $200K <b>and</b> your Net Worth is over $1M.
+                *You are considered an "<strong>accredited investor</strong>" if
+                your Annual Income exceeds $200K <strong>and</strong> your Net
+                Worth is over $1M.
               </p>
               <hr />
 
