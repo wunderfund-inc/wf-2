@@ -8,11 +8,11 @@
         <b-navbar-toggle target="collapse"></b-navbar-toggle>
         <b-collapse id="collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item to="/raise-capital" class="mx-3">
+            <b-nav-item to="/raise-capital" class="mx-md-3">
               Raise Capital
             </b-nav-item>
 
-            <b-nav-item-dropdown text="FAQs" class="mx-3">
+            <b-nav-item-dropdown text="FAQs" class="mx-3 d-none d-md-flex">
               <b-dropdown-item to="/faq/general">General</b-dropdown-item>
               <b-dropdown-item to="/faq/companies">
                 On Fundraising
@@ -22,7 +22,7 @@
               </b-dropdown-item>
             </b-nav-item-dropdown>
 
-            <b-nav-item-dropdown text="Legal" class="mx-3">
+            <b-nav-item-dropdown text="Legal" class="mx-3 d-none d-md-flex">
               <b-dropdown-item to="/legal/terms-of-use">
                 Terms of Use
               </b-dropdown-item>
@@ -70,16 +70,22 @@
             </div>
           </b-navbar-nav>
           <b-navbar-nav v-if="loggedIn" class="ml-auto d-none d-md-flex">
-            <b-nav-item
-              to="/account"
-              active-class="font-weight-bolder"
-              class="px-md-3"
+            <b-nav-item-dropdown
+              :text="`Account (${email})`"
+              class="font-weight-bolder"
             >
-              Account
-            </b-nav-item>
-            <b-nav-item to="/" class="px-md-3" @click="logout">
-              Logout
-            </b-nav-item>
+              <b-dropdown-item to="/account">Dashboard</b-dropdown-item>
+              <b-dropdown-item to="/account/accreditation">
+                Accreditation
+              </b-dropdown-item>
+              <b-dropdown-item to="/account/investments">
+                Investments
+              </b-dropdown-item>
+              <b-dropdown-item to="/account/settings">
+                Settings
+              </b-dropdown-item>
+              <b-dropdown-item to="/" @click="logout">Logout</b-dropdown-item>
+            </b-nav-item-dropdown>
           </b-navbar-nav>
           <b-navbar-nav v-else class="ml-auto d-none d-md-flex">
             <b-nav-item
@@ -111,6 +117,9 @@ export default {
     PlatformLogo,
   },
   computed: {
+    email() {
+      return this.$store.state.auth.email;
+    },
     loggedIn() {
       return !!this.$store.state.auth.email;
     },

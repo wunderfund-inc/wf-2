@@ -22,6 +22,7 @@ import {
   validateExpiry,
   validateMethodDetails,
   validateCreditCard,
+  validateSSN,
 } from "./form";
 
 describe("Investment Form", () => {
@@ -134,9 +135,10 @@ describe("Investment Form", () => {
       });
 
       it("invalid account numbers", () => {
-        const error = validationError("Invalid account number.");
-        expect(validateAchAccount("12")).toEqual(error);
-        expect(validateAchAccount("123456789012345678")).toEqual(error);
+        expect(validateAchAccount(null).valid).toBeFalsy();
+        expect(validateAchAccount(undefined).valid).toBeFalsy();
+        expect(validateAchAccount("12").valid).toBeFalsy();
+        expect(validateAchAccount("123456789012345678").valid).toBeFalsy();
       });
 
       it("valid account numbers", () => {
@@ -191,6 +193,8 @@ describe("Investment Form", () => {
         expect(validateCardNumber("378282246310005")).toEqual(amexError);
         expect(validateCardNumber("371449635398431")).toEqual(amexError);
         expect(validateCardNumber("378734493671000")).toEqual(amexError);
+        expect(validateCardNumber(null).valid).toBeFalsy();
+        expect(validateCardNumber(undefined).valid).toBeFalsy();
       });
 
       it("valid Cardholder Number", () => {
@@ -206,17 +210,15 @@ describe("Investment Form", () => {
       });
 
       it("invalid Expiry Month", () => {
-        const typeError = validationError("Must be of type String.");
-        const isBetweenError = validationError("Must be between 01 and 12.");
-
-        expect(validateExpiryMonth(null)).toEqual({ valid: false });
-        expect(validateExpiryMonth(undefined)).toEqual({ valid: false });
-        expect(validateExpiryMonth(0)).toEqual({ valid: false });
-        expect(validateExpiryMonth(1)).toEqual(typeError);
-        expect(validateExpiryMonth(10)).toEqual(typeError);
-        expect(validateExpiryMonth("0")).toEqual(isBetweenError);
-        expect(validateExpiryMonth("00")).toEqual(isBetweenError);
-        expect(validateExpiryMonth("13")).toEqual(isBetweenError);
+        expect(validateExpiryMonth(null).valid).toBeFalsy();
+        expect(validateExpiryMonth(undefined).valid).toBeFalsy();
+        expect(validateExpiryMonth("0A").valid).toBeFalsy();
+        expect(validateExpiryMonth(0).valid).toBeFalsy();
+        expect(validateExpiryMonth(1).valid).toBeFalsy();
+        expect(validateExpiryMonth(10).valid).toBeFalsy();
+        expect(validateExpiryMonth("0").valid).toBeFalsy();
+        expect(validateExpiryMonth("00").valid).toBeFalsy();
+        expect(validateExpiryMonth("13").valid).toBeFalsy();
       });
 
       it("valid Expiry Month", () => {
@@ -235,22 +237,23 @@ describe("Investment Form", () => {
       });
 
       it("invalid Expiry Year", () => {
-        const error = validationError("Invalid expiry year.");
-        const typeError = validationError("Must be of type String.");
-
-        expect(validateExpiryYear("20")).toEqual(error);
-        expect(validateExpiryYear(21)).toEqual(typeError);
+        expect(validateExpiryYear(null).valid).toBeFalsy();
+        expect(validateExpiryYear(undefined).valid).toBeFalsy();
+        expect(validateExpiryYear("20").valid).toBeFalsy();
+        expect(validateExpiryYear(20).valid).toBeFalsy();
       });
 
       it("valid Expiry Year", () => {
         const year = new Date().getFullYear() % 100;
-        expect(validateExpiryYear(String(year))).toEqual(success);
+        expect(validateExpiryYear(String(year)).valid).toBeTruthy();
+        expect(validateExpiryYear(21).valid).toBeTruthy();
       });
 
       it("invalid CVV", () => {
-        const error = validationError("Invalid CVV number.");
-        expect(validateCVV("12")).toEqual(error);
-        expect(validateCVV("1234")).toEqual(error);
+        expect(validateCVV(null).valid).toBeFalsy();
+        expect(validateCVV(undefined).valid).toBeFalsy();
+        expect(validateCVV("12").valid).toBeFalsy();
+        expect(validateCVV("1234").valid).toBeFalsy();
       });
 
       it("valid CVV", () => {
@@ -258,41 +261,38 @@ describe("Investment Form", () => {
       });
 
       it("invalid expiry combination (month and year)", () => {
-        expect(validateExpiry(12, 20)).toEqual({
-          valid: false,
-          message: "Must be of type String.",
-        });
-        expect(validateExpiry("12", "20")).toEqual({
-          valid: false,
-          message: "Invalid expiry year.",
-        });
+        expect(validateExpiry(12, 20).valid).toBeFalsy();
+        expect(validateExpiry("01", "21").valid).toBeFalsy();
+        expect(validateExpiry("12", "20").valid).toBeFalsy();
       });
 
       it("valid expiry combination (month and year)", () => {
-        expect(validateExpiry("12", "99")).toEqual({ valid: true });
+        expect(validateExpiry("12", "99").valid).toBeTruthy();
       });
     });
   });
 
   describe("Attestations", () => {
-    const error = validationError(
-      "You must agree to all attestations before investing."
-    );
-
     it("is invalid if not every checkbox is checked", () => {
-      const attestations = ["attestation 1", "attestation 2", "attestation 3"];
-      expect(allAgreed(attestations)).toEqual(error);
-      attestations.push("attestation 4");
-      expect(allAgreed(attestations)).toEqual(error);
-      const attestations2 = [null, "asdf", "asdf", "asdf"];
-      expect(allAgreed(attestations2)).toEqual(error);
-      const attestations3 = [undefined, "asdf", "asdf", "asdf"];
-      expect(allAgreed(attestations3)).toEqual(error);
+      expect(allAgreed().valid).toBeFalsy();
+      expect(
+        allAgreed(["attestation 1", "attestation 2", "attestation 3"]).valid
+      ).toBeFalsy();
+      expect(
+        allAgreed([
+          "attestation 1",
+          "attestation 2",
+          "attestation 3",
+          "attestation 4",
+        ]).valid
+      ).toBeFalsy();
+      expect(allAgreed([null, "asdf", "asdf", "asdf"]).valid).toBeFalsy();
+      expect(allAgreed([undefined, "asdf", "asdf", "asdf"]).valid).toBeFalsy();
     });
 
     it("is valid if every checkbox is checked", () => {
       const attestations = ["att 1", "att 2", "att 3", "att 4", "att 5"];
-      expect(allAgreed(attestations)).toEqual(success);
+      expect(allAgreed(attestations).valid).toBeTruthy();
     });
   });
 
@@ -493,6 +493,7 @@ describe("Investment Form", () => {
       method: { valid: true },
       methodDetails: { valid: true },
       attestations: { valid: true },
+      ssn: { valid: true },
     };
 
     it("invalid form state", () => {
@@ -520,6 +521,12 @@ describe("Investment Form", () => {
           attestations: { valid: false },
         })
       ).toBe(false);
+      expect(
+        isFormValid({
+          ...formState,
+          ssn: { valid: false },
+        })
+      ).toBe(false);
     });
 
     it("valid form state", () => {
@@ -532,12 +539,14 @@ describe("Investment Form", () => {
       annualIncome: 0,
       netWorth: 0,
       isEntity: false,
+      country: "USA",
     };
 
     const offering = {
       securityType: "Equity",
       pricePerShare: 100,
       minShares: 1,
+      ssnRequired: false,
     };
 
     const investment = {
@@ -545,6 +554,7 @@ describe("Investment Form", () => {
       method: "CHECK",
       methodDetails: null,
       attestations: ["asdf", "asdf", "asdf", "asdf", "asdf"],
+      ssn: "856-88-4512",
     };
 
     const formState = {
@@ -552,11 +562,51 @@ describe("Investment Form", () => {
       method: { valid: true },
       methodDetails: { valid: true },
       attestations: { valid: true },
+      ssn: { valid: true },
     };
+
+    it("valid investment form (checking SSN requirements)", () => {
+      expect(
+        investmentForm(user, { ...offering, ssnRequired: true }, investment)
+      ).toEqual(formState);
+    });
+
+    it("invalid investment form (checking SSN requirements)", () => {
+      expect(
+        investmentForm(
+          user,
+          { ...offering, ssnRequired: true },
+          { ...investment, ssn: "000-00-0000" }
+        )
+      ).toEqual({
+        ...formState,
+        ssn: { valid: false, message: "Invalid SSN." },
+      });
+    });
 
     it("valid investment form (non-entity)", () => {
       const form = investmentForm(user, offering, investment);
       expect(form).toEqual(formState);
+    });
+
+    it("valid investment form (accredited)", () => {
+      const accreditedUser = {
+        annualIncome: 1000000,
+        netWorth: 6000000,
+        isEntity: false,
+      };
+      const form = investmentForm(accreditedUser, offering, investment);
+      expect(form).toEqual(formState);
+    });
+
+    it("valid investment form (mega-rich person)", () => {
+      const accreditedUser2 = {
+        annualIncome: 10000000,
+        netWorth: 60000000,
+        isEntity: false,
+      };
+      const form2 = investmentForm(accreditedUser2, offering, investment);
+      expect(form2).toEqual(formState);
     });
 
     it("valid investment form (entity-based)", () => {
@@ -686,6 +736,58 @@ describe("Investment Form", () => {
         },
       });
     });
+
+    it("valid form if not from USA", () => {
+      expect(
+        investmentForm(
+          { ...user, country: "UKR", isEntity: false },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "", country: "UKR", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "", country: "UKR", isEntity: false },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm({ ...user, country: "UKR" }, offering, investment)
+      ).toEqual(formState);
+    });
+
+    it("valid form if Entity", () => {
+      expect(
+        investmentForm({ ...user, isEntity: true }, offering, investment)
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, country: "UKR", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+
+      expect(
+        investmentForm(
+          { ...user, ssn: "000-00-0000", isEntity: true },
+          offering,
+          investment
+        )
+      ).toEqual(formState);
+    });
   });
 
   describe("Validate relationship of user/offering to amount invested", () => {
@@ -709,6 +811,43 @@ describe("Investment Form", () => {
           investment_minimum: 23,
         })
       ).toEqual(false);
+    });
+  });
+
+  describe("Validate SSN from input", () => {
+    it("valid when user is Individual and country is USA", () => {
+      expect(validateSSN("856-45-6789").valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "USA").valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "USA", false).valid).toBeTruthy();
+    });
+
+    it("valid when user is Individual and country is not USA", () => {
+      expect(validateSSN("856-45-6789", "UKR", false).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity, regardless of country", () => {
+      expect(validateSSN("856-45-6789", "AAA", true).valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "000", true).valid).toBeTruthy();
+      expect(validateSSN("856-45-6789", "***", true).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity and country is USA", () => {
+      expect(validateSSN("856-45-6789", "USA", true).valid).toBeTruthy();
+      expect(validateSSN("000-00-0000", "USA", true).valid).toBeTruthy();
+    });
+
+    it("valid when user is Entity and country is not USA", () => {
+      expect(validateSSN("856-45-6789", "AAA", true).valid).toBeTruthy();
+      expect(validateSSN("000-00-0000", "AAA", true).valid).toBeTruthy();
+    });
+
+    it("invalid when user is Individual and country is USA", () => {
+      expect(validateSSN(null).valid).toBeFalsy();
+      expect(validateSSN(undefined).valid).toBeFalsy();
+      expect(validateSSN("000-00-0000").valid).toBeFalsy();
+      expect(validateSSN("000-00-0000", "USA", false).valid).toBeFalsy();
+      expect(validateSSN("666-66-6666").valid).toBeFalsy();
+      expect(validateSSN("666-66-6666", "USA", false).valid).toBeFalsy();
     });
   });
 });

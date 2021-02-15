@@ -28,6 +28,11 @@
 import InvestmentForm from "@/components/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
+import { db } from "../../plugins/firebase";
+import {
+  isProfileFormValid,
+  profileFormState,
+} from "~/components/ProfileForm/form";
 
 export default {
   middleware: ["authenticated"],
@@ -37,9 +42,6 @@ export default {
   },
   async asyncData({ redirect, route, $prismic, store, error }) {
     try {
-      const userId = store.state.auth.userId;
-      await store.dispatch("profile/fetch", userId);
-
       const companyId = route.params.companyId;
       const companyRef = await $prismic.api.getByUID("campaign", companyId);
       const company = companyRef.data;
@@ -56,21 +58,34 @@ export default {
         return redirect(`/${companyId}`);
       }
 
+      const userId = store.state.auth.userId;
+      const userRef = await db.collection("users").doc(userId).get();
+      const userData = userRef.data();
+
       const user = {
-        annualIncome: store.state.profile.accreditation_ai,
-        netWorth: store.state.profile.accreditation_nw,
-        isEntity: store.state.profile.is_entity,
-        firstName: store.state.profile.first_name,
-        lastName: store.state.profile.last_name,
-        entityName: store.state.profile.entity_name,
-        street1: store.state.profile.address_street_1,
-        street2: store.state.profile.address_street_2,
-        city: store.state.profile.address_city,
-        state: store.state.profile.address_state,
-        postal: store.state.profile.address_postal,
-        avatar: store.state.profile.avatar,
-        accountId: store.state.profile.transact_api_account_id,
+        annualIncome: userData.accreditation_ai,
+        netWorth: userData.accreditation_nw,
+        isEntity: userData.is_entity,
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        entityName: userData.entity_name,
+        entityType: userData.entity_type,
+        ein: userData.entity_ein,
+        dob: userData.dob,
+        phone: userData.phone,
+        street1: userData.address_street_1,
+        street2: userData.address_street_2,
+        city: userData.address_city,
+        state: userData.address_state,
+        country: userData.address_country,
+        postal: userData.address_postal,
+        avatar: userData.avatar,
+        accountId: userData.transact_api_account_id,
       };
+
+      if (!isProfileFormValid(profileFormState(user))) {
+        return redirect(`/${companyId}/verify`);
+      }
 
       return { user, company, offering };
     } catch (e) {

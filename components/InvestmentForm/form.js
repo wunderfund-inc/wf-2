@@ -1,4 +1,4 @@
-import { paymentMethods } from "./choices";
+import { months, paymentMethods } from "./choices";
 
 export const validationError = (message) => ({ valid: false, message });
 export const success = { valid: true };
@@ -59,9 +59,7 @@ export function validateNonEquityAmount(
   spendCapacity,
   method
 ) {
-  if (!amount) {
-    return { valid: false };
-  }
+  if (!amount) return { valid: false };
 
   if (amount > 5000 && method === "CC") {
     return {
@@ -70,15 +68,8 @@ export function validateNonEquityAmount(
     };
   }
 
-  const result = required(amount);
-  if (!result.valid) {
-    return result;
-  }
-
-  const result2 = minimumNonEquity(amount, minAmount);
-  if (!result2.valid) {
-    return result2;
-  }
+  const checkEquityAmount = minimumNonEquity(amount, minAmount);
+  if (!checkEquityAmount.valid) return checkEquityAmount;
 
   return canSpend(amount, spendCapacity);
 }
@@ -112,41 +103,43 @@ export function isFormValid(form) {
   const validMethod = form.method.valid;
   const validMethodDetails = form.methodDetails.valid;
   const validAttestations = form.attestations.valid;
-  return validAmount && validMethod && validMethodDetails && validAttestations;
+  const validSSN = form.ssn.valid;
+  return (
+    validAmount &&
+    validMethod &&
+    validMethodDetails &&
+    validAttestations &&
+    validSSN
+  );
 }
 
 export function investmentForm(user, offering, form) {
-  const { annualIncome, netWorth } = user;
-  const { securityType } = offering;
-  const { amount, method, methodDetails, attestations } = form;
+  const { annualIncome, netWorth, country, isEntity } = user;
+  const { securityType, ssnRequired } = offering;
+  const { amount, method, methodDetails, attestations, ssn } = form;
   const spendPool = calculateSpendPool(annualIncome, netWorth);
 
-  if (securityType === "Equity") {
-    return {
-      amount: validateEquityAmount(
-        amount,
-        offering.minShares,
-        offering.pricePerShare,
-        spendPool,
-        method
-      ),
-      method: amongst(method),
-      methodDetails: validateMethodDetails(method, methodDetails),
-      attestations: allAgreed(attestations),
-    };
-  } else {
-    return {
-      amount: validateNonEquityAmount(
-        amount,
-        offering.minimumInvestmentAmount,
-        spendPool,
-        method
-      ),
-      method: amongst(method),
-      methodDetails: validateMethodDetails(method, methodDetails),
-      attestations: allAgreed(attestations),
-    };
-  }
+  return {
+    amount:
+      securityType === "Equity"
+        ? validateEquityAmount(
+            amount,
+            offering.minShares,
+            offering.pricePerShare,
+            spendPool,
+            method
+          )
+        : validateNonEquityAmount(
+            amount,
+            offering.minimumInvestmentAmount,
+            spendPool,
+            method
+          ),
+    method: amongst(method),
+    methodDetails: validateMethodDetails(method, methodDetails),
+    attestations: allAgreed(attestations),
+    ssn: ssnRequired ? validateSSN(ssn, country, isEntity) : { valid: true },
+  };
 }
 
 export function amongst(method) {
@@ -162,12 +155,13 @@ export function allAgreed(attestations = []) {
     !attestations.every((el) => el.length > 0) ||
     attestations.length !== 5
   ) {
-    return validationError(
-      "You must agree to all attestations before investing."
-    );
+    return {
+      valid: false,
+      message: "You must agree to all attestations before investing.",
+    };
   }
 
-  return success;
+  return { valid: true };
 }
 
 export function validateAchAccount(account) {
@@ -208,101 +202,63 @@ export function validateAchRouting(routing) {
 
 export function validateCardName(name) {
   if (!name) return { valid: false };
-  if (!required(name).valid) return required(name);
-
   const regex = /^(?=.{2,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/g;
-
   if (name.length <= 1 || !regex.test(name)) {
     return validationError("Invalid cardholder name.");
   }
-
   return success;
 }
 
 export function validateExpiryMonth(month) {
-  if (!month) {
-    return { valid: false };
-  }
-
-  if (!required(month).valid) {
-    return required(month);
-  }
-
-  if (typeof month !== "string") {
-    return validationError("Must be of type String.");
-  }
-
-  if (Number(month) < 1 || Number(month) > 12) {
-    return validationError("Must be between 01 and 12.");
-  }
-
-  return success;
+  if (!month) return { valid: false };
+  const validMonths = months.map((month) => month.value);
+  if (month && validMonths.includes(month)) return { valid: true };
+  return { valid: false, message: "Invalid expiry month." };
 }
 
 export function validateExpiryYear(year) {
-  if (!year) {
-    return { valid: false };
-  }
-
-  if (typeof year !== "string") {
-    return validationError("Must be of type String.");
-  }
-
+  if (!year) return { valid: false };
   const thisYear = new Date().getFullYear();
-
-  if (2000 + Number(year) < thisYear) {
-    return validationError("Invalid expiry year.");
-  }
-
-  return success;
+  if (2000 + Number(year) >= thisYear) return { valid: true };
+  return { valid: false, message: "Invalid expiry year." };
 }
 
 export function validateExpiry(month, year) {
   if (!validateExpiryMonth(month).valid) return validateExpiryMonth(month);
   if (!validateExpiryYear(year).valid) return validateExpiryYear(year);
-
   const today = new Date();
   const expiry = new Date(`${2000 + Number(year)}-${month}`);
-  if (today > expiry) {
-    return { valid: false, message: "Card expired." };
-  }
+  if (today > expiry) return { valid: false, message: "Card expired." };
   return { valid: true };
 }
 
 export function validateCVV(number) {
-  if (!number) {
-    return { valid: false };
-  }
-
+  if (!number) return { valid: false };
   const regex = /^[0-9]{3}$/;
-
-  if (regex.test(number)) {
-    return success;
-  }
-
+  if (regex.test(number)) return success;
   return validationError("Invalid CVV number.");
 }
 
 export function validateCardNumber(number) {
-  const error = validationError(
-    "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
-  );
+  if (!number) return { valid: false };
 
   const amexError = validationError(
     "We do not accept American Express. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
   );
-
   const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
   const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
   const diRegex = /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
   const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
 
-  if (!number) return { valid: false };
-
   if (aeRegex.test(number)) return amexError;
   else if (viRegex.test(number)) return success;
   else if (mcRegex.test(number)) return success;
   else if (diRegex.test(number)) return success;
+
+  const error = validationError(
+    "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
+  );
+
   return error;
 }
 
@@ -342,4 +298,11 @@ export function canInvest(user, offering) {
   const spendPool = calculateSpendPool(user.annualIncome, user.netWorth);
   const min = offering.investment_minimum * offering.pps;
   return spendPool >= min;
+}
+
+export function validateSSN(val, country = "USA", isEntity = false) {
+  if (!val) return { valid: false };
+  const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
+  if (isEntity || country !== "USA" || regex.test(val)) return { valid: true };
+  return { valid: false, message: "Invalid SSN." };
 }

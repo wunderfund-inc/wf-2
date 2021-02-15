@@ -298,6 +298,46 @@
                 </div>
               </b-form-group>
 
+              <div v-if="form.method === 'CC'">
+                <hr />
+                <h4 class="alert-heading pt-1">A note about credit cards:</h4>
+                <p>
+                  Federal Regulations limit the extent to which you can make
+                  investments with borrowed money. Additionally, investing with
+                  a Credit Card comes with inherent
+                  <a
+                    href="https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-19"
+                    target="_blank"
+                    >risks</a
+                  >
+                  you should be aware of before making this investment. Because
+                  of these limits, most banks have blocked the ability to use a
+                  Credit Card on an Investment Crowdfunding portal, such as
+                  <a href="/" target="_blank">ours</a>.
+                </p>
+                <p>
+                  If you have issues with your Credit Card, please consider
+                  another option for your investment or
+                  <a href="mailto:taylor@wunderfund.co" target="_blank">
+                    contact us
+                  </a>
+                  so we can answer your questions.
+                </p>
+
+                <h4 class="alert-heading pt-1">Also note:</h4>
+                <p>
+                  When investing with a credit card, please note in your bank
+                  statements that it will be under the title
+                  <b>"NORTHSTAR"</b> (via our
+                  <a href="https://www.northcapital.com" target="_blank">
+                    transfer agent
+                  </a>
+                  ) so you don't cancel it by mistake.
+                </p>
+              </div>
+
+              <hr class="py-2" />
+
               <div v-if="form.method === 'ACH'" class="form-group mb-0">
                 <div class="form-row">
                   <div class="col-12 col-md-6">
@@ -474,6 +514,50 @@
             </div>
           </section>
 
+          <!-- Input: SSN (if from USA) -->
+          <section
+            v-if="
+              offering.ssn_required &&
+              validatedForm.methodDetails.valid &&
+              user.country === 'USA'
+            "
+            class="card bg-light mb-3"
+          >
+            <div class="container">
+              <div class="form-group mt-3">
+                <b-form-group
+                  label-cols-lg="6"
+                  label="Social Security Number:"
+                  label-size="lg"
+                  label-class="font-weight-bold pt-0"
+                  class="mb-0"
+                >
+                  <TheMask
+                    id="ssn"
+                    v-model="form.ssn"
+                    class="form-control"
+                    mask="###-##-####"
+                    :masked="true"
+                    placeholder="###-##-####"
+                    type="tel"
+                  />
+                  <small class="text-muted">
+                    Why are we asking for this? This company requires your SSN
+                    on your agreement to give you a K-1 Tax Form. This only
+                    applies for people who attested to living in the United
+                    States.
+                  </small>
+                  <b-form-invalid-feedback
+                    v-if="!validatedForm.ssn.valid"
+                    :state="validatedForm.ssn.valid"
+                  >
+                    {{ validatedForm.ssn.message }}
+                  </b-form-invalid-feedback>
+                </b-form-group>
+              </div>
+            </div>
+          </section>
+
           <!-- Input: attestations -->
           <section
             v-if="validatedForm.methodDetails.valid"
@@ -597,7 +681,9 @@
                       <br v-if="user.street2 && user.street2.length > 0" />
                       <span v-if="user.street2">{{ user.street2 }}</span>
                       <br />
-                      {{ `${user.city}, ${user.state} ${user.postal}` }}
+                      {{ `${user.city}, ${user.state} ${user.country}` }}
+                      <br />
+                      {{ user.postal }}
                     </address>
                   </div>
                 </div>
@@ -687,6 +773,7 @@ import {
   validateExpiryMonth,
   validateExpiryYear,
   validateCVV,
+  validateSSN,
 } from "./form";
 
 export default {
@@ -718,6 +805,7 @@ export default {
         methodDetails: {},
         attestations: [],
         testimonial: null,
+        ssn: null,
       },
       months,
       investmentId: null,
@@ -754,16 +842,16 @@ export default {
             pricePerShare: pps,
             minShares: investment_minimum,
             securityType: "Equity",
+            ssnRequired: this.offering.ssn_required,
           },
           this.form
         );
       } else {
-        // eslint-disable-next-line camelcase
-        const { minimum_investment_amount } = this.offering;
         return investmentForm(
           this.user,
           {
-            minimumInvestmentAmount: minimum_investment_amount,
+            minimumInvestmentAmount: this.offering.minimum_investment_amount,
+            ssnRequired: this.offering.ssn_required,
           },
           this.form
         );
@@ -804,6 +892,16 @@ export default {
     },
     validatedCVV() {
       return validateCVV(this.form.methodDetails.cvv);
+    },
+    validatedSSN() {
+      if (this.offering.ssn_required) {
+        return validateSSN(
+          this.form.ssn,
+          this.user.country,
+          this.user.is_entity
+        );
+      }
+      return { valid: true };
     },
     color() {
       switch (this.$config.PLATFORM) {
@@ -866,6 +964,7 @@ export default {
           user_last_name: this.user.lastName,
           user_avatar: this.user.avatar || null,
           user_tapi_account_id: this.user.accountId,
+          user_ssn: this.form.ssn,
         };
 
         if (this.form.method === "ACH") {
