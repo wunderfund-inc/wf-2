@@ -25,11 +25,17 @@
     </template>
 
     <template v-slot:cell(download)="data">
-      <div class="text-center">
-        <b-button size="sm" :disabled="data.item.loading" @click="view(data)">
-          <b-spinner v-if="data.item.loading" small />
-          <span v-else>Download</span>
-        </b-button>
+      <b-button
+        v-if="data.item.tradeId"
+        size="sm"
+        :disabled="data.item.loading"
+        @click="view(data)"
+      >
+        <b-spinner v-if="data.item.loading" small />
+        <span v-else>View Agreement</span>
+      </b-button>
+      <div v-else>
+        <p>Not uploaded (yet)</p>
       </div>
     </template>
   </b-table>
@@ -44,9 +50,9 @@ export default {
       fields: [
         { key: "purchaseDate", label: "Date Purchased" },
         { key: "companyName", label: "Company" },
-        { key: "amount", label: "Amount" },
+        "amount",
         "method",
-        { key: "download", label: "Download Agreement" },
+        { key: "download", label: "Agreement" },
       ],
       error: null,
     };

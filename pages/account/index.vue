@@ -36,9 +36,12 @@
           Profile information updated.
         </b-alert>
         <div class="card bg-light mb-4">
-          <h4 class="card-body pb-0">Heads Up!</h4>
-          <p class="card-body mb-0 py-0">
+          <h4 class="card-body pb-1">Heads Up!</h4>
+          <p class="card-body py-0">
             You will need everything below in order to invest on our platform.
+            Save some time by filling it out now!
+          </p>
+          <p class="card-body mb-0 py-0">
             Please fill this out as if you're filling out a tax form.
           </p>
           <hr />

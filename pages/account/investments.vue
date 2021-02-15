@@ -42,6 +42,16 @@
             <div v-else>No Investments to show.</div>
           </div>
         </div>
+        <div v-if="investments.length > 0" class="row text-center">
+          <div class="col">
+            <p>
+              Got any questions about your investments?
+              <a href="mailto:taylor@wunderfund.co" target="_blank">
+                Contact us!
+              </a>
+            </p>
+          </div>
+        </div>
       </article>
     </div>
   </main>
@@ -55,12 +65,10 @@ export default {
   components: {
     InvestmentsTable,
   },
-  async asyncData({ store, redirect, query }) {
+  async asyncData({ store, query }) {
     try {
       const { userId } = store.state.auth;
-      // await store.dispatch("profile/fetch", userId);
       await store.dispatch("investments/fetch", userId);
-
       return { investmentMade: !!query.event };
     } catch (error) {
       throw new Error(error);
