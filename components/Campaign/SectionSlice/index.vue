@@ -51,8 +51,15 @@
       <prismic-rich-text :field="content.primary.content_text" />
     </div>
 
-    <!-- TODO: Discuss with Marvin for this -->
-    <div v-else-if="content.slice_type === 'image_gallery'"></div>
+    <div v-else-if="content.slice_type === 'image_gallery'">
+      <img
+        v-for="(item, index) in content.items"
+        :key="index"
+        :src="item.gallery_image.url"
+        :alt="`gallery image ${index}`"
+        class="w-100"
+      />
+    </div>
 
     <div v-else-if="content.slice_type === 'faqs'">
       <h3 class="pb-2 pt-2 text-center text-md-left">FAQs</h3>
@@ -88,6 +95,7 @@
                 {{ employee.employee_role }}
               </small>
             </div>
+            <p class="text-justify">{{ employee.employee_description }}</p>
           </b-card>
         </b-card-group>
       </div>
