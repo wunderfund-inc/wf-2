@@ -832,6 +832,7 @@ export default {
             method: { valid: false },
             methodDetails: { valid: false },
             attestations: { valid: false },
+            ssn: { valid: false },
           };
         }
 
