@@ -9,13 +9,13 @@
 
     <div v-if="content.slice_type === 'double_image'">
       <div class="row no-gutters">
-        <div class="col">
+        <div class="col-12 col-md-6">
           <prismic-image
             :field="content.primary.left_image"
             class="mw-100 mb-3"
           />
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
           <prismic-image
             :field="content.primary.right_image"
             class="mw-100 mb-3"
@@ -26,19 +26,19 @@
 
     <div v-if="content.slice_type === 'triple_image'">
       <div class="row no-gutters">
-        <div class="col">
+        <div class="col-12 col-md-4">
           <prismic-image
             :field="content.primary.left_image"
             class="mw-100 mb-3"
           />
         </div>
-        <div class="col">
+        <div class="col-12 col-md-4">
           <prismic-image
             :field="content.primary.center_image"
             class="mw-100 mb-3"
           />
         </div>
-        <div class="col">
+        <div class="col-12 col-md-4">
           <prismic-image
             :field="content.primary.right_image"
             class="mw-100 mb-3"
