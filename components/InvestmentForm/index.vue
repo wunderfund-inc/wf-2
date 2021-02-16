@@ -328,7 +328,8 @@
                 <p>
                   When investing with a credit card, please note in your bank
                   statements that it will be under the title
-                  <b>"NORTHSTAR"</b> (via our
+                  <strong>"NORTHSTAR"</strong> or
+                  <strong>"NCPTLPRVTSEC"</strong> (via our
                   <a href="https://www.northcapital.com" target="_blank">
                     transfer agent
                   </a>
