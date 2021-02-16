@@ -998,6 +998,7 @@ export default {
           user_id: this.$store.state.auth.userId,
           investment_amount: this.form.amount,
           investment_id: this.investmentId,
+          ssn: this.form.ssn,
         };
 
         const url = await this.$axios.$post(`${domain}/${endpoint}`, payload);
