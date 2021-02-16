@@ -1,26 +1,26 @@
 <template>
-  <b-card bg-variant="light">
-    <h2>Current Investment Limit: {{ currentSpendPool | asCurrency }}</h2>
-    <h5 class="text-muted mb-0">
-      Annual Maximum Limit: {{ spendPoolMax | asCurrency }}
+  <div class="card bg-light mb-3">
+    <h2 class="card-body mb-0 pb-0">
+      Current Investment Limit: {{ (limit - spent) | asCurrency }}
+    </h2>
+    <h5 class="card-body text-muted mb-0">
+      Annual Maximum Limit: {{ limit | asCurrency }}
     </h5>
-  </b-card>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
-  computed: {
-    ...mapGetters({
-      spendPoolCurrent: "profile/spendPoolCurrent",
-      spendPoolMax: "profile/spendPoolMax",
-      spent: "investments/spent",
-    }),
-    currentSpendPool() {
-      const diff = this.spendPoolCurrent - this.spent;
-      if (diff < 0) return 0;
-      return diff;
+  props: {
+    limit: {
+      type: Number,
+      default: () => 0,
+      required: false,
+    },
+    spent: {
+      type: Number,
+      default: () => 0,
+      required: false,
     },
   },
 };

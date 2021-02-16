@@ -35,6 +35,7 @@
         <b-alert v-if="action === 'profile-updated'" show dismissible>
           Profile information updated.
         </b-alert>
+        <SectionSpendLimit :limit="limit" :spent="spent" />
         <div class="card bg-light mb-4">
           <h4 class="card-body pb-1">Heads Up!</h4>
           <p class="card-body py-0">
@@ -55,12 +56,15 @@
 </template>
 
 <script>
+import SectionSpendLimit from "@/components/Account/SectionSpendLimit";
 import ProfileForm from "@/components/ProfileForm";
-import { db } from "../../plugins/firebase";
+import { calculatePersonalLimit } from "@/helpers/finance";
+import { db } from "@/plugins/firebase";
 
 export default {
   middleware: ["authenticated"],
   components: {
+    SectionSpendLimit,
     ProfileForm,
   },
   async asyncData({ store }) {
@@ -68,7 +72,13 @@ export default {
       const { userId } = store.state.auth;
       const userDocument = await db.collection("users").doc(userId).get();
       const userData = userDocument.data();
-      return { user: userData };
+      const limit = calculatePersonalLimit(
+        userData.accreditation_ai || 0,
+        userData.accreditation_nw || 0
+      );
+      await store.dispatch("investments/fetch", userId);
+      const spent = store.getters["investments/spent"];
+      return { user: userData, limit, spent };
     } catch (error) {
       throw new Error(error);
     }
