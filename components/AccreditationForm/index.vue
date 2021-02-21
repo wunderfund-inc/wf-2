@@ -10,7 +10,7 @@
         >
           <vue-numeric
             id="annual-income"
-            v-model="ai"
+            v-model="form.annualIncome"
             currency="$"
             separator=","
             class="form-control"
@@ -25,7 +25,7 @@
         >
           <vue-numeric
             id="net-worth"
-            v-model="nw"
+            v-model="form.netWorth"
             currency="$"
             separator=","
             class="form-control"
@@ -44,29 +44,36 @@
 
 <script>
 import VueNumeric from "vue-numeric";
+import { db, timestamp } from "@/plugins/firebase";
 
 export default {
   components: { VueNumeric },
-  computed: {
+  props: {
     ai: {
-      get() {
-        return this.$store.state.accreditation.ai;
-      },
-      set(val) {
-        this.$store.dispatch("accreditation/setAttribute", { prop: "ai", val });
-      },
+      type: Number,
+      default: () => 0,
+      required: false,
     },
     nw: {
-      get() {
-        return this.$store.state.accreditation.nw;
-      },
-      set(val) {
-        this.$store.dispatch("accreditation/setAttribute", { prop: "nw", val });
-      },
+      type: Number,
+      default: () => 0,
+      required: false,
     },
-    isEntity() {
-      return this.$store.state.profile.is_entity;
+    isEntity: {
+      type: Boolean,
+      default: () => false,
+      required: false,
     },
+  },
+  data() {
+    return {
+      form: {
+        annualIncome: 0,
+        netWorth: 0,
+      },
+    };
+  },
+  computed: {
     color() {
       switch (this.$config.PLATFORM) {
         case "WFP":
@@ -79,18 +86,19 @@ export default {
     },
   },
   created() {
-    const {
-      accreditation_ai: ai,
-      accreditation_nw: nw,
-    } = this.$store.state.profile;
-    this.$store.dispatch("accreditation/setAttribute", { prop: "ai", val: ai });
-    this.$store.dispatch("accreditation/setAttribute", { prop: "nw", val: nw });
+    this.form.annualIncome = this.ai;
+    this.form.netWorth = this.nw;
   },
   methods: {
     async updateAccreditation() {
       const userId = this.$store.state.auth.userId;
-      await this.$store.dispatch("accreditation/update", userId);
-      await window.location.reload();
+      await db.collection("users").doc(userId).update({
+        accreditation_ai: this.form.annualIncome,
+        accreditation_nw: this.form.netWorth,
+        date_updated: timestamp,
+        flag: "update:accreditation",
+      });
+      window.location.replace("/account?action=accreditation_updated");
     },
   },
 };

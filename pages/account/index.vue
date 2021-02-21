@@ -32,6 +32,10 @@
       </aside>
 
       <article class="col-12 col-md-9 mb-3">
+        <b-alert v-if="action === 'accreditation_updated'" show dismissible>
+          Accreditation information updated. See below to check how much you may
+          invest on our platform.
+        </b-alert>
         <b-alert v-if="action === 'profile-updated'" show dismissible>
           Profile information updated.
         </b-alert>

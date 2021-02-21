@@ -60,7 +60,7 @@
               </p>
               <hr />
 
-              <AccreditationForm />
+              <AccreditationForm :is-entity="isEntity" :ai="ai" :nw="nw" />
             </b-card>
           </div>
         </div>
@@ -70,17 +70,29 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import AccreditationForm from "@/components/Form/Accreditation";
+import AccreditationForm from "@/components/AccreditationForm";
+import { db } from "@/plugins/firebase";
 
 export default {
   components: {
     AccreditationForm,
   },
+  async asyncData({ store }) {
+    try {
+      const { userId } = store.state.auth;
+      const userDocument = await db.collection("users").doc(userId).get();
+      const userData = userDocument.data();
+      const {
+        is_entity: isEntity,
+        accreditation_ai: ai,
+        accreditation_nw: nw,
+      } = userData;
+      return { user: userData, isEntity, ai, nw };
+    } catch (error) {
+      throw new Error(error);
+    }
+  },
   computed: {
-    ...mapState({
-      isEntity: (state) => state.profile.is_entity,
-    }),
     color() {
       switch (this.$config.PLATFORM) {
         case "WFP":
