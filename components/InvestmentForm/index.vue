@@ -967,6 +967,7 @@ export default {
           user_avatar: this.user.avatar || null,
           user_tapi_account_id: this.user.accountId,
           user_ssn: this.form.ssn,
+          user_phone: this.user.phone,
         };
 
         if (this.form.method === "ACH") {
