@@ -160,12 +160,19 @@
                       />
                     </div>
 
-                    <div
-                      v-if="!validatedForm.amount.valid"
-                      class="small text-danger text-right pt-2"
+                    <b-form-invalid-feedback
+                      :state="validatedForm.amount.valid"
                     >
                       {{ validatedForm.amount.message }}
-                    </div>
+                    </b-form-invalid-feedback>
+
+                    <b-form-text v-if="!validatedForm.amount.valid">
+                      If you're trying to invest more than the maximum annual
+                      limit per user ($2,200), you will need to first update
+                      your accreditation status. Please update it
+                      <nuxt-link to="/account/accreditation">here,</nuxt-link>
+                      in your account.
+                    </b-form-text>
 
                     <div class="row d-flex justify-content-between px-3 pt-3">
                       <h6>Price Per Share:</h6>
@@ -206,11 +213,20 @@
                         type="tel"
                       />
                     </b-input-group>
+
                     <b-form-invalid-feedback
                       :state="validatedForm.amount.valid"
                     >
                       {{ validatedForm.amount.message }}
                     </b-form-invalid-feedback>
+
+                    <b-form-text v-if="!validatedForm.amount.valid">
+                      If you're trying to invest more than the maximum annual
+                      limit per user ($2,200), you will need to first update
+                      your accreditation status. Please update it
+                      <nuxt-link to="/account/accreditation">here,</nuxt-link>
+                      in your account.
+                    </b-form-text>
                   </b-form-group>
                 </div>
               </div>
