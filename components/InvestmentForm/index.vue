@@ -98,9 +98,22 @@
                           </span>
                         </b-form-radio>
                         <small v-if="!canInvest(tier)" class="text-small">
-                          <nuxt-link to="/faq/investors">
+                          <a v-b-toggle.collapse-invest class="mt-2 mb-3">
                             Why can't I select this one?
-                          </nuxt-link>
+                          </a>
+                          <b-collapse id="collapse-invest" class="pt-3">
+                            <span class="text-muted">
+                              This class of security requires you to invest more
+                              than you've attested to be your annual limit. If
+                              you're trying to invest more than the maximum
+                              annual limit per user ($2,200), you will need to
+                              first update your accreditation status. Please
+                              update it
+                              <nuxt-link to="/account/accreditation">
+                                in your account.
+                              </nuxt-link>
+                            </span>
+                          </b-collapse>
                         </small>
                       </div>
 
