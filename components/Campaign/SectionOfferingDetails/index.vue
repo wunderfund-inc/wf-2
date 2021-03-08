@@ -83,14 +83,15 @@
 
     <template v-if="offering.security_type === 'Convertible Note'">
       <p>
-        {{ companyName }} is offering to pay you back the amount you invested in
-        them (at a <strong>{{ offering.interest_rate }}%</strong> interest
-        rate), but should it reach its minimum goal, your investment amount
-        instead converts to shares (at
+        {{ companyName }} is offering you a convertible note. The money you
+        invest will accrue interest at a rate of
+        <strong>{{ offering.interest_rate }}%</strong> until a
+        conversion-qualifying event when the investment + interest will convert
+        into equity ownership - shares of company stock - at a
+        <strong>{{ offering.discount_rate }}%</strong> discounted share price.
+        Additionally, the conversion share price will be capped at a maximum of
         <strong>{{ offering.price_per_share | asCurrency }}</strong
-        >/share) with a <strong>{{ offering.discount_rate }}%</strong> discount.
-        {{ companyName }} will then offer you <strong>equity</strong> ownership
-        instead.
+        >/share for investors that participate.
       </p>
     </template>
 
