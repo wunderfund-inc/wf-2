@@ -23,7 +23,7 @@ export default [
   {
     question: "What is the minimum and maximum amount I can invest?",
     answer:
-      "The minimum investment is typically $100. However, the minimum could be set higher by the issuer who launches the campaign. These will be disclosed on their offering page.",
+      "The minimum investment is typically $100. However, the minimum could be set higher by the issuer who launches the campaign. These will be disclosed on their offering page. The maximum investment amount allowable per year is determined by calculating 10% of your gross annual income or net worth (whichever is greater). You must complete your account accreditation in order for us to calculate the maximum investment amount. If you do not, the default maximum is set at $2,200 a year per Reg CF regulations set by the SEC.",
   },
   {
     question: "How are investments pre-vetted before being listed?",
