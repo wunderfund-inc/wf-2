@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import jwtDecode from "jwt-decode";
 import cookieParser from "cookieparser";
 

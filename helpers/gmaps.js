@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const API_KEY = "AIzaSyAb7_sg7JGnRjBreaSAmOxiz4LbjWL-7a0";
 const CALLBACK_NAME = "gmapsCallback";
 
