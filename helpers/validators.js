@@ -2,31 +2,9 @@
 import differenceInYears from "date-fns/differenceInYears";
 
 export const validPostal = (val) => {
-  if (val === null) return null;
+  // if (val === null) return null;
   const reg = /^[0-9]{5}(?:-[0-9]{4})?$/;
   return val === null ? val : reg.test(val);
-};
-
-export const validMethodExtras = (state) => {
-  if (state.selectedMethod === "ACH") {
-    const validAccountNumber = true;
-    const validRoutingNumber = true;
-
-    return validAccountNumber && validRoutingNumber;
-  } else if (state.selectedMethod === "CC") {
-    const regexCVV = /^[0-9]{3,4}$/;
-    const validCVV = regexCVV.test(state.cc.cvv);
-    const validMonth =
-      Number(state.cc.expiry.month) > 0 && Number(state.cc.expiry.month) < 13;
-    const validYear = state.cc.expiry.year === 20;
-
-    return validMonth && validYear && validCVV;
-  } else if (state.selectedMethod === "CRYPTO") {
-    const validEthereumAddress = true;
-
-    return validEthereumAddress;
-  }
-  return false;
 };
 
 export const validEmail = (email) => {
@@ -39,7 +17,7 @@ export const accredited = (ai = 0, nw = 0) => {
 };
 
 // TODO
-const isBetween = (n = 0, a = 0, b = 0) => (n - a) * (n - b) <= 0;
+export const isBetween = (n = 0, a = 0, b = 0) => (n - a) * (n - b) <= 0;
 
 export const validAchAccountNumber = (number) => {
   if (!number) return false;
@@ -57,7 +35,7 @@ const validName = (name) => {
   return name.length >= 3;
 };
 
-const validNumber = (number) => {
+export const validNumber = (number) => {
   const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
   const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
   const diRegex = /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
@@ -69,19 +47,19 @@ const validNumber = (number) => {
   return false;
 };
 
-const validMonth = (month) => {
+export const validMonth = (month = null) => {
   if (!month) return false;
   return month.length === 2 && isBetween(Number(month), 1, 12);
 };
 
-const validYear = (year) => {
+export const validYear = (year = null) => {
   if (!year) return false;
-  return year.length === 2 && Number(year) >= 20;
+  return year.length === 2 && Number(year) >= 21;
 };
 
-const validCVV = (cvv) => {
+export const validCVV = (cvv = null) => {
   if (!cvv) return false;
-  const regex = /^[0-9]{3,4}$/;
+  const regex = /^\d{3}$/;
   return regex.test(cvv);
 };
 

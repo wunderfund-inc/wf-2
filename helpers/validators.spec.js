@@ -1,13 +1,20 @@
 import {
-  validPostal,
-  validEmail,
   accredited,
+  endedAlready,
+  endingSoon,
+  isBetween,
+  oneYearPassed,
   validAchAccountNumber,
   validAchRoutingNumber,
-  validCreditCard,
-  validEthereumAddress,
   validAttestations,
-  oneYearPassed,
+  validCreditCard,
+  validCVV,
+  validEmail,
+  validEthereumAddress,
+  validMonth,
+  validNumber,
+  validPostal,
+  validYear,
 } from "./validators";
 
 describe("testing validator functions", () => {
@@ -18,7 +25,7 @@ describe("testing validator functions", () => {
     });
 
     it("test invalid values", () => {
-      const data = ["1234", 112, "12345-1"];
+      const data = ["1234", 112, "12345-1", null];
       data.forEach((el) => expect(validPostal(el)).toBeFalsy());
     });
   });
@@ -48,6 +55,7 @@ describe("testing validator functions", () => {
         { ai: 200000, nw: 1000000, expected: true },
       ];
       data.forEach((el) => expect(accredited(el.ai, el.nw)).toBe(el.expected));
+      expect(accredited()).toBe(false);
     });
   });
 
@@ -91,6 +99,10 @@ describe("testing validator functions", () => {
 
       it("Valid Credit Card", () => {
         expect(validCreditCard(dto)).toBe(true);
+        dto.number = "6011000000000004";
+        expect(validCreditCard(dto)).toBe(true);
+        dto.number = "5500000000000004";
+        expect(validCreditCard(dto)).toBe(true);
       });
       it("Invalid Name", () => {
         dto.name = "TJ";
@@ -109,23 +121,16 @@ describe("testing validator functions", () => {
         expect(validCreditCard(dto)).toBe(false);
         dto.month = null;
         expect(validCreditCard(dto)).toBe(false);
+        dto.month = "";
+        expect(validCreditCard(dto)).toBe(false);
+        dto.month = undefined;
+        expect(validCreditCard(dto)).toBe(false);
       });
       it("Invalid Year", () => {
         dto.year = "19";
         expect(validCreditCard(dto)).toBe(false);
         dto.year = null;
         expect(validCreditCard(dto)).toBe(false);
-      });
-      it("Valid CVV, 4-digit", () => {
-        /** TODO: For some reason, this doesn't work by mutating dto */
-        const dto2 = {
-          name: "Justin Chiou",
-          number: "4242424242424242",
-          month: "02",
-          year: "20",
-          cvv: "1234",
-        };
-        expect(validCreditCard(dto2)).toBe(true);
       });
       it("Invalid CVV", () => {
         dto.cvv = "aaa";
@@ -152,6 +157,7 @@ describe("testing validator functions", () => {
     it("test attestations", () => {
       const data = [
         { d: null, expected: false },
+        { d: undefined, expected: false },
         { d: [null], expected: false },
         { d: [], expected: false },
         { d: [false, false, false, false, false], expected: false },
@@ -173,6 +179,57 @@ describe("testing validator functions", () => {
       expect(oneYearPassed(now - 364 * 24 * 60 * 60)).toBe(false);
       expect(oneYearPassed(now - 365 * 24 * 60 * 60)).toBe(false);
       expect(oneYearPassed(now - 366 * 24 * 60 * 60)).toBe(true);
+    });
+  });
+
+  describe("testing if a campaign ended already", () => {
+    test("endedAlready function", () => {
+      expect(endedAlready("2020-01-01")).toBe(true);
+    });
+    test("endingSoon function", () => {
+      expect(endingSoon("2021-04-01")).toBe(true);
+    });
+  });
+
+  describe("testing a credit card number individually", () => {
+    test("valid numbers", () => {
+      expect(validNumber("4242424242424242")).toBe(true);
+      expect(validNumber("5500000000000004")).toBe(true);
+      expect(validNumber("6011000000000004")).toBe(true);
+    });
+    test("invalid numbers", () => {
+      expect(validNumber("")).toBe(false);
+      expect(validNumber("1234")).toBe(false);
+      expect(validNumber(null)).toBe(false);
+      expect(validNumber(undefined)).toBe(false);
+      expect(validNumber("371449635398431")).toBe(false);
+    });
+  });
+
+  describe("smaller functions", () => {
+    test("isBetween", () => {
+      expect(isBetween()).toBe(true);
+    });
+
+    test("validMonth", () => {
+      expect(validMonth()).toBe(false);
+      expect(validMonth("02")).toBe(true);
+      expect(validMonth(2)).toBe(false);
+    });
+
+    test("validYear", () => {
+      expect(validYear()).toBe(false);
+      expect(validYear("21")).toBe(true);
+      expect(validYear("99")).toBe(true);
+    });
+
+    test("validCVV", () => {
+      expect(validCVV()).toBe(false);
+      expect(validCVV("123")).toBe(true);
+      expect(validCVV("99")).toBe(false);
+      expect(validCVV("1234")).toBe(false);
+      expect(validCVV(null)).toBe(false);
+      expect(validCVV(undefined)).toBe(false);
     });
   });
 });
