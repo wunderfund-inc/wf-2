@@ -29,13 +29,12 @@
 </template>
 
 <script>
-import faqLinks from "@/content/faq/links";
-import faqItems from "@/content/faq/general";
+import { faqLinks, generalFaqs } from "@/content/faqs";
 
 export default {
   computed: {
     links: () => faqLinks,
-    faqs: () => faqItems,
+    faqs: () => generalFaqs,
   },
 };
 </script>

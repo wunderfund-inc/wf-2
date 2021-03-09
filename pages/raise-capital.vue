@@ -178,11 +178,11 @@
 </template>
 
 <script>
-import { faqs } from "@/content/raise-capital/faqs";
+import { raiseCapitalFaqs } from "@/content/faqs";
 
 export default {
   computed: {
-    items: () => faqs,
+    items: () => raiseCapitalFaqs,
     color() {
       switch (this.$config.PLATFORM) {
         case "WFP":
