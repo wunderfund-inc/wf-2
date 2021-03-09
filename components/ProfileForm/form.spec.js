@@ -259,6 +259,16 @@ describe("form validation", () => {
         profileFormState(
           {
             ...form,
+            postal: "45208-1234",
+            country: "USA",
+          },
+          false
+        ).postal.valid
+      ).toBeFalsy();
+      expect(
+        profileFormState(
+          {
+            ...form,
             state: "NOUS",
             country: "USA",
           },
