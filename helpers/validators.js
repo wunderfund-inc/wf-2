@@ -1,4 +1,5 @@
-import differenceInDays from "date-fns/differenceInDays";
+// import differenceInDays from "date-fns/differenceInDays";
+import differenceInYears from "date-fns/differenceInYears";
 
 export const validPostal = (val) => {
   if (val === null) return null;
@@ -135,5 +136,9 @@ export const endedAlready = (endDate) => {
  * @returns boolean
  */
 export function oneYearPassed(seconds) {
-  return differenceInDays(new Date(), new Date(Number(seconds) * 1000)) >= 365;
+  const difference = differenceInYears(
+    new Date(),
+    new Date(Number(seconds) * 1000)
+  );
+  return difference >= 1;
 }
