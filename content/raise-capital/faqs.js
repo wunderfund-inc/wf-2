@@ -1,4 +1,4 @@
-export default [
+export const faqs = [
   {
     icon: "branding",
     title: "We are Branders",

@@ -178,7 +178,7 @@
 </template>
 
 <script>
-import faqs from "@/content/raise-capital/faqs";
+import { faqs } from "@/content/raise-capital/faqs";
 
 export default {
   computed: {
