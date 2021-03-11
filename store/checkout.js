@@ -1,5 +1,5 @@
 import { db, timestamp } from "@/plugins/firebase";
-import { validMethodExtras } from "@/helpers/validators";
+// import { validMethodExtras } from "@/helpers/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -51,7 +51,8 @@ export const getters = {
   validMethod: (state) => {
     const validTransactionMethod =
       state.selectedMethod && state.selectedMethod.length > 0;
-    const validExtras = validMethodExtras(state);
+    // const validExtras = validMethodExtras(state);
+    const validExtras = true;
 
     return validTransactionMethod && validExtras;
   },
