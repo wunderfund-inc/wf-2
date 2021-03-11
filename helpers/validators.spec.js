@@ -93,7 +93,7 @@ describe("testing validator functions", () => {
         name: "Justin Chiou",
         number: "4242424242424242",
         month: "02",
-        year: "20",
+        year: String(new Date().getFullYear() - 2000),
         cvv: "123",
       };
 
