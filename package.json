@@ -25,6 +25,7 @@
     }
   },
   "dependencies": {
+    "@babel/preset-env": "^7.12.13",
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@googlemaps/markerclustererplus": "^1.0.3",
