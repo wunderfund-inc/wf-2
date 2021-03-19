@@ -930,7 +930,7 @@ export default {
         return validateSSN(
           this.form.ssn,
           this.user.country,
-          this.user.is_entity
+          this.user.isEntity
         );
       }
       return { valid: true };
@@ -966,6 +966,9 @@ export default {
       try {
         await this.$store.dispatch("agreement/showOverlay", true);
         const companyId = this.$route.params.companyId;
+        const userId = this.$store.state.auth.userId;
+        const user = await db.collection("users").doc(userId).get();
+        const userData = user.data();
         const newInvestment = db.collection("investments").doc();
         const newInvestmentId = newInvestment.id;
         const investmentPayload = {
@@ -973,7 +976,7 @@ export default {
           company_name: this.companyName.toUpperCase(), // `WUNDERFUND`
           date_created: timestamp,
           date_updated: timestamp,
-          investment_type: this.user.isEntity ? "ENTITY" : "PERSONAL",
+          investment_type: userData.is_entity ? "ENTITY" : "PERSONAL",
           investment_agreement_id: null,
           investment_amount_type:
             this.offering.security_type === "Equity" ? "SHARES" : "RAW", // `RAW` or `SHARES`
@@ -986,18 +989,18 @@ export default {
           tapi_trade_id: null,
           uid: newInvestmentId,
           user_accredited: accredited(
-            this.user.annualIncome,
-            this.user.netWorth
+            userData.accredited_ai,
+            userData.accredited_nw
           ),
           user_testimonial: this.form.testimonial, // typeof string
           user_id: this.$store.state.auth.userId,
           user_email: this.$store.state.auth.email,
-          user_first_name: this.user.firstName,
-          user_last_name: this.user.lastName,
-          user_avatar: this.user.avatar || null,
-          user_tapi_account_id: this.user.accountId,
+          user_first_name: userData.first_name,
+          user_last_name: userData.last_name,
+          user_avatar: userData.avatar || null,
+          user_tapi_account_id: userData.transact_api_account_id,
           user_ssn: this.form.ssn,
-          user_phone: this.user.phone,
+          user_phone: userData.phone,
         };
 
         if (this.form.method === "ACH") {
