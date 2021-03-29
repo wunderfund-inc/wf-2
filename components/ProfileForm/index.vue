@@ -245,6 +245,10 @@
               {{ state.name }}
             </option>
           </select>
+          <small class="form-text text-muted">
+            For investors outside the United States, please select the "Non-US"
+            option.
+          </small>
           <small
             v-if="!validatedForm.state.valid"
             class="form-text text-danger pt-1"

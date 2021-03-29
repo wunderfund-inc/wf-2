@@ -213,7 +213,7 @@ function validateCountry(state, country) {
   return { valid: false, message: "Invalid country selection." };
 }
 
-function validatePostal(postal, country = "USA") {
+export function validatePostal(postal, country = "USA") {
   if (!postal) return { valid: false };
   const regex = /^\d{5}$/;
   if (country === "USA" && !regex.test(postal)) {
@@ -246,7 +246,7 @@ export function profileFormState(form, isEntity = false) {
     city: validateCity(form.city),
     state: validateState(form.state, form.country),
     country: validateCountry(form.state, form.country),
-    postal: validatePostal(form.postal),
+    postal: validatePostal(form.postal, form.country),
   };
 
   if (isEntity) {

@@ -8,6 +8,7 @@ import {
   profileFormState,
   isProfileFormValid,
   isEIN,
+  validatePostal,
 } from "./form";
 
 describe("form validation", () => {
@@ -265,6 +266,16 @@ describe("form validation", () => {
           false
         ).postal.valid
       ).toBeFalsy();
+      expect(
+        profileFormState(
+          {
+            ...form,
+            postal: "A1A1A1",
+            country: "CAN",
+          },
+          false
+        ).postal.valid
+      ).toBe(true);
       expect(
         profileFormState(
           {
@@ -580,5 +591,26 @@ describe("form validation", () => {
         )
       ).toEqual(false);
     });
+  });
+
+  describe("validating postal code, based on country", () => {
+    test("valid if in USA", () => {
+      expect(validatePostal("12345").valid).toBe(true);
+      expect(validatePostal("12345", "USA").valid).toBe(true);
+    });
+    test("invalid if in USA", () => {
+      expect(validatePostal("12345-1234", "USA").valid).toBe(false);
+      expect(validatePostal("12345-", "USA").valid).toBe(false);
+      expect(validatePostal("12345-1", "USA").valid).toBe(false);
+      expect(validatePostal("12345-12", "USA").valid).toBe(false);
+      expect(validatePostal("12345-123", "USA").valid).toBe(false);
+      expect(validatePostal("1234a", "USA").valid).toBe(false);
+    });
+    test("valid if outside USA", () => {
+      expect(validatePostal("A1A1A1", "CAN").valid).toBe(true);
+      expect(validatePostal("A1A 1A1", "CAN").valid).toBe(true);
+      expect(validatePostal("A1A-1A1", "CAN").valid).toBe(true);
+    });
+    // test("invalid if outside USA", () => {});
   });
 });
