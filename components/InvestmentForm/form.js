@@ -138,7 +138,10 @@ export function investmentForm(user, offering, form) {
     method: amongst(method),
     methodDetails: validateMethodDetails(method, methodDetails),
     attestations: allAgreed(attestations),
-    ssn: ssnRequired ? validateSSN(ssn, country, isEntity) : { valid: true },
+    ssn:
+      ssnRequired && country === "USA"
+        ? validateSSN(ssn, country, isEntity)
+        : { valid: true },
   };
 }
 

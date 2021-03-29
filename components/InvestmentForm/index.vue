@@ -882,6 +882,7 @@ export default {
         return investmentForm(
           this.user,
           {
+            securityType: this.offering.security_type,
             minimumInvestmentAmount: this.offering.minimum_investment_amount,
             ssnRequired: this.offering.ssn_required,
           },

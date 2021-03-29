@@ -571,6 +571,22 @@ describe("Investment Form", () => {
       ).toEqual(formState);
     });
 
+    test("valid ssn validation when the investor is non-US", () => {
+      expect(
+        investmentForm(
+          {
+            ...user,
+            country: "CAN",
+          },
+          {
+            ...offering,
+            ssnRequired: true,
+          },
+          investment
+        )
+      );
+    });
+
     it("invalid investment form (checking SSN requirements)", () => {
       expect(
         investmentForm(
