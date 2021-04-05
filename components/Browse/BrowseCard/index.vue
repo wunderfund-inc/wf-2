@@ -22,7 +22,12 @@
         <p class="text-muted mb-0">{{ company.data.company_motto }}</p>
       </b-media>
 
-      <b-list-group flush>
+      <b-list-group v-if="company.data.ttw_phase" flush>
+        <b-list-group-item class="text-center">
+          <small class="text-muted">Pre-investment phase</small>
+        </b-list-group-item>
+      </b-list-group>
+      <b-list-group v-else flush>
         <b-list-group-item class="text-center">
           <template v-if="offering.security_type === 'Promissory Note'">
             <small class="mb-0 text-muted">
