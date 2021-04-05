@@ -284,7 +284,8 @@
     >
       Just want to stay in the loop on {{ companyName }}?
     </EmailCapture>
-    <div v-else>Test the Waters Form</div>
+
+    <TestTheWatersForm v-else :company-name="companyName" />
   </section>
 </template>
 
@@ -303,7 +304,7 @@ export default {
     offering: {
       type: Object,
       default() {},
-      required: true,
+      required: false,
     },
   },
   computed: {
