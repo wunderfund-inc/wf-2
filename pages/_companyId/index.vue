@@ -6,7 +6,7 @@
       :company-id="$route.params.companyId"
     />
     <section-investments-map
-      v-if="locations.length > 0"
+      v-if="locations && locations.length > 0"
       :company-location="companyLocation"
       :locations="locations"
     />
@@ -61,43 +61,46 @@ export default {
       await store.dispatch("company/fetchComments", companyId);
 
       const company = (await $prismic.api.getByUID("campaign", companyId)).data;
-      const offeringRef = company.company_offerings[0];
-      const offeringId = offeringRef.offering_data.id;
-      const offeringData = (await $prismic.api.getByID(offeringId)).data;
+      if (company.company_offerings && company.company_offerings.length > 0) {
+        const offeringRef = company.company_offerings[0];
+        const offeringId = offeringRef.offering_data.id;
+        const offeringData = (await $prismic.api.getByID(offeringId)).data;
 
-      const offeringDoc = await db
-        .collection("metrics_per_offering")
-        .doc(offeringId)
-        .get();
-      const offeringMetrics = offeringDoc.data();
+        const offeringDoc = await db
+          .collection("metrics_per_offering")
+          .doc(offeringId)
+          .get();
+        const offeringMetrics = offeringDoc.data();
 
-      const investmentDocs = await db
-        .collection("investments")
-        .where("offering_id", "==", offeringId)
-        .get();
+        const investmentDocs = await db
+          .collection("investments")
+          .where("offering_id", "==", offeringId)
+          .get();
 
-      const investmentData = investmentDocs.empty
-        ? []
-        : investmentDocs.docs.map((doc) => doc.data());
+        const investmentData = investmentDocs.empty
+          ? []
+          : investmentDocs.docs.map((doc) => doc.data());
 
-      const zip = "45202";
-      const companyLocation = await getCompanyLocation(zip);
+        const zip = "45202";
+        const companyLocation = await getCompanyLocation(zip);
 
-      const locations = await getLocations(offeringId);
+        const locations = await getLocations(offeringId);
 
-      return {
-        company,
-        offerings: [
-          {
-            ...offeringData,
-            ...offeringRef,
-            investments: investmentData,
-            metrics: offeringMetrics,
-          },
-        ],
-        companyLocation,
-        locations,
-      };
+        return {
+          company,
+          offerings: [
+            {
+              ...offeringData,
+              ...offeringRef,
+              investments: investmentData,
+              metrics: offeringMetrics,
+            },
+          ],
+          companyLocation,
+          locations,
+        };
+      }
+      return { company, offerings: [], locations: [] };
     } catch (e) {
       error({ statusCode: 404, message: "Page not found" });
     }

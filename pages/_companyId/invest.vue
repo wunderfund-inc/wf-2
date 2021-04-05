@@ -46,6 +46,10 @@ export default {
       const companyRef = await $prismic.api.getByUID("campaign", companyId);
       const company = companyRef.data;
 
+      if (company.ttw_phase) {
+        return redirect(`/${companyId}`);
+      }
+
       const offeringMetadata = company.company_offerings[0].offering_data;
       const offeringId = offeringMetadata.id;
       const offeringData = (await $prismic.api.getByID(offeringId)).data;

@@ -275,12 +275,15 @@ export default {
       return !!this.$store.state.auth.email;
     },
     testimonials() {
-      const offering = this.offerings[0];
-      const investments = offering.investments.filter((i) => {
-        const id = i.investment_agreement_id;
-        return id && id.length > 0;
-      });
-      return investments;
+      if (this.offerings && this.offerings.length > 0) {
+        const offering = this.offerings[0];
+        const investments = offering.investments.filter((i) => {
+          const id = i.investment_agreement_id;
+          return id && id.length > 0;
+        });
+        return investments;
+      }
+      return [];
     },
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <section class="pt-2 pb-3">
-    <div class="text-center text-md-left">
+    <div v-if="offering" class="text-center text-md-left">
       <h2>
         Raised:
         <strong class="text-success">
@@ -48,7 +48,7 @@
       </h6>
     </div>
 
-    <template v-if="offering.security_type === 'Promissory Note'">
+    <template v-if="offering && offering.security_type === 'Promissory Note'">
       <p class="mb-0">
         {{ companyName }} will pay your <strong>debt</strong> back in
         <strong>{{ offering.payment_interval.toLowerCase() }}</strong>
@@ -66,7 +66,7 @@
       </p>
     </template>
 
-    <template v-if="offering.security_type === 'Revenue Share'">
+    <template v-if="offering && offering.security_type === 'Revenue Share'">
       <p>
         {{ companyName }} will pay
         <strong>{{ offering.percent_per_period }}%</strong> of
@@ -81,7 +81,7 @@
       </p>
     </template>
 
-    <template v-if="offering.security_type === 'Convertible Note'">
+    <template v-if="offering && offering.security_type === 'Convertible Note'">
       <p>
         {{ companyName }} is offering you a convertible note. The money you
         invest will accrue interest at a rate of
@@ -95,7 +95,7 @@
       </p>
     </template>
 
-    <template v-if="offering.security_type === 'Equity'">
+    <template v-if="offering && offering.security_type === 'Equity'">
       <div v-if="offering.minimum_investment_amount_tiers.length > 1">
         <p>
           {{ companyName }} is offering you <strong>equity</strong> ownership,
@@ -150,7 +150,7 @@
       </div>
     </template>
 
-    <template v-if="offering.security_type === 'SAFE Note'">
+    <template v-if="offering && offering.security_type === 'SAFE Note'">
       <p class="text-justify">
         {{ companyName }} is offering a
         <strong>{{ `${offering.percent_discount}%` }}</strong>
@@ -169,7 +169,7 @@
       </p>
     </template>
 
-    <template v-if="offering.security_type === 'SAFT Note'">
+    <template v-if="offering && offering.security_type === 'SAFT Note'">
       <p>
         {{ companyName }}
       </p>
@@ -181,7 +181,8 @@
 
     <template
       v-if="
-        offering.agreement_offering.url || offering.agreement_subscription.url
+        offering &&
+        (offering.agreement_offering.url || offering.agreement_subscription.url)
       "
     >
       <p>See the following below for more details about the offering:</p>
@@ -209,7 +210,7 @@
       </div>
     </template>
 
-    <div v-if="offering.accredited_investors_only" class="row py-3">
+    <div v-if="offering && offering.accredited_investors_only" class="row py-3">
       <div class="col">
         <div class="text-center">
           <small class="text-muted">
@@ -226,7 +227,7 @@
       </div>
     </div>
 
-    <template v-if="!offeringEnded && endingSoon">
+    <template v-if="offering && !offeringEnded && endingSoon">
       <h3 class="text-center">
         Time Left:
         <strong>{{ offering.offering_date_end | timeDistance }}</strong>
@@ -234,7 +235,7 @@
     </template>
 
     <b-navbar
-      v-if="!offeringEnded"
+      v-if="offering && !offeringEnded"
       fixed="bottom"
       variant="transparent"
       class="d-block d-md-none"
@@ -254,7 +255,7 @@
     </b-navbar>
 
     <nuxt-link
-      v-if="!offeringEnded"
+      v-if="offering && !offeringEnded"
       :to="
         signedIn
           ? `/${$route.params.companyId}/verify`
@@ -267,17 +268,23 @@
       </main-button>
     </nuxt-link>
 
-    <b-alert v-else show variant="success" class="py-3 mt-3 mb-0 text-center">
+    <b-alert
+      v-if="offering && offeringEnded"
+      show
+      variant="success"
+      class="py-3 mt-3 mb-0 text-center"
+    >
       This offering has ended.
     </b-alert>
 
     <EmailCapture
-      v-if="!offeringEnded"
+      v-if="offering && !offeringEnded"
       :tags="['newsletter', 'campaign', slug]"
       width="col"
     >
       Just want to stay in the loop on {{ companyName }}?
     </EmailCapture>
+    <div v-else>Test the Waters Form</div>
   </section>
 </template>
 

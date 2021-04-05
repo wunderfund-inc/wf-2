@@ -3,7 +3,14 @@
     :style="`background-color: ${bgColor}`"
     class="terms-details bg-custom d-print-none"
   >
-    <div class="container py-5 text-light">
+    <div v-if="!offering" class="container py-5 text-light">
+      <p>
+        <strong>{{ companyName }}</strong> is not offering anything (yet!). In
+        order to ensure we have the best possible deal for you, please answer
+        the survey above so we can make a deal in the future.
+      </p>
+    </div>
+    <div v-else class="container py-5 text-light">
       <h2 class="text-center pb-3">Terms of the Offering</h2>
 
       <!-- <template v-if="offering.security_type === 'Promissory Note'"></template> -->
@@ -158,7 +165,7 @@ export default {
     offering: {
       type: Object,
       default() {},
-      required: true,
+      required: false,
     },
   },
   computed: {
