@@ -304,8 +304,8 @@ export function canInvest(user, offering) {
 }
 
 export function validateSSN(val, country = "USA", isEntity = false) {
-  if (!val) return { valid: false };
   const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
   if (isEntity || country !== "USA" || regex.test(val)) return { valid: true };
+  if (!val) return { valid: false };
   return { valid: false, message: "Invalid SSN." };
 }

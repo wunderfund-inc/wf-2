@@ -550,7 +550,8 @@
             v-if="
               offering.ssn_required &&
               validatedForm.methodDetails.valid &&
-              user.country === 'USA'
+              user.country === 'USA' &&
+              !user.isEntity
             "
             class="card bg-light mb-3"
           >
