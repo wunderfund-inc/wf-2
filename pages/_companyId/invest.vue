@@ -87,7 +87,12 @@ export default {
         accountId: userData.transact_api_account_id,
       };
 
-      if (!isProfileFormValid(profileFormState(user))) {
+      if (
+        !isProfileFormValid(
+          profileFormState(user, user.isEntity),
+          user.isEntity
+        )
+      ) {
         return redirect(`/${companyId}/verify`);
       }
 
