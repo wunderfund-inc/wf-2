@@ -408,9 +408,9 @@ export default {
         };
 
         if (this.user.is_entity) {
-          dto.entity_name = this.form.entity_name;
-          dto.entity_type = this.form.entity_type;
-          dto.entity_ein = this.form.entity_ein;
+          dto.entity_name = this.form.entityName;
+          dto.entity_type = this.form.entityType;
+          dto.entity_ein = this.form.ein;
         } else {
           dto.dob = this.form.dob;
         }
