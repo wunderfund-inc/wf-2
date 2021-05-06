@@ -284,8 +284,6 @@
     >
       Just want to stay in the loop on {{ companyName }}?
     </EmailCapture>
-
-    <TestTheWatersForm v-else :company-name="companyName" />
   </section>
 </template>
 
