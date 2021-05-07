@@ -230,7 +230,7 @@
             />
             <TestTheWatersForm
               v-if="content.ttw_phase && offerings.length < 1"
-              :company-name="companyName"
+              :company-name="content.company_name_short"
             />
           </aside>
         </div>
