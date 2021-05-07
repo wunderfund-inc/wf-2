@@ -113,6 +113,10 @@
         - {{ content.primary.issuer_name }}, {{ content.primary.issuer_role }}
       </p>
     </div>
+
+    <div v-else-if="content.slice_type === 'video_embed'">
+      <b-embed :src="convertLink(content)" type="iframe" allowfullscreen />
+    </div>
   </section>
 </template>
 
@@ -123,6 +127,11 @@ export default {
       type: Object,
       default() {},
       required: true,
+    },
+  },
+  methods: {
+    convertLink(content) {
+      return content.primary.embed.url;
     },
   },
 };

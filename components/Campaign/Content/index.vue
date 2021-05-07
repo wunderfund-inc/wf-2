@@ -306,7 +306,6 @@ export default {
     },
     convertLink(url) {
       const provider = url.provider_url;
-
       switch (provider) {
         case "https://www.youtube.com/": {
           const videoId = url.embed_url.replace(`${provider}watch?v=`, "");
