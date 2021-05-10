@@ -112,7 +112,10 @@ export default {
     BASE_URL: process.env.BASE_URL || "http://localhost:3000",
     PLATFORM: process.env.PLATFORM || "TEST",
   },
-  privateRuntimeConfig: {},
+  privateRuntimeConfig: {
+    SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+    SENDGRID_TEMPLATE_ID: process.env.SENDGRID_TEMPLATE_ID,
+  },
   /*
    ** Build configuration
    */
@@ -132,6 +135,7 @@ export default {
       config.resolve.alias.vue = "vue/dist/vue.common";
     },
   },
+  serverMiddleware: ["~/server-middleware/tapi-webhook"],
   // generate: {
   //   routes: dynamicRoutes,
   //   fallback: "404.html",
