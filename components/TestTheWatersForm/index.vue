@@ -48,15 +48,19 @@
             <label for="amount" class="form-label">
               How much would you be willing to invest in {{ companyName }}?
             </label>
-            <VueNumeric
+            <select
+              id="amount"
               v-model="form.amount"
-              :precision="2"
-              currency="$"
-              separator=","
+              name="amount"
               class="form-control"
-              type="tel"
               required
-            />
+            >
+              <option :value="null" disabled>Please Select</option>
+              <option value="$100">$100</option>
+              <option value="$101 - $1,000">$101 - $1,000</option>
+              <option value="$1,001 - $5,000">$1,001 - $5,000</option>
+              <option value="$5,000+">$5,000+</option>
+            </select>
           </div>
         </div>
         <div class="form-row">
@@ -71,12 +75,7 @@
 </template>
 
 <script>
-import VueNumeric from "vue-numeric";
-
 export default {
-  components: {
-    VueNumeric,
-  },
   props: {
     companyName: {
       type: String,
