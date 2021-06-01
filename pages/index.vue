@@ -8,7 +8,7 @@
     </EmailCapture>
     <SectionBrowse v-if="companies.length > 0" :companies="companies">
       <template #header>
-        <h5 class="text-center pb-4">Live Campaigns:</h5>
+        <h5 class="text-center pb-4">Browse Campaigns:</h5>
       </template>
     </SectionBrowse>
   </main>
