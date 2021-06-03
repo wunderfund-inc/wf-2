@@ -101,6 +101,7 @@ export default {
           url: "https://api.airtable.com/v0/apppAfHzBw2HK5Y5I/Table%201",
           data: {
             fields: {
+              Date: new Date(),
               Email: this.form.email,
               "Likeliness to Invest": this.form.likeliness,
               Amount: this.form.amount,
