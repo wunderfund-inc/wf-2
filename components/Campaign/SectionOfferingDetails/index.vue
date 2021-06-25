@@ -152,9 +152,11 @@
 
     <template v-if="offering && offering.security_type === 'SAFE Note'">
       <p class="text-justify">
-        {{ companyName }} is offering a
-        <strong>{{ `${offering.percent_discount}%` }}</strong>
-        discount on future shares into their company.
+        <span v-if="offering.percent_discount">
+          {{ companyName }} is offering a
+          <strong>{{ `${offering.percent_discount}%` }}</strong>
+          discount on future shares into their company.
+        </span>
         <span v-if="offering.valuation_cap || offering.valuation_cap > 0">
           You're speculating that {{ companyName }} will be worth more than
           <strong>
