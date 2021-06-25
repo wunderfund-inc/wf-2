@@ -136,7 +136,7 @@
             {{ `${offering.percent_discount}%` }}.
           </span>
         </p>
-        <p v-else>
+        <p v-if="offering.percent_discount">
           <strong>Discount Details:</strong> {{ offering.percent_discount }}%
         </p>
         <p v-if="offering.valuation_type !== 'None'">
