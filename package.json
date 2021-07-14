@@ -33,7 +33,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/prismic": "^1.2.4",
     "@sendgrid/mail": "^7.4.4",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.0.2",
     "bootstrap-vue": "^2.18.1",
     "cookieparser": "^0.1.0",
     "core-js": "^3.8.3",
