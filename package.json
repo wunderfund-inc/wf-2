@@ -37,7 +37,7 @@
     "bootstrap-vue": "^2.18.1",
     "cookieparser": "^0.1.0",
     "core-js": "^3.8.3",
-    "date-fns": "^2.16.1",
+    "date-fns": "^2.22.1",
     "express": "^4.17.1",
     "firebase": "^8.2.6",
     "js-cookie": "^2.2.1",
