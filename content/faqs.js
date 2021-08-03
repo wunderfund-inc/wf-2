@@ -368,4 +368,8 @@ export const faqLinks = [
     name: "FAQs for Companies",
     url: "/faq/companies",
   },
+  {
+    name: "FAQs on Securities",
+    url: "/faq/securities",
+  },
 ];

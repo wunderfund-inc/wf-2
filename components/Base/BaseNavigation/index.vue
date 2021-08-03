@@ -20,6 +20,9 @@
               <b-dropdown-item to="/faq/investors">
                 For Investors
               </b-dropdown-item>
+              <b-dropdown-item to="/faq/securities">
+                On Securities
+              </b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item-dropdown text="Legal" class="mx-3 d-none d-md-flex">
