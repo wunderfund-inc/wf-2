@@ -14,11 +14,8 @@ Vue.filter("capitalize", capitalize);
  * Proper case a string (capitalize the first letter only)
  */
 export const properCase = (val) => {
-  if (val === "iot") {
-    return "IoT";
-  } else {
-    return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
-  }
+  if (val === "iot") return "IoT";
+  return val.charAt(0).toUpperCase() + val.substr(1).toLowerCase();
 };
 Vue.filter("properCase", properCase);
 
@@ -49,14 +46,22 @@ Vue.filter("regulationFormat", regulationFormat);
  * Pluralize words on the FAQ menus, depending on the word
  */
 export const pluralFaq = (val) => {
-  if (val === "investor") return `${val}s`;
-  if (val === "company") return "companies";
-  return val;
+  switch (val) {
+    case "investor":
+      return `${val}s`;
+    case "company":
+      return "companies";
+    default:
+      return val;
+  }
 };
 Vue.filter("pluralFaq", pluralFaq);
 
 /**
  * Payment method string formatting
+ * @example "ACH" => "Bank Account (ACH)"
+ * @param {string} val
+ * @returns string
  */
 export const paymentMethodFormat = (val) => {
   switch (val) {
@@ -95,28 +100,25 @@ Vue.filter("timeDistance", timeDistance);
 
 /**
  * Format currency to its abbreviated form
+ * @example 10000 => "$10.0K"
+ * @param {int} val
+ * @returns string
  */
 export const currencyDisplayFormat = (val) => {
-  if (parseFloat(val.toString()) === parseFloat(val)) {
-    return numeral(val).format("($0.0a)").toUpperCase();
-  } else {
-    throw new TypeError("not a number");
-  }
+  if (isNaN(val)) throw new TypeError("not a number");
+  return numeral(val).format("$(0.0a)").toUpperCase();
 };
 Vue.filter("currencyDisplayFormat", currencyDisplayFormat);
 
 /**
  * Format number to a shorthand version.
- * @example 1000000 => "1M"
+ * @example 1000000 => "1.0M"
  * @param {int} val
  * @returns string
  */
 export const properIntegerFormat = (val) => {
-  if (parseFloat(val.toString()) === parseFloat(val)) {
-    return numeral(val).format("(0.0a)").toUpperCase();
-  } else {
-    throw new TypeError("not a number");
-  }
+  if (isNaN(val)) throw new TypeError("not a number");
+  return numeral(val).format("(0.0a)").toUpperCase();
 };
 Vue.filter("properIntegerFormat", properIntegerFormat);
 
@@ -137,12 +139,7 @@ Vue.filter("reduceToTotal", reduceToTotal);
  * @param {string} val
  * @returns string
  */
-const firstLetterOnly = (val) => {
-  if (val) {
-    return val.charAt(0);
-  }
-  return "";
-};
+export const firstLetterOnly = (val) => (!val ? "" : val.charAt(0));
 Vue.filter("firstLetterOnly", firstLetterOnly);
 
 /**
@@ -150,7 +147,7 @@ Vue.filter("firstLetterOnly", firstLetterOnly);
  * @param {Date} val
  * @returns date string
  */
-const dateFromSeconds = (val) => fromUnixTime(val).toLocaleDateString();
+export const dateFromSeconds = (val) => fromUnixTime(val).toLocaleDateString();
 Vue.filter("dateFromSeconds", dateFromSeconds);
 
 /**
@@ -158,5 +155,5 @@ Vue.filter("dateFromSeconds", dateFromSeconds);
  * @param {Date} val
  * @returns date string
  */
-const dateFormatLong = (val) => format(val, "PP");
+export const dateFormatLong = (val) => format(val, "PP");
 Vue.filter("dateFormatLong", dateFormatLong);

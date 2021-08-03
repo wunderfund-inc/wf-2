@@ -24,6 +24,6 @@ describe("FAQs", () => {
   });
 
   test("FAQ links", () => {
-    expect(faqLinks.length).toBe(3);
+    expect(faqLinks.length).toBe(4);
   });
 });
