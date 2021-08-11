@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/functions";
 
 if (!firebase.apps.length) {
   const firebaseConfig = {
@@ -18,6 +19,7 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
+export const functions = firebase.functions();
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 export async function uploadImage(refStr, file) {
