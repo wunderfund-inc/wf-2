@@ -214,14 +214,24 @@ describe("Investment Form", () => {
         expect(validateExpiryMonth(undefined).valid).toBeFalsy();
         expect(validateExpiryMonth("0A").valid).toBeFalsy();
         expect(validateExpiryMonth(0).valid).toBeFalsy();
-        expect(validateExpiryMonth(1).valid).toBeFalsy();
-        expect(validateExpiryMonth(10).valid).toBeFalsy();
         expect(validateExpiryMonth("0").valid).toBeFalsy();
         expect(validateExpiryMonth("00").valid).toBeFalsy();
         expect(validateExpiryMonth("13").valid).toBeFalsy();
       });
 
       it("valid Expiry Month", () => {
+        expect(validateExpiryMonth(1)).toEqual(success);
+        expect(validateExpiryMonth(2)).toEqual(success);
+        expect(validateExpiryMonth(3)).toEqual(success);
+        expect(validateExpiryMonth(4)).toEqual(success);
+        expect(validateExpiryMonth(5)).toEqual(success);
+        expect(validateExpiryMonth(6)).toEqual(success);
+        expect(validateExpiryMonth(7)).toEqual(success);
+        expect(validateExpiryMonth(8)).toEqual(success);
+        expect(validateExpiryMonth(9)).toEqual(success);
+        expect(validateExpiryMonth(10)).toEqual(success);
+        expect(validateExpiryMonth(11)).toEqual(success);
+        expect(validateExpiryMonth(12)).toEqual(success);
         expect(validateExpiryMonth("01")).toEqual(success);
         expect(validateExpiryMonth("02")).toEqual(success);
         expect(validateExpiryMonth("03")).toEqual(success);
@@ -234,6 +244,9 @@ describe("Investment Form", () => {
         expect(validateExpiryMonth("10")).toEqual(success);
         expect(validateExpiryMonth("11")).toEqual(success);
         expect(validateExpiryMonth("12")).toEqual(success);
+
+        const currentMonth = new Date().getMonth() + 1;
+        expect(validateExpiryMonth(currentMonth).valid).toBeTruthy();
       });
 
       it("invalid Expiry Year", () => {
@@ -245,7 +258,7 @@ describe("Investment Form", () => {
 
       it("valid Expiry Year", () => {
         const year = new Date().getFullYear() % 100;
-        expect(validateExpiryYear(String(year)).valid).toBeTruthy();
+        expect(validateExpiryYear(year).valid).toBeTruthy();
         expect(validateExpiryYear(21).valid).toBeTruthy();
       });
 
@@ -267,7 +280,12 @@ describe("Investment Form", () => {
       });
 
       it("valid expiry combination (month and year)", () => {
-        expect(validateExpiry("12", "99").valid).toBeTruthy();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear() % 100;
+
+        expect(validateExpiry(month, year).valid).toBeTruthy();
+        expect(validateExpiry(month, year + 1).valid).toBeTruthy();
+        expect(validateExpiry(month, year + 100).valid).toBeTruthy();
       });
     });
   });

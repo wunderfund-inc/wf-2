@@ -1,4 +1,4 @@
-import { months, paymentMethods } from "./choices";
+import { paymentMethods } from "./choices";
 
 export const validationError = (message) => ({ valid: false, message });
 export const success = { valid: true };
@@ -76,7 +76,7 @@ export function validateNonEquityAmount(
 
 export function validateMethodDetails(method, methodDetails) {
   if (["CHECK", "WIRE"].includes(method)) {
-    return { valid: true };
+    return success;
   } else if (method === "ACH") {
     return validateACH(methodDetails);
   } else if (method === "CC") {
@@ -141,15 +141,18 @@ export function investmentForm(user, offering, form) {
     ssn:
       ssnRequired && country === "USA"
         ? validateSSN(ssn, country, isEntity)
-        : { valid: true },
+        : success,
   };
 }
 
 export function amongst(method) {
   const values = paymentMethods.map((el) => el.value);
-  return values.includes(method)
-    ? success
-    : validationError("Not one of the choices.");
+
+  if (!values.includes(method)) {
+    return validationError("Not one of the choices.");
+  }
+
+  return success;
 }
 
 export function allAgreed(attestations = []) {
@@ -164,7 +167,7 @@ export function allAgreed(attestations = []) {
     };
   }
 
-  return { valid: true };
+  return success;
 }
 
 export function validateAchAccount(account) {
@@ -205,34 +208,58 @@ export function validateAchRouting(routing) {
 
 export function validateCardName(name) {
   if (!name) return { valid: false };
+
   const regex = /^(?=.{2,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/g;
+
   if (name.length <= 1 || !regex.test(name)) {
     return validationError("Invalid cardholder name.");
   }
+
   return success;
 }
 
-export function validateExpiryMonth(month) {
-  if (!month) return { valid: false };
-  const validMonths = months.map((month) => month.value);
-  if (month && validMonths.includes(month)) return { valid: true };
-  return { valid: false, message: "Invalid expiry month." };
+export function validateExpiryMonth(m) {
+  if (!m) return { valid: false };
+
+  if (isNaN(Number(m))) {
+    return { valid: false, message: "Month is not a number." };
+  }
+
+  if (Number(m) > 12 || Number(m) < 1) {
+    return { valid: false, message: "Invalid expiry month." };
+  }
+
+  return success;
 }
 
 export function validateExpiryYear(year) {
   if (!year) return { valid: false };
-  const thisYear = new Date().getFullYear();
-  if (2000 + Number(year) >= thisYear) return { valid: true };
-  return { valid: false, message: "Invalid expiry year." };
+
+  if (new Date().getFullYear() > 2000 + Number(year)) {
+    return { valid: false, message: "Invalid expiry year." };
+  }
+
+  return success;
 }
 
 export function validateExpiry(month, year) {
-  if (!validateExpiryMonth(month).valid) return validateExpiryMonth(month);
-  if (!validateExpiryYear(year).valid) return validateExpiryYear(year);
-  const today = new Date();
+  if (!validateExpiryMonth(month).valid) {
+    return validateExpiryMonth(month);
+  }
+
+  if (!validateExpiryYear(year).valid) {
+    return validateExpiryYear(year);
+  }
+
+  const now = new Date();
+  const today = new Date(`${now.getFullYear()}-${now.getMonth() + 1}`);
   const expiry = new Date(`${2000 + Number(year)}-${month}`);
-  if (today > expiry) return { valid: false, message: "Card expired." };
-  return { valid: true };
+
+  if (today > expiry) {
+    return { valid: false, message: "Card expired." };
+  }
+
+  return success;
 }
 
 export function validateCVV(number) {
@@ -275,7 +302,7 @@ export function validateACH(methodDetails) {
   if (!validAccountNumber.valid || !validRoutingNumber.valid) {
     return { valid: false, message: "Invalid ACH credentials." };
   }
-  return { valid: true };
+  return success;
 }
 
 export function validateCreditCard(methodDetails) {
@@ -294,7 +321,7 @@ export function validateCreditCard(methodDetails) {
     return { valid: false, message: "Invalid Credit Card credentials." };
   }
 
-  return { valid: true };
+  return success;
 }
 
 export function canInvest(user, offering) {
@@ -305,7 +332,7 @@ export function canInvest(user, offering) {
 
 export function validateSSN(val, country = "USA", isEntity = false) {
   const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
-  if (isEntity || country !== "USA" || regex.test(val)) return { valid: true };
+  if (isEntity || country !== "USA" || regex.test(val)) return success;
   if (!val) return { valid: false };
   return { valid: false, message: "Invalid SSN." };
 }
