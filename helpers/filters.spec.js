@@ -3,6 +3,7 @@ import {
   asPercentage,
   capitalize,
   currencyDisplayFormat,
+  dateFormatLong,
   einNumToStr,
   firstLetterOnly,
   properCase,
@@ -137,5 +138,9 @@ describe("testing filter functions", () => {
     expect(paymentMethodFormat("WIRE")).toBe("Wire Transfer");
     expect(paymentMethodFormat("CRYPTO")).toBe("Cryptocurrency (Ethereum)");
     expect(paymentMethodFormat("bananas")).toBe("Bananas");
+  });
+
+  test("date, long-formatted", () => {
+    expect(dateFormatLong(new Date("2020-05-01"))).toEqual("Apr 30, 2020");
   });
 });

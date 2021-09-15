@@ -2,7 +2,6 @@ import Vue from "vue";
 import numeral from "numeral";
 import format from "date-fns/format";
 import formatDistance from "date-fns/formatDistance";
-import fromUnixTime from "date-fns/fromUnixTime";
 
 /**
  * Capitalize all letters of a string
@@ -141,14 +140,6 @@ Vue.filter("reduceToTotal", reduceToTotal);
  */
 export const firstLetterOnly = (val) => (!val ? "" : val.charAt(0));
 Vue.filter("firstLetterOnly", firstLetterOnly);
-
-/**
- * Converts unix time to locale date string
- * @param {Date} val
- * @returns date string
- */
-export const dateFromSeconds = (val) => fromUnixTime(val).toLocaleDateString();
-Vue.filter("dateFromSeconds", dateFromSeconds);
 
 /**
  * Converts to Long form date (e.g. "May 01, 2020")
