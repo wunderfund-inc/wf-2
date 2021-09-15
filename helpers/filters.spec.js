@@ -141,6 +141,8 @@ describe("testing filter functions", () => {
   });
 
   test("date, long-formatted", () => {
-    expect(dateFormatLong(new Date("2020-05-01"))).toEqual("Apr 30, 2020");
+    expect(dateFormatLong(new Date(2020, 0, 1))).toEqual("Jan 1, 2020");
+    expect(dateFormatLong(new Date(2020, 4, 1))).toEqual("May 1, 2020");
+    expect(dateFormatLong(new Date(2020, 11, 31))).toEqual("Dec 31, 2020");
   });
 });

@@ -142,9 +142,9 @@ export const firstLetterOnly = (val) => (!val ? "" : val.charAt(0));
 Vue.filter("firstLetterOnly", firstLetterOnly);
 
 /**
- * Converts to Long form date (e.g. "May 01, 2020")
- * @param {Date} val
- * @returns date string
+ * Returns a string representing a long form date (e.g. "May 01, 2020")
+ * @param {Date} date
+ * @returns string
  */
-export const dateFormatLong = (val) => format(val, "PP");
+export const dateFormatLong = (date) => format(date, "PP");
 Vue.filter("dateFormatLong", dateFormatLong);
