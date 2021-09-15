@@ -1,28 +1,32 @@
 import { paymentMethods } from "./choices";
 
-export const validationError = (message) => ({ valid: false, message });
-export const success = { valid: true };
+export const validState = { valid: true };
+export const invalidState = (message = "") => {
+  const state = { valid: false };
+  if (message) state.message = message;
+  return state;
+};
 
 export function required(value) {
-  return !value ? validationError("Required.") : success;
+  return !value ? invalidState("Required.") : validState;
 }
 
 export function minimum(shares, minShares) {
   return shares < minShares
-    ? validationError(`Must be at least ${minShares} shares.`)
-    : success;
+    ? invalidState(`Must be at least ${minShares} shares.`)
+    : validState;
 }
 
 export function minimumNonEquity(amount, minAmount) {
   return amount < minAmount
-    ? validationError(`Must be at least $${minAmount} minimum.`)
-    : success;
+    ? invalidState(`Must be at least $${minAmount} minimum.`)
+    : validState;
 }
 
 export function canSpend(toSpend, spendCapacity) {
   return spendCapacity - toSpend < 0
-    ? validationError("Cannot invest more than allowed.")
-    : success;
+    ? invalidState("Cannot invest more than allowed.")
+    : validState;
 }
 
 export function validateEquityAmount(
@@ -39,16 +43,12 @@ export function validateEquityAmount(
   }
 
   if (shares * pricePerShare > 5000 && method === "CC") {
-    return {
-      valid: false,
-      message: "Cannot invest any amount over $5,000.00 using a credit card.",
-    };
+    const m = "Cannot invest any amount over $5,000.00 using a credit card.";
+    return invalidState(m);
   }
 
   const result2 = minimum(shares, minShares);
-  if (!result2.valid) {
-    return result2;
-  }
+  if (!result2.valid) return result2;
 
   return canSpend(shares * pricePerShare, spendCapacity);
 }
@@ -59,13 +59,11 @@ export function validateNonEquityAmount(
   spendCapacity,
   method
 ) {
-  if (!amount) return { valid: false };
+  if (!amount) return invalidState();
 
   if (amount > 5000 && method === "CC") {
-    return {
-      valid: false,
-      message: "Cannot invest any amount over $5,000.00 using a credit card.",
-    };
+    const m = "Cannot invest any amount over $5,000.00 using a credit card.";
+    return invalidState(m);
   }
 
   const checkEquityAmount = minimumNonEquity(amount, minAmount);
@@ -75,15 +73,21 @@ export function validateNonEquityAmount(
 }
 
 export function validateMethodDetails(method, methodDetails) {
-  if (["CHECK", "WIRE"].includes(method)) {
-    return success;
-  } else if (method === "ACH") {
-    return validateACH(methodDetails);
-  } else if (method === "CC") {
-    return validateCreditCard(methodDetails);
-  } else {
-    return { valid: false, message: "Invalid payment method." };
+  const methods = ["CHECK", "WIRE", "ACH", "CC"];
+
+  if (!methods.includes(method)) {
+    return invalidState("Invalid payment method.");
   }
+
+  if (method === "ACH") {
+    return validateACH(methodDetails);
+  }
+
+  if (method === "CC") {
+    return validateCreditCard(methodDetails);
+  }
+
+  return validState;
 }
 
 function calculateSpendPool(ai, nw) {
@@ -141,7 +145,7 @@ export function investmentForm(user, offering, form) {
     ssn:
       ssnRequired && country === "USA"
         ? validateSSN(ssn, country, isEntity)
-        : success,
+        : validState,
   };
 }
 
@@ -149,10 +153,10 @@ export function amongst(method) {
   const values = paymentMethods.map((el) => el.value);
 
   if (!values.includes(method)) {
-    return validationError("Not one of the choices.");
+    return invalidState("Not one of the choices.");
   }
 
-  return success;
+  return validState;
 }
 
 export function allAgreed(attestations = []) {
@@ -161,27 +165,25 @@ export function allAgreed(attestations = []) {
     !attestations.every((el) => el.length > 0) ||
     attestations.length !== 5
   ) {
-    return {
-      valid: false,
-      message: "You must agree to all attestations before investing.",
-    };
+    const m = "You must agree to all attestations before investing.";
+    return invalidState(m);
   }
 
-  return success;
+  return validState;
 }
 
 export function validateAchAccount(account) {
-  if (!account) return { valid: false };
+  if (!account) return invalidState();
 
   if (account.length < 3 || account.length > 17) {
-    return validationError("Invalid account number.");
+    return invalidState("Invalid account number.");
   }
 
-  return success;
+  return validState;
 }
 
 export function validateAchRouting(routing) {
-  if (!routing) return { valid: false };
+  if (!routing) return invalidState();
 
   const checksumTotal =
     7 *
@@ -200,46 +202,46 @@ export function validateAchRouting(routing) {
   const checksumMod = checksumTotal % 10;
 
   if (checksumMod !== 0 || routing.length !== 9) {
-    return validationError("Invalid routing number.");
+    return invalidState("Invalid routing number.");
   }
 
-  return success;
+  return validState;
 }
 
 export function validateCardName(name) {
-  if (!name) return { valid: false };
+  if (!name) return invalidState();
 
   const regex = /^(?=.{2,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/g;
 
   if (name.length <= 1 || !regex.test(name)) {
-    return validationError("Invalid cardholder name.");
+    return invalidState("Invalid cardholder name.");
   }
 
-  return success;
+  return validState;
 }
 
 export function validateExpiryMonth(m) {
-  if (!m) return { valid: false };
+  if (!m) return invalidState();
 
   if (isNaN(Number(m))) {
-    return { valid: false, message: "Month is not a number." };
+    return invalidState("Month is not a number.");
   }
 
   if (Number(m) > 12 || Number(m) < 1) {
-    return { valid: false, message: "Invalid expiry month." };
+    return invalidState("Invalid expiry month.");
   }
 
-  return success;
+  return validState;
 }
 
 export function validateExpiryYear(year) {
-  if (!year) return { valid: false };
+  if (!year) return invalidState();
 
   if (new Date().getFullYear() > 2000 + Number(year)) {
     return { valid: false, message: "Invalid expiry year." };
   }
 
-  return success;
+  return validState;
 }
 
 export function validateExpiry(month, year) {
@@ -256,23 +258,23 @@ export function validateExpiry(month, year) {
   const expiry = new Date(`${2000 + Number(year)}-${month}`);
 
   if (today > expiry) {
-    return { valid: false, message: "Card expired." };
+    return invalidState("Card expired.");
   }
 
-  return success;
+  return validState;
 }
 
 export function validateCVV(number) {
-  if (!number) return { valid: false };
+  if (!number) return invalidState();
   const regex = /^[0-9]{3}$/;
-  if (regex.test(number)) return success;
-  return validationError("Invalid CVV number.");
+  if (!regex.test(number)) return invalidState("Invalid CVV number.");
+  return validState;
 }
 
 export function validateCardNumber(number) {
-  if (!number) return { valid: false };
+  if (!number) return invalidState();
 
-  const amexError = validationError(
+  const amexError = invalidState(
     "We do not accept American Express. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
   );
   const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
@@ -281,28 +283,29 @@ export function validateCardNumber(number) {
   const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
 
   if (aeRegex.test(number)) return amexError;
-  else if (viRegex.test(number)) return success;
-  else if (mcRegex.test(number)) return success;
-  else if (diRegex.test(number)) return success;
+  else if (viRegex.test(number)) return validState;
+  else if (mcRegex.test(number)) return validState;
+  else if (diRegex.test(number)) return validState;
 
-  const error = validationError(
-    "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
-  );
-
-  return error;
+  const m =
+    "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER.";
+  return invalidState(m);
 }
 
 export function validateACH(methodDetails) {
   if (!methodDetails || !methodDetails.account || !methodDetails.routing) {
-    return { valid: false };
+    return invalidState();
   }
+
   const { account, routing } = methodDetails;
   const validAccountNumber = validateAchAccount(account);
   const validRoutingNumber = validateAchRouting(routing);
+
   if (!validAccountNumber.valid || !validRoutingNumber.valid) {
-    return { valid: false, message: "Invalid ACH credentials." };
+    return invalidState("Invalid ACH credentials.");
   }
-  return success;
+
+  return validState;
 }
 
 export function validateCreditCard(methodDetails) {
@@ -318,10 +321,10 @@ export function validateCreditCard(methodDetails) {
     !validExpiry.valid ||
     !validCVV.valid
   ) {
-    return { valid: false, message: "Invalid Credit Card credentials." };
+    return invalidState("Invalid Credit Card credentials.");
   }
 
-  return success;
+  return validState;
 }
 
 export function canInvest(user, offering) {
@@ -332,7 +335,7 @@ export function canInvest(user, offering) {
 
 export function validateSSN(val, country = "USA", isEntity = false) {
   const regex = /^(?!000|666)[0-8][0-9]{2}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$/;
-  if (isEntity || country !== "USA" || regex.test(val)) return success;
-  if (!val) return { valid: false };
-  return { valid: false, message: "Invalid SSN." };
+  if (isEntity || country !== "USA" || regex.test(val)) return validState;
+  if (!val) return invalidState();
+  return invalidState("Invalid SSN.");
 }

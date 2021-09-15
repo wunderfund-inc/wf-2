@@ -1,6 +1,6 @@
 import {
-  validationError,
-  success,
+  invalidState,
+  validState,
   required,
   minimum,
   minimumNonEquity,
@@ -26,8 +26,23 @@ import {
 } from "./form";
 
 describe("Investment Form", () => {
+  describe("testing form state", () => {
+    test("valid state works", () => {
+      expect(validState).toEqual({ valid: true });
+    });
+
+    test("invalid state works", () => {
+      expect(invalidState()).toEqual({ valid: false });
+    });
+
+    test("invalid state works when a message is given", () => {
+      const state = { valid: false, message: "required" };
+      expect(invalidState("required")).toEqual(state);
+    });
+  });
+
   describe("Required value", () => {
-    const error = validationError("Required.");
+    const error = invalidState("Required.");
 
     it("is invalid when null", () => {
       expect(required(null)).toEqual(error);
@@ -46,7 +61,7 @@ describe("Investment Form", () => {
     });
 
     it("returns true when value is present", () => {
-      expect(required("some value")).toEqual(success);
+      expect(required("some value")).toEqual(validState);
     });
   });
 
@@ -59,11 +74,11 @@ describe("Investment Form", () => {
     });
 
     it("is valid when committed investment and minimum shares is equal", () => {
-      expect(minimum(1, 1)).toEqual(success);
+      expect(minimum(1, 1)).toEqual(validState);
     });
 
     it("is valid when more than minimum shares", () => {
-      expect(minimum(2, 1)).toEqual(success);
+      expect(minimum(2, 1)).toEqual(validState);
     });
   });
 
@@ -76,32 +91,32 @@ describe("Investment Form", () => {
     });
 
     it("is valid when amount and minimum amount is equal", () => {
-      expect(minimumNonEquity(100, 100)).toEqual(success);
+      expect(minimumNonEquity(100, 100)).toEqual(validState);
     });
 
     it("is valid when greater than minimum amount", () => {
-      expect(minimumNonEquity(101, 100)).toEqual(success);
+      expect(minimumNonEquity(101, 100)).toEqual(validState);
     });
   });
 
   describe("Relationship between committed amount and spend capacity", () => {
-    const error = validationError("Cannot invest more than allowed.");
+    const error = invalidState("Cannot invest more than allowed.");
 
     it("is invalid if trying to invest more than user can spend", () => {
       expect(canSpend(2300, 2200)).toEqual(error);
     });
 
     it("is valid if trying to invest as much as one can spend", () => {
-      expect(canSpend(2200, 2200)).toEqual(success);
+      expect(canSpend(2200, 2200)).toEqual(validState);
     });
 
     it("is valid if trying to invest something under spend limit", () => {
-      expect(canSpend(100, 2200)).toEqual(success);
+      expect(canSpend(100, 2200)).toEqual(validState);
     });
   });
 
   describe("Payment Method Choices", () => {
-    const error = validationError("Not one of the choices.");
+    const error = invalidState("Not one of the choices.");
 
     it("is invalid if choices not amongst list", () => {
       expect(amongst("any value")).toEqual(error);
@@ -109,29 +124,29 @@ describe("Investment Form", () => {
       expect(amongst(undefined)).toEqual(error);
     });
     it("is valid if choices amongst the list", () => {
-      expect(amongst("CC")).toEqual(success);
-      expect(amongst("ACH")).toEqual(success);
-      expect(amongst("CHECK")).toEqual(success);
-      expect(amongst("WIRE")).toEqual(success);
-      expect(amongst("CRYPTO")).toEqual(success);
+      expect(amongst("CC")).toEqual(validState);
+      expect(amongst("ACH")).toEqual(validState);
+      expect(amongst("CHECK")).toEqual(validState);
+      expect(amongst("WIRE")).toEqual(validState);
+      expect(amongst("CRYPTO")).toEqual(validState);
     });
   });
 
   describe("Payment Method Details", () => {
     describe("ACH", () => {
       it("invalid routing numbers", () => {
-        const error = validationError("Invalid routing number.");
-        expect(validateAchRouting(null)).toEqual({ valid: false });
-        expect(validateAchRouting("")).toEqual({ valid: false });
+        const error = invalidState("Invalid routing number.");
+        expect(validateAchRouting(null)).toEqual(invalidState());
+        expect(validateAchRouting("")).toEqual(invalidState());
         expect(validateAchRouting("110000009")).toEqual(error);
       });
 
       it("valid routing numbers", () => {
-        expect(validateAchRouting("110000000")).toEqual(success);
-        expect(validateAchRouting("072403004")).toEqual(success);
-        expect(validateAchRouting("021000021")).toEqual(success);
-        expect(validateAchRouting("011401533")).toEqual(success);
-        expect(validateAchRouting("091000019")).toEqual(success);
+        expect(validateAchRouting("110000000")).toEqual(validState);
+        expect(validateAchRouting("072403004")).toEqual(validState);
+        expect(validateAchRouting("021000021")).toEqual(validState);
+        expect(validateAchRouting("011401533")).toEqual(validState);
+        expect(validateAchRouting("091000019")).toEqual(validState);
       });
 
       it("invalid account numbers", () => {
@@ -142,13 +157,13 @@ describe("Investment Form", () => {
       });
 
       it("valid account numbers", () => {
-        expect(validateAchAccount("000123456789")).toEqual(success);
-        expect(validateAchAccount("000111111116")).toEqual(success);
-        expect(validateAchAccount("000111111113")).toEqual(success);
-        expect(validateAchAccount("000222222227")).toEqual(success);
-        expect(validateAchAccount("000333333335")).toEqual(success);
-        expect(validateAchAccount("000444444440")).toEqual(success);
-        expect(validateAchAccount("856667")).toEqual(success);
+        expect(validateAchAccount("000123456789")).toEqual(validState);
+        expect(validateAchAccount("000111111116")).toEqual(validState);
+        expect(validateAchAccount("000111111113")).toEqual(validState);
+        expect(validateAchAccount("000222222227")).toEqual(validState);
+        expect(validateAchAccount("000333333335")).toEqual(validState);
+        expect(validateAchAccount("000444444440")).toEqual(validState);
+        expect(validateAchAccount("856667")).toEqual(validState);
       });
     });
 
@@ -159,9 +174,9 @@ describe("Investment Form", () => {
           message: "Invalid cardholder name.",
         };
 
-        expect(validateCardName(undefined)).toEqual({ valid: false });
-        expect(validateCardName(null)).toEqual({ valid: false });
-        expect(validateCardName("")).toEqual({ valid: false });
+        expect(validateCardName(undefined)).toEqual(invalidState());
+        expect(validateCardName(null)).toEqual(invalidState());
+        expect(validateCardName("")).toEqual(invalidState());
         expect(validateCardName(";!@#$%")).toEqual(regexError);
         expect(validateCardName("R2-D2")).toEqual(regexError);
         expect(validateCardName("J")).toEqual(regexError);
@@ -169,17 +184,17 @@ describe("Investment Form", () => {
       });
 
       it("valid Cardholder Name", () => {
-        expect(validateCardName("asdfjkl")).toEqual(success);
-        expect(validateCardName("Jon")).toEqual(success);
-        expect(validateCardName("D'Artagnan")).toEqual(success);
+        expect(validateCardName("asdfjkl").valid).toBeTruthy();
+        expect(validateCardName("Jon").valid).toBeTruthy();
+        expect(validateCardName("D'Artagnan").valid).toBeTruthy();
       });
 
       it("invalid Cardholder Number", () => {
-        const error = validationError(
+        const error = invalidState(
           "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
         );
 
-        const amexError = validationError(
+        const amexError = invalidState(
           "We do not accept American Express. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
         );
 
@@ -198,15 +213,15 @@ describe("Investment Form", () => {
       });
 
       it("valid Cardholder Number", () => {
-        expect(validateCardNumber("4003830171874018")).toEqual(success);
-        expect(validateCardNumber("4012888888881881")).toEqual(success);
-        expect(validateCardNumber("4111111111111111")).toEqual(success);
-        expect(validateCardNumber("5496198584584769")).toEqual(success);
-        expect(validateCardNumber("6011111111111117")).toEqual(success);
-        expect(validateCardNumber("6011000990139424")).toEqual(success);
-        expect(validateCardNumber("4242424242424242")).toEqual(success);
-        expect(validateCardNumber("5555555555554444")).toEqual(success);
-        expect(validateCardNumber("5105105105105100")).toEqual(success);
+        expect(validateCardNumber("4003830171874018").valid).toBeTruthy();
+        expect(validateCardNumber("4012888888881881").valid).toBeTruthy();
+        expect(validateCardNumber("4111111111111111").valid).toBeTruthy();
+        expect(validateCardNumber("5496198584584769").valid).toBeTruthy();
+        expect(validateCardNumber("6011111111111117").valid).toBeTruthy();
+        expect(validateCardNumber("6011000990139424").valid).toBeTruthy();
+        expect(validateCardNumber("4242424242424242").valid).toBeTruthy();
+        expect(validateCardNumber("5555555555554444").valid).toBeTruthy();
+        expect(validateCardNumber("5105105105105100").valid).toBeTruthy();
       });
 
       it("invalid Expiry Month", () => {
@@ -220,30 +235,30 @@ describe("Investment Form", () => {
       });
 
       it("valid Expiry Month", () => {
-        expect(validateExpiryMonth(1)).toEqual(success);
-        expect(validateExpiryMonth(2)).toEqual(success);
-        expect(validateExpiryMonth(3)).toEqual(success);
-        expect(validateExpiryMonth(4)).toEqual(success);
-        expect(validateExpiryMonth(5)).toEqual(success);
-        expect(validateExpiryMonth(6)).toEqual(success);
-        expect(validateExpiryMonth(7)).toEqual(success);
-        expect(validateExpiryMonth(8)).toEqual(success);
-        expect(validateExpiryMonth(9)).toEqual(success);
-        expect(validateExpiryMonth(10)).toEqual(success);
-        expect(validateExpiryMonth(11)).toEqual(success);
-        expect(validateExpiryMonth(12)).toEqual(success);
-        expect(validateExpiryMonth("01")).toEqual(success);
-        expect(validateExpiryMonth("02")).toEqual(success);
-        expect(validateExpiryMonth("03")).toEqual(success);
-        expect(validateExpiryMonth("04")).toEqual(success);
-        expect(validateExpiryMonth("05")).toEqual(success);
-        expect(validateExpiryMonth("06")).toEqual(success);
-        expect(validateExpiryMonth("07")).toEqual(success);
-        expect(validateExpiryMonth("08")).toEqual(success);
-        expect(validateExpiryMonth("09")).toEqual(success);
-        expect(validateExpiryMonth("10")).toEqual(success);
-        expect(validateExpiryMonth("11")).toEqual(success);
-        expect(validateExpiryMonth("12")).toEqual(success);
+        expect(validateExpiryMonth(1)).toEqual(validState);
+        expect(validateExpiryMonth(2)).toEqual(validState);
+        expect(validateExpiryMonth(3)).toEqual(validState);
+        expect(validateExpiryMonth(4)).toEqual(validState);
+        expect(validateExpiryMonth(5)).toEqual(validState);
+        expect(validateExpiryMonth(6)).toEqual(validState);
+        expect(validateExpiryMonth(7)).toEqual(validState);
+        expect(validateExpiryMonth(8)).toEqual(validState);
+        expect(validateExpiryMonth(9)).toEqual(validState);
+        expect(validateExpiryMonth(10)).toEqual(validState);
+        expect(validateExpiryMonth(11)).toEqual(validState);
+        expect(validateExpiryMonth(12)).toEqual(validState);
+        expect(validateExpiryMonth("01")).toEqual(validState);
+        expect(validateExpiryMonth("02")).toEqual(validState);
+        expect(validateExpiryMonth("03")).toEqual(validState);
+        expect(validateExpiryMonth("04")).toEqual(validState);
+        expect(validateExpiryMonth("05")).toEqual(validState);
+        expect(validateExpiryMonth("06")).toEqual(validState);
+        expect(validateExpiryMonth("07")).toEqual(validState);
+        expect(validateExpiryMonth("08")).toEqual(validState);
+        expect(validateExpiryMonth("09")).toEqual(validState);
+        expect(validateExpiryMonth("10")).toEqual(validState);
+        expect(validateExpiryMonth("11")).toEqual(validState);
+        expect(validateExpiryMonth("12")).toEqual(validState);
 
         const currentMonth = new Date().getMonth() + 1;
         expect(validateExpiryMonth(currentMonth).valid).toBeTruthy();
@@ -270,7 +285,7 @@ describe("Investment Form", () => {
       });
 
       it("valid CVV", () => {
-        expect(validateCVV("123")).toEqual(success);
+        expect(validateCVV("123")).toEqual(validState);
       });
 
       it("invalid expiry combination (month and year)", () => {
@@ -428,19 +443,19 @@ describe("Investment Form", () => {
         it("invalid combination", () => {
           expect(
             validateMethodDetails("ACH", { ...ach, account: "12" })
-          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          ).toEqual(invalidState("Invalid ACH credentials."));
           expect(
             validateMethodDetails("ACH", {
               ...ach,
               account: "123456781234567890",
             })
-          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          ).toEqual(invalidState("Invalid ACH credentials."));
           expect(
             validateMethodDetails("ACH", { ...ach, routing: "12345678" })
-          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          ).toEqual(invalidState("Invalid ACH credentials."));
           expect(
             validateMethodDetails("ACH", { ...ach, routing: "1234567890" })
-          ).toEqual({ valid: false, message: "Invalid ACH credentials." });
+          ).toEqual(invalidState("Invalid ACH credentials."));
         });
       });
 
@@ -518,31 +533,31 @@ describe("Investment Form", () => {
       expect(
         isFormValid({
           ...formState,
-          amount: { valid: false },
+          amount: invalidState(),
         })
       ).toBe(false);
       expect(
         isFormValid({
           ...formState,
-          method: { valid: false },
+          method: invalidState(),
         })
       ).toBe(false);
       expect(
         isFormValid({
           ...formState,
-          methodDetails: { valid: false },
+          methodDetails: invalidState(),
         })
       ).toBe(false);
       expect(
         isFormValid({
           ...formState,
-          attestations: { valid: false },
+          attestations: invalidState(),
         })
       ).toBe(false);
       expect(
         isFormValid({
           ...formState,
-          ssn: { valid: false },
+          ssn: invalidState(),
         })
       ).toBe(false);
     });
@@ -614,7 +629,7 @@ describe("Investment Form", () => {
         )
       ).toEqual({
         ...formState,
-        ssn: { valid: false, message: "Invalid SSN." },
+        ssn: invalidState("Invalid SSN."),
       });
     });
 
@@ -708,7 +723,7 @@ describe("Investment Form", () => {
       });
       expect(form).toEqual({
         ...formState,
-        methodDetails: { valid: false },
+        methodDetails: invalidState(),
       });
     });
 
