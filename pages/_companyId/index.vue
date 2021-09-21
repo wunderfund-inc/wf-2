@@ -14,7 +14,10 @@
       :company-name="company.company_name_short"
       :offering="offerings[0]"
     />
-    <section-cancellation :company-name="company.company_name_short" />
+    <section-cancellation
+      v-if="!company.ttw_phase"
+      :company-name="company.company_name_short"
+    />
   </main>
 </template>
 
