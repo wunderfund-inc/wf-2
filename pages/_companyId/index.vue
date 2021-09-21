@@ -14,10 +14,8 @@
       :company-name="company.company_name_short"
       :offering="offerings[0]"
     />
-    <section-cancellation
-      v-if="!company.ttw_phase"
-      :company-name="company.company_name_short"
-    />
+    <section-ttw-details v-if="company.ttw_phase" />
+    <section-cancellation v-else :company-name="company.company_name_short" />
   </main>
 </template>
 
@@ -27,6 +25,7 @@ import CampaignContent from "@/components/Campaign/Content";
 import SectionInvestmentsMap from "@/components/Campaign/SectionInvestmentsMap";
 import TermsDetails from "@/components/Campaign/TermsDetails";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
+import SectionTtwDetails from "@/components/Campaign/SectionTtwDetails";
 
 async function getLocations(offeringId) {
   const snapshot = await db
@@ -49,9 +48,10 @@ async function getCompanyLocation(zip) {
 export default {
   components: {
     CampaignContent,
-    SectionInvestmentsMap,
-    TermsDetails,
     SectionCancellation,
+    SectionInvestmentsMap,
+    SectionTtwDetails,
+    TermsDetails,
   },
   async asyncData({ route, $prismic, store, error }) {
     try {
