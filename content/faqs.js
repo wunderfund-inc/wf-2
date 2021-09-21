@@ -42,7 +42,7 @@ export const generalFaqs = [
     question:
       "What is equity crowdfunding and how is it different from traditional crowdfunding?",
     answer:
-      "Crowdfunding is the practice of funding a project or venture by raising many small amounts of money from a large number of people via the Internet. There are essentially two types of crowdfunding platforms. The first type of crowdfunding platform offers products or rewards in exchange for your funding commitment. Typical sites include: Kickstarter and IndieGogo. The second type, which is one that Wunderfund.co runs, allows individuals to invest in a startup company in exchange for a percentage share (or equity) in that company. This fundraising method was legalized by the JOBS Act in 2012 and it's subsequent revision with Title III in 2015.",
+      "Crowdfunding is the practice of funding a project or venture by raising many small amounts of money from a large number of people via the Internet. There are essentially two types of crowdfunding platforms. The first type of crowdfunding platform offers products or rewards in exchange for your funding commitment. The second type, which is one that Wunderfund.co runs, allows individuals to invest in a startup company in exchange for a percentage share (or equity) in that company. This fundraising method was legalized by the JOBS Act in 2012 and it's subsequent revision with Title III in 2015.",
   },
   {
     question: "How does the Wunderfund Platform work?",
