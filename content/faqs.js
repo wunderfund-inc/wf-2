@@ -58,7 +58,7 @@ export const generalFaqs = [
   {
     question: "How much money do I need to start investing?",
     answer:
-      "You can invest as little as $100 in a startup company and up to a maximum limit that's based on the SEC's Regulation Crowdfunding guidelines. Wunderfund.co will automatically calculate the limit you can invest based on your annual income and net worth you provide. Legally, we cannot allow you to invest more than the guidelines set by the SEC for every 12 month period: \n All investors can invest a least $2,000 \n If either your income or net worth are less than $100K, you may invest up to 5% of the smaller number. \n If both your income or net worth is >$100K, you can invest up to 10% of the smaller number. \n $100K is the maximum amount accredited investors can invest (i.e. people who earn $200K in annually or $300K jointly) or those have over $1M in assets. \n Regardless, we'll automatically calculate your maximum limit for you and you'll be able to see how much you are allowed to invest in your investor profile page.",
+      "You can invest as little as $100 in a startup company and up to a maximum limit that's based on the SEC's Regulation Crowdfunding guidelines. Wunderfund.co will automatically calculate the limit you can invest based on your annual income and net worth you provide. Legally, we cannot allow you to invest more than the guidelines set by the SEC for every 12 month period: \n All investors can invest a least $2,200 \n If either your income or net worth are less than $107K, you may invest up to 5% of the smaller number. \n If both your income or net worth is >$100K, you can invest up to 10% of the smaller number. \n $100K is the maximum amount accredited investors can invest (i.e. people who earn $200K in annually or $300K jointly) or those have over $1M in assets. \n Regardless, we'll automatically calculate your maximum limit for you and you'll be able to see how much you are allowed to invest in your investor profile page.",
   },
   {
     question: "Why did you create the Wunderfund Platform?",
@@ -86,7 +86,7 @@ export const companyFaqs = [
   {
     question: "Does it cost money to create a basic profile?",
     answer:
-      "It's free to sign up, build a profile, and start a campaign. If your campaign is successful, we take 5-7% of the funds based on how much your company raises.",
+      "It's free to sign up, build a profile, and start a campaign. If your campaign is successful, we take 5-9% of the funds based on how much your company raises.",
   },
   {
     question:
