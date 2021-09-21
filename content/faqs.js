@@ -86,7 +86,7 @@ export const companyFaqs = [
   {
     question: "Does it cost money to create a basic profile?",
     answer:
-      "It's free to sign up, build a profile, and start a campaign. If your campaign is successful, we take 5-9% of the funds based on how much your company raises.",
+      "It's free to sign up, build a profile, and start a campaign. If your campaign is successful, we take anywhere from 5 to 10% of the funds based on how much your company raises.",
   },
   {
     question:
