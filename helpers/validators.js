@@ -1,5 +1,6 @@
 // import differenceInDays from "date-fns/differenceInDays";
 import differenceInYears from "date-fns/differenceInYears";
+import { validCard } from "./card";
 
 export const validPostal = (val) => {
   // if (val === null) return null;
@@ -38,16 +39,7 @@ const validName = (name) => {
 };
 
 export const validNumber = (number) => {
-  const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  const diRegex =
-    /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  // const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
-
-  if (viRegex.test(number)) return true;
-  else if (mcRegex.test(number)) return true;
-  else if (diRegex.test(number)) return true;
-  return false;
+  return validCard(number);
 };
 
 export const validMonth = (month = null) => {

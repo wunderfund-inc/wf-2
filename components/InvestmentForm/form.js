@@ -1,4 +1,5 @@
 import { paymentMethods } from "./choices";
+import { AMEX_REGEX, determineCard } from "~/helpers/card";
 
 export const validState = { valid: true };
 export const invalidState = (message = "") => {
@@ -266,8 +267,7 @@ export function validateExpiry(month, year) {
 
 export function validateCVV(number) {
   if (!number) return invalidState();
-  const regex = /^[0-9]{3}$/;
-  if (!regex.test(number)) return invalidState("Invalid CVV number.");
+  if (!/^[0-9]{3}$/.test(number)) return invalidState("Invalid CVV number.");
   return validState;
 }
 
@@ -277,16 +277,9 @@ export function validateCardNumber(number) {
   const amexError = invalidState(
     "We do not accept American Express. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER."
   );
-  const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  const diRegex =
-    /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
-  const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
 
-  if (aeRegex.test(number)) return amexError;
-  else if (viRegex.test(number)) return validState;
-  else if (mcRegex.test(number)) return validState;
-  else if (diRegex.test(number)) return validState;
+  if (AMEX_REGEX.test(number)) return amexError;
+  if (["VI", "MC", "DI"].includes(determineCard(number))) return validState;
 
   const m =
     "Invalid cardholder number. Please use a number from one of the following companies: VISA, MASTERCARD, DISCOVER.";
