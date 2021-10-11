@@ -903,7 +903,8 @@ export default {
     determineCreditCard() {
       const viRegex = /^4\d{3}([-]?)\d{4}\1\d{4}\1\d{4}$/;
       const mcRegex = /^5[1-5]\d{2}([-]?)\d{4}\1\d{4}\1\d{4}$/;
-      const diRegex = /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
+      const diRegex =
+        /^6(?:011|22(?:1(?=[-]?(?:2[6-9]|[3-9]))|[2-8]|9(?=[-]?(?:[01]|2[0-5])))|4[4-9]\d|5\d\d)([-]?)\d{4}\1\d{4}\1\d{4}$/;
       const aeRegex = /^3[47]\d{1,2}(| |-)\d{6}\1\d{6}$/;
 
       if (viRegex.test(this.form.methodDetails.number)) return "VI";

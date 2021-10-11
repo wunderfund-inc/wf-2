@@ -56,7 +56,8 @@ export const getters = {
     const validLastName = lastName && lastName.length > 0;
 
     const dob = state.dob;
-    const dobRegex = /(?:19|20)\d{2}-((?:0[1-9])|(?:1[0-2]))-((?:0[0-9])|(?:[1-2][0-9])|(?:3[0-1]))/;
+    const dobRegex =
+      /(?:19|20)\d{2}-((?:0[1-9])|(?:1[0-2]))-((?:0[0-9])|(?:[1-2][0-9])|(?:3[0-1]))/;
 
     const validDob = dobRegex.test(dob);
     const validStreet1 = street1 && street1.length > 0;
