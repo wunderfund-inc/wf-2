@@ -1,6 +1,11 @@
 <template>
   <nuxt-link to="/">
-    <img :src="platformImgSrc" :alt="platform" width="200" />
+    <img
+      v-if="$config.PLATFORM !== TEST"
+      :src="platformImgSrc"
+      :alt="platform"
+      width="200"
+    />
   </nuxt-link>
 </template>
 
@@ -13,7 +18,8 @@ export default {
     },
     platformImgSrc() {
       if (this.platform && this.platform !== "TEST") {
-        return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
+        const p = this.platform.toLowerCase();
+        return require(`@/assets/platform/${p}/logo.png`).default;
       }
       return null;
     },
