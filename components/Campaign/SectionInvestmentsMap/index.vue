@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-custom">
+  <section class="bg-custom" :style="`background-color: ${bgColor}`">
     <div class="container p-5">
       <div class="row justify-content-center">
         <h1 class="text-light pb-3">See who's invested so far:</h1>
@@ -31,11 +31,23 @@ export default {
       required: true,
     },
   },
+  computed: {
+    bgColor() {
+      switch (this.$config.PLATFORM) {
+        case "WFP":
+          return "#003b5a";
+        case "WFH":
+          return "#007bff";
+        default:
+          return "#6c757d";
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .bg-custom {
-  background-color: lighten(#003b5a, 7%);
+  filter: brightness(1.4);
 }
 </style>
