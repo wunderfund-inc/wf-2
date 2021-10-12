@@ -192,6 +192,7 @@ a {
       font-weight: 400;
     }
   }
+
   .card:hover {
     cursor: pointer;
     text-decoration: none;

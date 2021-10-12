@@ -74,6 +74,7 @@ export default {
 .comment-avatar {
   border-radius: 15px;
 }
+
 .button--cancel {
   text-decoration: none;
 }

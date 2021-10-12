@@ -28,6 +28,7 @@ $primary: #c89f5c;
   transition: 0.3s ease all;
   background-color: $primary;
   padding: 12px;
+
   &:hover {
     border: 1px solid lighten($primary, 10%);
     color: white;

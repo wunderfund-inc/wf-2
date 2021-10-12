@@ -39,8 +39,10 @@
     background-position: right bottom;
     margin-bottom: 0;
     -webkit-box-reflect: transparent;
+
     .hero {
       height: 50vh;
+
       .title {
         width: 100%;
       }
