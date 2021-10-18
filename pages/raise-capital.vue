@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-6 col-sm-8">
             <img
-              :src="require(`@/assets/bg/rc.png`)"
+              :src="require(`@/assets/bg/rc.png`).default"
               alt="Raise Capital Hero Image"
               class="img__bg-hero"
             />
@@ -45,7 +45,9 @@
             <div class="row">
               <div class="col-lg-2 col-sm-3 d-none d-md-block">
                 <img
-                  :src="require(`@/assets/raise-capital/${item.icon}.png`)"
+                  :src="
+                    require(`@/assets/raise-capital/${item.icon}.png`).default
+                  "
                   alt="icon"
                   class="aside"
                 />
@@ -72,7 +74,7 @@
           <div class="px-5">
             <div class="px-5">
               <img
-                :src="require(`@/assets/raise-capital/line.png`)"
+                :src="require(`@/assets/raise-capital/line.png`).default"
                 alt="line"
                 class="img-fluid"
               />
