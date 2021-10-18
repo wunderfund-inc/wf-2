@@ -43,10 +43,13 @@
                   {{ offering.securities_total | properIntegerFormat }} shares).
                 </template>
                 <template v-if="offering.security_type === 'SAFE Note'">
-                  <strong>A SAFE Note</strong> - At the moment, your investment
-                  will give you a {{ `${offering.percent_discount}%` }} discount
-                  on future shares into this company.
-                  <br />
+                  <strong>A SAFE Note</strong> -{{ " " }}
+                  <span v-if="offering.percent_discount">
+                    At the moment, your investment will give you a
+                    {{ `${offering.percent_discount}%` }} discount on future
+                    shares into this company.
+                    <br />
+                  </span>
                   It's speculated that the company will be worth more than
                   {{ offering.valuation_cap | currencyDisplayFormat }}
                   in the future.
