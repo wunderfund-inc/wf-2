@@ -122,7 +122,10 @@
         <p>
           {{ companyName }} is offering you <strong>equity</strong> ownership at
           <strong>
-            {{ offering.minimum_investment_amount_tiers[0].pps | asCurrency }}
+            {{
+              offering.minimum_investment_amount_tiers[0].price_per_share
+                | asCurrency
+            }}
             per share,
           </strong>
           which will be calculated as (your amount invested /
@@ -137,10 +140,11 @@
           <small class="text-muted">
             (x
             {{
-              offering.minimum_investment_amount_tiers[0].pps | asCurrency
+              offering.minimum_investment_amount_tiers[0].price_per_share
+                | asCurrency
             }}/share =
             {{
-              (offering.minimum_investment_amount_tiers[0].pps *
+              (offering.minimum_investment_amount_tiers[0].price_per_share *
                 offering.minimum_investment_amount_tiers[0].investment_minimum)
                 | asCurrency
             }}
