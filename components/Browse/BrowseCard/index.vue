@@ -64,9 +64,11 @@
               {{ offering.valuation_cap | currencyDisplayFormat }} valuation
             </small>
 
-            <small v-else class="mb-0 ml-2 text-muted">
+            <small v-if="offering.percent_discount" class="mb-0 text-muted">
               Future Equity at a {{ offering.percent_discount }}% discount
             </small>
+
+            <small v-else class="mb-0 text-muted">Future Equity</small>
           </template>
 
           <template v-if="offering.security_type === 'SAFT Note'">
