@@ -274,7 +274,8 @@ describe("Investment Form", () => {
       it("valid Expiry Year", () => {
         const year = new Date().getFullYear() % 100;
         expect(validateExpiryYear(year).valid).toBeTruthy();
-        expect(validateExpiryYear(21).valid).toBeTruthy();
+        expect(validateExpiryYear(year + 1).valid).toBeTruthy();
+        expect(validateExpiryYear(year - 1).valid).toBeFalsy();
       });
 
       it("invalid CVV", () => {
