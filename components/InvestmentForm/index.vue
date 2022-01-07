@@ -122,14 +122,14 @@
 
                       <div class="form-row text-muted pt-3">
                         <small>
-                          Minimum number of shares needed to purchase for a
+                          Minimum number of unit needed to purchase for a
                           valid investment:
                           <strong>{{ tier.investment_minimum }}</strong>
                         </small>
                       </div>
                       <div class="form-row text-muted pt-1">
                         <small>
-                          Price per share:
+                          Price per unit:
                           <strong>{{ tier.pps | asCurrency }}</strong>
                         </small>
                       </div>
@@ -157,7 +157,7 @@
                 <div class="form-group mt-3">
                   <b-form-group
                     label-cols-lg="6"
-                    label="Number of shares you wish to buy:"
+                    label="Number of units you wish to buy:"
                     label-size="lg"
                     label-class="font-weight-bold pt-0"
                     class="mb-0"
@@ -165,7 +165,7 @@
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text text-muted"
-                          ># Shares</span
+                          ># Units</span
                         >
                       </div>
                       <TheMask
@@ -192,7 +192,7 @@
                     </b-form-text>
 
                     <div class="row d-flex justify-content-between px-3 pt-3">
-                      <h6>Price Per Share:</h6>
+                      <h6>Price Per Unit:</h6>
                       <h6>x {{ securityClass.pps | asCurrency }}</h6>
                     </div>
 
