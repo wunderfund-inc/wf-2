@@ -191,7 +191,7 @@
               <small>
                 Share with your friends!
                 <a
-                  :href="`https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2Fc%2F${$route.params.companyId}`"
+                  :href="`https://www.facebook.com/sharer/sharer.php?u= https%3A%2F%2Fwunderfund.co%2F${$route.params.companyId}`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
@@ -201,7 +201,7 @@
                   />
                 </a>
                 <a
-                  :href="`https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2Fc%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`"
+                  :href="`https://www.linkedin.com/shareArticle/?mini=true&ur l=https://wunderfund.co%2F${$route.params.companyId}&ti tle=I%20invested%20in%20${content.company_name_short}!`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
@@ -211,7 +211,7 @@
                   />
                 </a>
                 <a
-                  :href="`https://twitter.com/intent/tweet?url=https://wu nderfund.co%2Fc%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`"
+                  :href="`https://twitter.com/intent/tweet?url=https://wu nderfund.co%2F${$route.params.companyId}&text=I%20invested%20in%20${content.company_name_short}!`"
                   target="_blank"
                   class="pl-3 pr-2 text-muted"
                 >
