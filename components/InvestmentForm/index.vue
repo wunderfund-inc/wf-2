@@ -122,8 +122,8 @@
 
                       <div class="form-row text-muted pt-3">
                         <small>
-                          Minimum number of unit needed to purchase for a
-                          valid investment:
+                          Minimum number of units needed to purchase for a valid
+                          investment:
                           <strong>{{ tier.investment_minimum }}</strong>
                         </small>
                       </div>
@@ -164,9 +164,7 @@
                   >
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text text-muted"
-                          ># Units</span
-                        >
+                        <span class="input-group-text text-muted"># Units</span>
                       </div>
                       <TheMask
                         id="inv-amt"
