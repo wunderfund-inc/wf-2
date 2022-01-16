@@ -12,7 +12,7 @@ import {
   regulationFormat,
   reduceToTotal,
   properIntegerFormat,
-  // timeDistance,
+  timeDistance,
 } from "./filters";
 
 describe("testing filter functions", () => {
@@ -125,11 +125,11 @@ describe("testing filter functions", () => {
     expect(() => properIntegerFormat("aw2wa")).toThrow(TypeError);
   });
 
-  // test("calculate time delta", () => {
-  //   const result = new Date();
-  //   result.setDate(result.getDate() + 1); // 1 day ahead
-  //   expect(timeDistance(result.toLocaleDateString())).toBe("1 day");
-  // });
+  test("calculate time delta", () => {
+    const result = new Date();
+    result.setDate(result.getDate() + 365); // ~1 year ahead
+    expect(timeDistance(result.toLocaleDateString())).toBe("about 1 year");
+  });
 
   test("payment method format", () => {
     expect(paymentMethodFormat("ACH")).toBe("Bank Account (ACH)");
