@@ -122,14 +122,14 @@
 
                       <div class="form-row text-muted pt-3">
                         <small>
-                          Minimum number of units needed to purchase for a valid
-                          investment:
+                          Minimum number of shares needed to purchase for a
+                          valid investment:
                           <strong>{{ tier.investment_minimum }}</strong>
                         </small>
                       </div>
                       <div class="form-row text-muted pt-1">
                         <small>
-                          Price per unit:
+                          Price per share:
                           <strong>{{ tier.pps | asCurrency }}</strong>
                         </small>
                       </div>
@@ -157,21 +157,24 @@
                 <div class="form-group mt-3">
                   <b-form-group
                     label-cols-lg="6"
-                    label="Number of units you wish to buy:"
+                    label="Number of shares you wish to buy:"
                     label-size="lg"
                     label-class="font-weight-bold pt-0"
                     class="mb-0"
                   >
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text text-muted"># Units</span>
+                        <span class="input-group-text text-muted">
+                          # Shares
+                        </span>
                       </div>
-                      <TheMask
+                      <input
                         id="inv-amt"
                         v-model.number="form.amount"
-                        mask="######"
+                        type="number"
                         class="form-control text-right"
-                        type="tel"
+                        :step="offering.securities_min"
+                        :min="offering.securities_min"
                       />
                     </div>
 
@@ -190,7 +193,7 @@
                     </b-form-text>
 
                     <div class="row d-flex justify-content-between px-3 pt-3">
-                      <h6>Price Per Unit:</h6>
+                      <h6>Price Per Share:</h6>
                       <h6>x {{ securityClass.pps | asCurrency }}</h6>
                     </div>
 
@@ -837,7 +840,7 @@ export default {
     return {
       securityClass: null,
       form: {
-        amount: 0,
+        amount: this.offering.securities_min,
         method: null,
         methodDetails: {},
         attestations: [],
