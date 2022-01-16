@@ -581,10 +581,11 @@
                     type="tel"
                   />
                   <small class="text-muted">
-                    Why are we asking for this? This company requires your SSN
-                    on your agreement to give you a K-1 Tax Form. This only
-                    applies for people who attested to living in the United
-                    States.
+                    Why do we ask for this? This company requires your SSN on
+                    your agreement to give you a K-1 Tax Form. This only applies
+                    for people who attested to living in the United States. We
+                    will never save this information, thus you will need to fill
+                    this out with every investment.
                   </small>
                   <b-form-invalid-feedback
                     v-if="!validatedForm.ssn.valid"
