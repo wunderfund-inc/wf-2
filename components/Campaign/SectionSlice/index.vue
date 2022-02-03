@@ -115,14 +115,16 @@
     </div>
 
     <div v-else-if="content.slice_type === 'press'">
-      <div class="card shadow">
+      <div class="card shadow mb-3">
         <img
           :src="content.primary.img_logo.url"
           :alt="content.primary.img_logo.alt"
         />
-        <a :href="content.primary.link.url" target="_blank" class="text-dark">
-          <h2>{{ content.primary.title }}</h2>
-        </a>
+        <div class="card-body text-center">
+          <a :href="content.primary.link.url" target="_blank" class="text-dark">
+            <h2>{{ content.primary.title }}</h2>
+          </a>
+        </div>
         <img
           :src="content.primary.img_article.url"
           :alt="content.primary.img_article.alt"
