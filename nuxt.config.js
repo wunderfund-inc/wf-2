@@ -101,6 +101,18 @@ export default {
         ],
       },
     ],
+    [
+      "nuxt-facebook-pixel-module",
+      {
+        pixelId: "wunderfund",
+        pixels: [
+          {
+            pixelId: "462536288702414",
+            routes: ["/bircus"],
+          },
+        ],
+      },
+    ],
   ],
   prismic: {
     endpoint: "https://wunderfund.cdn.prismic.io/api/v2",
