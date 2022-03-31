@@ -97,16 +97,16 @@ const toEasternTimezone = (d = null) => {
 
   if (d) {
     dString = new Date(d).toLocaleString("en-US", {
-      timeZone: "America/New_York"
+      timeZone: "America/New_York",
     });
   } else {
     dString = new Date().toLocaleString("en-US", {
-      timeZone: "America/New_York"
-    })
+      timeZone: "America/New_York",
+    });
   }
 
   return new Date(dString);
-}
+};
 
 /**
  * Function to calculate days left
