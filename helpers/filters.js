@@ -90,15 +90,27 @@ export const einNumToStr = (val) => {
 Vue.filter("einStrFormat", einNumToStr);
 
 /**
+ * Helper function to convert to local timezone.
+ */
+const toEasternTimezone = (d = null) => {
+  if (d) {
+    const dString = new Date(d).toLocaleString("en-US", {
+      timeZone: "America/New_York"
+    });
+    return new Date(dString);
+  }
+  return new Date(new Date().toLocaleString("en-US", {
+    timeZone: "America/New_York"
+  }));
+}
+
+/**
  * Function to calculate days left
  */
 export const timeDistance = (val) => {
-  return formatDistance(
-    new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
-    new Date(`${val} 23:59:59`).toLocaleString("en-US", {
-      timeZone: "America/New_York",
-    })
-  );
+  const d = toEasternTimezone();
+  const d2 = toEasternTimezone(val);
+  return formatDistance(d, d2);
 };
 Vue.filter("timeDistance", timeDistance);
 
