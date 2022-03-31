@@ -93,15 +93,19 @@ Vue.filter("einStrFormat", einNumToStr);
  * Helper function to convert to local timezone.
  */
 const toEasternTimezone = (d = null) => {
+  let dString;
+
   if (d) {
-    const dString = new Date(d).toLocaleString("en-US", {
+    dString = new Date(d).toLocaleString("en-US", {
       timeZone: "America/New_York"
     });
-    return new Date(dString);
+  } else {
+    dString = new Date().toLocaleString("en-US", {
+      timeZone: "America/New_York"
+    })
   }
-  return new Date(new Date().toLocaleString("en-US", {
-    timeZone: "America/New_York"
-  }));
+
+  return new Date(dString);
 }
 
 /**
