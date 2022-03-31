@@ -94,7 +94,11 @@ Vue.filter("einStrFormat", einNumToStr);
  */
 export const timeDistance = (val) => {
   return formatDistance(
-    new Date(),
+    new Date(
+      new Date().toLocaleString("en-US", {
+        timeZone: "America/New_York",
+      })
+    ),
     new Date(
       new Date(`${val} 23:59:59`).toLocaleString("en-US", {
         timeZone: "America/New_York",
