@@ -226,7 +226,7 @@
     <template v-if="offering && !offeringEnded && endingSoon">
       <h3 class="text-center">
         Time Left:
-        <strong>{{ offering.offering_date_end | timeDistance }}</strong>
+        <strong>{{ endingIn }}</strong>
       </h3>
     </template>
 
@@ -287,6 +287,7 @@
 import { endingSoon, endedAlready } from "@/helpers/validators";
 import MainButton from "@/components/Common/MainButton";
 import SolidIcon from "@/components/Common/SolidIcon";
+import { timeDistance } from "~/helpers/filters";
 
 export default {
   components: { MainButton, SolidIcon },
@@ -324,6 +325,10 @@ export default {
     },
     slug() {
       return this.$route.params.companyId;
+    },
+    endingIn() {
+      const endDate = this.offering.offering_date_end;
+      return timeDistance(endDate);
     },
   },
 };
