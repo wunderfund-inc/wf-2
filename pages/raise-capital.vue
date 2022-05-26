@@ -171,7 +171,7 @@
       </details>
       <h5 class="pt-5">
         Still have questions?
-        <nuxt-link to="/faq">
+        <nuxt-link to="/faq/general">
           <strong>Check out the rest of our FAQs.</strong>
         </nuxt-link>
       </h5>
