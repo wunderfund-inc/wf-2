@@ -90,7 +90,7 @@
           </b-form-checkbox>
 
           <b-form-checkbox
-            v-model="$v.form.attestations.$model[2]"
+            v-model="$v.form.attestations.$model[3]"
             value="The user agrees to Wunderfund's Electronic Consent."
             switch
             class="py-2"
@@ -102,7 +102,7 @@
           </b-form-checkbox>
 
           <b-form-checkbox
-            v-model="$v.form.attestations.$model[3]"
+            v-model="$v.form.attestations.$model[4]"
             value="The user agrees to Wunderfund's disclosure for the platform generating income."
             switch
             class="py-2"
