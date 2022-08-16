@@ -90,6 +90,18 @@
           </b-form-checkbox>
 
           <b-form-checkbox
+            v-model="$v.form.attestations.$model[2]"
+            value="The user agrees to Wunderfund's Electronic Consent."
+            switch
+            class="py-2"
+          >
+            I'm agreeing to Wunderfund's
+            <nuxt-link to="/legal/electronic-consent" target="_blank">
+              Electronic Consent.
+            </nuxt-link>
+          </b-form-checkbox>
+
+          <b-form-checkbox
             v-model="$v.form.attestations.$model[3]"
             value="The user agrees to Wunderfund's disclosure for the platform generating income."
             switch
@@ -150,7 +162,7 @@ export default {
     form: {
       attestations: {
         required,
-        minLength: minLength(4),
+        minLength: minLength(5),
       },
     },
     validAttestations: ["form.attestations"],
