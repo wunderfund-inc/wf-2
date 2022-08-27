@@ -1027,14 +1027,10 @@ export default {
         await newInvestment.set(investmentPayload);
         this.investmentId = newInvestmentId;
 
-        const domain =
-          "https://us-central1-wunderfund-server.cloudfunctions.net";
-        const endpoint = "agreementOnRequest";
+        const domain = "https://ecf-api.vercel.app/api";
+        const endpoint = "getSubscriptionAgreement";
 
         const payload = {
-          offering_details: this.offering,
-          user_id: this.$store.state.auth.userId,
-          investment_amount: this.form.amount,
           investment_id: this.investmentId,
           ssn: this.form.ssn,
         };
