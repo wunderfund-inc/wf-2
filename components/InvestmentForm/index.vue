@@ -1035,7 +1035,10 @@ export default {
           ssn: this.form.ssn,
         };
 
-        const { agreementUrl } = await this.$axios.$post(`${domain}/${endpoint}`, payload);
+        const { agreementUrl } = await this.$axios.$post(
+          `${domain}/${endpoint}`, 
+          payload
+        );
         await window.location.replace(agreementUrl);
       } catch (error) {
         this.submissionError = error.message;
