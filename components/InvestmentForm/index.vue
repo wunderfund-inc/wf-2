@@ -1036,7 +1036,7 @@ export default {
         };
 
         const { agreementUrl } = await this.$axios.$post(
-          `${domain}/${endpoint}`, 
+          `${domain}/${endpoint}`,
           payload
         );
         await window.location.replace(agreementUrl);
