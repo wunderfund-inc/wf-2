@@ -1036,8 +1036,9 @@ export default {
         };
 
         const res = await this.$axios.$post(`${domain}/${endpoint}`, payload);
-        const { agreementUrl } = res.data;
-        await window.location.replace(agreementUrl);
+        // const { agreementUrl } = res.data;
+        console.log(res);
+        // await window.location.replace(agreementUrl);
       } catch (error) {
         this.submissionError = error.message;
         await this.$store.dispatch("agreement/showOverlay", false);
