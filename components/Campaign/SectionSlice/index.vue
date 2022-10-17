@@ -133,12 +133,14 @@
     </div>
 
     <div v-else-if="content.slice_type === 'embed_video_player'">
-      <div class="wrapper">
-        <iframe
+      <div class="mb-3">
+        <div class="wrapper">
+          <iframe
           :src="content.primary.embed_url.url"
           frameborder="0"
           class="iframe"
-        ></iframe>
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
