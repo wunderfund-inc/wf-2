@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import { downloadURL } from "@/plugins/firebase";
-
 export default {
   data() {
     return {
@@ -74,7 +72,9 @@ export default {
         const response = await this.$axios.$post(endpoint, { tradeId });
         const url = response.url;
 
+        // eslint-disable-next-line no-console
         console.log(response.data);
+        // eslint-disable-next-line no-console
         console.log(response.url);
 
         window.open(url, "_blank");
