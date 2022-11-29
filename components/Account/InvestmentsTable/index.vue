@@ -66,27 +66,22 @@ export default {
   },
   methods: {
     async view(investment) {
+      investment.item.loading = true;
       try {
-        investment.item.loading = true;
-        let url;
         const tradeId = investment.item.tradeId;
 
-        if (tradeId) {
-          const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
-          const response = await this.$axios.$post(endpoint, { tradeId });
-          url = response.url;
-        } else {
-          url = await downloadURL(
-            "agreements",
-            `${investment.item.agreementId}.pdf`
-          );
-        }
-        window.open(url);
+        const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
+        const response = await this.$axios.$post(endpoint, { tradeId });
+        const url = response.url;
+
+        console.log(response.data);
+        console.log(response.url);
+
+        window.open(url, "_blank");
       } catch (error) {
         this.error = error;
-      } finally {
-        investment.item.loading = false;
       }
+      investment.item.loading = false;
     },
     cancel(investment) {
       const toCancel = confirm(
