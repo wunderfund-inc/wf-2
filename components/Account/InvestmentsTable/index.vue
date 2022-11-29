@@ -72,10 +72,9 @@ export default {
         const tradeId = investment.item.tradeId;
 
         if (tradeId) {
-          const endpoint =
-            "https://us-central1-wunderfund-server.cloudfunctions.net/documentOnRequest";
+          const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
           const response = await this.$axios.$post(endpoint, { tradeId });
-          url = response;
+          url = response.data.url;
         } else {
           url = await downloadURL(
             "agreements",
