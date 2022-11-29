@@ -136,9 +136,9 @@
       <div class="mb-3">
         <div class="wrapper">
           <iframe
-          :src="content.primary.embed_url.url"
-          frameborder="0"
-          class="iframe"
+            :src="content.primary.embed_url.url"
+            frameborder="0"
+            class="iframe"
           ></iframe>
         </div>
       </div>
