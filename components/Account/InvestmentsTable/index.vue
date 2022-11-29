@@ -67,17 +67,9 @@ export default {
       investment.item.loading = true;
       try {
         const tradeId = investment.item.tradeId;
-
         const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
         const response = await this.$axios.$post(endpoint, { tradeId });
-        const url = response.url;
-
-        // eslint-disable-next-line no-console
-        console.log(response.data);
-        // eslint-disable-next-line no-console
-        console.log(response.url);
-
-        window.open(url, "_blank");
+        window.open(response.url, "_blank");
       } catch (error) {
         this.error = error;
       }
