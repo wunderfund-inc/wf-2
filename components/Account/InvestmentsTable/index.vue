@@ -74,7 +74,7 @@ export default {
         if (tradeId) {
           const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
           const response = await this.$axios.$post(endpoint, { tradeId });
-          url = response.data.url;
+          url = response.url;
         } else {
           url = await downloadURL(
             "agreements",
