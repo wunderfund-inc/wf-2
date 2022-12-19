@@ -465,7 +465,7 @@ describe("Investment Form", () => {
           name: "Justin Chiou",
           number: "4242424242424242",
           month: "11",
-          year: String(new Date().getFullYear() % 100),
+          year: String((new Date().getFullYear() + 1) % 100),
           cvv: "123",
         };
 
