@@ -69,7 +69,7 @@ export default {
         const tradeId = investment.item.tradeId;
         const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
         const response = await this.$axios.$post(endpoint, { tradeId });
-        window.open(response.url, "_blank");
+        window.location.assign(response.url);
       } catch (error) {
         this.error = error;
       }
