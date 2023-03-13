@@ -213,7 +213,7 @@ export const investorFaqs = [
     question:
       "Can anyone invest using this portal or do you have to be an accredited investor?",
     answer:
-      "Before May 16, 2016, only wealthy people and banks were considered 'accredited investors' and allowed to invest in private companies. All that has changed with the Jobs Act, which allows the average American to invest using regulation crowdfunding. Although this has opened up a huge gate for investors, there are still some limitations on the amounts you can invest each year. Wunderfund.co will automatically let you know how much you can invest based on your annual income and net worth you set up in your profile.",
+      "Anyone can invest in a Regulation Crowdfunding offering. Because of the risks involved with this type of investing, however, you may be limited in how much you can invest during any 12-month period in these transactions. If you are an accredited investor, then there are no limits on how much you can invest. If you are a non-accredited investor, then the limitation on how much you can invest depends on your net worth and annual income. If either your annual income or your net worth is less than $124,000, then during any 12-month period, you can invest up to the greater of either $2,500 or 5% of the greater of your annual income or net worth. If both your annual income and your net worth are equal to or more than $124,000, then during any 12-month period, you can invest up to 10% of annual income or net worth, whichever is greater, but not to exceed $124,000.",
   },
   {
     question: "What happens when rounds are oversubscribed?",
@@ -249,7 +249,7 @@ export const investorFaqs = [
   {
     question: "Is this free to join?",
     answer:
-      "Yes, you can join Wunderfund.co for free. You can also browse any of the investments on the site to see what's currently available to invest in. However, if you want access to an issuer's secured documents, growth plans, and other important information that will inform you before you invest, you have to create an account and sign in.",
+      "Yes, you can join Wunderfund.co for free. You can also browse any of the investments on the site to see what's currently available to invest in. However, if you want access to an issuer's secured documents, growth plans, and other important information that will inform you before you invest, all required information are provided in their respective campaign pages and, for additional information about the company not required for disclosure, create an account and sign in.",
   },
   {
     question: "What is startup investing and is it for me?",
@@ -371,5 +371,9 @@ export const faqLinks = [
   {
     name: "FAQs on Securities",
     url: "/faq/securities",
+  },
+  {
+    name: "FAQs on Reporting",
+    url: "/faq/reporting",
   },
 ];
