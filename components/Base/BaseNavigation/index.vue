@@ -23,6 +23,9 @@
               <b-dropdown-item to="/faq/securities">
                 On Securities
               </b-dropdown-item>
+              <b-dropdown-item to="/faq/reporting">
+                On Reporting
+              </b-dropdown-item>
             </b-nav-item-dropdown>
 
             <b-nav-item-dropdown text="Legal" class="mx-3 d-none d-md-flex">
