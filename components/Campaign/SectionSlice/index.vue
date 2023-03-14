@@ -160,10 +160,11 @@ export default {
     convertLink(content) {
       return content.primary.embed.url;
     },
-    htmlSerializer: function (type, element, text, children) {
-      if (type === 'label')
-        return `<strong className="${element.data.label}">${children}</strong>`
-      return null
+    htmlSerializer: (type, element, text, children) => {
+      if (type === "label") {
+        return `<strong className="${element.data.label}">${children}</strong>`;
+      }
+      return null;
     },
   },
 };
