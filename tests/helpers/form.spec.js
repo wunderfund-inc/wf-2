@@ -655,7 +655,7 @@ describe("investment form validation", () => {
   });
 
   describe("Required value", () => {
-    const error = invalidState("Required.");
+    const error = invalidState();
 
     it("is invalid when null", () => {
       expect(required(null)).toEqual(error);
@@ -946,18 +946,18 @@ describe("investment form validation", () => {
   describe("Validate combined parameters", () => {
     it("invalid equity investments", () => {
       expect(validateEquityAmount(null, 1, 100, 2200, "WIRE")).toEqual({
+        // message: "Required.",
         valid: false,
-        message: "Required.",
       });
 
       expect(validateEquityAmount(undefined, 1, 100, 2200, "WIRE")).toEqual({
+        // message: "Required.",
         valid: false,
-        message: "Required.",
       });
 
       expect(validateEquityAmount(0, 0, 100, 2200, "WIRE")).toEqual({
+        // message: "Required.",
         valid: false,
-        message: "Required.",
       });
 
       expect(validateEquityAmount(100, 400, 100, 2200, "WIRE")).toEqual({

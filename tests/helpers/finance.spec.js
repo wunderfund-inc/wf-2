@@ -1,4 +1,4 @@
-import { calculatePersonalLimit } from "./finance";
+import { calculatePersonalLimit } from "@/helpers/finance";
 
 describe("testing finance functions", () => {
   describe("calculating spend limits", () => {

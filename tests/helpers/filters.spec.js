@@ -6,13 +6,13 @@ import {
   dateFormatLong,
   einNumToStr,
   firstLetterOnly,
-  properCase,
-  pluralFaq,
   paymentMethodFormat,
-  regulationFormat,
-  reduceToTotal,
+  pluralFaq,
+  properCase,
   properIntegerFormat,
-} from "./filters";
+  reduceToTotal,
+  regulationFormat,
+} from "@/helpers/filters";
 
 describe("testing filter functions", () => {
   describe("capitalizing strings", () => {

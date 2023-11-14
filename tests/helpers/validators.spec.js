@@ -15,7 +15,7 @@ import {
   validNumber,
   validPostal,
   validYear,
-} from "./validators";
+} from "@/helpers/validators";
 
 describe("testing validator functions", () => {
   describe("test Zip Code Input", () => {
