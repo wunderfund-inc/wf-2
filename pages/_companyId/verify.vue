@@ -26,8 +26,8 @@ import { db } from "@/plugins/firebase";
 import ProfileForm from "@/components/ProfileForm";
 
 export default {
-  middleware: ["authenticated"],
   components: { ProfileForm },
+  middleware: ["authenticated"],
   async asyncData({ store }) {
     const userId = store.state.auth.userId;
     const userRef = await db.collection("users").doc(userId).get();

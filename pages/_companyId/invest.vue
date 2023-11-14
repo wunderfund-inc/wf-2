@@ -25,21 +25,21 @@
 </template>
 
 <script>
+import { db } from "../../plugins/firebase";
 import InvestmentForm from "@/components/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
-import { db } from "../../plugins/firebase";
 import {
   isProfileFormValid,
   profileFormState,
 } from "~/components/ProfileForm/form";
 
 export default {
-  middleware: ["authenticated"],
   components: {
     InvestmentForm,
     SectionCancellation,
   },
+  middleware: ["authenticated"],
   async asyncData({ redirect, route, $prismic, store, error }) {
     try {
       const companyId = route.params.companyId;

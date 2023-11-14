@@ -1,10 +1,11 @@
 import { db, timestamp } from "@/plugins/firebase";
+// eslint-disable-next-line
 import {
   validAchAccountNumber,
   validAchRoutingNumber,
+  validAttestations,
   validCreditCard,
   validEthereumAddress,
-  validAttestations,
 } from "../helpers/validators";
 
 export const state = () => ({

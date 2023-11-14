@@ -66,11 +66,11 @@ import { calculatePersonalLimit } from "@/helpers/finance";
 import { db } from "@/plugins/firebase";
 
 export default {
-  middleware: ["authenticated"],
   components: {
     SectionSpendLimit,
     ProfileForm,
   },
+  middleware: ["authenticated"],
   async asyncData({ store }) {
     try {
       const { userId } = store.state.auth;

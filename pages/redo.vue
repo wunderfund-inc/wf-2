@@ -134,9 +134,9 @@
 </template>
 
 <script>
-import { db, functions } from "@/plugins/firebase";
 import { BFormGroup, BFormInvalidFeedback, BFormRadio } from "bootstrap-vue";
 import { TheMask } from "vue-the-mask";
+import { db, functions } from "@/plugins/firebase";
 import {
   validateAchAccount,
   validateAchRouting,
