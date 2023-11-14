@@ -34,7 +34,7 @@
         <div class="row mb-4">
           <div class="col">
             <b-card v-if="investments.length > 0" no-body>
-              <template v-slot:header>
+              <template #header>
                 <h6 class="mb-0 text-center">Investments</h6>
               </template>
               <InvestmentsTable :investments="investments" />

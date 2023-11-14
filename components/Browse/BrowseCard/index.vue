@@ -7,7 +7,7 @@
       class="my-2"
     >
       <b-media class="container my-3">
-        <template v-slot:aside>
+        <template #aside>
           <b-img
             :src="company.data.company_logo.url"
             :alt="company.data.company_name_short"

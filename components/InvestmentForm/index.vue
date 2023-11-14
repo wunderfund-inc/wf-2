@@ -500,7 +500,7 @@
                         v-model="form.methodDetails.year"
                         :options="years"
                       >
-                        <template v-slot:first>
+                        <template #first>
                           <option :value="null" disabled>
                             -- Please Select --
                           </option>
@@ -696,7 +696,7 @@
       <aside class="col-md-4">
         <div style="position: sticky; top: 20px" class="mb-3">
           <b-card no-body>
-            <template v-slot:header>
+            <template #header>
               <h6 class="text-center mb-0">Investment Summary</h6>
             </template>
             <b-list-group flush>
@@ -798,9 +798,6 @@
 <script>
 import { TheMask } from "vue-the-mask";
 import VueNumeric from "vue-numeric";
-import BrandIcon from "@/components/Common/BrandIcon";
-import { accredited } from "@/helpers/validators";
-import { db, timestamp } from "@/plugins/firebase";
 import { months } from "./choices";
 import {
   canInvest,
@@ -815,6 +812,9 @@ import {
   validateCVV,
   validateSSN,
 } from "./form";
+import BrandIcon from "@/components/Common/BrandIcon";
+import { accredited } from "@/helpers/validators";
+import { db, timestamp } from "@/plugins/firebase";
 import { determineCard } from "~/helpers/card";
 
 export default {

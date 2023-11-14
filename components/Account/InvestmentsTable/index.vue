@@ -7,11 +7,11 @@
     hover
     class="mb-0"
   >
-    <template v-slot:cell(purchaseDate)="data">
+    <template #cell(purchaseDate)="data">
       {{ (data.item.purchaseDate.seconds * 1000) | dateFormatLong }}
     </template>
 
-    <template v-slot:cell(amount)="data">
+    <template #cell(amount)="data">
       <span v-if="data.item.type === 'SHARES'">
         {{ (data.item.amount * data.item.pricePerShare) | asCurrency }}
       </span>
@@ -20,11 +20,11 @@
       </span>
     </template>
 
-    <template v-slot:cell(method)="data">
+    <template #cell(method)="data">
       {{ data.item.method | paymentMethodFormat }}
     </template>
 
-    <template v-slot:cell(download)="data">
+    <template #cell(download)="data">
       <b-button
         v-if="data.item.tradeId"
         size="sm"

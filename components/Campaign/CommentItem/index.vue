@@ -1,6 +1,6 @@
 <template>
   <b-media v-if="comment.approved" class="comment">
-    <template v-slot:aside>
+    <template #aside>
       <b-avatar
         :src="comment.avatar || require(`@/assets/logo/wf-circle.png`)"
       />
