@@ -326,10 +326,7 @@
                       target="_blank"
                       class="mb-0"
                     >
-                      <b-img
-                        thumbnail
-                        :src="require(`@/assets/logo/tapi_secure.png`).default"
-                      />
+                      <b-img thumbnail src="~/assets/logo/tapi_secure.png" />
                     </b-link>
                   </div>
                 </div>

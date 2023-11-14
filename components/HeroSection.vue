@@ -20,7 +20,7 @@
 
 <style lang="scss" scoped>
 .img--bg {
-  background-image: url("@/assets/bg/hero.svg");
+  background-image: url("~assets/bg/hero.svg");
   background-position: bottom right;
   background-repeat: no-repeat;
   -webkit-box-reflect: below -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));

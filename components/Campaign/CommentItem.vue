@@ -2,7 +2,7 @@
   <b-media v-if="comment.approved" class="comment">
     <template #aside>
       <b-avatar
-        :src="comment.avatar || require(`@/assets/logo/wf-circle.png`)"
+        :src="comment.avatar || require(`~/assets/logo/wf-circle.png`)"
       />
     </template>
     <article class="pb-3">

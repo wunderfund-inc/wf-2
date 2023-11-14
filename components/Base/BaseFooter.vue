@@ -99,12 +99,6 @@ export default {
     platform() {
       return this.$config.PLATFORM;
     },
-    platformImgSrc() {
-      if (this.platform) {
-        return require(`@/assets/platform/${this.platform.toLowerCase()}/logo.png`);
-      }
-      return null;
-    },
     bgColor() {
       switch (this.platform) {
         case "WFP":

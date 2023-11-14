@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container py-5">
       <img
-        :src="require('@/assets/bg/404.jpg').default"
+        src="~/assets/bg/404.jpg"
         alt="404 Error Image"
         class="img-thumbnail"
       />
