@@ -26,13 +26,10 @@
 
 <script>
 import { db } from "../../plugins/firebase";
-import InvestmentForm from "@/components/InvestmentForm/InvestmentForm";
+import InvestmentForm from "@/components/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
-import {
-  isProfileFormValid,
-  profileFormState,
-} from "~/components/ProfileForm/form";
+import { isProfileFormValid, profileFormState } from "@/helpers/form";
 
 export default {
   components: {

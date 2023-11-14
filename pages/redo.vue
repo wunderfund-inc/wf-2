@@ -137,10 +137,7 @@
 import { BFormGroup, BFormInvalidFeedback, BFormRadio } from "bootstrap-vue";
 import { TheMask } from "vue-the-mask";
 import { db, functions } from "@/plugins/firebase";
-import {
-  validateAchAccount,
-  validateAchRouting,
-} from "@/components/InvestmentForm/form";
+import { validateAchAccount, validateAchRouting } from "@/helpers/form";
 
 /**
  * Returns a firebase document for a particular investment.

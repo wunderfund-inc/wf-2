@@ -795,7 +795,6 @@
 <script>
 import { TheMask } from "vue-the-mask";
 import VueNumeric from "vue-numeric";
-import { months } from "./choices";
 import {
   canInvest,
   investmentForm,
@@ -808,11 +807,12 @@ import {
   validateExpiryYear,
   validateCVV,
   validateSSN,
-} from "./form";
+} from "../helpers/form";
+import { months } from "@/helpers/choices";
 import BrandIcon from "@/components/BrandIcon";
 import { accredited } from "@/helpers/validators";
 import { db, timestamp } from "@/plugins/firebase";
-import { determineCard } from "~/helpers/card";
+import { determineCard } from "@/helpers/card";
 
 export default {
   components: {

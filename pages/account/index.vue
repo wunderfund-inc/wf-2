@@ -61,7 +61,7 @@
 
 <script>
 import SectionSpendLimit from "@/components/Account/SectionSpendLimit";
-import ProfileForm from "@/components/ProfileForm/ProfileForm";
+import ProfileForm from "@/components/ProfileForm";
 import { calculatePersonalLimit } from "@/helpers/finance";
 import { db } from "@/plugins/firebase";
 

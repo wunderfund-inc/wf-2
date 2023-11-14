@@ -326,9 +326,9 @@
 </template>
 
 <script>
-import { db, timestamp } from "../../plugins/firebase";
-import { countries, states } from "./choices";
-import { profileFormState, isProfileFormValid } from "./form";
+import { db, timestamp } from "@/plugins/firebase";
+import { countries, states } from "@/helpers/choices";
+import { profileFormState, isProfileFormValid } from "@/helpers/form";
 
 export default {
   props: {

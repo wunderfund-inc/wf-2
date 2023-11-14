@@ -23,7 +23,7 @@
 
 <script>
 import { db } from "@/plugins/firebase";
-import ProfileForm from "@/components/ProfileForm/ProfileForm";
+import ProfileForm from "@/components/ProfileForm";
 
 export default {
   components: { ProfileForm },

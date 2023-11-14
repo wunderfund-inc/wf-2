@@ -1,4 +1,20 @@
-import { states, countries, entityTypes } from "./choices";
+import {
+  countries,
+  entityTypes,
+  months,
+  paymentMethods,
+  states,
+} from "../../helpers/choices";
+
+describe("choice data", () => {
+  it("months", () => {
+    expect(months.length).toEqual(13); // Including "Please Select" option.
+  });
+
+  it("payment methods", () => {
+    expect(paymentMethods.length).toEqual(5);
+  });
+});
 
 describe("Choice data file", () => {
   it("there are 51 states (including 'Non-US') to choose from", () => {
