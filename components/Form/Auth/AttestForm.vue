@@ -108,7 +108,7 @@
             class="py-2"
           >
             I understand that Wunderfund has a way to
-            <nuxt-link to="/faq/company" target="_blank">
+            <nuxt-link to="/faq/companies" target="_blank">
               earn income
             </nuxt-link>
             with every campaign offered on this platform.
