@@ -90,8 +90,8 @@
         into equity ownership - shares of company stock - at a
         <strong>{{ offering.discount_rate }}%</strong> discounted share price.
         Additionally, the conversion share price will be capped at a maximum of
-        <strong>{{ offering.price_per_share | asCurrency }}</strong
-        >/share for investors that participate.
+        <strong>{{ offering.valuation_cap | asCurrency }}</strong> for investors
+        that participate.
       </p>
     </template>
 
