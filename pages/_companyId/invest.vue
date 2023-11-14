@@ -26,7 +26,7 @@
 
 <script>
 import { db } from "../../plugins/firebase";
-import InvestmentForm from "@/components/InvestmentForm";
+import InvestmentForm from "@/components/InvestmentForm/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
 import {

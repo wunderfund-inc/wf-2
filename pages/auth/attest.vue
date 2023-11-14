@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import AttestForm from "@/components/Form/Auth/AttestForm";
+import AttestForm from "@/components/AttestForm";
 
 export default {
   components: { AttestForm },

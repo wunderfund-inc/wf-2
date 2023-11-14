@@ -812,7 +812,7 @@ import {
   validateCVV,
   validateSSN,
 } from "./form";
-import BrandIcon from "@/components/Common/BrandIcon";
+import BrandIcon from "@/components/BrandIcon";
 import { accredited } from "@/helpers/validators";
 import { db, timestamp } from "@/plugins/firebase";
 import { determineCard } from "~/helpers/card";

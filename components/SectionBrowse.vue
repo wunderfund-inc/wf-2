@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import BrowseCard from "@/components/Browse/BrowseCard";
+import BrowseCard from "@/components/BrowseCard";
 
 export default {
   components: { BrowseCard },

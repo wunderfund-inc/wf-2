@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import PlatformLogo from "@/components/Platform/Logo";
+import PlatformLogo from "@/components/PlatformLogo";
 
 export default {
   components: {

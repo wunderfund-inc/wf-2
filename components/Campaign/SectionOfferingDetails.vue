@@ -285,8 +285,8 @@
 
 <script>
 import { endingSoon, endedAlready } from "@/helpers/validators";
-import MainButton from "@/components/Common/MainButton";
-import SolidIcon from "@/components/Common/SolidIcon";
+import MainButton from "@/components/MainButton";
+import SolidIcon from "@/components/SolidIcon";
 import { timeDistance } from "~/helpers/filters";
 
 export default {

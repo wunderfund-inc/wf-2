@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import BaseSubNav from "@/components/Base/BaseSubNav";
+import BaseSubNav from "@/components/Base/BaseSubNav.vue";
 
 const legalLinks = [
   {

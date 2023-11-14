@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import SectionSocialMediaLogin from "@/components/Form/Auth/SectionSocialMediaLogin";
-import LoginForm from "@/components/Form/Auth/LoginForm";
+import SectionSocialMediaLogin from "@/components/SectionSocialMediaLogin";
+import LoginForm from "@/components/LoginForm";
 
 export default {
   components: {
