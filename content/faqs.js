@@ -233,7 +233,7 @@ export const investorFaqs = [
   {
     question: "How are investments pre-vetted before being listed?",
     answer:
-      "In order for an issuer's campaign can be listed publically on our platform, we conduct a full review of the the issuer's application. The appication includes a business plan, the financials, articles of organization, and other important documents. We then conduct a background & credit check on the issuer's founding team members & sponsors. Importantly, these measures don't take away the risks in the investment and Wunderfund.co cannot gaurantee results. What the vetting process aims to do is put quality startup companies for you to select from so you get quality deal flow. You as an investor have the full authority and discretion to choose which opportunity is right for you and how much you want to invest.",
+      "In order for an issuer's campaign can be listed publically on our platform, we conduct a full review of the the issuer's application. The appication includes a business plan, the financials, articles of organization, and other important documents. We then conduct a background & credit check on the issuer's founding team members & sponsors. Importantly, these measures don't take away the risks in the investment and Wunderfund.co cannot gaurantee results. You, as an investor, have the full authority and discretion to choose which opportunity is right for you and how much you want to invest.",
   },
   {
     question:
