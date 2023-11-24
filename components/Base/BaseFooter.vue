@@ -9,11 +9,6 @@
           <div class="row d-flex justify-content-center mb-3">
             <PlatformLogo />
           </div>
-
-          <div class="row d-flex justify-content-center">
-            <p>Startup Investing at its finest.</p>
-          </div>
-
           <div
             v-if="platform === 'WFP'"
             class="row d-flex justify-content-around"
