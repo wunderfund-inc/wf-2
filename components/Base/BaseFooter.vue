@@ -1,48 +1,43 @@
 <template>
   <footer
     :style="`background-color: ${bgColor}`"
-    class="footer pt-5 d-print-none"
+    class="footer py-5 d-print-none"
   >
     <div class="container text-light">
-      <div class="row">
-        <div class="col-12 col-md-3 text-center text-md-left pb-5">
-          <div class="row d-flex justify-content-center mb-3">
-            <PlatformLogo />
-          </div>
-          <div
-            v-if="platform === 'WFP'"
-            class="row d-flex justify-content-around"
+      <div class="d-flex justify-content-between">
+        <PlatformLogo />
+        <div v-if="platform === 'WFP'">
+          <a href="mailto:taylor@wunderfund.co" class="pr-2 text-light">
+            <SolidIcon class="fa-2x" i="envelope-square" />
+          </a>
+          <a
+            href="https://www.facebook.com/thewunderfund"
+            class="px-2 text-light"
           >
-            <a href="mailto:taylor@wunderfund.co" class="pr-2 text-light">
-              <SolidIcon class="fa-2x" i="envelope-square" />
-            </a>
-            <a
-              href="https://www.facebook.com/thewunderfund"
-              class="px-2 text-light"
-            >
-              <BrandIcon class="fa-2x" i="facebook-square" />
-            </a>
-            <a
-              href="https://www.linkedin.com/company/wunderfund"
-              class="px-2 text-light"
-            >
-              <BrandIcon class="fa-2x" i="linkedin" />
-            </a>
-            <a href="https://twitter.com/thewunderfund" class="px-2 text-light">
-              <BrandIcon class="fa-2x" i="twitter-square" />
-            </a>
-            <a
-              href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
-              class="px-2 text-light"
-            >
-              <BrandIcon class="fa-2x" i="youtube-square" />
-            </a>
-          </div>
-          <div v-else class="row d-flex justify-content-around">
-            <p>Insert Social Media</p>
-          </div>
+            <BrandIcon class="fa-2x" i="facebook-square" />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/wunderfund"
+            class="px-2 text-light"
+          >
+            <BrandIcon class="fa-2x" i="linkedin" />
+          </a>
+          <a href="https://twitter.com/thewunderfund" class="px-2 text-light">
+            <BrandIcon class="fa-2x" i="twitter-square" />
+          </a>
+          <a
+            href="https://www.youtube.com/channel/UC6O_9SMFr8BHa5XwfV3xykQ"
+            class="px-2 text-light"
+          >
+            <BrandIcon class="fa-2x" i="youtube-square" />
+          </a>
         </div>
-        <div class="col-12 col-md-9 pb-5">
+        <div v-else class="row d-flex justify-content-around">
+          <p>Insert Social Media</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="col">
           <p>
             This site (the "Site") is owned and maintained by Wunderfund, Inc.,
             which is not a registered broker-dealer. Wunderfund, Inc. does not
@@ -117,7 +112,7 @@
             and who meet the Wunderfund&#39;s investment criteria may invest.
           </p>
           <p>
-            Wunderfund Inc., cannot verify information provided by companies on
+            Wunderfund, Inc., cannot verify information provided by companies on
             this Site and makes no assurance as to the completeness or accuracy
             of any such information. Additional information about companies
             fundraising on the Site can be found by searching the EDGAR
