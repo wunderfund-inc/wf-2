@@ -1,6 +1,9 @@
 <template>
   <main class="container py-5">
     <h1 class="text-center mb-5">Account</h1>
+    <b-alert v-if="document_id" show dismissible>
+      Success! Your investment is being processed; view your investment below.
+    </b-alert>
     <div class="row justify-content-center">
       <aside class="col-12 col-md-3 mb-3">
         <div class="list-group">
@@ -87,6 +90,9 @@ export default {
         default:
           return "secondary";
       }
+    },
+    document_id() {
+      return this.$route.query.document_id ?? "";
     },
   },
 };
