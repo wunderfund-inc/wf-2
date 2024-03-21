@@ -26,7 +26,7 @@
 
     <template #cell(download)="data">
       <b-button
-        v-if="data.item.tradeId"
+        v-if="data.item.agreementId"
         size="sm"
         :disabled="data.item.loading"
         @click="view(data)"
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { downloadURL } from "~/plugins/firebase";
+
 export default {
   data() {
     return {
@@ -66,10 +68,9 @@ export default {
     async view(investment) {
       investment.item.loading = true;
       try {
-        const tradeId = investment.item.tradeId;
-        const endpoint = "https://ecf-api.vercel.app/api/getTradeDocument";
-        const response = await this.$axios.$post(endpoint, { tradeId });
-        window.location.assign(response.url);
+        const { agreementId } = investment.item;
+        const url = await downloadURL("agreements", `${agreementId}.pdf`);
+        window.open(url, "_blank");
       } catch (error) {
         this.error = error;
       }

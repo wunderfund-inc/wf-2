@@ -1,5 +1,5 @@
-import { db } from "@/plugins/firebase";
 import { oneYearPassed } from "@/helpers/validators";
+import { db } from "@/plugins/firebase";
 
 export const state = () => ({
   investments: [],
@@ -48,6 +48,7 @@ export const actions = {
             uid,
             company_name: cn,
             date_created: dc,
+            investment_agreement_id: iaid,
             investment_amount: ia,
             investment_amount_type: iat,
             investment_method: im,
@@ -55,6 +56,7 @@ export const actions = {
             offering_details: od,
           } = data;
           return {
+            agreementId: iaid,
             uid,
             companyName: cn,
             purchaseDate: dc,
