@@ -84,11 +84,6 @@ export const companyFaqs = [
       "Hit that green button in the right corner and sign up to become involved in the community. Once you start to build out your profile, we make it easy for you to fill out form c to get your campaign off the ground.",
   },
   {
-    question: "Does it cost money to create a basic profile?",
-    answer:
-      "It's free to sign up, build a profile, and start a campaign. If your campaign is successful, we take anywhere from 7 to 10% of the funds based on how much your company raises.",
-  },
-  {
     question:
       "Can I create a profile and not raise funds or commit to investing?",
     answer:
