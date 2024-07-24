@@ -43,13 +43,7 @@ export default {
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: {
-    dirs: [
-      "~/components",
-      {
-        path: "~/components/Platform/",
-        prefix: "Platform",
-      },
-    ],
+    dirs: ["~/components"],
   },
 
   pageTransition: "page",
@@ -143,9 +137,9 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {
-      config.resolve.alias.vue = "vue/dist/vue.common";
-    },
+    // extend(config, ctx) {
+    //   config.resolve.alias.vue = "vue/dist/vue.common";
+    // },
   },
   serverMiddleware: ["~/server-middleware/tapi-webhook"],
   // generate: {
