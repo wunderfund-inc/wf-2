@@ -18,18 +18,18 @@
   </section>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
 .img--bg {
   background-image: url("~assets/bg/hero.svg");
   background-position: bottom right;
   background-repeat: no-repeat;
   -webkit-box-reflect: below -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
+}
 
-  .text-container {
-    display: table-cell;
-    height: 80vh;
-    vertical-align: middle;
-  }
+.img--bg > .text-container {
+  display: table-cell;
+  height: 80vh;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 991px) {
@@ -39,14 +39,14 @@
     background-position: right bottom;
     margin-bottom: 0;
     -webkit-box-reflect: transparent;
+  }
 
-    .hero {
-      height: 50vh;
+  .img-bg > .hero {
+    height: 50vh;
+  }
 
-      .title {
-        width: 100%;
-      }
-    }
+  .img-bg > .hero > .title {
+    width: 100%;
   }
 }
 </style>

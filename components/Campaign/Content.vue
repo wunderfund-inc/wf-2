@@ -323,27 +323,20 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$gold: #c89f5c;
-$darker-gold: #84683c;
-
-.text {
-  &__gold-dark {
-    color: $gold;
-  }
+<style scoped>
+.text__gold-dark {
+  color: #84683c;
 }
 
-.btn {
-  &__gold {
-    border: $gold 1px solid;
-    background-color: $gold;
+.btn__gold {
+  border: #c89f5c 1px solid;
+  background-color: #c89f5c;
+}
 
-    &:hover,
-    &:focus {
-      border: $gold 1px solid;
-      background-color: transparent;
-      color: $gold;
-    }
-  }
+.btn__gold:hover,
+.btn__gold:focus {
+  border: #c89f5c 1px solid;
+  background-color: transparent;
+  color: #c89f5c;
 }
 </style>

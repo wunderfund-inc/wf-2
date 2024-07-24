@@ -116,18 +116,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$gold: #c89f5c;
+<style scoped>
+.btn__gold {
+  border: #c89f5c 1px solid;
+}
 
-.btn {
-  &__gold {
-    border: $gold 1px solid;
-    background-color: $gold;
-
-    &:hover,
-    &:focus {
-      background-color: darken($gold, 10%);
-    }
-  }
+.btn__gold:hover,
+.btn__gold:focus {
+  background-color: darken(#c89f5c, 10%);
 }
 </style>

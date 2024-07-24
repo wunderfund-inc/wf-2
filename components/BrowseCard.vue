@@ -180,27 +180,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$font: "Montserrat", sans-serif;
+<style scoped>
+a > .card > .card-badge {
+  background-color: rgba(236, 195, 11, 0.5);
+  color: #494949;
+  font-size: 12px;
+  padding: 7px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
 
-a {
-  .card {
-    .card-badge {
-      background-color: rgba(236, 195, 11, 0.5);
-      color: #494949;
-      font-size: 12px;
-      padding: 7px;
-      font-family: $font;
-      font-weight: 400;
-    }
-  }
-
-  .card:hover {
-    cursor: pointer;
-    text-decoration: none;
-    -webkit-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
-    -moz-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
-    box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
-  }
+a > .card:hover {
+  cursor: pointer;
+  text-decoration: none;
+  -webkit-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+  -moz-box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
+  box-shadow: 0 4px 12px 1px rgba(89, 89, 89, 0.1);
 }
 </style>

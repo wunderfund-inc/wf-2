@@ -16,23 +16,21 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$primary: #c89f5c;
-
+<style scoped>
 .gold {
-  border: 1px solid $primary;
+  border: 1px solid #c89f5c;
   cursor: pointer;
   color: white;
   text-decoration: none;
   -webkit-transition: 0.3s all ease;
   transition: 0.3s ease all;
-  background-color: $primary;
+  background-color: #c89f5c;
   padding: 12px;
+}
 
-  &:hover {
-    border: 1px solid lighten($primary, 10%);
-    color: white;
-    background-color: lighten($primary, 10%);
-  }
+.gold:hover {
+  border: 1px solid lighten(#c89f5c, 10%);
+  color: white;
+  background-color: lighten(#c89f5c, 10%);
 }
 </style>

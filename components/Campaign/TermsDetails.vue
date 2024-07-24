@@ -183,7 +183,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .bg-custom {
   filter: brightness(1.3);
 }

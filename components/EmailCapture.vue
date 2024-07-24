@@ -3,7 +3,9 @@
     <div class="container">
       <div class="row pb-3">
         <div class="col">
-          <h6 class="text-center"><slot></slot></h6>
+          <h6 class="text-center">
+            <slot></slot>
+          </h6>
         </div>
       </div>
 
@@ -122,10 +124,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-$font: "Montserrat", sans-serif;
-$color: #c89f5c;
-
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s;
@@ -136,23 +135,19 @@ $color: #c89f5c;
   opacity: 0;
 }
 
-.color {
-  &__gold {
-    background-color: $color;
-    border: 1px solid transparent;
-
-    &:hover,
-    &:focus {
-      background-color: transparent;
-      border: 1px solid #ced4da;
-      color: $color;
-    }
-  }
+.color__gold {
+  background-color: #c89f5c;
+  border: 1px solid transparent;
 }
 
-.cta {
-  &__section {
-    background-color: #fafbfc;
-  }
+.color__gold:hover,
+.color__gold:focus {
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  color: #c89f5c;
+}
+
+.cta__section {
+  background-color: #fafbfc;
 }
 </style>
