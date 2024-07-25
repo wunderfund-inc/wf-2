@@ -26,7 +26,7 @@
   -webkit-box-reflect: below -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent), to(rgba(250, 250, 250, 0.1)));
 }
 
-.img--bg > .text-container {
+.text-container {
   display: table-cell;
   height: 80vh;
   vertical-align: middle;
@@ -41,11 +41,11 @@
     -webkit-box-reflect: transparent;
   }
 
-  .img-bg > .hero {
+  .hero {
     height: 50vh;
   }
 
-  .img-bg > .hero > .title {
+  .title {
     width: 100%;
   }
 }
