@@ -1,6 +1,7 @@
-import { db, timestamp } from "@/plugins/firebase";
+import { doc, getDoc, updateDoc } from "firebase/firestore/lite";
 import { calculatePersonalLimit } from "@/helpers/finance";
 import { accredited, validAttestations } from "@/helpers/validators";
+import { db, timestamp } from "@/plugins/firebase";
 
 export const state = () => ({
   accreditation_ai: 0,
@@ -98,8 +99,9 @@ export const mutations = {
 export const actions = {
   async fetch({ commit }, userId) {
     try {
-      const userRef = await db.collection("users").doc(userId).get();
-      const userData = userRef.data();
+      const docRef = doc(db, `users/${userId}`);
+      const snapshot = await getDoc(docRef);
+      const userData = snapshot.data();
 
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "accreditation_ai",
@@ -211,46 +213,39 @@ export const actions = {
           dto.dob = state.dob;
         }
 
-        await db
-          .collection("users")
-          .doc(userId)
-          .update({
-            ...dto,
-            flag: `update:${state.is_entity ? "entity" : "individual"}`,
-          });
+        const docRef = doc(db, `users/${userId}`);
+        await updateDoc(docRef, {
+          ...dto,
+          flag: `update:${state.is_entity ? "entity" : "individual"}`,
+        });
       } else {
         /**
          * using attestation form data (for now, extend the if statement if
          * there's more forms to fill out)
          */
+        const docRef = doc(db, `users/${userId}`);
         dto = {
           is_entity: state.is_entity,
           attestations: state.attestations,
           date_updated: timestamp,
+          flag: "update:attestation",
         };
-
-        await db
-          .collection("users")
-          .doc(userId)
-          .update({
-            ...dto,
-            flag: "update:attestation",
-          });
+        await updateDoc(docRef, dto);
       }
     } catch (error) {
       throw new Error(error);
     }
   },
-  async updateAtCheckout(context, { userId, payload }) {
+  async updateAtCheckout(_, { userId, payload }) {
+    const docRef = doc(db, `users/${userId}`);
+    const dto = {
+      ...payload,
+      date_updated: timestamp,
+      flat: "update:checkout",
+    };
+
     try {
-      await db
-        .collection("users")
-        .doc(userId)
-        .update({
-          ...payload,
-          date_updated: timestamp,
-          flag: "update:checkout",
-        });
+      await updateDoc(docRef, dto);
     } catch (error) {
       throw new Error(error);
     }

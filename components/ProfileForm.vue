@@ -326,6 +326,7 @@
 </template>
 
 <script>
+import { doc, updateDoc } from "firebase/firestore/lite";
 import { db, timestamp } from "@/plugins/firebase";
 import { countries, states } from "@/helpers/choices";
 import { profileFormState, isProfileFormValid } from "@/helpers/form";
@@ -415,7 +416,8 @@ export default {
           dto.dob = this.form.dob;
         }
 
-        await db.collection("users").doc(this.user.uid).update(dto);
+        const docRef = doc(db, `users/${this.user.uid}`);
+        await updateDoc(docRef, dto);
 
         const urlString = this.$route.params.companyId
           ? `/${this.$route.params.companyId}/invest`

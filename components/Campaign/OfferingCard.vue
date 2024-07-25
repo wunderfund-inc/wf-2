@@ -224,9 +224,10 @@
 <script>
 import differenceInDays from "date-fns/differenceInDays";
 import isAfter from "date-fns/isAfter";
-import { db } from "@/plugins/firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
 import MainButton from "@/components/MainButton";
 import SolidIcon from "@/components/SolidIcon";
+import { db } from "@/plugins/firebase";
 
 export default {
   components: { MainButton, SolidIcon },
@@ -265,11 +266,11 @@ export default {
   },
   async created() {
     try {
-      const metricsRef = await db
-        .collection("metrics_per_offering")
-        .doc(this.offering.offering_data.id)
-        .get();
-      const metrics = metricsRef.data();
+      const offeringId = this.offering.offering_data.id;
+      const docRef = doc(db, `metrics_per_offering/${offeringId}`);
+      const snapshot = await getDoc(docRef);
+      const metrics = snapshot.data();
+
       this.currentRaise = metrics.total_raise;
       this.investmentCount = metrics.total_investments;
     } catch (error) {

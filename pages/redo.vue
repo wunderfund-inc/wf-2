@@ -136,6 +136,7 @@
 <script>
 import { BFormGroup, BFormInvalidFeedback, BFormRadio } from "bootstrap-vue";
 import { TheMask } from "vue-the-mask";
+import { doc, getDoc } from "firebase/firestore/lite";
 import { db, functions } from "@/plugins/firebase";
 import { validateAchAccount, validateAchRouting } from "@/helpers/form";
 
@@ -146,10 +147,12 @@ import { validateAchAccount, validateAchRouting } from "@/helpers/form";
  */
 async function getInvestment(investmentId) {
   try {
-    const investment = (
-      await db.collection("investments").doc(investmentId).get()
-    ).data();
-    if (!investment) throw new Error("no investment found.");
+    const docRef = doc(db, `investments/${investmentId}`);
+    const snapshot = await getDoc(docRef);
+    const investment = snapshot.data();
+    if (!investment) {
+      throw new Error("no investment found.");
+    }
     return [investment, null];
   } catch (error) {
     return [null, error];

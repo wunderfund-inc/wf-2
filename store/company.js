@@ -1,3 +1,13 @@
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore/lite";
 import { db, timestamp } from "@/plugins/firebase";
 
 export const state = () => ({
@@ -26,17 +36,18 @@ export const mutations = {
 
 export const actions = {
   async fetchOfferings({ commit }, companyId) {
-    try {
-      const activeOfferings = await db
-        .collection("offerings")
-        .where("companyId", "==", companyId)
-        .where("published", "==", true)
-        .where("platforms", "array-contains", "WFP")
-        .get();
+    const offeringsRef = collection(db, "offerings");
+    const q = query(
+      offeringsRef,
+      where("companyId", "==", companyId),
+      where("published", "==", true),
+      where("platforms", "array-contains", "WFP")
+    );
 
-      const offerings = await Promise.all(
-        activeOfferings.docs.map((offeringRef) => offeringRef.data())
-      );
+    try {
+      const activeOfferings = await getDocs(q);
+      const actions = activeOfferings.docs.map((o) => o.data());
+      const offerings = await Promise.all(actions);
       const sortedOfferings = offerings.sort((a, b) => {
         return a.goal.min - b.goal.min;
       });
@@ -48,11 +59,9 @@ export const actions = {
   },
   async fetchCompany({ commit, dispatch }, companyId) {
     try {
-      const companyDocument = await db
-        .collection("companies")
-        .doc(companyId)
-        .get();
-      const company = companyDocument.data();
+      const docRef = doc(db, `companies/${companyId}`);
+      const snapshot = await getDoc(docRef);
+      const company = snapshot.data();
 
       await dispatch("fetchOfferings", companyId);
       await dispatch("fetchComments", companyId);
@@ -64,26 +73,24 @@ export const actions = {
   },
   async fetchCompanies({ commit }) {
     try {
-      const querySnapshot = await db.collection("companies").get();
-      const listOfCompanies = await Promise.all(
-        querySnapshot.docs.map(async (company) => {
-          const companyData = company.data();
-          const activeOfferings = await db
-            .collection("offerings")
-            .where("companyId", "==", companyData.uid)
-            .where("published", "==", true)
-            .where("platforms", "array-contains", "WFP")
-            .orderBy("createdAt")
-            .get();
-
-          companyData.offerings = activeOfferings.docs.map((offering) =>
-            offering.data()
-          );
-
-          return companyData;
-        })
-      );
-
+      const companiesRef = collection(db, "companies");
+      const q = query(companiesRef);
+      const querySnapshot = await getDocs(q);
+      const actions = querySnapshot.docs.map(async (company) => {
+        const companyData = company.data();
+        const offeringsRef = collection(db, "offerings");
+        const q = query(
+          offeringsRef,
+          where("companyId", "==", companyData.uid),
+          where("published", "==", true),
+          where("platforms", "array-contains", "WFP"),
+          orderBy("createdAt")
+        );
+        const snapshot = await getDocs(q);
+        companyData.offerings = snapshot.docs.map((o) => o.data());
+        return companyData;
+      });
+      const listOfCompanies = await Promise.all(actions);
       await commit("SET_COMPANIES", listOfCompanies);
     } catch (error) {
       throw new Error(error.message);
@@ -91,13 +98,16 @@ export const actions = {
   },
   async fetchComments({ commit }, companyId) {
     try {
-      const commentDocs = await db
-        .collection("comments")
-        .where("companyId", "==", companyId)
-        .orderBy("createdAt", "desc")
-        .get();
-      if (!commentDocs.empty) {
-        const comments = commentDocs.docs.map((comment) => comment.data());
+      const colRef = collection(db, "comments");
+      const q = query(
+        colRef,
+        where("companyId", "==", companyId),
+        orderBy("createdAt", "desc")
+      );
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        const comments = snapshot.docs.map((comment) => comment.data());
+
         await commit("SET_COMMENTS", comments);
       }
     } catch (error) {
@@ -106,7 +116,7 @@ export const actions = {
   },
   async submitComment({ state, rootState }, { message, role, companyId }) {
     try {
-      const commentRef = await db.collection("comments").doc();
+      const docRef = doc(collection(db, "comments"));
       const dto = {
         message,
         role,
@@ -120,23 +130,21 @@ export const actions = {
         approved: false,
         createdAt: timestamp,
         updatedAt: timestamp,
-        uid: commentRef.id,
+        uid: docRef.id,
       };
-      await commentRef.set(dto);
+      await addDoc(docRef, dto);
     } catch (error) {
       throw new Error(error.message);
     }
   },
   async fetchTestimonials({ commit }, companyId) {
     try {
-      const testimonialDocs = await db
-        .collection("testimonials")
-        .where("companyId", "==", companyId)
-        .get();
-      const testimonials = testimonialDocs.docs.map((testimonial) => {
-        return testimonial.data();
-      });
-      await commit("SET_TESTIMONIALS", testimonials);
+      const colRef = collection(db, "testimonials");
+      const q = query(colRef, where("companyId", "==", companyId));
+      const snapshot = await getDocs(q);
+      const data = snapshot.docs.map((t) => t.data());
+
+      await commit("SET_TESTIMONIALS", data);
     } catch (error) {
       throw new Error(error.message);
     }

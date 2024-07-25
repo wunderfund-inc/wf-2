@@ -1,10 +1,12 @@
+import { doc, updateDoc } from "firebase/firestore/lite";
 import { db, uploadImage } from "@/plugins/firebase";
 
 export const actions = {
-  async upload(context, { userId, file }) {
+  async upload(_, { userId, file }) {
     try {
       const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
-      await db.collection("users").doc(userId).update({ avatar: url });
+      const docRef = doc(db, `users/${userId}`);
+      await updateDoc(docRef, { avatar: url });
     } catch (error) {
       throw new Error(error.message);
     }

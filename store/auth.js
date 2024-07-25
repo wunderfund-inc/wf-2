@@ -1,9 +1,8 @@
 import Cookies from "js-cookie";
 import {
   auth,
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  // TwitterAuthProvider
+  facebookAuthProvider,
+  googleAuthProvider,
 } from "@/plugins/firebase";
 
 export const state = () => ({
@@ -21,14 +20,14 @@ export const actions = {
     try {
       let provider;
 
-      if (brand === "facebook") {
-        provider = FacebookAuthProvider;
-      } else if (brand === "google") {
-        provider = GoogleAuthProvider;
+      switch (brand) {
+        case "facebook":
+          provider = facebookAuthProvider;
+          break;
+        case "google":
+          provider = googleAuthProvider;
+          break;
       }
-      // else {
-      //   provider = TwitterAuthProvider;
-      // }
 
       const user = await auth.signInWithPopup(provider);
       const userData = user.user.toJSON();

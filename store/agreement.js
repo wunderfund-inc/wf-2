@@ -1,12 +1,12 @@
-import { db, timestamp } from "@/plugins/firebase";
-// eslint-disable-next-line
+import { collection, doc, getDoc, setDoc } from "firebase/firestore/lite";
 import {
   validAchAccountNumber,
   validAchRoutingNumber,
   validAttestations,
   validCreditCard,
   validEthereumAddress,
-} from "../helpers/validators";
+} from "@/helpers/validators";
+import { db, timestamp } from "@/plugins/firebase";
 
 export const state = () => ({
   offering: null,
@@ -101,11 +101,11 @@ export const actions = {
     { state, commit },
     { accredited, auth, companyId, companyName }
   ) {
-    const userRef = db.collection("users").doc(auth.userId);
-    const userDoc = await userRef.get();
+    const userDocRef = doc(db, `users/${auth.userId}`);
+    const userDoc = await getDoc(userDocRef);
     const userData = userDoc.data();
 
-    const invRef = db.collection("investments").doc();
+    const invDocRef = doc(collection(db, "investments"));
     const investmentData = {
       campaign_id: companyId, // `wunderfund` or `spikes-beer-ice`
       company_name: companyName.toUpperCase(), // `WUNDERFUND`
@@ -127,7 +127,7 @@ export const actions = {
       offering_id: state.offering.offering_data.id,
       tapi_offering_id: state.offering.transact_api_offering_id,
       tapi_trade_id: null,
-      uid: invRef.id,
+      uid: invDocRef.id,
       user_accredited: accredited,
       user_testimonial: state.testimonial, // typeof string[]
       user_id: auth.userId,
@@ -158,14 +158,14 @@ export const actions = {
     }
 
     try {
-      const investmentId = invRef.id;
+      const investmentId = invDocRef.id;
 
       await commit("SET_AGREEMENT_ATTRIBUTE", {
         prop: "investmentId",
         val: investmentId,
       });
 
-      await invRef.set(investmentData);
+      await setDoc(invDocRef, investmentData);
     } catch (error) {
       throw new Error(error);
     }

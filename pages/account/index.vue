@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { doc, getDoc } from "firebase/firestore/lite";
 import SectionSpendLimit from "@/components/Account/SectionSpendLimit";
 import ProfileForm from "@/components/ProfileForm";
 import { calculatePersonalLimit } from "@/helpers/finance";
@@ -74,8 +75,9 @@ export default {
   async asyncData({ store }) {
     try {
       const { userId } = store.state.auth;
-      const userDocument = await db.collection("users").doc(userId).get();
-      const userData = userDocument.data();
+      const docRef = doc(db, `users/${userId}`);
+      const snapshot = await getDoc(docRef);
+      const userData = snapshot.data();
       const limit = calculatePersonalLimit(
         userData.accreditation_ai || 0,
         userData.accreditation_nw || 0

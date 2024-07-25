@@ -1,5 +1,5 @@
+import { addDoc, collection, doc, setDoc } from "firebase/firestore/lite";
 import { db, timestamp } from "@/plugins/firebase";
-// import { validMethodExtras } from "@/helpers/validators";
 const cloneDeep = require("lodash.clonedeep");
 
 export const state = () => ({
@@ -106,7 +106,7 @@ export const actions = {
       )
         ? state.selectedOffering.equity.pricePerShare * state.selectedShares
         : null;
-      const investmentRef = await db.collection("investments").doc();
+      const investmentRef = doc(collection(db, "investments"));
       const dto = {
         createdAt: timestamp,
         updatedAt: timestamp,
@@ -124,7 +124,7 @@ export const actions = {
       };
       const key = state.selectedMethod.toLowerCase();
       dto.extras = Object.assign(cloneDeep({ [key]: state[key] }));
-      await investmentRef.set(dto);
+      await setDoc(investmentRef, dto);
       await dispatch("getSigningLink", dto);
     } catch (error) {
       throw new Error(error.message);
@@ -145,19 +145,19 @@ export const actions = {
     { state },
     { companyId, userId, name, avatar }
   ) {
+    const testimonialRef = doc(collection(db, "testimonials"));
+    const payload = {
+      companyId,
+      userId,
+      name,
+      avatar,
+      testimonial: state.testimonial,
+      approved: false,
+      createdAt: timestamp,
+      updatedAt: timestamp,
+    };
     try {
-      const testimonialRef = await db.collection("testimonials").doc();
-      const payload = {
-        companyId,
-        userId,
-        name,
-        avatar,
-        testimonial: state.testimonial,
-        approved: false,
-        createdAt: timestamp,
-        updatedAt: timestamp,
-      };
-      await testimonialRef.set(payload);
+      await addDoc(testimonialRef, payload);
     } catch (error) {
       throw new Error(error.message);
     }

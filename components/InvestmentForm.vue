@@ -795,6 +795,8 @@
 <script>
 import { TheMask } from "vue-the-mask";
 import VueNumeric from "vue-numeric";
+import { doc, getDoc, collection, setDoc } from "firebase/firestore/lite";
+import { months } from "@/helpers/choices";
 import {
   canInvest,
   investmentForm,
@@ -807,12 +809,11 @@ import {
   validateExpiryYear,
   validateCVV,
   validateSSN,
-} from "../helpers/form";
-import { months } from "@/helpers/choices";
+} from "@/helpers/form";
 import BrandIcon from "@/components/BrandIcon";
+import { determineCard } from "@/helpers/card";
 import { accredited } from "@/helpers/validators";
 import { db, timestamp } from "@/plugins/firebase";
-import { determineCard } from "@/helpers/card";
 
 export default {
   components: {
@@ -966,10 +967,11 @@ export default {
         await this.$store.dispatch("agreement/showOverlay", true);
         const companyId = this.$route.params.companyId;
         const userId = this.$store.state.auth.userId;
-        const user = await db.collection("users").doc(userId).get();
+        const userDocRef = doc(db, `users/${userId}`);
+        const user = await getDoc(userDocRef);
         const userData = user.data();
-        const newInvestment = db.collection("investments").doc();
-        const newInvestmentId = newInvestment.id;
+        const newInvestmentRef = doc(collection(db, "investments"));
+        const newInvestmentId = newInvestmentRef.id;
         const investmentPayload = {
           campaign_id: companyId, // `wunderfund` or `spikes-beer-ice`
           company_name: this.companyName.toUpperCase(), // `WUNDERFUND`
@@ -1021,7 +1023,7 @@ export default {
           };
         }
 
-        await newInvestment.set(investmentPayload);
+        await setDoc(newInvestmentRef, investmentPayload);
         this.investmentId = newInvestmentId;
 
         const domain = "https://ecf-api.vercel.app/api";

@@ -20,20 +20,26 @@
 </template>
 
 <script>
-import { db } from "@/plugins/firebase";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore/lite";
 import CampaignContent from "@/components/Campaign/Content";
-import SectionInvestmentsMap from "@/components/Campaign/SectionInvestmentsMap";
-import TermsDetails from "@/components/Campaign/TermsDetails";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
+import SectionInvestmentsMap from "@/components/Campaign/SectionInvestmentsMap";
 import SectionTtwDetails from "@/components/Campaign/SectionTtwDetails";
+import TermsDetails from "@/components/Campaign/TermsDetails";
+import { db } from "@/plugins/firebase";
 
 async function getLocations(offeringId) {
-  const snapshot = await db
-    .collection("investment_locations")
-    .where("offering_id", "==", offeringId)
-    .get();
-
-  return snapshot.empty ? [] : snapshot.docs.map((location) => location.data());
+  const colRef = collection(db, "investment_locations");
+  const q = query(colRef, where("offering_id", "==", offeringId));
+  const snapshot = await getDocs(q);
+  return snapshot.empty ? [] : snapshot.docs.map((d) => d.data());
 }
 
 async function getCompanyLocation(zip) {
@@ -69,24 +75,22 @@ export default {
         const offeringId = offeringRef.offering_data.id;
         const offeringData = (await $prismic.api.getByID(offeringId)).data;
 
-        const offeringDoc = await db
-          .collection("metrics_per_offering")
-          .doc(offeringId)
-          .get();
-        const offeringMetrics = offeringDoc.data();
+        const offeringDocRef = doc(db, `metrics_per_offering/${offeringId}`);
+        const offeringSnapshot = await getDoc(offeringDocRef);
+        const offeringMetrics = offeringSnapshot.data();
 
-        const investmentDocs = await db
-          .collection("investments")
-          .where("offering_id", "==", offeringId)
-          .get();
-
-        const investmentData = investmentDocs.empty
+        const investmentsColRef = collection(db, "investments");
+        const investmentsQuery = query(
+          investmentsColRef,
+          where("offering_id", "==", offeringId)
+        );
+        const snapshot = await getDocs(investmentsQuery);
+        const investmentData = snapshot.empty
           ? []
-          : investmentDocs.docs.map((doc) => doc.data());
+          : snapshot.docs.map((doc) => doc.data());
 
         const zip = "45202";
         const companyLocation = await getCompanyLocation(zip);
-
         const locations = await getLocations(offeringId);
 
         return {

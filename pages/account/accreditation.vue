@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { doc, getDoc } from "firebase/firestore/lite";
 import AccreditationForm from "@/components/AccreditationForm";
 import { db } from "@/plugins/firebase";
 
@@ -80,8 +81,9 @@ export default {
   async asyncData({ store }) {
     try {
       const { userId } = store.state.auth;
-      const userDocument = await db.collection("users").doc(userId).get();
-      const userData = userDocument.data();
+      const docRef = doc(db, `users/${userId}`);
+      const snapshot = await getDoc(docRef);
+      const userData = snapshot.data();
       const {
         is_entity: isEntity,
         accreditation_ai: ai,

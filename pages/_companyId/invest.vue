@@ -25,11 +25,12 @@
 </template>
 
 <script>
-import { db } from "../../plugins/firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
 import InvestmentForm from "@/components/InvestmentForm";
 import SectionCancellation from "@/components/Campaign/SectionCancellation";
 import { endedAlready } from "@/helpers/validators";
 import { isProfileFormValid, profileFormState } from "@/helpers/form";
+import { db } from "@/plugins/firebase";
 
 export default {
   components: {
@@ -60,8 +61,9 @@ export default {
       }
 
       const userId = store.state.auth.userId;
-      const userRef = await db.collection("users").doc(userId).get();
-      const userData = userRef.data();
+      const docRef = doc(db, `users/${userId}`);
+      const snapshot = await getDoc(docRef);
+      const userData = snapshot.data();
 
       const user = {
         annualIncome: userData.accreditation_ai,

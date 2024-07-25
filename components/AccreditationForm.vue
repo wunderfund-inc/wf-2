@@ -44,6 +44,7 @@
 
 <script>
 import VueNumeric from "vue-numeric";
+import { doc, updateDoc } from "firebase/firestore/lite";
 import { db, timestamp } from "@/plugins/firebase";
 
 export default {
@@ -92,7 +93,8 @@ export default {
   methods: {
     async updateAccreditation() {
       const userId = this.$store.state.auth.userId;
-      await db.collection("users").doc(userId).update({
+      const docRef = doc(db, `users/${userId}`);
+      await updateDoc(docRef, {
         accreditation_ai: this.form.annualIncome,
         accreditation_nw: this.form.netWorth,
         date_updated: timestamp,

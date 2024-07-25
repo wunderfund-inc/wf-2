@@ -22,17 +22,18 @@
 </template>
 
 <script>
-import { db } from "@/plugins/firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
 import ProfileForm from "@/components/ProfileForm";
+import { db } from "@/plugins/firebase";
 
 export default {
   components: { ProfileForm },
   middleware: ["authenticated"],
   async asyncData({ store }) {
     const userId = store.state.auth.userId;
-    const userRef = await db.collection("users").doc(userId).get();
-    const userData = userRef.data();
-    return { user: userData };
+    const snapshot = await getDoc(doc(db, `users/${userId}`));
+    const user = snapshot.data();
+    return { user };
   },
 };
 </script>

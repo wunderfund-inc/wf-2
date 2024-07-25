@@ -1,3 +1,4 @@
+import { collection, getDocs, query, where } from "firebase/firestore/lite";
 import { oneYearPassed } from "@/helpers/validators";
 import { db } from "@/plugins/firebase";
 
@@ -33,15 +34,14 @@ export const mutations = {
 
 export const actions = {
   async fetch({ commit }, userId) {
-    const docRefs = await db
-      .collection("investments")
-      .where("user_id", "==", userId)
-      .get();
+    const colRef = collection(db, "investments");
+    const q = query(colRef, where("user_id", "==", userId));
+    const snapshot = await getDocs(q);
 
-    if (docRefs.empty) {
+    if (snapshot.empty) {
       await commit("SET_INVESTMENTS", []);
     } else {
-      const investments = docRefs.docs
+      const investments = snapshot.docs
         .map((investment) => {
           const data = investment.data();
           const {

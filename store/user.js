@@ -1,3 +1,13 @@
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore/lite";
 import { db, timestamp, uploadImage } from "@/plugins/firebase";
 import { calculatePersonalLimit } from "@/helpers/finance";
 import { reduceToTotal } from "@/helpers/filters";
@@ -159,29 +169,21 @@ export const actions = {
   async setAccountData({ dispatch }, userId) {
     try {
       if (userId) {
-        const user = await db.collection("users").doc(userId).get();
-        const userData = user.data();
+        const userProfileRef = doc(db, `users/${userId}`);
+        const userSnapshot = await getDoc(userProfileRef);
+        const userData = userSnapshot.data();
+
         await dispatch("setCurrentUser", userData);
         await dispatch("setProfileNameAttribute", { ...userData.name });
         await dispatch("setProfileAddressAttribute", { ...userData.address });
         await dispatch("setProfileAvatar", userData.avatar);
 
-        const entitiesList = await db
-          .collection("entities")
-          .where("userId", "==", userId)
-          .get();
-        const entities = entitiesList.docs.map((entity) => entity.data());
-        await dispatch("setEntities", entities);
+        const entitiesColRef = collection(db, "entities");
+        const q = query(entitiesColRef, where("userId", "==", userId));
+        const entitiesList = await getDocs(q);
+        const entities = entitiesList.docs.map((e) => e.data());
 
-        // TODO: add this back in, somehow
-        // const investmentsList = await db
-        //   .collection("investments")
-        //   .where("userId", "==", userId)
-        //   .get();
-        // const investments = investmentsList.docs.map(investment => {
-        //   return investment.data();
-        // });
-        // await dispatch("setInvestments", investments);
+        await dispatch("setEntities", entities);
       }
     } catch (error) {
       throw new Error(error.message);
@@ -189,18 +191,17 @@ export const actions = {
   },
   async createEntity(context, { entityData, currentUserAuth }) {
     try {
-      const entityRef = await db.collection("entities").doc();
+      const docRef = doc(collection(db, "entities"));
       const userId = currentUserAuth.uid || currentUserAuth.user_id;
-
       const dto = {
-        uid: entityRef.id,
+        uid: docRef.id,
         userId,
         ...entityData,
         createdAt: timestamp,
         updatedAt: timestamp,
       };
 
-      await entityRef.set({ ...dto, userId });
+      await addDoc(docRef, dto);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -230,33 +231,33 @@ export const actions = {
     try {
       const userId = state.currentUser.uid || state.currentUser.user_id;
       const profile = state.form.profile;
-      await db.collection("users").doc(userId).update({
+      const docRef = doc(db, `users/${userId}`);
+      const dto = {
         name: profile.name,
         address: profile.address,
         updatedAt: timestamp,
-      });
+      };
+      await updateDoc(docRef, dto);
     } catch (error) {
       throw new Error(error.message);
     }
   },
   async setInvestments({ commit }, investments) {
-    const d = await Promise.all(
-      investments.map(async (investment) => {
-        const companyRef = await db
-          .collection("companies")
-          .doc(investment.companyId)
-          .get();
-        const offeringRef = await db
-          .collection("offerings")
-          .doc(investment.offeringId)
-          .get();
-        return {
-          ...investment,
-          company: companyRef.data(),
-          offering: offeringRef.data(),
-        };
-      })
-    );
+    const actions = investments.map(async (investment) => {
+      const companyDocRef = doc(db, `companies/${investment.companyId}`);
+      const companyDocSnap = await getDoc(companyDocRef);
+
+      const offeringDocRef = doc(db, `offerings/${investment.offeringId}`);
+      const offeringDocSnap = await getDoc(offeringDocRef);
+
+      return {
+        ...investment,
+        company: companyDocSnap.data(),
+        offering: offeringDocSnap.data(),
+      };
+    });
+    const d = await Promise.all(actions);
+
     commit("SET_INVESTMENTS", d);
   },
   clearEntityForm({ commit }) {
@@ -281,9 +282,11 @@ export const actions = {
     commit("SET_ENTITY_FORM_ATTRIBUTE", entity);
   },
   async uploadAvatar({ dispatch }, { userId, file }) {
+    const docRef = doc(db, `users/${userId}`);
+
     try {
       const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
-      await db.collection("users").doc(userId).update({ avatar: url });
+      await updateDoc(docRef, { avatar: url });
       await dispatch("setProfileAvatar", url);
     } catch (error) {
       throw new Error(error.message);
