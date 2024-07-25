@@ -16,7 +16,7 @@ describe("FAQs", () => {
   });
 
   test("Company FAQ items", () => {
-    expect(companyFaqs.length).toBe(25);
+    expect(companyFaqs.length).toBe(24);
   });
 
   test("Investor FAQ items", () => {
