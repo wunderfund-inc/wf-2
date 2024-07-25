@@ -110,6 +110,7 @@ export default {
   ],
   prismic: {
     endpoint: "https://wunderfund.cdn.prismic.io/api/v2",
+    preview: false,
   },
   // https://go.nuxtjs.dev/axios
   axios: {},
