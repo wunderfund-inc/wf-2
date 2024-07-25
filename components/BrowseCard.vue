@@ -27,7 +27,7 @@
           <small class="text-muted">Pre-investment phase</small>
         </b-list-group-item>
       </b-list-group>
-      <b-list-group v-else flush>
+      <b-list-group v-else-if="'security_type' in offering" flush>
         <b-list-group-item class="text-center">
           <template v-if="offering.security_type === 'Promissory Note'">
             <small class="mb-0 text-muted">
@@ -113,7 +113,7 @@
               </template>
               <template v-else>{{ nonEquityPercent }}% Funded</template>
             </template>
-            <template v-else> 0% Funded </template>
+            <template v-else>0% Funded</template>
           </small>
         </b-list-group-item>
       </b-list-group>
