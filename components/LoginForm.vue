@@ -60,6 +60,11 @@
 </template>
 
 <script>
+import {
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 import { mapGetters } from "vuex";
 import { auth } from "@/plugins/firebase";
 
@@ -82,12 +87,16 @@ export default {
     async resendLink() {
       try {
         const { email, password } = this.form;
-        const { user } = await auth.signInWithEmailAndPassword(email, password);
-        await user.sendEmailVerification({
+        const { user } = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        await sendEmailVerification(user, {
           url: this.$config.BASE_URL,
           handleCodeInApp: true,
         });
-        await auth.signOut();
+        await signOut(auth);
         this.linkResent = true;
       } catch (error) {
         this.error = error.message;
@@ -103,7 +112,7 @@ export default {
             decodeURIComponent(this.$route.query.return_to)
           );
         } else {
-          await this.$router.go("/auth/attest");
+          this.$router.go("/auth/attest");
         }
       } catch (error) {
         if (error.message === "Error: Email not verified") {

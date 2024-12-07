@@ -115,7 +115,7 @@ export default {
       try {
         this.submitting = true;
         const error = await this.$store.dispatch(
-          "auth/updatePassword",
+          "user/updatePassword",
           this.password.new
         );
         if (error) {

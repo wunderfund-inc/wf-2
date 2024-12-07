@@ -1,3 +1,11 @@
+import {
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  getIdToken,
+  signOut,
+  updatePassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import Cookies from "js-cookie";
 import {
   auth,
@@ -29,19 +37,17 @@ export const actions = {
           break;
       }
 
-      const user = await auth.signInWithPopup(provider);
-      const userData = user.user.toJSON();
-      await dispatch("login", userData);
+      const { user } = await signInWithPopup(auth, provider);
+      await dispatch("login", user);
     } catch (error) {
       throw new Error(error.message);
     }
   },
   async loginUser({ dispatch }, { email, password }) {
     try {
-      const user = await auth.signInWithEmailAndPassword(email, password);
-      if (user.user.emailVerified) {
-        const userData = user.user.toJSON();
-        await dispatch("login", userData);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      if (user.emailVerified) {
+        await dispatch("login", user);
       } else {
         await dispatch("logout");
         throw new Error("Email not verified");
@@ -52,7 +58,7 @@ export const actions = {
   },
   async login({ dispatch }, user) {
     try {
-      const token = await auth.currentUser.getIdToken(true);
+      const token = await getIdToken(user, true);
       Cookies.set("access_token", token, { expires: 1 });
       await dispatch("set", {
         email: user.email,
@@ -65,23 +71,23 @@ export const actions = {
   },
   async logout({ dispatch }) {
     try {
-      await auth.signOut();
+      await signOut(auth);
       Cookies.remove("access_token");
       await dispatch("unset");
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  async updatePassword(context, password) {
+  async updatePassword(_, user, password) {
     try {
-      await auth.currentUser.updatePassword(password);
+      await updatePassword(user, password);
     } catch (error) {
       throw new Error(error.message);
     }
   },
-  async sendPasswordResetEmail(context, email) {
+  async sendPasswordResetEmail(_, email) {
     try {
-      await auth.sendPasswordResetEmail(email);
+      await sendPasswordResetEmail(auth, email);
     } catch (error) {
       throw new Error(error);
     }

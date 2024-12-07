@@ -46,7 +46,8 @@
               label-for="input-password"
               invalid-feedback="Must be at least 8 characters long."
             >
-              <b-form-input#input-password(
+              <b-form-input
+                id="input-password"
                 v-model="$v.form.password.$model"
                 :state="validateState('password')"
                 type="password"
@@ -84,6 +85,11 @@
 </template>
 
 <script>
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 import { mapGetters } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
@@ -132,15 +138,16 @@ export default {
         this.error = null;
         await this.$store.dispatch("toggleOverlay", true);
         const { email, password } = this.form;
-        const { user } = await auth.createUserWithEmailAndPassword(
+        const { user } = await createUserWithEmailAndPassword(
+          auth,
           email,
           password
         );
-        await user.sendEmailVerification({
+        await sendEmailVerification(user, {
           url: this.$config.BASE_URL,
           handleCodeInApp: true,
         });
-        await auth.signOut();
+        await signOut(auth);
         await this.$store.dispatch("toggleOverlay", false);
         this.showAlert = true;
       } catch (error) {
