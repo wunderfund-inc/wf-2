@@ -1,3 +1,4 @@
+import { updatePassword } from "firebase/auth";
 import {
   addDoc,
   collection,
@@ -288,6 +289,13 @@ export const actions = {
       const url = await uploadImage(`avatars/${userId}/${file.name}`, file);
       await updateDoc(docRef, { avatar: url });
       await dispatch("setProfileAvatar", url);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  async updatePassword(_, password) {
+    try {
+      await updatePassword(this.currentUser, password);
     } catch (error) {
       throw new Error(error.message);
     }
