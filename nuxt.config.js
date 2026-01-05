@@ -139,9 +139,17 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {
+      config.externals = config.externals || {};
       if (ctx.isClient) {
-        config.externals = config.externals || {};
         config.externals.undici = "undici";
+      } else {
+        // Externalize Firebase modules for server build
+        config.externals.firebase = "firebase";
+        config.externals["firebase/app"] = "firebase/app";
+        config.externals["firebase/auth"] = "firebase/auth";
+        config.externals["firebase/firestore/lite"] = "firebase/firestore/lite";
+        config.externals["firebase/functions"] = "firebase/functions";
+        config.externals["firebase/storage"] = "firebase/storage";
       }
     },
   },
