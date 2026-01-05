@@ -138,9 +138,12 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    // extend(config, ctx) {
-    //   config.resolve.alias.vue = "vue/dist/vue.common";
-    // },
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        config.externals = config.externals || {};
+        config.externals.undici = "undici";
+      }
+    },
   },
   serverMiddleware: ["~/server-middleware/tapi-webhook"],
   // generate: {
