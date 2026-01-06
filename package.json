@@ -43,7 +43,7 @@
     "jwt-decode": "^3.1.2",
     "lodash.clonedeep": "^4.5.0",
     "numeral": "^2.0.6",
-    "nuxt": "^2.18.1",
+    "nuxt": "^4.2.2",
     "nuxt-facebook-pixel-module": "^1.6.0",
     "nuxt-fontawesome": "^0.4.0",
     "v-money": "^0.8.1",
