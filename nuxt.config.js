@@ -142,10 +142,6 @@ export default {
       if (ctx.isClient) {
         config.externals = config.externals || {};
         config.externals.undici = "undici";
-      } else {
-        // For server build, use externalsPresets to handle Node.js built-ins
-        config.externalsPresets = { node: true };
-        config.externals = config.externals || {};
       }
     },
   },
