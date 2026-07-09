@@ -112,7 +112,7 @@ export default {
             decodeURIComponent(this.$route.query.return_to)
           );
         } else {
-          this.$router.go("/auth/attest");
+          this.$router.push("/auth/attest");
         }
       } catch (error) {
         if (error.message === "Error: Email not verified") {

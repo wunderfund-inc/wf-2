@@ -31,7 +31,7 @@ export default {
             decodeURIComponent(this.$route.query.return_to)
           );
         } else {
-          await this.$router.go("/auth/attest");
+          await this.$router.push("/auth/attest");
         }
       } catch (error) {
         await this.$store.dispatch("displaySocialMediaError", error.message);

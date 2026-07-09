@@ -103,6 +103,8 @@ export const actions = {
       const snapshot = await getDoc(docRef);
       const userData = snapshot.data();
 
+      if (!userData) return;
+
       await commit("SET_PROFILE_ATTRIBUTE", {
         prop: "accreditation_ai",
         val: userData.accreditation_ai,
