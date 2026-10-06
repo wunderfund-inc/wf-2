@@ -8,7 +8,7 @@ import {
 
 describe("FAQs", () => {
   test("Raise Capital FAQ items", () => {
-    expect(raiseCapitalFaqs.length).toBe(6);
+    expect(raiseCapitalFaqs.length).toBe(5);
   });
 
   test("General FAQ items", () => {
