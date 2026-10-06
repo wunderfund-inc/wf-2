@@ -19,7 +19,7 @@
               <summary class="mb-3">
                 <strong>{{ faq.question }}</strong>
               </summary>
-              <p>{{ faq.answer }}</p>
+              <FaqAnswer :answer="faq.answer" />
             </details>
           </article>
         </div>
