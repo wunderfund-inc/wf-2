@@ -7,8 +7,10 @@
             <div class="text-container">
               <h1 class="title">Invest in startups near you</h1>
               <h6 class="subtitle">
-                Invest as little as $20 in local startups and earn a return if
-                the startup succeeds.
+                Invest as little as $20 in local startups and earn a potential
+                return if the startup succeeds; understanding that CF
+                investments have risks, including the risk of the total loss of
+                your investment.
               </h6>
             </div>
           </div>
