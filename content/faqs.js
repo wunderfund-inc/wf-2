@@ -24,12 +24,6 @@ export const raiseCapitalFaqs = [
       "It’s all automated anyways, but if you need business help, we have the experience to help you!",
   },
   {
-    icon: "vet",
-    title: "We vet ALL our deals",
-    description:
-      "We walk through your financials and pitch deck to match what we know investors will back.",
-  },
-  {
     icon: "help",
     title: "We're here to help!",
     description:
@@ -47,7 +41,7 @@ export const generalFaqs = [
   {
     question: "How does the Wunderfund Platform work?",
     answer:
-      "We look for companies that have a chance of building a business that we believe in. Once a startup company launches a fundraising campaign, investors are given an opportunity to back the startup with an investment commitment. Ultimately, the crowd decides whether the campaign will reach their target goal. If that target goal is not met by the campaign deadline (usually 90-120 days), then the project goes unfunded, and your commitment is released.",
+      "Once a startup company launches a fundraising campaign, investors are given an opportunity to back the startup with an investment commitment. Ultimately, the crowd decides whether the campaign will reach their target goal. If that target goal is not met by the campaign deadline (usually 90-120 days), then the project goes unfunded, and your commitment is released.",
   },
   {
     question:
