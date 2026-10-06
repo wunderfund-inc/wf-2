@@ -1,3 +1,9 @@
+import {
+  investmentLimitTable,
+  investmentLimitFaqs,
+  offeringLimitFaqs,
+} from "./limits";
+
 export const raiseCapitalFaqs = [
   {
     icon: "branding",
@@ -51,8 +57,15 @@ export const generalFaqs = [
   },
   {
     question: "How much money do I need to start investing?",
-    answer:
-      "You can invest as little as $100 in a startup company and up to a maximum limit that's based on the SEC's Regulation Crowdfunding guidelines. Wunderfund.co will automatically calculate the limit you can invest based on your annual income and net worth you provide. Legally, we cannot allow you to invest more than the guidelines set by the SEC for every 12 month period: \n All investors can invest a least $2,200 \n If either your income or net worth are less than $107K, you may invest up to 5% of the smaller number. \n If both your income or net worth is >$100K, you can invest up to 10% of the smaller number. \n $100K is the maximum amount accredited investors can invest (i.e. people who earn $200K in annually or $300K jointly) or those have over $1M in assets. \n Regardless, we'll automatically calculate your maximum limit for you and you'll be able to see how much you are allowed to invest in your investor profile page.",
+    answer: [
+      {
+        p: "You can invest as little as $100 in a startup company, up to a limit set by the SEC's Regulation Crowdfunding rules. Wunderfund.co calculates your limit from the income and net worth you provide. The limit applies to all of your Regulation Crowdfunding investments in any 12-month period. Accredited investors have no limit.",
+      },
+      { table: investmentLimitTable },
+      {
+        p: "You can see how much you are allowed to invest in your investor profile page. See the FAQs for Investors for examples and more detail.",
+      },
+    ],
   },
   {
     question: "Why did you create the Wunderfund Platform?",
@@ -95,11 +108,7 @@ export const companyFaqs = [
     answer:
       "Before you can issue an offering on Wunderfund.co, you have to apply and tell us about your team and your company. We look for a complete business plan, pitch deck, financial information, and other relevant historical information that we review for preliminary due diligence. Only companies that get through this preliminary due diligence criteria will be permitted to raise funding. Passing this process is not meant to be construed as investment advice or endorsement by Wunderfund.co.",
   },
-  {
-    question: "How much equity can be raised for a single campaign?",
-    answer:
-      "***COVID-19 UPDATE: If you launch a campaign on our platform before August 31, 2020, you're eligible to raise up to $250K without needing a CPA Review, and the maximum limit has been raised to $5M.*** The maximum amount you can normally invest on our platform is $1.07M. Although we have no set minimum, we encourage companies to raise no less than $10,000 on this portal.",
-  },
+  ...offeringLimitFaqs,
   {
     question:
       "Are the company's confidential documents secure? Can anyone see those?",
@@ -198,12 +207,7 @@ export const investorFaqs = [
     answer:
       "We worked hard to make it as simple as possible to commit to an invesment. Simply create an account, verify your accreditation status, select an investment that works for you, signing legal documents and funding the investment. When an investment is made, the money is held in escrow until the deal closes. Once the investment target is met, the money is transferred to the project company for the sole purpose of the specific property being invested in.",
   },
-  {
-    question:
-      "Can anyone invest using this portal or do you have to be an accredited investor?",
-    answer:
-      "Anyone can invest in a Regulation Crowdfunding offering. Because of the risks involved with this type of investing, however, you may be limited in how much you can invest during any 12-month period in these transactions. If you are an accredited investor, then there are no limits on how much you can invest. If you are a non-accredited investor, then the limitation on how much you can invest depends on your net worth and annual income. If either your annual income or your net worth is less than $124,000, then during any 12-month period, you can invest up to the greater of either $2,500 or 5% of the greater of your annual income or net worth. If both your annual income and your net worth are equal to or more than $124,000, then during any 12-month period, you can invest up to 10% of annual income or net worth, whichever is greater, but not to exceed $124,000.",
-  },
+  ...investmentLimitFaqs,
   {
     question: "What happens when rounds are oversubscribed?",
     answer:
@@ -215,12 +219,7 @@ export const investorFaqs = [
       "All the signatures are handled electronically. once a contract is signed by both parties, a PDF copy of the executed forms will be emailed to all parties for their record keeping. A copy of your contract will also be available on Wunderfund.co in your profile.",
   },
   {
-    question: "What is the minimum and maximum amount I can invest?",
-    answer:
-      "The minimum investment is typically $100. However, the minimum could be set higher by the issuer who launches the campaign. These will be disclosed on their offering page. The maximum investment amount allowable per year is determined by calculating 10% of your gross annual income or net worth (whichever is greater). You must complete your account accreditation in order for us to calculate the maximum investment amount. If you do not, the default maximum is set at $2,200 a year per Reg CF regulations set by the SEC.",
-  },
-  {
-    question: "How are investments pre-vetted before being listed?",
+    question: "How are issuers reviewed before being listed?",
     answer:
       "In order for an issuer's campaign can be listed publically on our platform, we conduct a full review of the the issuer's application. The appication includes a business plan, the financials, articles of organization, and other important documents. We then conduct a background & credit check on the issuer's founding team members & sponsors. Importantly, these measures don't take away the risks in the investment and Wunderfund.co cannot gaurantee results. You, as an investor, have the full authority and discretion to choose which opportunity is right for you and how much you want to invest.",
   },
@@ -329,13 +328,19 @@ export const investorFaqs = [
   },
   {
     question: "How do I earn a return?",
-    answer:
-      "The companies that raise money on Wunderfund.co are private companies who will issue a SAFE note also known as a convertible note to their investors. This simply means that your investment amount will convert to stock when a proper value is placed on the company, which typically happens when the company raises a subsequent investment round from instutional investors who put a price on the company. If the company grows successfully, the value of the stock increases with each round of financing until the company is acquired or goes public in an IPO at which point you can sell your shares.",
+    answer: [
+      {
+        p: "Companies that raise money on Wunderfund.co are private companies. Many issue a SAFE (Simple Agreement for Future Equity). A SAFE is not stock, debt, or a loan: it is a contract that gives you the right to receive equity in the future, if certain events happen. It is similar to a convertible note in that it may convert to equity later, but unlike a convertible note it generally has no interest rate and no maturity date, so the company does not have to repay you. The terms of each offering are described on its offering page, so read them carefully.",
+      },
+      {
+        p: "A SAFE typically converts to shares only if the company later raises a priced equity round, or is sold or goes public. None of these events may ever happen. If they do, your ownership percentage may be reduced (diluted) by later financing, and you may have limited or no voting rights. Regulation Crowdfunding investments are illiquid, restricted from resale for at least one year, and speculative. There is no guarantee of any return, and you could lose your entire investment.",
+      },
+    ],
   },
   {
     question: "How are payments collected and remitted to investors?",
     answer:
-      "If a company is successfully acquired, Wunderfund.co will collect the payments directly through a third party servicing company and will remit the payments directly to investors net any processing fees. All projected returns or distributions along with the schedule are unique to each offering and will be clearly spelled out in the offering page for that campaign.",
+      "Most Regulation Crowdfunding investments do not pay regular returns, and there is no guarantee that you will ever receive a payment. If an issuer does make a payment to investors, such as a distribution or proceeds from a sale of the company, Wunderfund.co collects it through a third party servicing company and remits it to investors, net any processing fees. Any payment terms and schedule are specific to each offering and are described on the offering page for that campaign.",
   },
   {
     question: "How is the value of a company determined?",
