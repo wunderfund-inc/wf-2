@@ -8,7 +8,7 @@ RUN apk add --no-cache python3 make g++
 
 # Install dependencies
 RUN corepack enable
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Copy source code
