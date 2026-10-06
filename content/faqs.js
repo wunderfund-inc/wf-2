@@ -182,7 +182,7 @@ export const companyFaqs = [
   {
     question: "Will investors contact me directly?",
     answer:
-      "You can choose to have your email address available on your campaign page, or you may opt out and then all communications with investors are handled within the portal.",
+      "You may have an email dedicated to the campaign, but all communication with investors must occur through the portal.",
   },
   {
     question:
