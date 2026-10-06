@@ -13,10 +13,6 @@ module.exports = {
     "plugin:prettier/recommended",
     "plugin:nuxt/recommended",
   ],
-  settings: {
-    // pnpm's symlinked layout breaks import/named's parsing of firebase's re-exports
-    "import/ignore": ["firebase"],
-  },
   plugins: ["prettier"],
   // add your custom rules here
   rules: {

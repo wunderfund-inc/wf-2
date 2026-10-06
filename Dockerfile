@@ -7,15 +7,15 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++
 
 # Install dependencies
-RUN corepack enable
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc ./
-RUN pnpm install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci && \
+    npm cache clean --force
 
 # Copy source code
 COPY . .
 
 # Build the Nuxt application
-RUN pnpm build
+RUN npm run build
 
 # Production stage
 FROM node:18.19.0-alpine
@@ -32,7 +32,7 @@ RUN addgroup -g 1001 -S nodejs && \
 # Copy built application and node_modules from builder
 COPY --from=builder --chown=nuxtjs:nodejs /app/.nuxt ./.nuxt
 COPY --from=builder --chown=nuxtjs:nodejs /app/node_modules ./node_modules
-COPY --chown=nuxtjs:nodejs package.json ./
+COPY --chown=nuxtjs:nodejs package.json package-lock.json ./
 
 # Copy static and other necessary files
 COPY --chown=nuxtjs:nodejs static ./static
@@ -58,4 +58,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
 
 # Use dumb-init to properly handle signals
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["node_modules/.bin/nuxt", "start"]
+CMD ["npm", "start"]
