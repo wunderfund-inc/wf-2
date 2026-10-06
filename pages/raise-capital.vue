@@ -163,8 +163,8 @@
           </strong>
         </summary>
         <p>
-          The range at which any company can raise on our website is anywhere
-          from $10k to $1.07M.
+          A company can raise up to $5,000,000 in any 12-month period under
+          Regulation Crowdfunding.
         </p>
       </details>
       <h5 class="pt-5">
