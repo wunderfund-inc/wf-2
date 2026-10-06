@@ -5,7 +5,7 @@
         <div class="row justify-content-left">
           <div class="col-md-6">
             <div class="text-container">
-              <h1 class="title">Invest in vetted startups near you</h1>
+              <h1 class="title">Invest in startups near you</h1>
               <h6 class="subtitle">
                 Invest as little as $20 in local startups and earn a return if
                 the startup succeeds.
