@@ -4,6 +4,7 @@
   "description": "The next iteration of the Wunderfund platform",
   "author": "Justin Chiou",
   "private": true,
+  "packageManager": "pnpm@12.9.1",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
